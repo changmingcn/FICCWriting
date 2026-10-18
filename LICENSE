@@ -1,0 +1,18 @@
+FICCWriting is released under two licenses.
+
+1. MIT License -- full text in LICENSE-MIT.
+   Applies to:
+   - every file under skills/ficc-voice/scripts/ and skills/ficc-hand/scripts/
+   - install.sh and uninstall.sh
+
+2. Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+   -- notice and legal-code link in LICENSE-CC-BY-NC-4.0.
+   Applies to everything else: the rule files, references, the agent cards under
+   agents/, README.md, CHANGELOG.md and docs/.
+
+Corpus and quoted texts: the texts under skills/ficc-voice/references/corpus/
+(《九节》, 《熊猫讲期权》) and the monthly letters, reports and drafts quoted in the
+reference files are published with the owner's permission under CC BY-NC 4.0.
+This notice makes no statement about who wrote them.
+
+Copyright (c) 2026 changmingcn, except the corpus and quoted texts named above.

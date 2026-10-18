@@ -1,0 +1,2493 @@
+{
+ "about": "tieout.py 回归集（F-S，2026-10-17）。合并三份探针文件的每个用例与对照：tieout-probes.json（与 baseline-tieout-probes.json 逐字节相同，第二轮）、hand-review.json 28 例（第三轮）、parent-probes.json 5 例（主会话），加自检五组和 F-S 新例。预期：exit 退出码；misses 未匹配 [类, 词元]；pending 待核词元；unchecked 写法不认行数；targets 目标行数（有才比）。控制例取当时观察值；缺陷例按修复后的应有结果写。　S2（2026-10-17 第四轮）：加 hand-review.json independent_probes 16 例（r4.*）与 parent-probes.json 6 例（r4p.*），缺陷例按修复后的应有结果写（分数、日期、歧义各保类型，跨类型只报待核；bn、tn 等单位区间等价）；S2 新例 s2.*（类型 7、单位 22）与顺序行检查 o.*（正例 7、反例 6）。　R5 F5：顺序行套话检查 o.filler_fails（正例）与 o.neighbour_id_passes、o.keyword_passes、o.dotted_id_passes、o.ordinal_alias_passes（反例）。",
+ "runner": "python3 test_tieout.py（走 CLI）；python3 tieout.py --self-test（进程内）跑同一份用例",
+ "cases": [
+  {
+   "id": "tp.bp_truncation",
+   "source": "tieout-probes.json#bp_truncation",
+   "outline": "- **主旨**：收益率上升25bp。",
+   "against": [
+    "收益率上升25个基点。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "round-2 defect: 25bp truncated to 2"
+  },
+  {
+   "id": "tp.bp_truncation.c1",
+   "source": "tieout-probes.json#bp_truncation.controls[0]",
+   "outline": "- **主旨**：收益率上升25bp。",
+   "against": [
+    "收益率上升2个基点。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "25"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "round-2 defect: truncated 2 matched 2个基点"
+  },
+  {
+   "id": "tp.bp_truncation.c2",
+   "source": "tieout-probes.json#bp_truncation.controls[1]",
+   "outline": "- **主旨**：收益率上升25 bp。",
+   "against": [
+    "收益率上升25个基点。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.decimal_bp_truncation",
+   "source": "tieout-probes.json#decimal_bp_truncation",
+   "outline": "- **主旨**：收益率上升4.2bp。",
+   "against": [
+    "收益率上升4.2个基点。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "round-2 defect: 4.2bp truncated to 4"
+  },
+  {
+   "id": "tp.explicit_year",
+   "source": "tieout-probes.json#explicit_year",
+   "outline": "- **主旨**：2026年9月30日见顶。",
+   "against": [
+    "| E1 | 2025-09-30 见顶 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年9月30日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "round-2 defect: year ignored"
+  },
+  {
+   "id": "tp.explicit_year.c1",
+   "source": "tieout-probes.json#explicit_year.controls[0]",
+   "outline": "- **主旨**：2026年9月30日见顶。",
+   "against": [
+    "| E1 | 2026-09-30 见顶 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.explicit_year.c2",
+   "source": "tieout-probes.json#explicit_year.controls[1]",
+   "outline": "- **主旨**：2026年9月30日见顶。",
+   "against": [
+    "| E1 | 2025-09-29 见顶 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年9月30日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.date_number_leak",
+   "source": "tieout-probes.json#date_number_leak",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 09-22 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "22"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "round-2 defect: 09-22 supplied 22"
+  },
+  {
+   "id": "tp.date_number_leak.c1",
+   "source": "tieout-probes.json#date_number_leak.controls[0]",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 09/22 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "22"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.date_number_leak.c2",
+   "source": "tieout-probes.json#date_number_leak.controls[1]",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 9月22日 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "22"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.date_number_leak.c3",
+   "source": "tieout-probes.json#date_number_leak.controls[2]",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 增加22万亿美元 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.plain_claim_zero_coverage",
+   "source": "tieout-probes.json#plain_claim_zero_coverage",
+   "outline": "- 主旨：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 0
+   },
+   "note": "round-2 defect: zero coverage passed"
+  },
+  {
+   "id": "tp.plain_claim_zero_coverage.c1",
+   "source": "tieout-probes.json#plain_claim_zero_coverage.controls[0]",
+   "outline": "- **主旨**：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "4.2"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.plain_claim_zero_coverage.c2",
+   "source": "tieout-probes.json#plain_claim_zero_coverage.controls[1]",
+   "outline": "- **主旨：**4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 0
+   }
+  },
+  {
+   "id": "tp.name_table_zero_coverage",
+   "source": "tieout-probes.json#name_table_zero_coverage",
+   "outline": "**名字表**\n\n| 名字 | 指什么与口径 | 本篇写法 | 不许用的叫法 |\n|---|---|---|---|\n| Barclays | 机构 | Barclays | 巴克莱 |",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 0
+   }
+  },
+  {
+   "id": "tp.name_table_zero_coverage.c1",
+   "source": "tieout-probes.json#name_table_zero_coverage.controls[0] (**名字表** -> ## 名字表)",
+   "outline": "## 名字表\n\n| 名字 | 指什么与口径 | 本篇写法 | 不许用的叫法 |\n|---|---|---|---|\n| Barclays | 机构 | Barclays | 巴克莱 |",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "名称",
+      "Barclays"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "tp.global_token_boundary",
+   "source": "tieout-probes.json#global_token_boundary",
+   "outline": "- **主旨**：Citi 预计赤字为 4.2 万亿美元。",
+   "against": [
+    "| E1 | Citi 预计赤字为 2 万亿美元 |\n| E2 | Goldman Sachs 预计通胀为 4.2% |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "documented scope limit: global token presence"
+  },
+  {
+   "id": "tp.global_token_boundary.c1",
+   "source": "tieout-probes.json#global_token_boundary.control (E2 deleted)",
+   "outline": "- **主旨**：Citi 预计赤字为 4.2 万亿美元。",
+   "against": [
+    "| E1 | Citi 预计赤字为 2 万亿美元 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "4.2"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "self.基础",
+   "source": "tieout.py SELF_CASES / tieout-probes.json#self_test",
+   "outline": "# 提纲\n## 名字表\n- 期限溢价（ACM）：按 ACM 模型算\n## 根主旨\n- **主旨**：9月22日到30日长端领涨，长端升了39个基点（R01，见 6.3.1），JPMorgan 说政策路径占40。\n- **主旨**：Barclays 估计4.2万亿。〔标题〕长端：九月先涨在加息\n### N1 〔标题 一、〕Citi 看长端：九月先涨在加息\n",
+   "against": [
+    "| E1 | 长端 9月30日 5.64%，升39个基点 | 09-22 起长端领涨 | ACM | JPMorgan 2026-09-12 政策路径占 40 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "名称",
+      "Barclays"
+     ],
+     [
+      "名称",
+      "Citi"
+     ],
+     [
+      "数",
+      "4.2"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 4
+   }
+  },
+  {
+   "id": "self.单位不截数",
+   "source": "tieout.py SELF_CASES",
+   "outline": "- **主旨**：收益率上升25bp，另一段升4.2bp。",
+   "against": [
+    "收益率上升2个基点，另一段升4个基点。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "25"
+     ],
+     [
+      "数",
+      "4.2"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "self.年份参与比较",
+   "source": "tieout.py SELF_CASES",
+   "outline": "- **主旨**：2026年9月30日见顶。",
+   "against": [
+    "| E1 | 2025-09-30 见顶 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年9月30日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "self.短日期不当数",
+   "source": "tieout.py SELF_CASES",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 09-22 | 09/23 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "22"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "self.零覆盖不当通过",
+   "source": "tieout.py SELF_CASES",
+   "outline": "- 主旨：4.2万亿美元。\n\n**名字表**\n\n| Barclays | 机构 |",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 2,
+    "targets": 0
+   }
+  },
+  {
+   "id": "hr.normal_full",
+   "source": "hand-review.json#normal_full",
+   "outline": "## 名字表\n| 名字 | 机构 |\n| Citi | 银行 |\n## 根\n- **主旨**：2026年9月30日，Citi预计增加4.2万亿美元，收益率升25bp。",
+   "against": [
+    "Citi 2026-09-30 增加4.2万亿美元，收益率升25个基点。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 3
+   }
+  },
+  {
+   "id": "hr.bp_bad",
+   "source": "hand-review.json#bp_bad",
+   "outline": "- **主旨**：收益率上升25bp。",
+   "against": [
+    "收益率上升2个基点。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "25"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.bp_good",
+   "source": "hand-review.json#bp_good",
+   "outline": "- **主旨**：收益率上升25bp。",
+   "against": [
+    "收益率上升25个基点。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.bp_decimal_bad",
+   "source": "hand-review.json#bp_decimal_bad",
+   "outline": "- **主旨**：收益率上升4.2bp。",
+   "against": [
+    "收益率上升4个基点。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "4.2"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.bp_decimal_good",
+   "source": "hand-review.json#bp_decimal_good",
+   "outline": "- **主旨**：收益率上升4.2bp。",
+   "against": [
+    "收益率上升4.2个基点。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.explicit_year_bad",
+   "source": "hand-review.json#explicit_year_bad",
+   "outline": "- **主旨**：2026年9月30日见顶。",
+   "against": [
+    "| E1 | 2025-09-30 见顶 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年9月30日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.explicit_year_good",
+   "source": "hand-review.json#explicit_year_good",
+   "outline": "- **主旨**：2026年9月30日见顶。",
+   "against": [
+    "| E1 | 2026-09-30 见顶 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.yearless_allowed",
+   "source": "hand-review.json#yearless_allowed",
+   "outline": "- **主旨**：2026年9月30日见顶。",
+   "against": [
+    "| E1 | 09-30 见顶 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   },
+   "note": "documented compatibility: no-year source accepted"
+  },
+  {
+   "id": "hr.short_date_dash_no_amount",
+   "source": "hand-review.json#short_date_dash_no_amount",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 09-22 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "22"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.short_date_slash_no_amount",
+   "source": "hand-review.json#short_date_slash_no_amount",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 09/22 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "22"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.short_date_chinese_no_amount",
+   "source": "hand-review.json#short_date_chinese_no_amount",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 9月22日 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "22"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.amount_present",
+   "source": "hand-review.json#amount_present",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 增加22万亿美元 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.plain_claim_zero",
+   "source": "hand-review.json#plain_claim_zero",
+   "outline": "- 主旨：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 0
+   }
+  },
+  {
+   "id": "hr.bold_colon_claim_zero",
+   "source": "hand-review.json#bold_colon_claim_zero",
+   "outline": "- **主旨：**4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 0
+   }
+  },
+  {
+   "id": "hr.recognized_claim_missing",
+   "source": "hand-review.json#recognized_claim_missing",
+   "outline": "- **主旨**：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "4.2"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.bold_names_zero",
+   "source": "hand-review.json#bold_names_zero",
+   "outline": "**名字表**\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 0
+   }
+  },
+  {
+   "id": "hr.heading_names_missing",
+   "source": "hand-review.json#heading_names_missing",
+   "outline": "## 名字表\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "名称",
+      "Barclays"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 3
+   }
+  },
+  {
+   "id": "hr.heading_names_present",
+   "source": "hand-review.json#heading_names_present",
+   "outline": "## 名字表\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
+   "against": [
+    "Barclays"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 3
+   }
+  },
+  {
+   "id": "hr.zero_target",
+   "source": "hand-review.json#zero_target",
+   "outline": "普通文本，无主旨行和名字表。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 0
+   }
+  },
+  {
+   "id": "hr.mixed_plain_claim",
+   "source": "hand-review.json#mixed_plain_claim",
+   "outline": "- **主旨**：市场变化。\n- 主旨：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.mixed_heading_claim",
+   "source": "hand-review.json#mixed_heading_claim",
+   "outline": "- **主旨**：市场变化。\n### 主旨：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   },
+   "note": "round-3 defect: residual coverage failure: second claim silently skipped"
+  },
+  {
+   "id": "hr.mixed_bold_colon_names",
+   "source": "hand-review.json#mixed_bold_colon_names",
+   "outline": "- **主旨**：市场变化。\n**名字表：**\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   },
+   "note": "round-3 defect: residual coverage failure: names table silently skipped"
+  },
+  {
+   "id": "hr.mixed_numbered_claim",
+   "source": "hand-review.json#mixed_numbered_claim",
+   "outline": "- **主旨**：市场变化。\n- N1 主旨：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   },
+   "note": "round-3 defect: residual coverage failure: second claim silently skipped"
+  },
+  {
+   "id": "hr.numeric_range_hyphen",
+   "source": "hand-review.json#numeric_range_hyphen",
+   "outline": "- **主旨**：增长率为3%至5%。",
+   "against": [
+    "| E1 | 增长率为3-5% |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   },
+   "note": "round-3 defect: new false missing: numeric range deleted as date"
+  },
+  {
+   "id": "hr.numeric_range_chinese_control",
+   "source": "hand-review.json#numeric_range_chinese_control",
+   "outline": "- **主旨**：增长率为3%至5%。",
+   "against": [
+    "| E1 | 增长率为3%至5% |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.fraction",
+   "source": "hand-review.json#fraction",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "| E1 | 比例为1/3 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   },
+   "note": "round-3 defect: new false missing: same numerical fraction deleted from against text as date"
+  },
+  {
+   "id": "hr.fraction_chinese_control",
+   "source": "hand-review.json#fraction_chinese_control",
+   "outline": "- **主旨**：分子为1，分母为3。",
+   "against": [
+    "| E1 | 分子为1，分母为3 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "hr.global_token_scope",
+   "source": "hand-review.json#global_token_scope",
+   "outline": "- **主旨**：Citi预计赤字为4.2万亿美元。",
+   "against": [
+    "| E1 | Citi预计赤字为2万亿美元 |\n| E2 | Goldman Sachs预计通胀为4.2% |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   },
+   "note": "documented scope limit, not a new defect"
+  },
+  {
+   "id": "pp.range",
+   "source": "parent-probes.json#range",
+   "outline": "- **主旨**：增长率为3%至5%。",
+   "against": [
+    "增长率为3-5%"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "round-3 defect"
+  },
+  {
+   "id": "pp.fraction",
+   "source": "parent-probes.json#fraction",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "比例为1/3"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "round-3 defect"
+  },
+  {
+   "id": "pp.range_control",
+   "source": "parent-probes.json#range_control",
+   "outline": "- **主旨**：增长率为3%至5%。",
+   "against": [
+    "增长率为3%至5%"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "pp.mixed_claim",
+   "source": "parent-probes.json#mixed_claim",
+   "outline": "- **主旨**：收益率回落。\n### 主旨：4.2万亿美元。",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1
+   },
+   "note": "round-3 defect"
+  },
+  {
+   "id": "pp.bp_control",
+   "source": "parent-probes.json#bp_control",
+   "outline": "- **主旨**：收益率升25bp。",
+   "against": [
+    "收益率升25个基点。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.range_unit_index",
+   "source": "F-S 区间",
+   "outline": "- **主旨**：利差收窄10至15个基点。",
+   "against": [
+    "| E1 | 利差收窄10-15个基点 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.fraction_whole_mismatch",
+   "source": "F-S 分数",
+   "outline": "- **主旨**：约1/3的资金。",
+   "against": [
+    "| E1 | 约1/4的资金 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "1/3"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.mixed_title_section_empty",
+   "source": "F-S 混合标题",
+   "outline": "- **主旨**：收益率回落。\n## 根主旨\n\n美国居民借债4.2万亿美元。",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "fs.range_outline_side",
+   "source": "F-S 区间",
+   "outline": "- **主旨**：区间为3-5%。",
+   "against": [
+    "| E1 | 3%至5% |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.fraction_component_no_amount",
+   "source": "F-S 分数",
+   "outline": "- **主旨**：增加3万亿美元。",
+   "against": [
+    "| E1 | 比例为1/3 |"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "3"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.ratio",
+   "source": "F-S 分数",
+   "outline": "- **主旨**：杠杆比为1:3。",
+   "against": [
+    "| E1 | 杠杆比1:3 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.two_thirds",
+   "source": "F-S 分数",
+   "outline": "- **主旨**：约2/3。",
+   "against": [
+    "| E1 | 2/3 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.ambiguous_amount",
+   "source": "F-S 歧义",
+   "outline": "- **主旨**：增加15万亿美元。",
+   "against": [
+    "| E1 | 10-15 |"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "15"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.ambiguous_supports_date",
+   "source": "F-S 歧义",
+   "outline": "- **主旨**：10月15日加息。",
+   "against": [
+    "| E1 | 10-15 加息 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.amb_slash_date",
+   "source": "F-S 歧义",
+   "outline": "- **主旨**：9月22日见顶。",
+   "against": [
+    "| E1 | 9/22 见顶 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.amb_slash_amount",
+   "source": "F-S 歧义",
+   "outline": "- **主旨**：增加22万亿美元。",
+   "against": [
+    "| E1 | 9/22 |"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "22"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.outline_ambiguous_miss",
+   "source": "F-S 歧义",
+   "outline": "- **主旨**：区间为10-15。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "10-15"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.date_context_amount",
+   "source": "F-S 日期语境",
+   "outline": "- **主旨**：增加15万亿美元。",
+   "against": [
+    "| E1 | 截至10-15，余额持平 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "15"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.date_column",
+   "source": "F-S 日期字段",
+   "outline": "- **主旨**：10月15日加息，增加15万亿美元。",
+   "against": [
+    "| 日期 | 事件 |\n|---|---|\n| 10-15 | 加息 |"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "15"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.outline_zero_padded_date",
+   "source": "F-S 日期语境",
+   "outline": "- **主旨**：09-22 起长端领涨。",
+   "against": [
+    "| E1 | 9月22日长端领涨 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "fs.mixed_title_section_ok",
+   "source": "F-S 混合标题",
+   "outline": "## 根主旨\n\n- **主旨**：收益率回落。",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "fs.mixed_bold_root",
+   "source": "F-S 混合标题",
+   "outline": "- **主旨**：市场变化。\n- **根主旨**：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "fs.skeleton_root",
+   "source": "F-S 混合标题",
+   "outline": "- **主旨**：市场变化。\nN0 根主旨：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "fs.prose_mention",
+   "source": "F-S 混合标题",
+   "outline": "- **主旨**：收益率回落。\n- **关系**：1.4的主旨行写进了3.1的内容，见名字表“底稿”一行。",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "fs.loose_with_miss",
+   "source": "F-S 混合标题",
+   "outline": "- **主旨**：4.2万亿美元。\n- 主旨：5万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [
+     [
+      "数",
+      "4.2"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "fs.heading_names_colon",
+   "source": "F-S 混合标题",
+   "outline": "### 名字表：\n| Barclays | 银行 |",
+   "against": [
+    "Barclays"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "fs.multi_against",
+   "source": "F-S 多文件",
+   "outline": "- **主旨**：Citi 预计4.2万亿美元，收益率升25bp。",
+   "against": [
+    "| E1 | Citi 预计4.2万亿美元 |",
+    "| L1 | 收益率升25个基点 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r3.f",
+   "source": "R3 probes/f（发现 1：索引 9/10 要支持提纲日期）",
+   "outline": "- **主旨**：9月10日长端领涨。\n",
+   "against": [
+    "| E1 | 9/10 长端领涨 |\n"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   },
+   "note": "F-S v1 regression: 9/10 read only as fraction"
+  },
+  {
+   "id": "r3.f2",
+   "source": "R3 probes/f2",
+   "outline": "- **主旨**：9月22日长端领涨。\n",
+   "against": [
+    "| E1 | 9/22 长端领涨 |\n"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   }
+  },
+  {
+   "id": "r3.f.mmdd",
+   "source": "R3 发现 1 对照：提纲 MM-DD",
+   "outline": "- **主旨**：09-10 长端领涨。",
+   "against": [
+    "| E1 | 9/10 长端领涨 |\n"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r3.f.fraction",
+   "source": "R3 发现 1 对照：同一写法仍算分数",
+   "outline": "- **主旨**：约9/10的资金。",
+   "against": [
+    "| E1 | 约9/10的资金 |"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r3.f.amount",
+   "source": "R3 发现 1 对照：9/10 的位不满足金额",
+   "outline": "- **主旨**：增加10万亿美元。",
+   "against": [
+    "| E1 | 9/10 长端领涨 |\n"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "10"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r3.g",
+   "source": "R3 probes/g（发现 2：句中“各节点主旨：”不是候选）",
+   "outline": "- **主旨**：杠杆率14个月降1.4个百分点。\n- 信息量测试，只读根和各节点主旨：14个月降1.4个百分点\n",
+   "against": [
+    "| E1 | 14个月降1.4个百分点 |\n"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   },
+   "note": "F-S v1 flagged as 写法不认"
+  },
+  {
+   "id": "r3.p",
+   "source": "R3 probes/p（发现 2）",
+   "outline": "- **主旨**：规模4.2万亿美元。\n- 各节点主旨：见上\n",
+   "against": [
+    "| E1 | 规模4.2万亿美元 |\n"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 1
+   },
+   "note": "F-S v1 flagged as 写法不认"
+  },
+  {
+   "id": "r3.anchor_control",
+   "source": "R3 发现 2 对照：行首标签仍是候选",
+   "outline": "- **主旨**：规模4.2万亿美元。\n- 主旨：见上",
+   "against": [
+    "| E1 | 规模4.2万亿美元 |"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "r4.canonical_normal",
+   "source": "hand-review.json#independent_probes/canonical_normal（Codex 第四轮）",
+   "outline": "## 名字表\n| 名字 | 机构 |\n| Citi | 银行 |\n## N0 根主旨\n- **主旨**：Citi预计2026年9月30日增长率为3-5%，收益率升25bp，约1/3的资金流入。",
+   "against": [
+    "Citi 2026-09-30 增长率为3%至5%，收益率升25个基点，约1/3的资金流入。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0,
+    "targets": 3
+   }
+  },
+  {
+   "id": "r4.mixed_heading_now_blocked",
+   "source": "hand-review.json#independent_probes/mixed_heading_now_blocked（Codex 第四轮）",
+   "outline": "- **主旨**：市场变化。\n### 主旨：4.2万亿美元。",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "r4.mixed_names_now_blocked",
+   "source": "hand-review.json#independent_probes/mixed_names_now_blocked（Codex 第四轮）",
+   "outline": "- **主旨**：市场变化。\n**名字表：**\n| Barclays | 银行 |",
+   "against": [
+    "无相关资料"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [],
+    "unchecked": 1,
+    "targets": 1
+   }
+  },
+  {
+   "id": "r4.percent_range_good",
+   "source": "hand-review.json#independent_probes/percent_range_good（Codex 第四轮）",
+   "outline": "- **主旨**：增长率为3%至5%。",
+   "against": [
+    "增长率为3-5%"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4.percent_range_bad",
+   "source": "hand-review.json#independent_probes/percent_range_bad（Codex 第四轮）",
+   "outline": "- **主旨**：增长率为3%至5%。",
+   "against": [
+    "增长率为3-4%"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "5"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4.fraction_good",
+   "source": "hand-review.json#independent_probes/fraction_good（Codex 第四轮）",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "比例为1/3"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4.fraction_bad",
+   "source": "hand-review.json#independent_probes/fraction_bad（Codex 第四轮）",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "比例为1/4"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "1/3"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4.fraction_replaced_by_date",
+   "source": "hand-review.json#independent_probes/fraction_replaced_by_date（Codex 第四轮）",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "日期为1月3日。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "1/3"
+    ],
+    "unchecked": 0
+   },
+   "note": "R4-4 分数被日期顶替（修前退出0）"
+  },
+  {
+   "id": "r4.date_replaced_by_fraction",
+   "source": "hand-review.json#independent_probes/date_replaced_by_fraction（Codex 第四轮）",
+   "outline": "- **主旨**：1月3日见顶。",
+   "against": [
+    "比例为1/3。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "1月3日"
+    ],
+    "unchecked": 0
+   },
+   "note": "R4-4 日期被分数顶替（修前退出0）"
+  },
+  {
+   "id": "r4.year_bad_control",
+   "source": "hand-review.json#independent_probes/year_bad_control（Codex 第四轮）",
+   "outline": "- **主旨**：2026年1月3日见顶。",
+   "against": [
+    "2025-01-03见顶。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年1月3日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4.year_bad_with_fraction",
+   "source": "hand-review.json#independent_probes/year_bad_with_fraction（Codex 第四轮）",
+   "outline": "- **主旨**：2026年1月3日见顶。",
+   "against": [
+    "2025-01-03见顶；比例为1/3。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年1月3日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "R4-4 歧义分数绕过明确年份差异（修前退出0）"
+  },
+  {
+   "id": "r4.range_bp",
+   "source": "hand-review.json#independent_probes/range_bp（Codex 第四轮）",
+   "outline": "- **主旨**：收益率升3至5bp。",
+   "against": [
+    "收益率升3-5bp。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4.range_bn",
+   "source": "hand-review.json#independent_probes/range_bn（Codex 第四轮）",
+   "outline": "- **主旨**：规模为3至5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "R4-5 bn 区间未识别（修前退出3）"
+  },
+  {
+   "id": "r4.range_tn",
+   "source": "hand-review.json#independent_probes/range_tn（Codex 第四轮）",
+   "outline": "- **主旨**：规模为3至5tn。",
+   "against": [
+    "规模为3-5tn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "R4-5 tn 区间未识别（修前退出3）"
+  },
+  {
+   "id": "r4.range_chinese_unit",
+   "source": "hand-review.json#independent_probes/range_chinese_unit（Codex 第四轮）",
+   "outline": "- **主旨**：规模为3至5十亿美元。",
+   "against": [
+    "规模为3-5十亿美元。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "R4-5 十亿区间未识别（修前退出3）"
+  },
+  {
+   "id": "r4.short_date_good",
+   "source": "hand-review.json#independent_probes/short_date_good（Codex 第四轮）",
+   "outline": "- **主旨**：9月10日见顶。",
+   "against": [
+    "9/10见顶。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4p.fraction_correct",
+   "source": "parent-probes.json#fraction_correct（主会话核例）",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "比例为1/3。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4p.fraction_from_date",
+   "source": "parent-probes.json#fraction_from_date（主会话核例）",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "1月3日。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "1/3"
+    ],
+    "unchecked": 0
+   },
+   "note": "R4-4（修前退出0）"
+  },
+  {
+   "id": "r4p.year_mismatch_only",
+   "source": "parent-probes.json#year_mismatch_only（主会话核例）",
+   "outline": "- **主旨**：2026年1月3日见顶。",
+   "against": [
+    "2025年1月3日见顶。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年1月3日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4p.year_mismatch_plus_fraction",
+   "source": "parent-probes.json#year_mismatch_plus_fraction（主会话核例）",
+   "outline": "- **主旨**：2026年1月3日见顶。",
+   "against": [
+    "2025年1月3日见顶。比例为1/3。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年1月3日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "R4-4（修前退出0）"
+  },
+  {
+   "id": "r4p.bn_range",
+   "source": "parent-probes.json#bn_range（主会话核例）",
+   "outline": "- **主旨**：规模为3-5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "r4p.percent_range",
+   "source": "parent-probes.json#percent_range（主会话核例）",
+   "outline": "- **主旨**：增长为3%至5%。",
+   "against": [
+    "增长为3-5%。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.year_amb_bare",
+   "source": "S2",
+   "outline": "- **主旨**：2026年1月3日见顶。",
+   "against": [
+    "2025年1月3日见顶。另见1/3。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "日期",
+      "2026年1月3日"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "歧义分数（无分数语境）也不得充当无年日期"
+  },
+  {
+   "id": "s2.year_amb_only",
+   "source": "S2",
+   "outline": "- **主旨**：2026年1月3日见顶。",
+   "against": [
+    "1/3见顶。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "2026年1月3日"
+    ],
+    "unchecked": 0
+   },
+   "note": "带年日期只见歧义写法：待核"
+  },
+  {
+   "id": "s2.outline_amb_vs_date",
+   "source": "S2",
+   "outline": "- **主旨**：1/3。",
+   "against": [
+    "1月3日。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "1/3"
+    ],
+    "unchecked": 0
+   },
+   "note": "提纲歧义写法只见日期：待核"
+  },
+  {
+   "id": "s2.outline_amb_dash_vs_date",
+   "source": "S2",
+   "outline": "- **主旨**：区间为10-15。",
+   "against": [
+    "10月15日。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "10-15"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.date_vs_frac_context_after",
+   "source": "S2",
+   "outline": "- **主旨**：1月3日见顶。",
+   "against": [
+    "约1/3的资金。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "1月3日"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.yearless_date_vs_amb_control",
+   "source": "S2",
+   "outline": "- **主旨**：9月22日见顶。",
+   "against": [
+    "9/22见顶。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "短日期兼容不变"
+  },
+  {
+   "id": "s2.frac_vs_amb_literal",
+   "source": "S2",
+   "outline": "- **主旨**：比例为1/3。",
+   "against": [
+    "1/3。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "同一字面仍过"
+  },
+  {
+   "id": "s2.unit_bn_outline_0",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_outline_1",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3-5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_outline_2",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3–5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_outline_3",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3~5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_outline_4",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3～5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_index_0",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3-5bn。",
+   "against": [
+    "规模为3至5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_index_2",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3-5bn。",
+   "against": [
+    "规模为3–5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_index_3",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3-5bn。",
+   "against": [
+    "规模为3~5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_index_4",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3-5bn。",
+   "against": [
+    "规模为3～5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_tn",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5tn。",
+   "against": [
+    "规模为3-5tn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_mn",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5mn。",
+   "against": [
+    "规模为3-5mn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_k",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5k。",
+   "against": [
+    "规模为3-5k。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_亿",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5亿。",
+   "against": [
+    "规模为3-5亿。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_万亿",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5万亿。",
+   "against": [
+    "规模为3-5万亿。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_万",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5万。",
+   "against": [
+    "规模为3-5万。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_倍",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5倍。",
+   "against": [
+    "规模为3-5倍。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_x",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5x。",
+   "against": [
+    "规模为3-5x。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_pct",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5pct。",
+   "against": [
+    "规模为3-5pct。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_pp",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5pp。",
+   "against": [
+    "规模为3-5pp。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_十亿美元",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5十亿美元。",
+   "against": [
+    "规模为3-5十亿美元。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "s2.unit_bn_bad",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3至5bn。",
+   "against": [
+    "规模为3-4bn。"
+   ],
+   "expect": {
+    "exit": 1,
+    "misses": [
+     [
+      "数",
+      "5"
+     ]
+    ],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "单位补全后错误区间照报缺"
+  },
+  {
+   "id": "s2.unit_same_literal",
+   "source": "S2",
+   "outline": "- **主旨**：规模为3-5bn。",
+   "against": [
+    "规模为3-5bn。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "o.missing_new",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **顺序**：先给总量，N2 才有分母。\n- **关系**：和N2，通过总量，是前提与依赖。\n## N2 二、结构\n- **主旨**：收益率回落。\n- **任务**：拆结构。\n- **关系**：和N1，通过分母，是前提与依赖。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行缺失：N2"
+    ],
+    "unchecked": 0
+   },
+   "note": "新提纲：N2 只有新式关系行，没有顺序行"
+  },
+  {
+   "id": "o.empty_order",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **顺序**：\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行缺失：N1"
+    ],
+    "unchecked": 0
+   },
+   "note": "顺序行为空"
+  },
+  {
+   "id": "o.name_only",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **顺序**：并列\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行只写关系名：N1"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "o.name_only_ref",
+   "source": "S2",
+   "outline": "## N2 二、结构\n- **主旨**：收益率回落。\n- **任务**：拆结构。\n- 顺序：和 N1 是因果与机制关系。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行只写关系名：N2"
+    ],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "o.old_no_relation",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **展开**：1.1、1.2。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行缺失：N1"
+    ],
+    "unchecked": 0
+   },
+   "note": "旧提纲也要有顺序理由：任务行之外既无顺序行也无关系行"
+  },
+  {
+   "id": "o.old_relation_name_only",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **关系**：递进。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行只写关系名：N1"
+    ],
+    "unchecked": 0
+   },
+   "note": "O38 兼容：旧提纲关系行按顺序与关系合写判"
+  },
+  {
+   "id": "o.swappable_name_only",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **顺序**：并列，可对调。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行只写关系名：N1"
+    ],
+    "unchecked": 0
+   },
+   "note": "只写关系名加“可对调”，没有相邻内容（O18、O19）"
+  },
+  {
+   "id": "o.good",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **顺序**：先给总量，N2 才有分母。\n- **关系**：和N2，通过总量，是前提与依赖。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "o.old_compat",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **关系**：排第一，先立没变的一半，读者才分得清后面改的是哪一半。\n  - 关系：和根，通过总量，是主张与支持。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "10-17 以前的旧提纲：关系行带排序理由，不报缺失"
+  },
+  {
+   "id": "o.swappable",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **顺序**：并列，可对调：N1 讲美国、N2 讲欧洲，两块各答一个地区。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "可对调且用两块内容说明：不报"
+  },
+  {
+   "id": "o.hang",
+   "source": "S2",
+   "outline": "#### 1.1 段群：三套数\n- **主旨**：收益率回落。\n- **挂法**：背景卫星，放在第一次用到数之前。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "段群级挂法行合写任务与顺序；没有任务行不查"
+  },
+  {
+   "id": "o.merged_label",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务与顺序**：立住总量，排第一，后面几节都要用它当分母。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   }
+  },
+  {
+   "id": "o.mixed_old_node",
+   "source": "S2",
+   "outline": "## N1 一、总量\n- **主旨**：收益率回落。\n- **任务**：立住总量。\n- **顺序**：先给总量，N2 才有分母。\n- **关系**：和N2，通过总量，是前提与依赖。\n## N2 二、结构\n- **主旨**：收益率回落。\n- **任务**：拆结构。\n- **关系**：排在一之后，一给了总量，二才拆它。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "新提纲里未维护的旧式关系行照 O38 兼容"
+  },
+  {
+   "id": "o.filler_fails",
+   "source": "S2 R5-F5",
+   "outline": "## N1 一、借债\n- **主旨**：美国居民借债仍慢。\n- **任务**：立住借债慢。\n- **顺序**：先立借债慢，N2 再找压力落点。\n## N2 二、住房\n- **主旨**：利率上行的压力落在住房上。\n- **任务**：找压力落点。\n- **顺序**：承上启下。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 3,
+    "misses": [],
+    "pending": [
+     "顺序行只写套话：N2"
+    ],
+    "unchecked": 0
+   },
+   "note": "R5 F5：套话不含相邻节点编号，也不含相邻主旨的实词"
+  },
+  {
+   "id": "o.neighbour_id_passes",
+   "source": "S2 R5-F5",
+   "outline": "## N1 一、借债\n- **主旨**：美国居民借债仍慢。\n- **任务**：立住借债慢。\n- **顺序**：先立借债慢，N2 再找压力落点。\n## N2 二、住房\n- **主旨**：利率上行的压力落在住房上。\n- **任务**：找压力落点。\n- **顺序**：承上启下，接 N1。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "顺序行带相邻节点 N 编号：过"
+  },
+  {
+   "id": "o.keyword_passes",
+   "source": "S2 R5-F5",
+   "outline": "## N1 一、借债\n- **主旨**：美国居民借债仍慢。\n- **任务**：立住借债慢。\n- **顺序**：先立借债慢，N2 再找压力落点。\n## N2 二、住房\n- **主旨**：利率上行的压力落在住房上。\n- **任务**：找压力落点。\n- **顺序**：承上启下：借债慢之后再看压力落点。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "顺序行带相邻主旨的实词“借债”：过"
+  },
+  {
+   "id": "o.dotted_id_passes",
+   "source": "S2 R5-F5",
+   "outline": "### 2.2 借债\n- **主旨**：美国居民借债仍慢。\n- **任务**：立住借债慢。\n- **顺序**：先立借债慢，2.3 再找压力落点。\n### 2.3 住房\n- **主旨**：利率上行的压力落在住房上。\n- **任务**：找压力落点。\n- **顺序**：承上启下，接 2.2。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "顺序行带相邻节点节号 2.2：过"
+  },
+  {
+   "id": "o.ordinal_alias_passes",
+   "source": "S2 R5-F5",
+   "outline": "## 1 借债\n- **主旨**：美国居民借债仍慢。\n- **任务**：立住借债慢。\n- **顺序**：先立借债慢，二再找压力落点。\n## 2 住房\n- **主旨**：利率上行的压力落在住房上。\n- **任务**：找压力落点。\n- **顺序**：排在一之后。\n",
+   "against": [
+    "收益率回落。"
+   ],
+   "expect": {
+    "exit": 0,
+    "misses": [],
+    "pending": [],
+    "unchecked": 0
+   },
+   "note": "“## 2 ……”整数节号的中文序号“二”“一”算相邻节点编号（旧提纲写法）"
+  }
+ ]
+}
