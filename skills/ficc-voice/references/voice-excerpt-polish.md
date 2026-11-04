@@ -15,6 +15,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； goes to T0. The writer neither edits it nor exempts it.
   - Paragraph organization: FICCCompose.md C08.
   - See references/FICCVoice-rationale.md V07.
+- V08 Mark the add-on relation between parallel child nodes of the same kind.
 - V10 Control sentence length.
   - Prefer short sentences, provided the meaning stays complete and references stay clear.
   - First delete repetition and redundancy. Then judge whether the sentence needs splitting. Do not delete necessary conditions, scope, or exceptions to shorten a sentence.

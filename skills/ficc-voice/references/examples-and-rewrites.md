@@ -29,7 +29,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 
 ## FICCOutline 3.2
 
-- Tone-setting is not a claim: “我们并不认可这个逻辑” only states a stance, “这两个价格要连起来读” only gives a reading, “再看利率” only announces a topic, “有两点值得注意” and “往往有这么几个特征” only report a count, “很有意思” only gives an evaluation, and “本部分说明融资链各层的机制” only reports a task. 〔例〕 (the first two sentences come from 《1009AI表外》; my fixes: this file's FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22 (originally section 7.1 of FICCStructure))
+- Tone-setting is not a claim: “我们并不认可这个逻辑” only states a stance, “这两个价格要连起来读” only gives a reading, “再看利率” only announces a topic, “有两点值得注意” and “往往有这么几个特征” only report a count, “很有意思” only gives an evaluation, and “本部分说明融资链各层的机制” only reports a task. 〔例〕 (the first two sentences come from 《1009AI表外》; my fixes: this file's FICCCompose C01, C02, FICCVoice V22)
 
 ## FICCOutline 4.2
 
@@ -50,7 +50,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
     〔卫星〕附三：观察清单，备查
 ```
 
-  The four parts under this tree's root were later arranged into a chain, following the carry-over paragraph approved by the author and corrected by T0; see this file's FICCCompose C04 (formerly V41) (originally section 6.2 of FICCStructure).
+  The four parts under this tree's root were later arranged into a chain, following the carry-over paragraph approved by the author and corrected by T0; see this file's FICCCompose C04.
 
 ## FICCOutline 4.3
 
@@ -77,7 +77,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 
 ## FICCOutline 7.3
 
-- 〔改例〕 An inference the original draft did not have, added to make a chain: in the carry-over paragraph of 《1009AI表外》 approved by the author, step two originally read “既然账看得见，钱也就没有断”. The body text's reason that the money was not cut off is that the channel changed, not that the accounts are visible; “既然” marks a cause and effect the original draft did not have. On 2026-10-11 the source-check seat rejected this step, and it was corrected to “而且钱也没有断，只是换了路”. What to note: in the body text, visible accounts and money not cut off are two things, each with its own reason; “而且” joins them as they are, and the chain still goes deeper; the extra inference step added by “既然……就” is not in the body text. The full paragraph before and after the correction: see this file's FICCCompose C04 (formerly V41) (originally section 6.2 of FICCStructure).
+- 〔改例〕 An inference the original draft did not have, added to make a chain: in the carry-over paragraph of 《1009AI表外》 approved by the author, step two originally read “既然账看得见，钱也就没有断”. The body text's reason that the money was not cut off is that the channel changed, not that the accounts are visible; “既然” marks a cause and effect the original draft did not have. On 2026-10-11 the source-check seat rejected this step, and it was corrected to “而且钱也没有断，只是换了路”. What to note: in the body text, visible accounts and money not cut off are two things, each with its own reason; “而且” joins them as they are, and the chain still goes deeper; the extra inference step added by “既然……就” is not in the body text. The full paragraph before and after the correction: see this file's FICCCompose C04.
 
 - 〔改例〕 One row of the name table (`名字表`): it gives the one name used throughout the piece, how to write it at first appearance, and in which node it is defined first; a concept that carries a number lists all its members at once:
 
@@ -90,7 +90,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 
 ## FICCOutline 8.1
 
-- Answer first: “我们对美国货币宽松的预期，在与我们交流的市场参与者中，似乎是最激进的。”〔2023年12月月报〕 (S:306) For an example that gives the situation first and then the answer, see the first item of this file's FICCCompose C01 (formerly V05) (originally section 6.1 of FICCStructure).
+- Answer first: “我们对美国货币宽松的预期，在与我们交流的市场参与者中，似乎是最激进的。”〔2023年12月月报〕 (S:306) For an example that gives the situation first and then the answer, see the first item of this file's FICCCompose C01.
 - 〔改例〕 The third draft of 《1009AI表外》 opens with “9月有两个价格，放在一起看很有意思。”, which only gives an evaluation; I changed it to the third kind: the second paragraph closes on “……莫非AI的资金游戏即将迎来审判日？”, and the third paragraph's first sentence, “我们并不认可这个逻辑。”, is the answer.
 - The model texts do not keep the claim first at the upper layers: 《九节》 has no lead, and its conclusion comes after the first 80% of the text; 《熊猫讲期权》 opens with only the question, and the answer comes after the first 15% (counts: see the 2026-10-11 addition to section 36 of references/dev-notes.md).
 
@@ -136,7 +136,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 
 ## FICCStructure 3.3
 
-- Progression between aspects: the carry-over sentence of revision example 1 (see this file's FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22 (originally section 7.1 of FICCStructure)) is “一个融资渠道的暂时停滞并不意味着总体资金链断裂，而且市场早就看见这笔账了”; “而且” previews a progression: not only not cut off, but long since seen and already being charged for; the latter goes one step beyond the former, and swapping them loses that step, so it is progression, not parallel; “量上” (in volume) pays off the first half of the sentence, and “价上” (in price) the second half.
+- Progression between aspects: the carry-over sentence of revision example 1 (see this file's FICCCompose C01, C02, FICCVoice V22) is “一个融资渠道的暂时停滞并不意味着总体资金链断裂，而且市场早就看见这笔账了”; “而且” previews a progression: not only not cut off, but long since seen and already being charged for; the latter goes one step beyond the former, and swapping them loses that step, so it is progression, not parallel; “量上” (in volume) pays off the first half of the sentence, and “价上” (in price) the second half.
 - Example sentences for stages and different aspects: see references/connectives.md 4.
 
 ## FICCStructure 3.4
@@ -151,7 +151,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 - 〔例〕 “这项措施可以提高效率。因为它减少了重复录入。” The second sentence is both cause and effect and view–grounds. (user's posted text, 2026-10-12)
 - 〔例〕 “这项措施可以提高效率。这里的效率主要指处理时间。” The second sentence is both explanation and qualifier. (user's posted text, 2026-10-12)
 
-## FICCCompose C01 (formerly V05) (originally section 6.1 of FICCStructure)
+## FICCCompose C01
 
 - The whole piece's judgment lands at the end of the lead's first paragraph: “所以想要试水美债市场，第一步就需要检讨和纠正在中国市场养成的静态思维习惯。”〔2024年8月月报〕 (S:329) Before it come only a few sentences of situation and complication.
 - A long article gives its judgment in two sentences: “我们目前的判断是，当前Dealer在流动性方面并未出现特别严重的系统性危机。”〔2025年4月月报〕 (L:179) gives the short-term conclusion first, and the end of the same paragraph then gives the long-term conclusion with “虽然这次市场动荡将会很快恢复，但是接下来类似的麻烦可能会越来越频繁，而且会越来越严重。”〔2025年4月月报〕 (L:179).
@@ -160,7 +160,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 - Picking up the preceding text: “我们不假思索认定短视的金融市场参与者不担忧赤字，可能有些绝对。至少美债市场的参与者还是很关心赤字问题的。”〔九节〕 (nine-sections.md:177) The first sentence corrects the end of the previous story, and the second gives this paragraph's claim.
 - Posed question: “到现在为止，我们讨论的都是第一步，即市场单纯的下跌。那么，有没有进入到第二步、第三步，比如一些中性交易策略解盘或金融机构资金链断裂的风险呢？目前看来，没有。”〔2025年4月月报〕 (L:253) It first ties back to the framework, then poses the question, and the answer follows right after the question.
 
-## FICCCompose C04 (formerly V41) (originally section 6.2 of FICCStructure)
+## FICCCompose C04
 
 - The corrected carry-over paragraph 〔亲改〕 (2026-10-11, after the lead of 《1009AI表外》; the source-check seat found two places where the author-approved draft disagreed with the body text, and T0 corrected them; verbatim):
 
@@ -188,7 +188,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 - 〔改例〕 The lead of the second draft of 《1009AI表外》 has seven paragraphs; the main-line sentence (the root of the tree diagram in 本文件FICCOutline 4.2) first appears only in paragraph four, the last three paragraphs are roadmaps, and the heading covers only two of the three questions. Direction of the fix: make this sentence the root claim, change the heading so that it covers it, and merge the three roadmap paragraphs into one carry-over paragraph.
 - A carry-over that gives no conclusion: “许多故事似乎越来越清晰，许多力量似乎越来越强大了。”〔2026年3月月报〕 (S:416) After this sentence, four markets get one section each, but the carry-over gives none of the sections' conclusions, and after reading you cannot state an overall view either. What to note: what is missing here is one sentence on what the four markets show together, and the four markets do not each take a step on the chain either; rules: FICCOutline.md O78 (list month), FICCCompose.md C05 (each step of the carry-over has its own conclusion) and C06 (a carry-over before several cases first states what they prove together).
 
-## FICCCompose C13 (formerly V08) (originally section 6.3 of FICCStructure)
+## FICCCompose C13
 
 - Cause and effect: “既然Dealer是金融危机的核心环节，那么我们就通过这个Swap观察Dealer的状态。”〔2025年4月月报〕 (L:215)
 - Concession: “就算2023年发生金融危机的可能性不大，发生衰退倒逼联储降息的可能性总是不小吧。”〔2022年12月月报〕 (L:49) The Q&A form writes the link back into the premise of the question.
@@ -197,7 +197,7 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 - Between parts, first sum up the previous part, then move on: “总结一下《Short Gamma策略》和《Long Gamma策略》，我们可以发现，Long Gamma策略与Short Gamma策略的风格完全不一样。”〔熊猫讲期权〕 (panda-on-options.md:647)
 - 〔改例〕 The transitions between the first three parts of the second draft of 《1009AI表外》 (“那么，价收在哪几层？”; the wording has to become plain language, see FICCVoice.md 5.2) are the best-joined places in the whole text; what does not join is the inserted part four, which is not a link of the main line, so after it the line has to be reconnected.
 
-## FICCCompose C17 (formerly V09) (originally section 6.4 of FICCStructure)
+## FICCCompose C17
 
 - Liu Xie, “啟行之辭，逆萌中篇之意；絕筆之言，追媵前句之旨”: the opening foreshadows the middle, and the ending recalls the claim of what came before; only then are beginning and end one body. 〔经典〕
 - After covering commercial real estate and mid-sized banks, 《九节》 closes on “风险孤立化，这就是做宏观金融风险最好的故事了。所以，对美国银行业金融体系威胁最大的两个风险其实都已经在消退了。”〔九节〕 (nine-sections.md:149) The first sentence says what this means, and the second brings the two stories back to “好消息” (good news).
@@ -206,11 +206,11 @@ This file only shows what things look like; it sets no rules. Since 2026-10-11, 
 - One sentence brings back three subtrees by name (the blood pack, retail investors, companies' own funds) and gives the exit condition: “当然话又说回来，一旦这几个故事消亡——如果发现血包补充的速度远远赶不上消耗的速度，散户的钱真的接不上了，或者企业已经花光了自有资金、需要大手大脚借杠杆甚至借短期的杠杆——即使再多人向你鼓吹便宜资产和伟大前程也千万不可恋恋不舍，已经到了当机立断斩泡沫的时期了。”〔九节〕 (nine-sections.md:227)
 - A ghost-story close: “最后，讲一个鬼故事，COR1M指数，最近上升的趋势越来越明显了……”〔2024年8月月报〕 (S:346) The key to understanding it is placed in the previous paragraph, which is about correlation “在市场上涨的时候几乎毫不相干，但是市场大幅下跌时会急剧趋同”〔2024年8月月报〕 (S:342).
 
-## FICCCompose C07 (formerly V44) (originally section 6.5 of FICCStructure)
+## FICCCompose C07
 
 - When re-mentioning, repeat the parent sentence's key words and add this block's own conclusion: for the first rule, the one opening with “像金融机构一样”, see 本文件FICCStructure 2.2.
 
-## FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22 (originally section 7.1 of FICCStructure)
+## FICCCompose C01, C02, FICCVoice V22
 
 Revision examples 1 and 2 are my own edits of 2026-10-10 〔亲改〕.
 
@@ -234,27 +234,27 @@ Revision examples 1 and 2 are my own edits of 2026-10-10 〔亲改〕.
   - What to note: the original sentence first hangs a topic, “资金没退场、分成了两路”, and after the comma switches to another subject, “这个回答”; it picks up the answer in the lead's second paragraph, while the paragraph immediately before it is about the rules still changing, and the relation between the two is not marked either; the reader's first glance lands on the subject, and it does not connect to the preceding text. The user's two fixes are exactly the two permitted ways: within one sentence, the connective “但是” comes first and the named judgment (“……这个判断”) is the subject; or first state the answer once with “所以”, then start a sentence with “但是” about the confidence; then “这个回答” refers back to the sentence immediately before it and points accurately (FICCVoice.md 4.3 and 4.4).
   - Note (T0): the confidence grade in the article is “中偏低”, and the user's first fix writes “中低”; the user's original sentence is recorded as is, and the finished draft writes the article's grade, “中偏低”.
 
-## FICCVoice V25 (formerly section 7.3 of FICCStructure)
+## FICCVoice V25
 
 - A label sentence that gives only the method: “第一，要从美国企业的经营习惯出发” needs to be followed right away by a sentence that states the conclusion, and the end of the paragraph lands the judgment once more. 〔例〕
 
-## FICCCompose C17, C10 (formerly V09, V46) (originally section 7.4 of FICCStructure)
+## FICCCompose C17, C10
 
-- No repetition at the end of the paragraph: once revision example 2 moves its conclusion up to the paragraph opening, the end no longer repeats it and instead goes one step further (see this file's FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22 (originally section 7.1 of FICCStructure)).
-- A paragraph group: “但是当前企业和居民的资产负债表存量状态其实还算不错”〔2022年12月月报〕 (L:36) first concedes a step and then gives the group's claim; below, one paragraph each for the two aspects, companies and households, closing on the sentence already quoted in this file's FICCCompose C17 (formerly V09) (originally section 6.4 of FICCStructure), “太早布局衰退交易的确定性是不足的”.
+- No repetition at the end of the paragraph: once revision example 2 moves its conclusion up to the paragraph opening, the end no longer repeats it and instead goes one step further (see this file's FICCCompose C01, C02, FICCVoice V22).
+- A paragraph group: “但是当前企业和居民的资产负债表存量状态其实还算不错”〔2022年12月月报〕 (L:36) first concedes a step and then gives the group's claim; below, one paragraph each for the two aspects, companies and households, closing on the sentence already quoted in this file's FICCCompose C17, “太早布局衰退交易的确定性是不足的”.
 - The revision example of piling material up by source: see 本文件FICCOutline 5.1.
 
-## FICCVoice V15, V19 (formerly section 7.5 of FICCStructure)
+## FICCVoice V15, V19
 
 - A complex sentence is also a complete small tree: “这一点是美债市场最大的拖累，因为政府杠杆率还在上升，而且市场参与者对货币政策和通胀的担忧越来越不利于债券，再考虑到美债对冲过汇率之后的估值比欧债日债都贵，所以，不论联储货币政策如何转变，如果不能为美债找到一个扎实的海外需求源泉，就不应该把长端美债当成一个资产配置工具。”〔九节〕 (nine-sections.md:177) The central clause comes first, and “这一点” refers back to the previous sentence's claim; the three reasons are set side by side with “因为”, “而且”, and “再考虑到” while growing heavier step by step; “所以” brings out the conclusion, and the conclusion clause in turn nests “不论” and “如果……就”.
 - 〔改例〕 After the colon the subject changes and the topic changes, and a metaphor stands in for the explanation: the carry-over paragraph of 《1009AI表外》 originally read “而且钱也没有断，只是换了路：Hyperscalers今天还付得起，新增的缺口一层层往下传，第一个接住的是Oracle，后面出钱接手的人也比通常设想的多。” Before the colon it says that the channel of those who put up the money changed; after the colon, the first two things are about the borrowers; “往下传” and “接住” are metaphors and do not make clear what money goes from whom to whom; the last sentence jumps back to those who put up the money, again without saying who they are. After reading it, the author said “完全没有逻辑”. Changed to “而且钱也没有断，只是换了路。9月停下的主要是美国投资级这一条路，它也更像是要多给利息才有人买，不是没人买；高收益、非美元和证券化照常在发，Private Credit和保险也还在出钱。借钱这一边，Hyperscalers今天自己还凑得齐；Oracle的融资顺序是先拿客户的预付款，再发债、发股。” What to note: those who put up the money and those who borrow are split into two sentences, each with its own facts, and both sentences answer the earlier “换了路” (which route stopped and which routes are still open; on the borrowing side, who can still put the money together, and who is the one most people are doing the sums on, not who borrows the most; the source-check seat found that the rewrite had wrongly said “借得最多”, and it has been changed back); the metaphor is replaced by named routes and companies, so you can read what money goes from whom to whom.
 
-## FICCVoice V53, V54 (formerly section 8.1 of FICCStructure)
+## FICCVoice V53, V54
 
 - A connective at the paragraph opening picks up the previous paragraph's claim: “就这样，看似诱人的市场机会，竟然是一个令人损失惨重的陷阱。”〔九节〕 (nine-sections.md:9) closes the whole forced-liquidation story before it; “所以说，决定中性策略（尤其是高杠杆策略）生死存亡的关键，未必是高明的模型和算法”〔九节〕 (nine-sections.md:11) draws on the conclusions of the previous few paragraphs.
 - Outer-layer words go in the outer layer: in “因为机构了解风险，也没有兴趣顶着炮火前进，所以一旦感知风暴就迅速斩仓躲到安全地带”〔九节〕 (nine-sections.md:131), “因为……所以” governs the outer layer, and “一旦……就” governs only the clause after “所以”.
 
-## FICCVoice V22 (formerly section 8.2 of FICCStructure)
+## FICCVoice V22
 
 - A back-reference that opens a paragraph or node sentence names what it follows: “这个判断” (this judgment), “上面说的两路” (the two routes above). 〔例〕
 - Progression with only a latter-clause marker: “套利策略人人喜欢，而且还普遍喜欢加杠杆”〔九节〕 (nine-sections.md:3); the first clause has no word at all, and the relation is still clear.
@@ -291,14 +291,14 @@ The following examples illustrate the strength of a judgment.
 
 ## FICCVoice 4.3
 
-- Subject and sentence start (FICCVoice.md 4.4, user, 2026-10-14): see revision example 4 in this file's FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22 (originally section 7.1 of FICCStructure).
+- Subject and sentence start (FICCVoice.md 4.4, user, 2026-10-14): see revision example 4 in this file's FICCCompose C01, C02, FICCVoice V22.
 - 〔改例〕 “三处” can attach to two sets of things: “把三处和反方合起来看，散户手上没有退场” (散户v1:183; Codex#39); the final version names the three: “把保证金余额、净存入和BofA的私人客户的净买卖同反方合起来看，散户的资金没有退场” (散户:185)
 - 〔改例〕 The previous sentence lists several sets of numbers, so “这几个数” does not point clearly: “扣掉策略保证金贷款，这几个数都更低，方向不变。” (散户v1:125; Codex#31) Final version: “所以扣掉策略保证金贷款，只能说三家合计和这两个比例都更低，三家只占一小块的结论不变。” (散户:127)
 - 〔改例〕 Before it come one month-on-month and one year-on-year comparison, so it is unclear which pair “两边” points to: “低于7月的56亿，也低于去年8月的48亿；只是……公司自己不报环比和同比，两边并不完全可比。” (散户v1:155; Codex#36) Final version: “这个金额比7月的56亿美元少。和去年同月比也少，去年8月是48亿。只是公司的表上，环比、同比两栏都没有给数。” (散户:157)
 
 ## FICCVoice 4.4
 
-An embedded question does not open the sentence (FICCVoice.md 4.4, user ruling 2026-10-14); for the revision example on subject and sentence start, see revision example 4 in this file's FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22 (originally section 7.1 of FICCStructure).
+An embedded question does not open the sentence (FICCVoice.md 4.4, user ruling 2026-10-14); for the revision example on subject and sentence start, see revision example 4 in this file's FICCCompose C01, C02, FICCVoice V22.
 
 - Revision example 1: an embedded question opens the sentence, and what the material does not say is the subject (《1012散户》 node U07, cold read F1 line 203; （作者草稿）):
   - 〔原例〕 (original example) “Robinhood最高4倍的日内购买力和PDT新规是什么关系，材料没有说：按Deutsche Bank 9月30日转述的Robinhood交易峰会，这项日内保证金产品……‘下个月开始推出’……；原文没有提PDT。”
@@ -368,7 +368,7 @@ An embedded question does not open the sentence (FICCVoice.md 4.4, user ruling 2
 
 **Line numbers**: 九节 and 熊猫讲期权 are under references/corpus/ in the ficc-voice skill, written nine-sections.md and panda-on-options.md; the two compilations of monthly reports are under （作者草稿） in the task directory, the long-article compilation written L and the short-article compilation written S.
 
-**改例** (revision examples): the body text of the first draft (the two FICCStructure 3.4 examples of keeping the connective next to its antecedent are at line 41 and line 23, and the turn-dimension example at line 74). The FICCStructure 3.4 example of classification written as cause and effect is taken from line 80 of （作者草稿） (the original sentence before the 10-11 round of changes to causal connectives), and the FICCVoice 5.2 “一侧” example comes from the same line. The FICCVoice V15, V19 (formerly section 7.5 of FICCStructure) example of the colon switching subject is taken from line 13 of 1009AI表外-新树.md in the same directory (the original sentence before the 10-11 round of logic changes; pre-change backup 〔待填〕 (to be filled)); the rewritten sentence is in （作者草稿） in the task directory. For FICCOutline 5.4, the author's own sentence and the two original remarks are in （作者草稿） and （作者草稿） of the same task directory; the paragraph ordered by stage and split by role is in part one (二) 2 of 1009AI表外-新树.md, pre-change backup 1009AI表外-新树.pre-STAGE.md. All architecture problems of the second draft are taken from （作者草稿） in the task directory, with line numbers per that audit (the original file has been rewritten); the tree diagram is taken from sections 1–2 of （作者草稿） in the same task directory, with the three lines for the root, part four, and the counter-views changed per items 1, 3, and 6 of section 3 of （作者草稿）. The third draft and the user's own edits come from （作者草稿） in the task directory; for revision examples 1 and 2 of 10-10, see the 10-10（五） row of section 35 of references/dev-notes.md. Carry-over paragraph: the old paragraph is at line 13 of （作者草稿）, the current corrected paragraph is in （作者草稿） in the task directory, and the author-approved draft is APPROVED-LEAD.md in the same directory.
+**改例** (revision examples): the body text of the first draft (the two FICCStructure 3.4 examples of keeping the connective next to its antecedent are at line 41 and line 23, and the turn-dimension example at line 74). The FICCStructure 3.4 example of classification written as cause and effect is taken from line 80 of （作者草稿） (the original sentence before the 10-11 round of changes to causal connectives), and the FICCVoice 5.2 “一侧” example comes from the same line. The FICCVoice V15, V19 example of the colon switching subject is taken from line 13 of 1009AI表外-新树.md in the same directory (the original sentence before the 10-11 round of logic changes; pre-change backup 〔待填〕 (to be filled)); the rewritten sentence is in （作者草稿） in the task directory. For FICCOutline 5.4, the author's own sentence and the two original remarks are in （作者草稿） and （作者草稿） of the same task directory; the paragraph ordered by stage and split by role is in part one (二) 2 of 1009AI表外-新树.md, pre-change backup 1009AI表外-新树.pre-STAGE.md. All architecture problems of the second draft are taken from （作者草稿） in the task directory, with line numbers per that audit (the original file has been rewritten); the tree diagram is taken from sections 1–2 of （作者草稿） in the same task directory, with the three lines for the root, part four, and the counter-views changed per items 1, 3, and 6 of section 3 of （作者草稿）. The third draft and the user's own edits come from （作者草稿） in the task directory; for revision examples 1 and 2 of 10-10, see the 10-10（五） row of section 35 of references/dev-notes.md. Carry-over paragraph: the old paragraph is at line 13 of （作者草稿）, the current corrected paragraph is in （作者草稿） in the task directory, and the author-approved draft is APPROVED-LEAD.md in the same directory.
 
 **散户**: the 〔改例〕 entries added on 2026-10-13; the bad examples are taken from the first draft of 《1012散户》, （作者草稿） (散户v1), and the revision examples from the final version, （作者草稿） (散户); all are sentences actually published. The grounds for picking out the errors are the Codex sentence-by-sentence list (（作者草稿） in the task directory; its item numbers are the Codex# numbers) and （作者草稿） in the same directory; Codex's suggested fixes are not used (user ruling). The name-table row is taken from the name table of （作者草稿）.
 
@@ -383,4 +383,4 @@ An embedded question does not open the sentence (FICCVoice.md 4.4, user ruling 2
 - Xing Fuyi, 《汉语复句研究》 (Studies of Chinese Complex Sentences, 2001): three major classes, 因果 cause and effect, 并列 parallel, and 转折 turn, with twelve subclasses; concession divides into 实让 factual, 虚让 hypothetical, 总让 total, and 忍让 forbearing concession, plus 假转 hypothetical turn; connectives have four functions, “显示、选示、转化、强化” (display, selective display, conversion, reinforcement). Quoted second-hand from Zhang Wenqing, 《从“认知”到“语用”》, Ritsumeikan IILCS 26(4) pp.297–315 (https://ritsumei.repo.nii.ac.jp/record/2896/files/IILCS_26_4pp297-315ZHANG.pdf ), citing Xing's book P.31 and P.39.
 - Latter-clause connective adverbs cannot be omitted: Zhang Yisheng (2000, P.299), quoted second-hand from the same source.
 - The senses of “就” and “才”: Lü Shuxiang, 《现代汉语八百词》 (Eight Hundred Words of Modern Chinese), quoted second-hand from Kanagawa University, 《日语母语使用者汉语副词“就”和“才”的习得研究》 (https://kanagawa-u.repo.nii.ac.jp/record/14021/ ).
-- The diagnostic questions of FICCStructure 3.1 were compiled from the handouts and papers above. “第一、第二”, “一是……二是”, “一旦”, “尤其”, “更重要的是”, “这才”, and “最后” were not found in the classical tables; they are classified by meaning, which is an inference; “分阶段” (by stage) and “不同方面” (different aspects) have no dedicated class in the classics, and their markers are discourse-level time words and topic frames. The “前位词位置看主语” (the position of the former-clause word depends on the subject) of FICCVoice V22 (formerly section 8.2 of FICCStructure) is a common grammar rule; the research seat did not verify its source. Complex-sentence relations recur in multi-layer complex sentences, with a first-hand example (Zhou Guodong and Li Zhongguo, 《汉语多层次结构分析研究》, figure 2); “句群与复句同构” (sentence groups are isomorphic to complex sentences) has only third-hand evidence, and the original book was not obtained.
+- The diagnostic questions of FICCStructure 3.1 were compiled from the handouts and papers above. “第一、第二”, “一是……二是”, “一旦”, “尤其”, “更重要的是”, “这才”, and “最后” were not found in the classical tables; they are classified by meaning, which is an inference; “分阶段” (by stage) and “不同方面” (different aspects) have no dedicated class in the classics, and their markers are discourse-level time words and topic frames. The “前位词位置看主语” (the position of the former-clause word depends on the subject) of FICCVoice V22 is a common grammar rule; the research seat did not verify its source. Complex-sentence relations recur in multi-layer complex sentences, with a first-hand example (Zhou Guodong and Li Zhongguo, 《汉语多层次结构分析研究》, figure 2); “句群与复句同构” (sentence groups are isomorphic to complex sentences) has only third-hand evidence, and the original book was not obtained.

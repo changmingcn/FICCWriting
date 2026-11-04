@@ -1,6 +1,6 @@
 # FICCVoice rationale and distinctions
 
-This file holds the rationale and examples moved out of FICCVoice.md in the terse rewrite, in sections by V number. Each section first gives the original sentence, then one sentence on which rule it supports. The original sentences come from the FICCVoice.md then in force (first 16 hex digits of sha256: c62441e813405456). Ledger numbers are in （作者草稿）. Here each original sentence appears in English translation, and Chinese example phrases inside it stay in Chinese with an English gloss. The Chinese originals are in references/zh/FICCVoice-rationale.md. Write per FICCVoice.md. Consult this file only when a rule is unclear.
+This file holds the rationale and examples moved out of FICCVoice.md in the terse rewrite, in sections by rule number. Each section first gives the original sentence, then one sentence on which rule it supports. The original sentences come from the FICCVoice.md then in force (first 16 hex digits of sha256: c62441e813405456). Ledger numbers are in （作者草稿）. Here each original sentence appears in English translation, and Chinese example phrases inside it stay in Chinese with an English gloss. The Chinese originals are in references/zh/FICCVoice-rationale.md. Write per FICCVoice.md. Consult this file only when a rule is unclear.
 
 ## Introduction
 
@@ -9,15 +9,15 @@ This file holds the rationale and examples moved out of FICCVoice.md in the ters
 - Original (ledger #4): This file borrows the methods of the SEC handbook and ASD-STE100 for controlling comprehension load:
   Supports: the source of the introduction's method. For the borrowed texts and their scope, see FICCVoice-provenance.md.
 
-## V05
+## C01
 
 - Original (ledger #43): Not merely saying “下文看总量和分组” (below we look at the total and the groups), but stating what different things the total and the groups reveal.
-  Supports: V05 “Replace material lists with content judgments”, showing the content judgment an opening should state.
+  Supports: C01 “Replace material lists with content judgments”, showing the content judgment an opening should state.
 
-## V06
+## C02
 
 - Original (ledger #53): For example, if the text below says both that the overall burden has fallen and that one group is still under pressure, the opening should name both the whole and the divergence. It cannot just say “压力已缓解” (pressure has eased).
-  Supports: V06 “When both sides of a contrast or turn belong to this paragraph, make the opening hold both sides”.
+  Supports: C02 “When both sides of a contrast or turn belong to this paragraph, make the opening hold both sides”.
 
 ## V07
 

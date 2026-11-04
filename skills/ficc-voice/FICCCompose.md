@@ -63,7 +63,7 @@ FICCCompose governs, inside a settled outline node, how the text opens, carries 
     - For how to write a hook, see FICCVoice.md 6.
     - Table row 7: the rule in FICCVoice.md 5.1 that keeps speakers within the sentence governs only who is the subject, not what goes at the paragraph opening.
   - Place headings, the lead, carry-overs, and the close where the outline sets them.
-  - See references/FICCVoice-rationale.md Introduction and V05. See references/FICCStructure-rationale.md 6.1, 7.1.
+  - See references/FICCVoice-rationale.md Introduction and C01. See references/FICCStructure-rationale.md 6.1, 7.1.
 - **C02** **Test the paragraph opening against what follows, item by item.**
   - When both sides of a contrast or turn belong to this paragraph, make the opening hold both sides.
   - When the first sentence does not yet complete this paragraph's judgment, the next sentence completes it. Whether that sentence must carry the main reason follows the C01 paragraph-type table.
@@ -74,7 +74,7 @@ FICCCompose governs, inside a settled outline node, how the text opens, carries 
     - If it serves only another judgment, do not keep it in this paragraph as material.
     - If it belongs to the settled claim but the opening does not state it fully, complete the opening.
     - If the claim or attachment must change, hand it back per FICCVoice.md V04.
-  - See references/FICCVoice-rationale.md V06.
+  - See references/FICCVoice-rationale.md C02.
 - **C03** **Show the whole article's claim at the start of the lead. Do not make the reader read half the piece to learn what we argue.**
   - The lead has three arrangements:
     - Situation and conflict first, then the answer.
@@ -302,4 +302,4 @@ A later check (check mode, or a check after a revision) covers the paragraphs ch
 
 ## 8 On-demand references
 
-Reasoning: references/FICCStructure-rationale.md 2.4, 6, 6.1–6.4, 7.1, 8.3, and 9.1 (C19 draws on the first, C12 on the last, and the rest on the rules moved from FICCStructure.md chapters 6–8). Rationale for C01, C02, and C08: references/FICCVoice-rationale.md Introduction, V05, V06, V07. Examples and revision examples: references/examples-and-rewrites.md, the blocks headed “FICCCompose C01 (formerly V05)”, “FICCCompose C04 (formerly V41)”, “FICCCompose C13 (formerly V08)”, “FICCCompose C17 (formerly V09)”, “FICCCompose C07 (formerly V44)”, “FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22”, and “FICCCompose C17, C10 (formerly V09, V46)”, and “FICCOutline 8.1”. Connectives: references/connectives.md. Do not read the maintenance records for everyday writing.
+Reasoning: references/FICCStructure-rationale.md 2.4, 6, 6.1–6.4, 7.1, 8.3, and 9.1 (C19 draws on the first, C12 on the last). Rationale for C01, C02, and C08: references/FICCVoice-rationale.md Introduction, C01, C02, V07. Examples and revision examples: references/examples-and-rewrites.md, the blocks headed “FICCCompose C01”, “FICCCompose C04”, “FICCCompose C13”, “FICCCompose C17”, “FICCCompose C07”, “FICCCompose C01, C02, FICCVoice V22”, and “FICCCompose C17, C10”, and “FICCOutline 8.1”. Connectives: references/connectives.md. Do not read the maintenance records for everyday writing.

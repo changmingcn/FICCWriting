@@ -9,6 +9,13 @@ voice-trim (branch claude/gifted-johnson-r902bf): FICCVoice.md cut from 42,635 t
 - references/FICCVoice-rationale.md: new V33 section records the user's 2026-10-11 ruling on English terms and names (home: FICCOutline.md O33).
 - scripts/xref_check.py: V30 removed from the polish excerpt's required list. scripts/budget.json: caps of the six changed files lowered to their new sizes.
 
+retired-pointers (2026-11-04, after voice-trim): the author withdrew the 2026-10-17 ruling "rule numbers frozen, retired numbers keep pointers". A retired number is now deleted with its line and never reused; every live file cites only current numbers, and the records (references/migration-2026-10-17.md, FICCVoice-provenance.md, history.md, dev-notes.md) keep the old numbers as history. Reviewed by refuter-t1e and a Codex second read.
+
+- FICCVoice.md: the 17 pointer lines of section 2 (V05, V06, V09, V41–V51, V55) and the V30 pointer are gone; V08 is a live rule again ("Mark the add-on relation between parallel child nodes of the same kind"); 39,413 → 38,883 characters. FICCStructure.md: the S16 and S80 pointers and the empty sections 6–8 are gone, sections 9–12 are now 6–9 (relation sheet 6, layer check 7, conclusion 8, appendix 9); 42,292 → 41,582. FICCOutline.md: the O77 pointer is gone, its sentence "In all three, the heading states a judgment" sits under O76; 52,473 → 52,345. FICCCompose.md: 31,377 → 31,194.
+- 109 live references and lineage notes ("(formerly V05)" and the like) rewritten to current numbers in the rule files, SKILL.md, references (rationale, examples-and-rewrites, dispatch-notes, exemplars, glossary, writing-checklist, relation-sheet-template), scripts/README.md and voice_check.py. references/FICCStructure-rationale.md keeps its own old section numbers and says so in its header. agents/ficc-structurer.md reads FICCStructure.md 1–6 and checks by section 7.
+- references/voice-excerpt-polish.md carries V08's intent line; its cap rises 18,372 → 18,450 by the author's ruling of 2026-11-04. The four rule files' caps are lowered to their new sizes.
+- scripts/xref_check.py: the retired-number mechanism (pointer lines, RETIRED-RULE, the "(formerly …)" exemption) is removed; a rule number without a definition line is MISSING-RULE; references/migration-2026-10-17.md is excluded as a record. SKILL.md 4 item 13 states the new rule.
+
 ## 1.1.0 (2026-11-04)
 
 Rebuilt from the author's tree of 2026-11-04 with the same release rules as 1.0.0. Nine files are new, none removed. FICCStructure.md is unchanged.

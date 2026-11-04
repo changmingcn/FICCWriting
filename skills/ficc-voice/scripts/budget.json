@@ -3,10 +3,10 @@
   "measure": "len(text) of the UTF-8 file",
   "root": "~/.claude",
   "files": {
-    "skills/ficc-voice/FICCVoice.md": 39413,
-    "skills/ficc-voice/FICCCompose.md": 31377,
-    "skills/ficc-voice/FICCOutline.md": 52473,
-    "skills/ficc-voice/FICCStructure.md": 42292,
+    "skills/ficc-voice/FICCVoice.md": 38883,
+    "skills/ficc-voice/FICCCompose.md": 31194,
+    "skills/ficc-voice/FICCOutline.md": 52345,
+    "skills/ficc-voice/FICCStructure.md": 41582,
     "skills/ficc-voice/references/compose-excerpt.md": 7189,
     "skills/ficc-voice/references/clarity-acceptance.md": 4512,
     "agents/ficc-outliner.md": 2722,
@@ -14,7 +14,7 @@
     "agents/ficc-composer.md": 2488,
     "agents/ficc-writer.md": 2599,
     "skills/ficc-voice/references/voice-excerpt-patch.md": 11795,
-    "skills/ficc-voice/references/voice-excerpt-polish.md": 18372,
+    "skills/ficc-voice/references/voice-excerpt-polish.md": 18450,
     "skills/ficc-voice/references/voice-excerpt-draft.md": 7308,
     "skills/ficc-voice/references/voice-excerpt-coldread.md": 10773
   },
@@ -164,6 +164,38 @@
         "skills/ficc-voice/references/clarity-acceptance.md": [
           4515,
           4512
+        ]
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "reason": "retired-number pointers removed per user ruling 2026-11-04",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          39413,
+          38883
+        ],
+        "skills/ficc-voice/FICCCompose.md": [
+          31377,
+          31194
+        ],
+        "skills/ficc-voice/FICCOutline.md": [
+          52473,
+          52345
+        ],
+        "skills/ficc-voice/FICCStructure.md": [
+          42292,
+          41582
+        ]
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "reason": "user ruling 2026-11-04: V08 restored as a live rule and its intent line added to the polish excerpt; polish cap raised 18372→18450",
+      "changes": {
+        "skills/ficc-voice/references/voice-excerpt-polish.md": [
+          18372,
+          18450
         ]
       }
     }

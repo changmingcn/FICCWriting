@@ -17,7 +17,7 @@ Trial (2026-10-25): at the research→writing handoff T0 may hand this router to
 |---|---|---|---|---|---|
 | ① Build or summarize outline (Hand handoff outline replaces it: ficc-hand/references/handoff.md 3) | outliner build | FICCOutline.md 1–4, 7–8 (7.3 only if summarizing) | goal, material or original draft | outline (name table `名字表`, order, unfolding, 〔标题〕 lines) | outliner |
 | ② Place | outliner place | FICCOutline.md 4.2 and 5–6 | outline, new material or change | placement record (references/placement-record-template.md), revised outline | outliner |
-| ③ Relate | structurer relate | FICCStructure.md 1–5 and 9 | outline view and node slices (dispatch-notes 6), placement record | relation sheet (references/relation-sheet-template.md) | placement objection (`安放异议`) → outliner |
+| ③ Relate | structurer relate | FICCStructure.md 1–6 | outline view and node slices (dispatch-notes 6), placement record | relation sheet (references/relation-sheet-template.md) | placement objection (`安放异议`) → outliner |
 | ④ Paragraphs | composer compose | FICCCompose.md | node slice, relation sheet, material excerpts, adjacent body text | paragraph draft | relation issue → structurer |
 | ⑤ Sentences, wording | writer polish | references/voice-excerpt-polish.md (FICCVoice.md by V number) | node slice, paragraph draft, name table, material excerpts | revised node, result sheet | paragraph issue → composer |
 | ⑥ Check | all four seats (writer: expression, cold read), source-check seat (by review tier: `shared-protocols/source-check.md`, Review tiers) and 标题级反驳席 (formerly counter-view) | §3 Check | full text | findings | per §3 |
@@ -32,7 +32,7 @@ Short piece (body ≤600 Chinese characters, O44 count, any node scale): one sea
 | Defect | Rules | Seat | Check |
 |---|---|---|---|
 | new material unplaced, length too short for kept information, hollow tree or claims, no placement reason | FICCOutline.md 1–6 | outliner | FICCOutline.md 9 |
-| relation unclear or grounds changed, side-by-side items written as cause and effect, wanted causality unproven, group missing a link | FICCStructure.md 1–5 | structurer | FICCStructure.md 10 |
+| relation unclear or grounds changed, side-by-side items written as cause and effect, wanted causality unproven, group missing a link | FICCStructure.md 1–5 | structurer | FICCStructure.md 7 |
 | bloated paragraph, opening not the claim, two tasks in a paragraph, carry-over as contents list, close restates | FICCCompose.md 1–6 | composer | FICCCompose.md 7 |
 | hard-to-follow sentence, unclear reference, vague condition or scope, unmarked seam | FICCVoice.md 2–4 | writer | FICCVoice.md 7 |
 | figure without measurement basis, lost attribution, misplaced note, two names for one thing | FICCVoice.md 5, name table | writer | FICCVoice.md 7 |
@@ -54,7 +54,7 @@ Short piece (body ≤600 Chinese characters, O44 count, any node scale): one sea
 10. The four rule files hold only rules. Rewrite examples: references/examples-and-rewrites.md; clarity rewrites: clarity-rewrites.md; connectives: connectives.md; model texts: exemplars.md; format: format-and-maintenance.md; grounds: dev-notes.md.
 11. The user's current request comes first. Do not draft by comparing against the author's original text. Write user corrections into the relevant rule file.
 12. Deliver a native Google Doc by default, updated in place by Doc ID; Markdown is the working source.
-13. Since 2026-10-16 rule files are concise English; rule numbers frozen, retired numbers keep pointers, never reused. references/zh/ is archive only, unread by agents.
+13. Since 2026-10-16 rule files are concise English. A retired rule number goes with its line, leaves no pointer, and is never reused; live files cite current numbers only, old-to-new only in records (references/migration-2026-10-17.md). User ruling 2026-11-04, replacing 2026-10-17. references/zh/ is archive only, unread by agents.
 
 ## 5 Dispatch details
 
