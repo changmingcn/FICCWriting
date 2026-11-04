@@ -256,6 +256,7 @@ Revision examples 1 and 2 are my own edits of 2026-10-10 〔亲改〕.
 
 ## FICCVoice V22 (formerly section 8.2 of FICCStructure)
 
+- A back-reference that opens a paragraph or node sentence names what it follows: “这个判断” (this judgment), “上面说的两路” (the two routes above). 〔例〕
 - Progression with only a latter-clause marker: “套利策略人人喜欢，而且还普遍喜欢加杠杆”〔九节〕 (nine-sections.md:3); the first clause has no word at all, and the relation is still clear.
 - The position of the former-clause word depends on the subject: with the same subject, put it after the subject, as in “券商不仅不用担心血管收缩，还可以大手大脚的给散户提供保证金贷款”〔九节〕 (nine-sections.md:59); with different subjects, put it before the first subject, as in “如果你观察到的情景是……那么即便是最谨慎的老手交易员也会……”〔九节〕 (nine-sections.md:13).
 
@@ -273,6 +274,8 @@ The following examples illustrate the strength of a judgment.
 
 - When wrong, admit it and say at which step: when 《九节》 reflects on its exchange-rate judgment, it explains that it gave too much weight to market factors and did not see the trade-off between them and political factors. 〔九节〕
 - A line of self-mockery before normative advice: “咱也国师一把”. A phrase the author has used; for reference, need not be copied.
+
+- A company that changes role along the chain (V15): one that both rents server rooms from others and rents computing power to downstream customers is named by the role it plays in each sentence. 〔例〕
 
 ### Sentence rhythm and information attachment
 

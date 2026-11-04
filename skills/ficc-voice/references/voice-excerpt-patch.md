@@ -11,7 +11,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - As the writer, do not change placement, claims, or node relations. Hand back any needed change per this rule.
   - In a style-only edit, keep the existing content and structure.
   - If a requirement such as a governing paragraph opening can be met only by changing order or structure, report it separately.
-  - See V29–V30: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
+  - See V29: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
 - V07 Do not use semicolons (；) in body prose.
   - Before handing over, search the body for ； and split each such sentence into short sentences with their own subjects. Carry the relation by repeating the noun or with a connective from connectives.md. Only separators inside a table cell or a genuine list line are exempt. Do not turn prose into a list to keep semicolons.
   - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； goes to T0. The writer neither edits it nor exempts it.
@@ -58,7 +58,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - Make the subject the thing this sentence judges, with its full name:
     - Do not use “这个回答” (this answer) or “这一点” (this point) as the first subject, except right after a preceding sentence that states it in full.
   - Check: sentence by sentence, confirm that the reader knows what each name refers to and can say which earlier point this sentence picks up from.
-  - Showing the relation at a paragraph or node opening, which connective to use, and when a relation may stay unmarked: see V22.
+  - Relation at the opening: V22.
 - V26 Let the reader identify each number as whose what.
   - Where a number is first really used, state whose indicator it is, which indicator, the point in time, and the unit.
   - In the same place, state the measurement basis and any needed sample source.

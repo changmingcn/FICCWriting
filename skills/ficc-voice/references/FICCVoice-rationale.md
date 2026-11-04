@@ -41,6 +41,8 @@ This file holds the rationale and examples moved out of FICCVoice.md in the ters
 - Original (ledger #122): “传输期间数据受损” (data were damaged during transmission) cannot be changed into “传输导致数据受损” (transmission damaged the data).
   Supports: V15 “If the agent is unknown, or you want to keep the patient as the topic, you may keep the passive”. When changing to the active, do not supply an agent that the material lacks.
 - (V15) Sentence groups and complex sentences below the paragraph also have a center, all the way down to clauses.
+- Moved here (2026-11-04, voice-trim): A complex sentence may be a complete small tree: the central clause comes first and may refer back to the previous sentence's claim. Several reasons stand side by side and grow heavier step by step; the conclusion clause brings out the conclusion and may nest concessions and conditions inside.
+  Supports: V15 “Within a simple sentence, require only a clear sentence core and clear attachment of modifiers” and V16 “Do not force every sentence into one subject–verb–object template”: a complex sentence is not split by count. Example: references/examples-and-rewrites.md, block “FICCVoice V15, V19”.
 
 ## V16
 
@@ -50,6 +52,10 @@ This file holds the rationale and examples moved out of FICCVoice.md in the ters
 ## V21
 
 - (V21) That table keeps every word the user specified.
+
+## V33
+
+- Ruling 2026-10-11 (user): 统一，术语公司名之类的都用英文 (unify: terms, company names and the like all in English); home: FICCOutline.md O33, the language rule after the name table. The same day added: 承购方、兜底、残值担保用中文，中国机构不改英文，人名改英文 (offtaker, backstop and residual-value guarantee in Chinese; Chinese institutions stay in Chinese; personal names in English). V33 keeps only the order of precedence and the note that standard terms the table does not list follow O33.
 
 ## V37
 

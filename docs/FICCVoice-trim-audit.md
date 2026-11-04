@@ -184,3 +184,16 @@
 4. 跑六项检查：xref_check -q、xref_check --selftest、voice_check --selftest、voice_check --selftest --clarity、budget_check（root改为仓库根的副本）、cjk_space --check本报告。
 5. 降封顶，CHANGELOG加Unreleased。
 6. PR描述贴“原号→去向”表和各文件改前改后字节数。
+
+## 裁定（2026-11-04）
+
+1. D1取(b)压缩版。补一条理由：budget.json里2026-11-03 r1那条记录的起因，正是写手拿到只有指针的摘录就跳过接缝检查（lesson L2），(a)纯指针会把这个问题重新打开。压缩后七项的新文本照抄进polish和coldread两份摘录。
+2. D2取(a)，合成一行留在V22里，不改connectives.md。“但……只有”来自用户2026-10-14的改句“但是这个回答我们只有中偏低的把握”，那里的“只有”是“只有中偏低的把握”的只有，不是连接词“只有……才”，不宜写进连接词表当固定搭配。
+3. D3、D4都可以动。L176–L177是用户2026-10-14原话（“读者的眼光会第一眼落到主语上”）的直接依据，照你的方案不动。L189–L191是T0根据那两处亲改提炼的，亲改原文在examples-and-rewrites.md的Revision example 4里不动。条件一个：别只在第8节放一个泛指针，V22正文里要留一个具体指针，把L178改成“There are two ways to show it (the user's two edits of 2026-10-14: references/examples-and-rewrites.md, Revision example 4):”，让人打开V22一跳就能找到那两处亲改。省的字节比你估的少几十，接受。
+4. D6做。补两处你表里没列的：L31那行“See V29–V30”也在patch摘录L14和draft摘录L31里（都在V04块内），要一起改，不只是polish。V30正文压成两行时，“The following are argument steps”下面四种情形（定义是本段核心、下句要靠它、口径定结论、本段要解释为什么成立）要在一行里都点到，不能只剩premises一个词。xref_check.py第229行元组删'V30'，可以。
+5. D7做。你查不到日期是因为公开版dev-notes.md只剩标题。本机记录：2026-10-11用户裁定“统一，术语公司名之类的都用英文”，同日补“承购方、兜底、残值担保用中文，中国机构不改英文，人名改英文”。当时的家是Voice第四节，2026-10-15名字表改四栏后，这条语言规则落在O33表后那两行，所以家在O33没错。请在references/FICCVoice-rationale.md加一节“## V33”，写一行“Ruling 2026-10-11 (user): 统一，术语公司名之类的都用英文; home: FICCOutline.md O33, the language rule after the name table.”，让公开版也带上出处。压缩句里“standard terms the table does not list”这一句保留。
+6. D8：删L110（导言和V39 L435各有一份）。L109不删、改成一行指针“Standard terms and official names stay whole (V32).”，它是V16“拆名词”的例外，位置要留。本机核过，这两行来自英文化之前的中文版，没有带日期的用户裁定。
+7. D9不做，确认。
+8. 封顶措辞可以。reason写“voice-trim per docs/FICCVoice-trim-audit.md, user approval 2026-11-04”，改动的每个文件（FICCVoice.md、三份摘录、clarity-acceptance.md）都降到改后尺寸，root仍写~/.claude。FICCVoice-rationale.md、examples-and-rewrites.md、connectives.md不在封顶表里，往那里挪东西不受限。
+
+其他：分支不改名，PR从claude/gifted-johnson-r902bf开到main；审计报告随PR一起走；不改VERSION，只加CHANGELOG的Unreleased；第5节不拆。

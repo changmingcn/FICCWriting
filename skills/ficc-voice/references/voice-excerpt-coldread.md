@@ -5,20 +5,16 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
 ## 1 Rules
 
 - V22 Make the relation at each seam visible to the reader, especially turn, cause and effect, condition, limitation, and concession.
-  - Use connectives heavily:
-    - Check: after writing, look first for the most often missing ones: inference, “但是” (but), progression, concession, explication, back-reference, and “甚至” (even) and “其实” (actually).
+  - Check: after writing, look first for the most often missing ones: inference, “但是” (but), progression, concession, explication, back-reference, and “甚至” (even) and “其实” (actually).
   - Check: read only the first few characters of each paragraph-opening sentence and node opening sentence. They show its relation to the level above and to the sibling it follows.
-  - Check: after writing a paragraph, run each seam through the nine checks below. Do not pad with added words.
-    - Where a seam fails, fix the wording if wording can fix it.
+  - Check: after writing a paragraph, run each seam through the seven checks below. Where a seam fails, fix the wording if wording can fix it. Do not pad with added words.
     1. Preview and payoff: FICCCompose.md C20.
-    2. Each same-layer seam carries a word of the class the relation sheet names.
-    3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” must be a cause, and what follows “而且” must go one layer further. The two sides of “但是” (but) sit on the same dimension.
-    4. Whether latter-clause markers are omitted: this rule.
+    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent’s check, FICCStructure.md S90; the word is the writer’s).
+    3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” (so) must be a cause, what follows “而且” (moreover) must go one layer further, and the two sides of “但是” (but) sit on the same dimension. Where inference belongs, “既然、可见” (since, evidently) is present. A “因为” (because) or “所以” that only restates or splits the first half: FICCStructure.md S28.
+    4. Latter-clause markers not omitted, and the relation of each paragraph opening and node opening sentence shown: this rule.
     5. The antecedent of paragraph-opening and sentence-opening connectives: V53.
     6. Suppositions and conditions stay hypothetical: V17.
-    7. Where inference belongs, “既然、可见” (since, evidently) is present. Take out the half sentence after “因为” (because) or “所以” (so) on its own. If it restates or splits the first half rather than being its cause or result, use a colon (：), “分几种” (falls into several kinds), or “也就是说” (that is to say) instead, or separate short sentences. Other word misuse: references/connectives.md, rows 转折 and 并列·解说.
-    8. Items after a colon or dash: V19.
-    9. The relation of the paragraph opening and each node's opening sentence: this rule.
+    7. Items after a colon or dash: V19.
 - V23 Keep the same name pointing to the same object.
   - After intervening material, or when carrying over from an earlier sibling, name the object again.
   - For a concept with a count, list all its members at first mention. Do not silently change the referent later.
@@ -99,7 +95,6 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - Even when counts stay within limits, still check for missing relations, missing conditions, and wrong attribution.
   - Do not lower counts by deleting qualifiers, hiding them in parentheses, or switching to abbreviations.
   - The paragraph length cap (FICCCompose.md C08) is a hard limit. This rule covers only the script's other flags.
-  - See references/clarity-acceptance.md: scripts, format, and existing sentence-pattern preferences.
 - V40 Report reading problems that can be located and fixed.
   - Writer: cold-read your own node before submitting. After the draft is assembled, a separate cold reader reads with only the finished draft and the name table (dispatch: SKILL.md 2).
   - The cold read reports only and does not edit. For each spot, list the node, line number, original sentence, and matching rule.

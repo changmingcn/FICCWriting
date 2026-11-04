@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+voice-trim (branch claude/gifted-johnson-r902bf): FICCVoice.md cut from 42,635 to 39,361 characters per `docs/FICCVoice-trim-audit.md` and the user's rulings of 2026-11-04. Rule numbers unchanged; no rule changes meaning, only organization and wording.
+
+- FICCVoice.md: V30 merged into V29 (V30 is now a pointer). V22's nine seam checks become seven (the inference and 因为/所以 items point to FICCStructure.md S28, the relation-sheet item to S90), its connective menu is one line, and lists that duplicate references/connectives.md 1 and 6 are gone. V25's group-size cap points to FICCStructure.md S25. V33's language rule points to FICCOutline.md O33. Per-rule “See …-rationale.md” lines are replaced by one pointer in section 8, which also now names references/examples-and-rewrites.md. V15's description of the complex sentence moved to references/FICCVoice-rationale.md; two examples moved to references/examples-and-rewrites.md. The duplicates of V13, V04, V52, V08, V32, V39 and of the introduction inside V22, V16, V29 are deleted.
+- references/voice-excerpt-{polish,coldread,patch,draft}.md: section 1 mirrors the changed lines; polish no longer carries V30. references/clarity-acceptance.md cites V29 alone.
+- references/FICCVoice-rationale.md: new V33 section records the user's 2026-10-11 ruling on English terms and names (home: FICCOutline.md O33).
+- scripts/xref_check.py: V30 removed from the polish excerpt's required list. scripts/budget.json: caps of the six changed files lowered to their new sizes.
+
 ## 1.1.0 (2026-11-04)
 
 Rebuilt from the author's tree of 2026-11-04 with the same release rules as 1.0.0. Nine files are new, none removed. FICCStructure.md is unchanged.
