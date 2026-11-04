@@ -1,6 +1,6 @@
 # FICCVoice: Write the relations clearly
 
-FICCOutline places material and maintains the outline. FICCStructure judges relations. FICCCompose organizes paragraphs. FICCVoice writes these judgments as clear, explicit, concrete sentences. Leave the reader nothing to take apart, pair up, or fill in logically. Decide sentence splitting and glossing by this standard, not by cutting at a character count. Use breakdown and checking for drafting and revising. They impose no fixed sentence pattern and add no fixed deliverable table.
+FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCompose as clear, explicit, concrete sentences. Leave the reader nothing to take apart, pair up, or fill in logically. Decide sentence splitting and glossing by this standard, not by cutting at a character count. Use breakdown and checking for drafting and revising. They impose no fixed sentence pattern and add no fixed deliverable table.
 
 ## 1 Break the meaning down first
 
@@ -28,11 +28,11 @@ FICCOutline places material and maintains the outline. FICCStructure judges rela
   - As the writer, do not change placement, claims, or node relations. Hand back any needed change per this rule.
   - In a style-only edit, keep the existing content and structure.
   - If a requirement such as a governing paragraph opening can be met only by changing order or structure, report it separately.
-  - See V29–V30: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
+  - See V29: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
 
 ## 2 Carry the relations into sentences and paragraphs
 
-Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/migration-2026-10-17.md). The old numbers stay here as pointers.
+Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md).
 
 - **V05** → FICCCompose.md C01
 - **V06** → FICCCompose.md C02
@@ -81,7 +81,6 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
 - **V15** **Write the action and who performs it, then choose active or passive.**
   - Reading a sentence, you can find who or what is in what state, did what, and mainly shows which point.
     - Within a simple sentence, require only a clear sentence core and clear attachment of modifiers.
-    - A complex sentence may be a complete small tree: the central clause comes first and may refer back to the previous sentence's claim. Several reasons stand side by side and grow heavier step by step; the conclusion clause brings out the conclusion and may nest concessions and conditions inside.
     - Where the outer and inner markers of a multi-layer complex sentence go: per V54.
   - Rewrite phrasings such as “进行分析、实现改善、承担风险” (conduct analysis, achieve improvement, bear risk) as who did what to what.
   - State which quantity moved in which direction. Use the subject and the concrete verb that the material gives.
@@ -90,28 +89,24 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
   - Before changing a passive sentence, find who or what caused the event. If the agent is known and matters, state it.
   - If the agent is unknown, or you want to keep the patient as the topic, you may keep the passive.
   - When the same company changes role along the chain, state which role it plays in this sentence whenever you write about it.
-    - Such as both renting server rooms from others and renting computing power to downstream customers.
   - When saying “损失” (loss), “赔” (lose money), or “扛” (bear), you must say which party.
   - Do not merge several parties' responsibilities into one subject.
   - Do not put one party's financial-statement distortion and another party's debt risk into the same judgment.
   - Check: circle every “赔”, “损失”, “扛”, and “低估” (underestimate) in the text and find which party is its subject. If you cannot answer, or the answer is two parties, write them separately.
-  - See references/FICCVoice-rationale.md V15.
 - **V16** **Unpack relations compressed into nouns and modifiers.**
   - Make it determinable which action or judgment each condition, cause, example, added explanation, aside, and source modifies.
   - For stacked attributives or long noun phrases, find the head first.
   - Then identify whether each remaining word says whose, toward whom, for what, or when.
   - Where two connections are possible, use a preposition, a verb, or a clause to state the one that the material settles.
   - If the material does not settle it, verify first.
-  - A mechanism sentence may follow the action for several steps. A comparison sentence may have several parts set against each other. A judgment sentence may carry conditions and reservations. Do not force every sentence into the same subject–verb–object template.
+  - A mechanism sentence may run several steps, a comparison several parts, a judgment its conditions and reservations. Do not force every sentence into one subject–verb–object template.
   - For “如果A，那么B，但只有C时才成立” (if A, then B, but only when C holds), state whether C limits B or the transmission from A to B.
   - Where a long attributive embeds another matter, lift the needed explanation into a clause and reconnect it to the sentence core.
   - Start a new sentence for an explanation only when it is a step in the argument.
-  - Keep standard terms and official names whole. When needed, explain them and then give a stable short name.
-  - Do not delete words by counting nouns or “的” (the possessive particle).
+  - Standard terms and official names stay whole (V32).
   - Place words such as “仅、主要、可能、短期” (only, mainly, possibly, short-term) next to what they actually qualify.
   - Where a change of subject or an omission could cause a wrong carry-over, rewrite the name.
   - Use omissions that can be restored uniquely.
-  - See references/FICCVoice-rationale.md V16.
 - **V17** **Confirm the logic of the conditions first, then write conditions and results fully paired.**
   - List which conditions limit each result.
   - Settle whether all conditions must hold or any one suffices, and whether each is necessary or sufficient. Then choose the form:
@@ -151,15 +146,13 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
 ### 4.1 Which connective to use
 
 - **V21** **Establish the content relation first, then choose the connective.**
-  - Prefer the words in references/connectives.md, section “现行连接词表” (current connective table). See that table for the full relation classification.
+  - Words and relation classes: references/connectives.md 1.
   - Keep exemplification distinct from proof, explication from progression, and supposition from condition. Do not change the relation by swapping words. Relation diagnosis: FICCStructure.md S04, S18, S27.
   - When the material supports only side-by-side observation, set the observations side by side. Do not add a connective that implies more relation than that.
 
 ### 4.2 Use enough, do not pile up
 
 - **V22** **Make the relation at each seam visible to the reader, especially turn, cause and effect, condition, limitation, and concession.**
-  - For parallel lists, use “第一、第二” (first, second). For steps, use “首先、然后、接着” (first, then, next).
-  - For two parallel items in one sentence, you may use “一是……二是……” (one is…, two is…).
   - Do not omit the latter-clause relation marker.
     - “因为、虽然、如果” (because, although, if) in the former clause may be omitted.
     - Do not omit the connecting “但是、所以、就、才、也、还、却” (but, so, then, only then, also, still, yet) in the latter clause.
@@ -167,29 +160,17 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
     - In a pair, when both clauses share a subject, put the former-clause word after the subject. When the subjects differ, put the former-clause word before the first subject.
   - Do not mechanically repeat the same word in adjacent sentences.
   - Do not let transition fillers such as “值得注意的是” (it is worth noting that) or “进一步来看” (looking further) stand in for a relation.
-  - Replace a vague clause-initial “而、则、并、且” (and/while, then, and, also) with a word that states the relation.
-  - Use fixed words and “而……也” (while… also) as the table specifies.
-  - Use connectives heavily:
-    - Mark every seam that has a relation. Between same-level parallel items, mark carry-over, repetition, emphasis, and deepening.
-    - “第一，” (first,) may stand inside a sentence (two items) or open a paragraph. When it opens a paragraph, and when to use a colon subheading (“第一个办法：”, the first method:): FICCCompose.md C10.
-    - Check: after writing, look first for the most often missing ones: inference, “但是” (but), progression, concession, explication, back-reference, and “甚至” (even) and “其实” (actually).
+  - Replace a vague clause-initial “而、则、并、且” (and/while, then, and, also) with a word that states the relation; fixed words are exempt (references/connectives.md 6).
+  - Numbering inside a sentence or at a paragraph opening: references/connectives.md 6, FICCCompose.md C10.
+  - Check: after writing, look first for the most often missing ones: inference, “但是” (but), progression, concession, explication, back-reference, and “甚至” (even) and “其实” (actually).
   - In a paragraph opening and a node's opening sentence, show the relation at the very start: choose a connective or a naming back-reference by the settled relation (relation sheet) and the paragraph arrangement (FICCCompose.md).
     - The relation is to the level above and to the sibling it follows. By default, the sibling it follows is the previous one. When it follows an earlier one, name that one with a back-reference.
-    - There are two ways to show it:
-      - Put a connective that states the relation at the start of the sentence.
-      - Start the sentence with a back-reference that names which judgment or which thing it follows.
-        - Such as “这个判断” (this judgment) or “上面说的两路” (the two routes above). For back-reference wording, see 4.3.
-    - Choose the connective by relation:
-      - Turn: “但是、不过” (but, however).
-      - Cause and effect: “所以、因此” (so, therefore).
-      - Conditions and limits: “只是” (only) or “但……只有” (but… only when).
-      - Concession: “虽然” (although).
-      - Progression: “而且、更” (moreover, even more).
-      - Other words: per 4.1.
-    - The two revisions the user gave are exactly the two ways (references/examples-and-rewrites.md, block “FICCCompose C01, C02 (formerly V05, V06), FICCVoice V22”, “Revision example 4”).
-      - Within one sentence, the connective comes first and the named judgment is the subject.
-      - Or state the answer once first, then open the next sentence with “但是” (but) to state the limit.
-    - The relation to the level below is previewed by the carry-over sentence and paid off by each sub-point's first sentence (FICCCompose.md C20). Do not mark it separately at the sentence start.
+    - There are two ways to show it (the user's two edits of 2026-10-14: references/examples-and-rewrites.md, Revision example 4):
+      - Put a connective that states the relation at the start of the sentence, with the named judgment as the subject.
+        - Or state the answer once first, then open the next sentence with “但是” (but) to state the limit.
+      - Start the sentence with a back-reference that names which judgment or which thing it follows (wording: 4.3).
+    - Choose the word by relation from references/connectives.md 1: turn “但是、不过” (but, however); cause and effect “所以、因此” (so, therefore); conditions and limits “只是” (only) or “但……只有” (but… only when); concession “虽然” (although); progression “而且、更” (moreover, even more).
+    - The relation to the level below is carried by preview and payoff (FICCCompose.md C20), not marked at the sentence start.
     - How to write the subject: see 4.4.
   - At an opening, these four relations must not go unmarked: turn, cause and effect, conditions and limits, and concession.
     - Only two cases allow no connective:
@@ -197,21 +178,15 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
       - It is the opening sentence of the first child node under its parent, or of the first item in a group, and it states the heading's claim.
     - Turn includes light turns.
     - Hinting the relation by re-mentioning a few words of the previous paragraph does not count as marking.
-  - Use conjunctions only to join sentences whose logical relation is very clear. See V13.
-  - When you cannot identify the relation with confidence, hand it back to T0.
   - Check: read only the first few characters of each paragraph-opening sentence and node opening sentence. They show its relation to the level above and to the sibling it follows.
-  - Check: after writing a paragraph, run each seam through the nine checks below. Do not pad with added words.
-    - Where a seam fails, fix the wording if wording can fix it.
+  - Check: after writing a paragraph, run each seam through the seven checks below. Where a seam fails, fix the wording if wording can fix it. Do not pad with added words.
     1. Preview and payoff: FICCCompose.md C20.
-    2. Each same-layer seam carries a word of the class the relation sheet names.
-    3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” must be a cause, and what follows “而且” must go one layer further. The two sides of “但是” (but) sit on the same dimension.
-    4. Whether latter-clause markers are omitted: this rule.
+    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent's check, FICCStructure.md S90; the word is the writer's).
+    3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” (so) must be a cause, what follows “而且” (moreover) must go one layer further, and the two sides of “但是” (but) sit on the same dimension. Where inference belongs, “既然、可见” (since, evidently) is present. A “因为” (because) or “所以” that only restates or splits the first half: FICCStructure.md S28.
+    4. Latter-clause markers not omitted, and the relation of each paragraph opening and node opening sentence shown: this rule.
     5. The antecedent of paragraph-opening and sentence-opening connectives: V53.
     6. Suppositions and conditions stay hypothetical: V17.
-    7. Where inference belongs, “既然、可见” (since, evidently) is present. Take out the half sentence after “因为” (because) or “所以” (so) on its own. If it restates or splits the first half rather than being its cause or result, use a colon (：), “分几种” (falls into several kinds), or “也就是说” (that is to say) instead, or separate short sentences. Other word misuse: references/connectives.md, rows 转折 and 并列·解说.
-    8. Items after a colon or dash: V19.
-    9. The relation of the paragraph opening and each node's opening sentence: this rule.
-  - See references/FICCStructure-rationale.md 7.1, 8.2.
+    7. Items after a colon or dash: V19.
 - **V52** **Put connectives at the seam between two things.**
   - After the reader's question in the lead, place a back-reference or add-on marker (references/connectives.md, row 并列·附加关系).
 - **V53** **Keep a connective right next to its true antecedent.**
@@ -220,7 +195,6 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
   - Where an inserted sentence or route sentence sits in between, move it away.
   - When the true antecedent is not adjacent and the order is fixed by the relation sheet, use a named back-reference instead of a connective.
   - Check: the sentence right before each paragraph-opening and sentence-opening connective is its true antecedent.
-  - See references/FICCStructure-rationale.md 8.1.
 - **V54** **When two layers of relation nest, put the outer layer's word at the outer seam and the inner layer's word at the inner seam.**
 - **V55** → FICCCompose.md C20
 
@@ -247,7 +221,7 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
   - Make the subject the thing this sentence judges, with its full name:
     - Do not use “这个回答” (this answer) or “这一点” (this point) as the first subject, except right after a preceding sentence that states it in full.
   - Check: sentence by sentence, confirm that the reader knows what each name refers to and can say which earlier point this sentence picks up from.
-  - Showing the relation at a paragraph or node opening, which connective to use, and when a relation may stay unmarked: see V22.
+  - Relation at the opening: V22.
 
 ### 4.5 Parallel syntax
 
@@ -259,8 +233,7 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
   - Do not delete limits or invent items for the sake of symmetry.
   - Do not line up a cause, its example, and its result as three same-level items.
   - After a long group, state together what the items mean for the current question. Do not force a tie-back onto a short group.
-  - In a paragraph that enters directly with “第一，” (first,), the group's claim has already been given in the claim paragraph before it.
-  - Keep parallel sub-points or sentences in a group within ten as far as possible. If a parallel structure of more than twelve nodes appears, then unless it lists a list of names, you should consider splitting and regrouping it into new substructures.
+  - Group size: FICCStructure.md S25.
 
 ## 5 Terms, parentheses, and figures
 
@@ -305,30 +278,22 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
   - Separate main and subordinate between sentences. A note does not count as a step in a sentence group.
     - Do not stuff two independent judgments into one long parenthesis as if both were supplements.
   - Attach a pure note once, where it serves. Do not make it a separate sentence. Attach notes for two words in two places.
-  - Give definitions and glosses at the first real use of the word. A short gloss may merge directly into the sentence.
+  - A short gloss may merge directly into the sentence (first use: V32).
   - At a key noun's first appearance, you may add one plain-language parenthetical.
   - Do not use any other in-sentence parenthetical to explain a term.
   - Place a parenthetical after the word. If it does not fit there, place it after the sentence's full stop (。).
   - Place aliases, English names, and “下称” (hereafter) after the word.
   - Write measurement basis, sample, and period first as an attributive or adverbial of the number. Use a parenthetical only if they do not fit.
   - Handle sources per V27. Put a figure's measurement basis in the figure note, without parentheses.
-  - Check: mark the notes when checking.
-  - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, or dropping it widens the main judgment's scope, handle it per V30.
-  - See references/FICCStructure-rationale.md 7.5.
-- **V30** **Keep in the body text the premises without which the conclusion cannot be understood.**
-  - The following are argument steps. Unfold them per the relation sheet:
-    - The definition is this paragraph's core.
-    - The next sentence must build on it.
-    - The measurement basis decides the conclusion.
-    - This paragraph must explain why it holds.
-  - Do not hide important premises, counter-evidence, or new points in parentheses.
+  - A note is an argument step when its definition is this paragraph's core, the next sentence must build on it, its measurement basis decides the conclusion, or this paragraph must explain why it holds: unfold it per the relation sheet, and do not hide important premises, counter-evidence, or new points in parentheses.
   - Merging a pure note back where it serves counts as a wording change. Keep facts, qualifiers, and degree words as they are.
-  - Check: skip the parentheses and reread the main judgment. If “样本内” (within the sample) would read as “全部” (all), or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
+  - Check: mark the notes when checking.
+  - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, or dropping it widens the main judgment's scope, move it into the body text as an argument step; if “样本内” (within the sample) would read as “全部” (all) or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
+- **V30** → V29
 - **V31** **Make figure, figure note, and body text match.**
   - Prefer a figure title that states a finding the data support. Distribution or measurement-basis figures may have descriptive titles.
   - Paragraph organization: FICCCompose.md C22.
   - Use the same object, period, and comparison baseline in the figure, the figure note, and the body text.
-  - See references/format-and-maintenance.md: format.
 
 ### 5.2 Wording the reader need not decode
 
@@ -359,7 +324,7 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
     - Do not apply “收敛、付价、标零、兑现” (converge, pay the price, mark to zero, cash in) to economic facts.
     - Do not let “读数、口径” (reading, measurement basis) appear in place of the numbers and the method.
 - **V33** **Choose terms, abbreviations, and names by whether the reader can identify the object.**
-  - Choose a name and its language in this order. First, the name table's ruling (FICCOutline.md O32–O33). Second, the language rule after the table (FICCOutline.md O33): foreign personal names, companies, institutions, media, and standard English terms in English, and Chinese personal names, companies, and institutions in Chinese. Third, only where the first two leave the choice open, apply the readability choice below. Standard terms are not listed in the name table (O32), but they still follow O33: write a standard English term in English.
+  - Choose a name and its language in this order: the name table's ruling (FICCOutline.md O32–O33); then the language rule after the table (O33), which also governs standard terms the table does not list; only where both leave the choice open, the readability choice below.
   - Institution names: per the list after the outline's name table (FICCOutline.md O33).
   - Use a Chinese word where readers understand it more easily.
   - Do not make the reader look back repeatedly for definitions to understand one sentence.
@@ -434,7 +399,6 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
   - Even when counts stay within limits, still check for missing relations, missing conditions, and wrong attribution.
   - Do not lower counts by deleting qualifiers, hiding them in parentheses, or switching to abbreviations.
   - The paragraph length cap (FICCCompose.md C08) is a hard limit. This rule covers only the script's other flags.
-  - See references/clarity-acceptance.md: scripts, format, and existing sentence-pattern preferences.
 - **V40** **Report reading problems that can be located and fixed.**
   - Writer: cold-read your own node before submitting. After the draft is assembled, a separate cold reader reads with only the finished draft and the name table (dispatch: SKILL.md 2).
   - The cold read reports only and does not edit. For each spot, list the node, line number, original sentence, and matching rule.
@@ -444,6 +408,6 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
 
 ## 8 On-demand references
 
-Paragraph organization: FICCCompose.md. Connectives: references/connectives.md. Revision examples: references/clarity-rewrites.md. Borrowed sources, scope of application, and rule migration: references/FICCVoice-provenance.md. Do not read the maintenance records for everyday writing. Format: references/format-and-maintenance.md. Submission checks: references/clarity-acceptance.md.
+Paragraph organization: FICCCompose.md. Connectives: references/connectives.md. Revision examples: references/clarity-rewrites.md. Borrowed sources, scope of application, and rule migration: references/FICCVoice-provenance.md. Do not read the maintenance records for everyday writing. Format: references/format-and-maintenance.md. Submission checks: references/clarity-acceptance.md. Rationale by V number: references/FICCVoice-rationale.md. Examples and the user's own edits: references/examples-and-rewrites.md (headings by section and V number).
 
-Rules migrated from FICCStructure.md chapters 6–8 that stay here (V15, V16, V19, V21, V22, V25, V27, V29, V52–V54): reasoning in references/FICCStructure-rationale.md 6–8. The rest moved on to FICCCompose.md (map: references/migration-2026-10-17.md).
+Rules migrated from FICCStructure.md chapters 6–8 that stay here (V15, V16, V19, V21, V22, V25, V27, V29, V52–V54): reasoning in references/FICCStructure-rationale.md 6–8.

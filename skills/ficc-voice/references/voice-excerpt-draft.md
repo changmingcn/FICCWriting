@@ -28,7 +28,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - As the writer, do not change placement, claims, or node relations. Hand back any needed change per this rule.
   - In a style-only edit, keep the existing content and structure.
   - If a requirement such as a governing paragraph opening can be met only by changing order or structure, report it separately.
-  - See V29–V30: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
+  - See V29: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
 - V26 Let the reader identify each number as whose what.
   - Where a number is first really used, state whose indicator it is, which indicator, the point in time, and the unit.
   - In the same place, state the measurement basis and any needed sample source.
