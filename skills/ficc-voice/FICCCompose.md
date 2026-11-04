@@ -148,7 +148,7 @@ FICCCompose governs, inside a settled outline node, how the text opens, carries 
     - With reorganization permission, split it into paragraphs that carry over from one another.
     - When a paragraph exceeds ten sentences, carry over into a new paragraph at an argument-unit boundary.
   - A new draft may split sentences and paragraphs on this basis. A revision stays within the permissions in FICCVoice.md V04.
-  - See references/FICCVoice-rationale.md V07.
+  - See references/FICCVoice-rationale.md C08.
 - **C09** **Each paragraph does one main thing for the layer above: put forward a judgment, explain a concept, show a scene, analyze evidence, handle an objection, form a conclusion, or drive action.**
   - A paragraph may hold several facts and several actions, but only one main action.
   - The first sentence lets the reader know which of these the paragraph is doing and what it concludes (C01).

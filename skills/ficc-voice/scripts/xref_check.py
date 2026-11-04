@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-r"""xref_check.py (2026-10-17, wave 4; no retired numbers since 2026-11-04) -- section references
-must resolve to numbered headings; V/S/O/C rule numbers must be defined.
+r"""xref_check.py (2026-10-17, wave 4; no retired numbers since 2026-11-04; agent cards and STALE-QUOTE
+2026-11-04) -- section references must resolve to numbered headings; V/S/O/C rule numbers must be defined;
+rationale "Supports" quotes must quote the current rule text.
 
 Checks that every reference to a section of FICCOutline.md, FICCStructure.md,
 FICCVoice.md or FICCCompose.md (and to a numbered section of any other .md file in
@@ -8,8 +9,8 @@ the skill, named by file) points at an existing heading, and that every quoted t
 still matches the heading text.  Stdlib only; Python 3.9+.
 
 Usage:
-  xref_check.py [--root DIR] [--json] [-q] [--selftest]
-  xref_check.py [--root DIR] --selftest-excerpt
+  xref_check.py [--root DIR] [--cards DIR] [--json] [-q] [--selftest]
+  xref_check.py [--root DIR] [--cards DIR] --selftest-excerpt
 
 Targets: numbered headings "## N title", "### N.M title", "#### N.M.N title" (title
 may be absent, as in "## 1.2" of the rationale files).  An unnumbered ## heading
@@ -107,15 +108,59 @@ EXCERPT-MISSING "required line ... (Compose Lnn)".  Every table row under C01 in
 is EXCERPT-MISMATCH only.  Section 2 must hold as many table rows as C01 has; a surplus left
 after the missing rows adds one EXCERPT-MISSING "table rows: ...".  All count as EXCERPT-MISSING.
 
+Agent cards (2026-11-04): the ficc-*.md files in <root>/../../agents (the installed skill
+~/.claude/skills/ficc-voice -> ~/.claude/agents; the public repo skills/ficc-voice -> <repo>/agents), or in
+--cards DIR, are checked like the skill files, results kept apart.  A symlinked card is read through its link (a
+broken link is skipped; a link and its target in the same dir are read once).  Section refs named by file (F 4.2,
+F.md 4.2, F.md “4.2 title”, dev-notes.md section 5, continuations "F.md 1–5 and 9") must resolve (MISSING), and
+every one must carry its section title right after the number (author ruling 2026-11-04):
+  FICCStructure.md 7 “Check relations layer by layer”   FICCOutline.md 1 “The outline is a tree”–4 “Build ...”
+the heading title without its number; compared after trimming blanks, case-insensitively.  The title is needed once
+per card: at the first mention of a (file, section); later mentions may omit it.  NO-TITLE only when no mention of
+that (file, section) in the card has a title (the note gives the title to write); a title that differs: STALE-TITLE
+wherever it stands.  A range "N–M" carries a title at each end and only its
+ends are refs.  V/S/O/C numbers must be defined (MISSING-RULE).  Not read in cards: bare section numbers without a
+file name ("4 Kept rulings" points at the card's skill SKILL.md), unprefixed quoted titles, item numbers written
+without ".md" (dispatch-notes 2.3), and refs to files outside this skill (ficc-hand/references/handoff.md 2).  The
+title rule holds for cards only; skill files keep STALE? for a quoted title.  No such dir, or no ficc-*.md file in
+it: one line "cards: none found at DIR", not a failure.  Report: "cards: DIR (names)", per-card blocks, then
+  cards N files · refs N · MISSING m · STALE-TITLE s · NO-TITLE n · rule refs R · MISSING-RULE r
+--json: "cards" {dir, found, files, per_file, refs, rules}; counts.cards_files, cards_refs, cards_missing,
+cards_stale_title, cards_no_title, cards_rule_refs, cards_missing_rule.  Card names show as "cards/<name>".
+
+Rationale quotes (2026-11-04): on each "Supports" line of references/*-rationale.md (fenced code skipped), a
+rule id followed -- after any spaces, or after one bracketed note "S12 (the sub-line) “...”" and any spaces -- by a
+quotation “...” (nested “” counted) must quote that rule's current text.  Body of Xnn: from its definition line in
+the rule file for its letter to the next "- **Xmm**" line or heading; each line compared with blanks at both ends
+and "**" removed, the definition line without "- Xnn " (the intent sentence), any other list line without its "- ".
+The quote (blanks at both ends and one final period removed) must be a substring of one body line; a quote with
+ellipses (…… … ...) passes when each segment is found, in order, on one line; ‘’ and “” count as the same mark
+(inner quotes nest as ‘’).  Otherwise STALE-QUOTE: the report gives file, line, rule id, the first 40 characters
+of the quote and the most similar body line.  A quotation not closed on its line is STALE-QUOTE too.  History is
+not checked: lines "- Original (ledger ...)", "- Origin (...)", "- Moved here (...)", and the rest of a Supports
+line from the first "Original (...):", "Origin:" or "Moved here" that stands outside every quotation (inside a
+quotation these words are quoted text and do not cut the line).  A rule id with no definition line is left to
+MISSING-RULE (quote SKIPPED).  Report:
+  rationale quotes: N "Supports: Xnn “...”" quotes in <files> checked against the rule bodies; STALE-QUOTE s
+--json: "quotes" (per quote: file, line, rule, quote, result, rule_file, match_line, nearest_line, nearest,
+similarity, note), "quote_files"; counts.quotes, counts.stale_quote.
+The cards line and the quotes line stand before the last line; their counts also go into the last line,
+just before its last item (see "Last line" below).
+
 Exit codes: 0 clean; 1 any MISSING, STALE?, MISSING-RULE, EXCERPT-MISMATCH,
-EXCERPT-MISSING or EXCERPT-MISSING-FILE; 2 usage error (root lacks FICCOutline.md,
-FICCStructure.md or FICCVoice.md).
+EXCERPT-MISSING or EXCERPT-MISSING-FILE in the skill; any MISSING, STALE-TITLE, NO-TITLE or MISSING-RULE in a
+card; any STALE-QUOTE; 2 usage error (root lacks FICCOutline.md, FICCStructure.md or FICCVoice.md).
 Last line of the text report:
   refs N · MISSING m · STALE? s · rule refs R · MISSING-RULE r
-    · excerpt lines N · EXCERPT-MISMATCH m · EXCERPT-MISSING k · excerpt §3 C23 ids OK
+    · excerpt lines N · EXCERPT-MISMATCH m · EXCERPT-MISSING k
+    · cards N files · cards MISSING m · cards STALE-TITLE s · cards NO-TITLE n · cards MISSING-RULE r
+    · quotes Q · STALE-QUOTE q
+    · excerpt §3 C23 ids OK
   (one line; the last item reads OK, MISMATCH, MISSING or skipped as in "Section 3" above;
   " · EXCERPT-MISSING-FILE 1" replaces the section-3 item when the excerpt is missing; " · excerpt
-  skipped" instead of the excerpt items when the root has no FICCCompose.md)
+  skipped" instead of the excerpt items when the root has no FICCCompose.md.  The cards and quotes
+  items (2026-11-04) always stand just before that last item; " · cards none" when no card dir with
+  ficc-*.md was found)
 Voice excerpts (wave 3, 2026-11-03): each file in VOICE_EXCERPTS (references/voice-excerpt-{patch,polish,draft,
 coldread}.md) must copy FICCVoice.md lines verbatim in its section 1 ("**" removed) and hold the intent line of each V
 number listed for it; results EXCERPT-MISMATCH / EXCERPT-MISSING / EXCERPT-MISSING-FILE (exit 1), one report line per
@@ -130,7 +175,10 @@ numbered reference file), or to a rule definition, before installing.  Details: 
 """
 import argparse
 import collections
+import contextlib
 import difflib
+import fnmatch
+import io
 import json
 import os
 import re
@@ -220,6 +268,23 @@ VOICE_EXCERPTS = {
     'references/voice-excerpt-coldread.md': ('V22', 'V23', 'V32', 'V36', 'V37', 'V38', 'V39', 'V40', 'V57'),
 }
 EX_V = re.compile(r'^-\s+(V\d{2})\s')
+# agent cards (2026-11-04): <root>/../../agents/ficc-*.md -- ~/.claude/skills/ficc-voice -> ~/.claude/agents, and
+# skills/ficc-voice -> <repo>/agents in the public repo; --cards DIR overrides.  Shown as "cards/<name>".
+CARDS_REL = ('..', '..', 'agents')
+CARD_GLOB = 'ficc-*.md'
+CARD_LABEL = 'cards/'
+# a card's section ref carries the section title right after its number: FICCStructure.md 7 “Check relations layer
+# by layer” (author ruling 2026-11-04); compared with the heading title case-insensitively
+CARD_TITLE = re.compile(r'\s?“([^”\n]{1,160})”')
+# rationale quotes (2026-11-04): "Supports: Xnn “<rule sentence>”" in references/*-rationale.md must quote the rule's
+# current body.  The id may be followed by one bracketed note before the quote: "S12 (the sub-line) “...”".
+RATIONALE_DIR, RATIONALE_SUFFIX = 'references', '-rationale.md'
+SUPPORTS = re.compile(r'^\s*(?:-\s+)?Supports\b')
+HISTORY_CUT = re.compile(r'(?:Original|Origin)\s*(?:\([^)\n]*\))?\s*:|Moved here')   # history text: not checked
+QREF = re.compile(r'(?<![A-Za-z0-9_])([VSOC]\d{2})(?![0-9])[ \t]*(?:[（(][^（()）\n]{0,80}[)）][ \t]*)?“')   # any spaces (Codex F2)
+RULE_ANY = re.compile(r'^\s*-\s+\*\*[VSOC]\d{2}\*\*')   # any rule line, pointer lines included: ends a body
+ELLIPSIS = re.compile(r'……|…|\.\.\.')
+QMAP = str.maketrans({'‘': '“', '’': '”'})   # a quote inside “...” nests with ‘’: ‘而且’ there = “而且” in the rule
 
 
 def read(path):
@@ -293,7 +358,15 @@ def attached_quote(line, pos):
     return next(g for g in m.groups() if g is not None).strip(), m.end()
 
 
-def chain(line, pos, prev):
+def attached_title(line, pos):
+    """a card ref's title: “...” right after the number (one optional space), up to 160 characters."""
+    m = CARD_TITLE.match(line, pos)
+    if not m:
+        return None, pos
+    return m.group(1).strip(), m.end()
+
+
+def chain(line, pos, prev, aq=attached_quote):
     """Continuations after ref `prev` ending at pos; yields (num, quote, start, end)."""
     out = []
     while True:
@@ -303,7 +376,7 @@ def chain(line, pos, prev):
         if m.group(1).strip() in RANGE and \
                 [int(x) for x in m.group(2).split('.')] <= [int(x) for x in prev.split('.')]:
             return out
-        q, end = attached_quote(line, m.end())
+        q, end = aq(line, m.end())
         out.append((m.group(2), q, m.start(2), end))
         pos, prev = end, m.group(2)
 
@@ -355,6 +428,162 @@ def _nearest(text, cands):
         if r > best[2]:
             best = (no, c, r)
     return best[0], best[1], round(best[2], 2)
+
+
+def cards_dir(root, cards=None):
+    """the agent-card directory: --cards DIR, else <root>/../../agents."""
+    if cards:
+        return os.path.abspath(os.path.expanduser(cards))
+    return os.path.normpath(os.path.join(os.path.abspath(os.path.expanduser(root)), *CARDS_REL))
+
+
+def card_files(cdir):
+    """-> sorted ficc-*.md names in cdir that are files after following symlinks (a broken link is not), one name per
+    real file (a regular file wins over a link to it); [] when cdir is missing or holds none."""
+    if not os.path.isdir(cdir):
+        return []
+    seen = {}
+    for fn in sorted(os.listdir(cdir)):
+        p = os.path.join(cdir, fn)
+        if not fnmatch.fnmatch(fn, CARD_GLOB) or not os.path.isfile(p):
+            continue
+        real = os.path.realpath(p)
+        if real not in seen or (os.path.islink(os.path.join(cdir, seen[real])) and not os.path.islink(p)):
+            seen[real] = fn
+    return sorted(seen.values())
+
+
+def rule_bodies(root):
+    """-> {Xnn: (rule file, [(line no, text)])}.  A body runs from the definition line "- **Xnn** **...**" to the next
+    rule line "- **Xmm**" (pointer lines included) or heading.  Text per line: blanks at both ends and "**" removed; the
+    definition line without its "- Xnn " prefix (= the intent sentence), any other list line without its leading "- "."""
+    out = {}
+    for letter, fname in sorted(RULE_FILE.items()):
+        fp = os.path.join(root, fname)
+        if not os.path.isfile(fp):
+            continue
+        cur = None
+        for no, l in enumerate(read(fp).split('\n'), 1):
+            d = RULE_DEF.match(l)
+            if d and d.group(1)[0] == letter:
+                cur = out.setdefault(d.group(1), (fname, []))[1]
+                cur.append((no, re.sub(r'^-\s+%s\s*' % d.group(1), '', l.replace('**', '').strip())))
+                continue
+            if RULE_ANY.match(l) or re.match(r'^#{1,6} ', l):
+                cur = None
+                continue
+            t = l.replace('**', '').strip()
+            if cur is not None and t:
+                cur.append((no, t[2:].strip() if t.startswith('- ') else t))
+    return out
+
+
+def _close_quote(line, k):
+    """index of the ” closing the “ at line[k] (nested “” counted), or -1."""
+    depth = 0
+    for j in range(k, len(line)):
+        if line[j] == '“':
+            depth += 1
+        elif line[j] == '”':
+            depth -= 1
+            if depth == 0:
+                return j
+    return -1
+
+
+def _history_cut(line):
+    """start of the first "Original (...):", "Origin:" or "Moved here" outside any “...” on the line, else len(line)."""
+    for h in HISTORY_CUT.finditer(line):
+        if line.count('“', 0, h.start()) == line.count('”', 0, h.start()):
+            return h.start()
+    return len(line)
+
+
+def norm_quote(q):
+    """blanks at both ends and one final period (. or 。, not an ellipsis) removed."""
+    q = q.strip()
+    if q.endswith(('.', '。')) and not q.endswith(('...', '…')):
+        q = q[:-1].rstrip()
+    return q
+
+
+def quote_on_line(q, line):
+    """q (normalised) is a substring of line; with ellipses (…… … ...) every segment, in order, on that line."""
+    segs = [x.strip() for x in ELLIPSIS.split(q)]
+    segs = [x for x in segs if x]
+    pos = 0
+    for x in segs:
+        k = line.find(x, pos)
+        if k < 0:
+            return False
+        pos = k + len(x)
+    return bool(segs)
+
+
+def rationale_files(root):
+    d = os.path.join(root, RATIONALE_DIR)
+    if not os.path.isdir(d):
+        return []
+    return sorted(RATIONALE_DIR + '/' + fn for fn in os.listdir(d)
+                  if fn.endswith(RATIONALE_SUFFIX) and os.path.isfile(os.path.join(d, fn)))
+
+
+def check_quotes(root):
+    """STALE-QUOTE (2026-11-04): on each "Supports" line of references/*-rationale.md (fenced code skipped; the
+    line cut where "Original (...):", "Origin:" or "Moved here" starts), every rule id followed -- optionally after one
+    bracketed note -- by a quotation “...” (nested “” counted) must quote its rule's current body: the quote, normalised
+    by norm_quote, is a substring of one body line, or with ellipses every segment in order on one line; ‘’ and “” count
+    as the same mark on both sides (a quote nests its inner quotes with ‘’).  "Original"/"Origin"/"Moved here"
+    lines are history and not read.  An id with no definition line is left to MISSING-RULE (result SKIPPED).
+    -> list of {file, line, rule, quote, result OK|STALE-QUOTE|SKIPPED, rule_file, match_line, nearest_line,
+    nearest, similarity, note}."""
+    bodies = rule_bodies(root)
+    out = []
+    for rel in rationale_files(root):
+        fence = False
+        for no, l in enumerate(read(os.path.join(root, rel)).split('\n'), 1):
+            if FENCE.match(l):
+                fence = not fence
+                continue
+            if fence or not SUPPORTS.match(l):
+                continue
+            cut = _history_cut(l)
+            pos = 0
+            while True:
+                m = QREF.search(l, pos)
+                if not m or m.start() >= cut:
+                    break
+                k = m.end() - 1
+                e = _close_quote(l, k)
+                rid = m.group(1)
+                r = {'file': rel, 'line': no, 'rule': rid, 'quote': l[k + 1:e] if e >= 0 else l[k + 1:],
+                     'result': 'OK', 'rule_file': RULE_FILE[rid[0]],
+                     'match_line': None, 'nearest_line': None, 'nearest': '', 'similarity': 0.0, 'note': ''}
+                if e < 0:   # never dropped silently (R1 F7)
+                    r['result'] = 'STALE-QUOTE'
+                    r['note'] = 'quotation “ not closed on this line'
+                    out.append(r)
+                    break
+                raw = r['quote']
+                pos = e + 1
+                if rid not in bodies:
+                    r['result'] = 'SKIPPED'
+                    r['note'] = '%s has no definition line (reported as MISSING-RULE)' % rid
+                    out.append(r)
+                    continue
+                q = norm_quote(raw).translate(QMAP)
+                lines = [(n, t.translate(QMAP)) for n, t in bodies[rid][1]]
+                hit = next((n for n, t in lines if quote_on_line(q, t)), None)
+                if hit:
+                    r['match_line'] = hit
+                else:
+                    r['result'] = 'STALE-QUOTE'
+                    r['nearest_line'], _, r['similarity'] = _nearest(q, lines)
+                    r['nearest'] = dict(bodies[rid][1]).get(r['nearest_line'], '')
+                    r['note'] = 'not on any line of %s %s (L%d–L%d)' % (
+                        r['rule_file'], rid, bodies[rid][1][0][0], bodies[rid][1][-1][0])
+                out.append(r)
+    return out
 
 
 def check_excerpt(root, required=EXCERPT_REQUIRED):
@@ -549,7 +778,7 @@ def check_voice_excerpts(root, table=None):
         return []
     pool = {l.replace('**', '').strip() for l in read(vp).split('\n') if l.strip()}
     out = []
-    for rel, req in sorted((table or VOICE_EXCERPTS).items()):
+    for rel, req in sorted((VOICE_EXCERPTS if table is None else table).items()):
         r = {'file': rel, 'lines': 0, 'mismatch': [], 'missing': [], 'required': list(req), 'missing_file': False}
         ep = os.path.join(root, rel)
         if not os.path.isfile(ep):
@@ -579,12 +808,13 @@ def check_voice_excerpts(root, table=None):
     return out
 
 
-def selftest_voice_excerpts(root=SKILL_DIR):
+def selftest_voice_excerpts(root=SKILL_DIR, cards=None):
     """--selftest-excerpt, part 2 (wave 3): on a temp copy of root, per voice excerpt: one word changed in a section-1
     line -> EXCERPT-MISMATCH; one required intent line dropped -> EXCERPT-MISSING; the file removed ->
     EXCERPT-MISSING-FILE; each with exit 1.  Then root itself must pass.  -> 0 or 1."""
     print('== voice excerpt selftest (%d files vs FICCVoice.md; temp copy of %s)' % (len(VOICE_EXCERPTS), root))
-    live = check(root)
+    cards = cards_dir(root, cards)   # the copy's own ../../agents is elsewhere: keep the original's
+    live = check(root, cards=cards)
     ok = live['exit_code'] == 0 and all(v['lines'] and not (v['mismatch'] or v['missing'] or v['missing_file'])
                                         for v in live['voice_excerpts'])
     tmp = tempfile.mkdtemp(prefix='xref_voice_')
@@ -607,7 +837,7 @@ def selftest_voice_excerpts(root=SKILL_DIR):
                 else:
                     with open(path, 'w', encoding='utf-8') as fh:
                         fh.write('\n'.join(text))
-                res = check(dst)
+                res = check(dst, cards=cards)
                 c = res['counts']
                 good = res['exit_code'] == 1 and c[key] >= 1 and all(
                     c[k] == live['counts'][k] for k in ('missing', 'stale', 'missing_rule', 'excerpt_mismatch',
@@ -625,7 +855,7 @@ def selftest_voice_excerpts(root=SKILL_DIR):
     return 0 if ok else 1
 
 
-def check(root):
+def check(root, cards=None, voice_table=None):
     root = os.path.abspath(os.path.expanduser(root))
     for f in REQUIRED:
         if not os.path.isfile(os.path.join(root, f + '.md')):
@@ -696,7 +926,7 @@ def check(root):
                     r['note'] = 'no "- **%s** **...**" in %s' % (rid, RULE_FILE[m.group(1)])
                 rules.append(r)
 
-    def resolve(rel, i, kind, tgt, num, raw, quote, local):
+    def resolve(rel, i, kind, tgt, num, raw, quote, local, card=False):
         H, B = target(tgt)
         name = disp(tgt)
         r = {'file': rel, 'line': i, 'kind': kind, 'raw': raw.strip(), 'target': tgt,
@@ -708,6 +938,15 @@ def check(root):
         elif num not in H:
             r['result'] = 'MISSING'
             r['note'] = 'no section %s in %s' % (num, tgt)
+        elif card:   # cards (author ruling 2026-11-04): every ref names its section title
+            title = H[num]
+            r['heading'] = ('%s %s %s' % (name, num, title)).strip()
+            if quote is None:
+                r['result'] = 'NO-TITLE'
+                r['note'] = 'no mention in this card has the title; at the first: %s %s “%s”' % (name, num, title)
+            elif quote.strip().lower() != title.strip().lower():
+                r['result'] = 'STALE-TITLE'
+                r['note'] = 'title “%s” ≠ heading “%s”' % (quote, title)
         else:
             title = H[num]
             r['heading'] = ('%s %s %s' % (name, num, title)).strip()
@@ -730,11 +969,14 @@ def check(root):
                     r['note'] = (r['note'] + '; ' if r['note'] else '') + '本文件 heading OK'
         refs.append(r)
 
-    for rel in scanned:
-        text = read(os.path.join(root, rel))
+    def scan_text(rel, text, card=False):
+        """Section refs and rule numbers of one file -> its per-file summary, or None when it has no ref.
+        A card (card=True, 2026-11-04) gets prefixed section refs (F 4.2, F.md “4.2 title”, file.md section 5) and
+        rule numbers only: no bare in-file refs, no unprefixed quoted titles."""
         scan_rules(rel, text)
         stem = rel[:-3] if rel.endswith('.md') else None
-        own = rel if (stem in FILES or (rel.startswith(ZH) and stem and stem[len(ZH):] in FILES)) else None
+        own = None if card else (
+            rel if (stem in FILES or (rel.startswith(ZH) and stem and stem[len(ZH):] in FILES)) else None)
         is_ex = rel == EXAMPLES
         start_n = len(refs)
         fence = False
@@ -770,15 +1012,15 @@ def check(root):
                     tgt = resolve_path(m.group('path'), rel)
                     if not tgt:
                         continue
-                    q, end = attached_quote(l, m.end())
+                    q, end = (attached_title if card else attached_quote)(l, m.end())
                     local = is_ex and l[max(0, m.start() - 3):m.start()] == '本文件'
                     found.append(('N', tgt, m.group('n'), q, l[m.start():end], m.start(), end, local))
                     spans.append((m.start(), end))
-                    for cn, cq, cs, ce in chain(l, end, m.group('n')):
+                    for cn, cq, cs, ce in chain(l, end, m.group('n'), attached_title if card else attached_quote):
                         found.append(('C', tgt, cn, cq, l[cs:ce], cs, ce, False))
                         spans.append((cs, ce))
                 for m in RQB.finditer(l):
-                    if not free(m.start()):
+                    if card or not free(m.start()):   # cards: prefixed refs only
                         continue
                     num, title = m.group('qn'), m.group('qt').strip()
                     if own:
@@ -805,12 +1047,41 @@ def check(root):
                                 spans.append((cs, ce))
                                 bare[own] += 1
             for kind, tgt, num, q, raw, s, e, local in sorted(found, key=lambda x: x[5]):
-                resolve(rel, i, kind, tgt, num, raw, q, local)
+                resolve(rel, i, kind, tgt, num, raw, q, local, card)
         mine = refs[start_n:]
+        if card:   # a (file, section) needs its title once per card, at its first mention (author ruling, round 4)
+            titled = {}
+            for r in mine:
+                if r['quote'] is not None and r['result'] in ('OK', 'STALE-TITLE'):
+                    titled.setdefault(r['ref'], r['line'])
+            for r in mine:
+                if r['result'] == 'NO-TITLE' and r['ref'] in titled:
+                    r['result'] = 'OK'
+                    r['note'] = 'title given in this card at L%d' % titled[r['ref']]
         if mine:
-            per.append({'file': rel, 'refs': len(mine),
-                        'missing': sum(r['result'] == 'MISSING' for r in mine),
-                        'stale': sum(r['result'] == 'STALE?' for r in mine)})
+            return {'file': rel, 'refs': len(mine),
+                    'missing': sum(r['result'] == 'MISSING' for r in mine),
+                    'stale': sum(r['result'] == 'STALE?' for r in mine),
+                    'stale_title': sum(r['result'] == 'STALE-TITLE' for r in mine),
+                    'no_title': sum(r['result'] == 'NO-TITLE' for r in mine)}
+        return None
+
+    for rel in scanned:
+        p = scan_text(rel, read(os.path.join(root, rel)))
+        if p:
+            per.append(p)
+    # agent cards (2026-11-04): <root>/../../agents/ficc-*.md or --cards DIR; counted apart from the skill files
+    n_refs, n_rules = len(refs), len(rules)
+    cdir = cards_dir(root, cards)
+    cnames = card_files(cdir)
+    cper = []
+    for fn in cnames:
+        p = scan_text(CARD_LABEL + fn, read(os.path.join(cdir, fn)), card=True)
+        if p:
+            cper.append(p)
+    card_refs, card_rules = refs[n_refs:], rules[n_rules:]
+    del refs[n_refs:]
+    del rules[n_rules:]
     ex_list = []
     for rel, why in excluded:
         try:
@@ -823,14 +1094,23 @@ def check(root):
     miss = sum(r['result'] == 'MISSING' for r in refs)
     stale = sum(r['result'] == 'STALE?' for r in refs)
     miss_rule = sum(r['result'] == 'MISSING-RULE' for r in rules)
-    vex = check_voice_excerpts(root)
+    vex = check_voice_excerpts(root, voice_table)
     exc = check_excerpt(root)
     ex_mis = sum(1 for x in exc['items'] if x['result'] != 'OK') if exc else 0
     ex_miss = len(exc['missing']) if exc else 0
     ex_file = 1 if exc and exc['missing_file'] else 0
+    c_miss = sum(r['result'] == 'MISSING' for r in card_refs)
+    c_stale_t = sum(r['result'] == 'STALE-TITLE' for r in card_refs)
+    c_no_t = sum(r['result'] == 'NO-TITLE' for r in card_refs)
+    c_miss_rule = sum(r['result'] == 'MISSING-RULE' for r in card_rules)
+    quotes = check_quotes(root)
+    stale_q = sum(q['result'] == 'STALE-QUOTE' for q in quotes)
     return {'root': root, 'refs': refs, 'per_file': per, 'excluded': ex_list,
             'bare': bare, 'rules': rules,
             'rules_defined': {k: len(v) for k, v in defined.items()},
+            'cards': {'dir': cdir, 'found': bool(cnames), 'files': [CARD_LABEL + f for f in cnames],
+                      'per_file': cper, 'refs': card_refs, 'rules': card_rules},
+            'quotes': quotes, 'quote_files': rationale_files(root),
             'excerpt': exc, 'voice_excerpts': vex,
             'counts': {'refs': n, 'missing': miss, 'stale': stale, 'bare': sum(bare.values()),
                        'rule_refs': len(rules), 'missing_rule': miss_rule,
@@ -839,21 +1119,29 @@ def check(root):
                        'excerpt_skipped': exc is None,
                        'voice_mismatch': sum(len(v['mismatch']) for v in vex),
                        'voice_missing': sum(len(v['missing']) for v in vex),
-                       'voice_missing_file': sum(1 for v in vex if v['missing_file'])},
+                       'voice_missing_file': sum(1 for v in vex if v['missing_file']),
+                       'cards_files': len(cnames), 'cards_refs': len(card_refs), 'cards_missing': c_miss,
+                       'cards_stale_title': c_stale_t, 'cards_no_title': c_no_t,
+                       'cards_rule_refs': len(card_rules), 'cards_missing_rule': c_miss_rule,
+                       'quotes': sum(q['result'] != 'SKIPPED' for q in quotes), 'stale_quote': stale_q},
             'exit_code': 1 if (miss or stale or miss_rule or ex_mis or ex_miss or ex_file
+                               or c_miss or c_stale_t or c_no_t or c_miss_rule or stale_q
                                or any(v['mismatch'] or v['missing'] or v['missing_file'] for v in vex)) else 0}
 
 
-def render(res, quiet=False):
-    out = ['root: %s' % res['root']]
+def _render_refs(out, refs, per_file, quiet):
     byfile = {}
-    for r in res['refs']:
+    for r in refs:
         byfile.setdefault(r['file'], []).append(r)
-    for p in res['per_file']:
+    for p in per_file:
         rows = byfile[p['file']]
-        if quiet and not (p['missing'] or p['stale']):
+        if quiet and not (p['missing'] or p['stale'] or p.get('stale_title') or p.get('no_title')):
             continue
-        out.append('== %s  (refs %d, MISSING %d, STALE? %d)' % (p['file'], p['refs'], p['missing'], p['stale']))
+        if p['file'].startswith(CARD_LABEL):
+            out.append('== %s  (refs %d, MISSING %d, STALE-TITLE %d, NO-TITLE %d)' % (
+                p['file'], p['refs'], p['missing'], p['stale_title'], p['no_title']))
+        else:
+            out.append('== %s  (refs %d, MISSING %d, STALE? %d)' % (p['file'], p['refs'], p['missing'], p['stale']))
         for r in rows:
             if quiet and r['result'] == 'OK':
                 continue
@@ -861,6 +1149,11 @@ def render(res, quiet=False):
                 r['result'] + ('  [%s]' % r['heading'] if r['heading'] else ''))
             out.append('  L%d [%s] %s -> %s%s' % (r['line'], r['kind'], r['raw'], res_txt,
                                                    ('  (%s)' % r['note']) if r['note'] else ''))
+
+
+def render(res, quiet=False):
+    out = ['root: %s' % res['root']]
+    _render_refs(out, res['refs'], res['per_file'], quiet)
     if res['excluded']:
         out.append('')
         out.append('== excluded (not checked)')
@@ -877,14 +1170,42 @@ def render(res, quiet=False):
         c['rule_refs'], d.get('V', 0), d.get('S', 0), d.get('O', 0), d.get('C', 0), c['missing_rule']))
     for r in bad:
         out.append('  %s L%d %s -> %s  (%s)' % (r['file'], r['line'], r['ref'], r['result'], r['note']))
+    cd = res.get('cards')
+    if cd is not None:
+        if not cd['found']:
+            out.append('cards: none found at %s (no %s; skipped, not a failure)' % (cd['dir'], CARD_GLOB))
+        else:
+            out.append('cards: %s (%s)' % (cd['dir'], ', '.join(f[len(CARD_LABEL):] for f in cd['files'])))
+            _render_refs(out, cd['refs'], cd['per_file'], quiet)
+            for r in cd['rules']:
+                if r['result'] != 'OK':
+                    out.append('  %s L%d %s -> %s  (%s)' % (r['file'], r['line'], r['ref'], r['result'], r['note']))
+            out.append('cards %d files · refs %d · MISSING %d · STALE-TITLE %d · NO-TITLE %d · rule refs %d · '
+                       'MISSING-RULE %d' % (c['cards_files'], c['cards_refs'], c['cards_missing'],
+                                           c['cards_stale_title'], c['cards_no_title'], c['cards_rule_refs'],
+                                           c['cards_missing_rule']))
+    if res.get('quotes') is not None:
+        qs = res['quotes']
+        out.append('rationale quotes: %d "Supports: Xnn “...”" quotes in %s checked against the rule bodies; '
+                   'STALE-QUOTE %d%s' % (c['quotes'], ', '.join(os.path.basename(f) for f in res['quote_files']) or
+                                          'no *-rationale.md', c['stale_quote'],
+                                          ('; skipped %d (rule not defined)' % sum(q['result'] == 'SKIPPED' for q in qs))
+                                          if any(q['result'] == 'SKIPPED' for q in qs) else ''))
+        for q in qs:
+            if q['result'] != 'STALE-QUOTE':
+                continue
+            out.append('  %s L%d %s “%s” -> STALE-QUOTE' % (q['file'], q['line'], q['rule'], snip(q['quote'], 40)))
+            out.append('      closest %s L%s (similarity %.2f): %s' % (
+                q['rule_file'], q['nearest_line'] or '-', q['similarity'], snip(q['nearest']) or '-'))
     exc = res.get('excerpt')
-    tail = ''
+    head, last = '', ''   # last line: ... excerpt items (head), cards and quotes, then the last item
     if exc is None:
         out.append('excerpt: skipped (no FICCCompose.md under the root)')
-        tail = ' · excerpt skipped'
+        last = ' · excerpt skipped'
     elif exc['missing_file']:
         out.append('excerpt: %s -> EXCERPT-MISSING-FILE' % exc['file'])
-        tail = ' · excerpt lines 0 · EXCERPT-MISMATCH 0 · EXCERPT-MISSING 0 · EXCERPT-MISSING-FILE 1'
+        head = ' · excerpt lines 0 · EXCERPT-MISMATCH 0 · EXCERPT-MISSING 0'
+        last = ' · EXCERPT-MISSING-FILE 1'
     else:
         tr = exc.get('table_rows') or {'rule': EX_TABLE_RULE, 'compose': 0, 'excerpt': 0}
         out.append('excerpt %s: %d lines before "## 3" checked against FICCCompose.md; '
@@ -919,8 +1240,9 @@ def render(res, quiet=False):
                 continue
             out.append('  %s (FICCCompose.md L%d) -> EXCERPT-MISSING  (no "- %s" intent line in excerpt section 1)'
                        % (x['rule'], x['compose_line'], x['rule']))
-        tail = ' · excerpt lines %d · EXCERPT-MISMATCH %d · EXCERPT-MISSING %d%s' % (
-            exc['lines'], c['excerpt_mismatch'], c['excerpt_missing'], s3_tail)
+        head = ' · excerpt lines %d · EXCERPT-MISMATCH %d · EXCERPT-MISSING %d' % (
+            exc['lines'], c['excerpt_mismatch'], c['excerpt_missing'])
+        last = s3_tail
     for v in res.get('voice_excerpts') or []:
         if v['missing_file']:
             out.append('voice excerpt %s -> EXCERPT-MISSING-FILE' % v['file'])
@@ -933,8 +1255,16 @@ def render(res, quiet=False):
             out.append('  L%d -> EXCERPT-MISMATCH  %s' % (no, snip(text)))
         for vn in v['missing']:
             out.append('  %s -> EXCERPT-MISSING  (no "- %s" intent line in section 1)' % (vn, vn))
-    out.append('refs %d · MISSING %d · STALE? %d · rule refs %d · MISSING-RULE %d%s' % (
-        c['refs'], c['missing'], c['stale'], c['rule_refs'], c['missing_rule'], tail))
+    mid = ''
+    if cd is not None:   # cards and rationale quotes (2026-11-04), just before the last item
+        mid = (' · cards %d files · cards MISSING %d · cards STALE-TITLE %d · cards NO-TITLE %d · cards MISSING-RULE %d'
+               % (c['cards_files'], c['cards_missing'], c['cards_stale_title'], c['cards_no_title'],
+                  c['cards_missing_rule'])) if cd['found'] \
+            else ' · cards none'
+    if res.get('quotes') is not None:
+        mid += ' · quotes %d · STALE-QUOTE %d' % (c['quotes'], c['stale_quote'])
+    out.append('refs %d · MISSING %d · STALE? %d · rule refs %d · MISSING-RULE %d%s%s%s' % (
+        c['refs'], c['missing'], c['stale'], c['rule_refs'], c['missing_rule'], head, mid, last))
     return '\n'.join(out)
 
 
@@ -997,7 +1327,7 @@ def selftest():
                 os.makedirs(os.path.dirname(p))
             with open(p, 'w', encoding='utf-8') as fh:
                 fh.write(txt)
-        res = check(tmp)
+        res = check(tmp, cards=os.path.join(tmp, 'no-cards'))   # cards and rationale quotes: selftest_cards_quotes
         print(render(res))
         print()
 
@@ -1125,8 +1455,210 @@ def selftest():
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     ok &= selftest_excerpt()
+    ok &= selftest_cards_quotes()
     print('selftest: %s' % ('all passed' if ok else 'FAILED'))
     return 0 if ok else 1
+
+
+# cards and rationale quotes (2026-11-04): a clean minimal tree at <tmp>/skills/ficc-voice, cards at <tmp>/agents
+CQ_TREE = {
+    'FICCOutline.md': '# FICCOutline\n\n## 1 The outline is a tree\n\n### 1.2 Position\n\n- **O01** **Write the claim first.**\n',
+    'FICCStructure.md': '# FICCStructure\n\n## 1 Set position\n\n- **S01** **Ask the task.**\n  - Name the parent node first.\n'
+                        '  - Origin: the task comes from the parent node.\n',
+    'FICCVoice.md': '# FICCVoice\n\n## 2 How to state a judgment\n\n'
+                    '- **V02** **State the judgment.**\n'                                           # L5
+                    '- **V08** **Mark the add-on relation. Keep the marker short.**\n'
+                    '  - Write “而且” (moreover) before the verb, not at the end.\n',
+    'SKILL.md': '# skill\n\nSkill files need no titles: FICCOutline.md 1.2 and FICCStructure.md 1.\n',
+}
+CQ_QUOTES = ('# FICCVoice rationale\n\n## V08\n\n'
+             '- Original (ledger #1): Mark it.\n'
+             '  Supports: V08 “Mark the add-on relation.” Intent line: "**" and the final period dropped.\n'     # L6
+             '  Supports: S01 (the sub-line) “Name the parent node first”. A sub-item line, after a bracketed note.\n'
+             '  Supports: V08 “Write ‘而且’ (moreover) …… not at the end”. Ellipsis segments in order; nested ‘’.\n'
+             '- Original (ledger #2): V02 “State the old judgment first” is history, not checked.\n'         # L9
+             '- Moved here (2026-11-04): V02 “An old line” is history too.\n'                               # L10
+             '  Supports: V08 “Mark the add-on relation” and S01 “Origin: the task comes from the parent node”. '
+             'Origin: V02 “made-up history” is not checked.\n')                                              # L11
+CQ_STALE = ('  Supports: V02 “State the judgment in full”. Changed wording.\n'                              # L12
+            '  Supports: V08 “not at the end …… Write ‘而且’”. Segments out of order.\n'                    # L13
+            '  Supports: V08 “Mark the add-on relation\n'                                                  # L14 unclosed
+            '  Supports: V02 “State, Origin: the judgment”. A history marker inside a stale quote.\n'      # L15
+            '  Supports: V02 “State, Original (ledger #3): the judgment”. Same with Original (...):.\n'   # L16
+            '  Supports: V02 “State, Moved here the judgment”. Same with Moved here.\n'                   # L17
+            '  Supports: V02  “State the old judgment”. Two spaces, no note.\n'                           # L18
+            '  Supports: V02 (intent line)  “State the older judgment”. Two spaces after the note.\n')   # L19
+CQ_GOOD_CARD = ('---\nname: ficc-good\n---\n\nRead FICCOutline.md 1 “The outline is a tree” to 1.2 “position” and '
+                'FICCStructure.md 1 “Set position”; apply O01 and V08. '
+                'Bare 4 Kept rulings, see 1.2 and “1.2 Position” are not checked.\n'
+                'Then FICCStructure.md 1 again: the title was given once in this card.\n')
+CQ_BAD_CARD = ('---\nname: ficc-bad\n---\n\nRead FICCStructure.md 1–5 and 9; FICCVoice.md “2 An old title”; '
+               'FICCOutline.md 1.2 “Old position”; apply V99 and S01.\nAgain FICCStructure.md 1, still with no title.\n')
+CQ_CLEAN_TAIL = ' · quotes 5 · STALE-QUOTE 0 · excerpt skipped'
+
+
+def selftest_cards_quotes():
+    """cards (default ../../agents, symlinked cards, --cards DIR, none found; titles: NO-TITLE, STALE-TITLE) and
+    STALE-QUOTE (history cut outside quotes, unclosed quote), on a clean minimal tree."""
+    print()
+    print('cards and rationale quotes (clean tree <tmp>/skills/ficc-voice, cards <tmp>/agents):')
+    tmp = tempfile.mkdtemp(prefix='xref_cards_')
+    ok, checks = True, []
+    try:
+        root = os.path.join(tmp, 'skills', 'ficc-voice')
+        files = dict(CQ_TREE)
+        files['references/FICCVoice-rationale.md'] = CQ_QUOTES
+        files['../../agents/ficc-good.md'] = CQ_GOOD_CARD
+        files['../../agents/notes.md'] = 'Not a ficc-*.md card: FICCOutline.md 9.9 is not checked.\n'
+        files['../../other/ficc-good.md'] = CQ_GOOD_CARD
+        files['../../linked/ficc-good.md'] = CQ_GOOD_CARD
+        files['../../src/bad-card.md'] = CQ_BAD_CARD
+        files['../../src/good-card.md'] = CQ_GOOD_CARD
+        for rel, txt in files.items():
+            p = os.path.normpath(os.path.join(root, rel))
+            if not os.path.isdir(os.path.dirname(p)):
+                os.makedirs(os.path.dirname(p))
+            with open(p, 'w', encoding='utf-8') as fh:
+                fh.write(txt)
+        linked = os.path.join(tmp, 'linked')
+        os.symlink('ficc-good.md', os.path.join(linked, 'ficc-alias.md'))                       # duplicate of a card
+        os.symlink(os.path.join(tmp, 'src', 'bad-card.md'), os.path.join(linked, 'ficc-link.md'))  # card kept elsewhere
+        os.symlink(os.path.join(tmp, 'src', 'gone.md'), os.path.join(linked, 'ficc-broken.md'))     # broken link
+        onlylink = os.path.join(tmp, 'onlylink')
+        os.makedirs(onlylink)
+        os.symlink(os.path.join(tmp, 'src', 'good-card.md'), os.path.join(onlylink, 'ficc-only.md'))
+        qpath = os.path.join(root, 'references/FICCVoice-rationale.md')
+        clean = check(root, voice_table={})
+        cc = clean['counts']
+        tail = render(clean).split('\n')
+        qs = [(q['line'], q['rule'], q['result']) for q in clean['quotes']]
+        checks += [
+            ('default cards dir <root>/../../agents found; ficc-*.md only (notes.md skipped)',
+             clean['cards']['found'] and clean['cards']['files'] == ['cards/ficc-good.md']
+             and clean['cards']['dir'] == os.path.join(tmp, 'agents')),
+            ('clean card: FICCOutline.md 1 “...” to 1.2 “position” (case-insensitive), FICCStructure.md 1 “...” OK; '
+             'O01, V08 OK; bare 4, see 1.2 and unprefixed “1.2 Position” not read',
+             sorted(r['ref'] for r in clean['cards']['refs'])
+             == ['FICCOutline 1', 'FICCOutline 1.2', 'FICCStructure 1', 'FICCStructure 1']
+             and all(r['result'] == 'OK' for r in clean['cards']['refs'] + clean['cards']['rules'])
+             and sorted(r['ref'] for r in clean['cards']['rules']) == ['O01', 'V08']),
+            ('title once per card: FICCStructure.md 1 titled at its first mention, untitled at the second -> both OK',
+             [(r['line'], r['result']) for r in clean['cards']['refs'] if r['ref'] == 'FICCStructure 1']
+             == [(5, 'OK'), (6, 'OK')]
+             and [r['note'] for r in clean['cards']['refs'] if r['ref'] == 'FICCStructure 1'][1]
+             == 'title given in this card at L5'),
+            ('skill files need no titles: SKILL.md refs without titles -> OK',
+             [r['result'] for r in clean['refs'] if r['file'] == 'SKILL.md'] == ['OK', 'OK']),
+            ('cards line: "cards 1 files · refs 4 · MISSING 0 · STALE-TITLE 0 · NO-TITLE 0 · rule refs 2 · '
+             'MISSING-RULE 0"',
+             'cards 1 files · refs 4 · MISSING 0 · STALE-TITLE 0 · NO-TITLE 0 · rule refs 2 · MISSING-RULE 0' in tail),
+            ('card refs and rule numbers kept out of the skill counts',
+             not any(r['file'].startswith(CARD_LABEL) for r in clean['refs'] + clean['rules'])),
+            ('quotes pass: intent line (period, ** dropped), sub-item after a bracketed note, ellipsis segments in '
+             'order with nested ‘’ = “”, two quotes on one line',
+             qs == [(6, 'V08', 'OK'), (7, 'S01', 'OK'), (8, 'V08', 'OK'), (11, 'V08', 'OK'), (11, 'S01', 'OK')]
+             and [q['match_line'] for q in clean['quotes']] == [6, 6, 7, 6, 7]),
+            ('"Original" and "Moved here" lines not checked (L9, L10); on a Supports line the text from "Origin:" '
+             'on is not checked (L11 V02), but "Origin:" inside a quote does not cut it (L11 S01)',
+             not any(q[0] in (9, 10) for q in qs) and not any(q[:2] == (11, 'V02') for q in qs)),
+            ('clean tree: STALE-QUOTE 0, exit 0', cc['stale_quote'] == 0 and cc['quotes'] == 5
+             and clean['exit_code'] == 0),
+            ('last line carries cards and quotes before its last item: "... · cards 1 files · cards MISSING 0 · '
+             'cards STALE-TITLE 0 · cards NO-TITLE 0 · cards MISSING-RULE 0 · quotes 5 · STALE-QUOTE 0 · excerpt skipped"',
+             tail[-1].endswith(' · cards 1 files · cards MISSING 0 · cards STALE-TITLE 0 · cards NO-TITLE 0'
+                               ' · cards MISSING-RULE 0' + CQ_CLEAN_TAIL)),
+        ]
+        with open(qpath, 'a', encoding='utf-8') as fh:
+            fh.write(CQ_STALE)
+        stale = check(root, voice_table={})
+        sq = [q for q in stale['quotes'] if q['result'] == 'STALE-QUOTE']
+        checks += [
+            ('changed wording -> STALE-QUOTE, closest line = V02 intent line (FICCVoice.md L5)',
+             [(q['line'], q['rule']) for q in sq][:1] == [(12, 'V02')] and sq[0]['nearest_line'] == 5
+             and sq[0]['similarity'] > 0.5),
+            ('ellipsis segments out of order -> STALE-QUOTE', [(q['line'], q['rule']) for q in sq][1:2] == [(13, 'V08')]),
+            ('unclosed quotation -> STALE-QUOTE, not dropped',
+             [(q['line'], q['rule']) for q in sq][2:3] == [(14, 'V08')] and 'not closed' in sq[2]['note']),
+            ('a history marker inside a stale quote does not hide it (Codex F1): Origin:, Original (...):, '
+             'Moved here -> STALE-QUOTE (L15-L17)',
+             [(q['line'], q['rule']) for q in sq][3:6] == [(15, 'V02'), (16, 'V02'), (17, 'V02')]),
+            ('extra spaces before the quote, with or without a note, are still read (Codex F2) -> STALE-QUOTE (L18, L19)',
+             [(q['line'], q['rule']) for q in sq][6:] == [(18, 'V02'), (19, 'V02')]),
+            ('STALE-QUOTE 8, exit 1; report line names file, line, rule and quote',
+             stale['counts']['stale_quote'] == 8 and stale['exit_code'] == 1
+             and '  references/FICCVoice-rationale.md L12 V02 “State the judgment in full” -> STALE-QUOTE'
+             in render(stale).split('\n')),
+            ('last line: "... · quotes 13 · STALE-QUOTE 8 · excerpt skipped"',
+             render(stale).split('\n')[-1].endswith(' · quotes 13 · STALE-QUOTE 8 · excerpt skipped')),
+        ]
+        with open(qpath, 'w', encoding='utf-8') as fh:
+            fh.write(CQ_QUOTES)
+        with open(os.path.join(tmp, 'agents', 'ficc-bad.md'), 'w', encoding='utf-8') as fh:
+            fh.write(CQ_BAD_CARD)
+        bad = check(root, voice_table={})
+        bc = bad['counts']
+        res_of = lambda f, raw: [r['result'] for r in bad['cards']['refs'] if r['file'] == f and r['raw'] == raw]
+        checks += [
+            ('bad card: "FICCStructure.md 1–5 and 9" -> 1 NO-TITLE, 5 and 9 MISSING; FICCVoice.md “2 An old title” '
+             'and FICCOutline.md 1.2 “Old position” -> STALE-TITLE; V99 -> MISSING-RULE',
+             res_of('cards/ficc-bad.md', 'FICCStructure.md 1') == ['NO-TITLE', 'NO-TITLE']
+             and res_of('cards/ficc-bad.md', '5') == ['MISSING'] and res_of('cards/ficc-bad.md', '9') == ['MISSING']
+             and res_of('cards/ficc-bad.md', 'FICCVoice.md “2 An old title”') == ['STALE-TITLE']
+             and res_of('cards/ficc-bad.md', 'FICCOutline.md 1.2 “Old position”') == ['STALE-TITLE']
+             and [r['result'] for r in bad['cards']['rules'] if r['ref'] == 'V99'] == ['MISSING-RULE']),
+            ('no mention titled: FICCStructure.md 1 twice in the bad card, never with a title -> NO-TITLE at both',
+             [r['line'] for r in bad['cards']['refs'] if r['file'] == 'cards/ficc-bad.md' and r['result'] == 'NO-TITLE']
+             == [5, 6]),
+            ('cards line counts 2 files · refs 10 · MISSING 2 · STALE-TITLE 2 · NO-TITLE 2 · rule refs 4 · '
+             'MISSING-RULE 1; exit 1',
+             'cards 2 files · refs 10 · MISSING 2 · STALE-TITLE 2 · NO-TITLE 2 · rule refs 4 · MISSING-RULE 1'
+             in render(bad).split('\n') and bad['exit_code'] == 1),
+            ('last line: "refs N · MISSING 0 · ... · cards 2 files · cards MISSING 2 · cards STALE-TITLE 2 · '
+             'cards NO-TITLE 2 · cards MISSING-RULE 1 · quotes 5 · STALE-QUOTE 0 · excerpt skipped"',
+             render(bad).split('\n')[-1].endswith(' · cards 2 files · cards MISSING 2 · cards STALE-TITLE 2'
+                                                   ' · cards NO-TITLE 2 · cards MISSING-RULE 1' + CQ_CLEAN_TAIL)
+             and render(bad).split('\n')[-1].startswith('refs %d · MISSING 0 · STALE? 0 ·' % cc['refs'])),
+            ('skill counts unchanged by the bad card',
+             all(bc[k] == cc[k] for k in ('refs', 'missing', 'stale', 'rule_refs', 'missing_rule', 'quotes'))),
+        ]
+        lk = check(root, cards=linked, voice_table={})
+        only = check(root, cards=onlylink, voice_table={})
+        checks += [
+            ('symlinked cards are read (R1 F1): a link to a card kept elsewhere is checked (its MISSING 2, '
+             'MISSING-RULE 1 reported, exit 1); a link to a card in the same dir is read once; a broken link is skipped',
+             lk['cards']['files'] == ['cards/ficc-good.md', 'cards/ficc-link.md']
+             and (lk['counts']['cards_missing'], lk['counts']['cards_missing_rule']) == (2, 1)
+             and lk['exit_code'] == 1),
+            ('a dir holding only a symlinked card is found, not "none found" (exit 0)',
+             only['cards']['found'] and only['cards']['files'] == ['cards/ficc-only.md'] and only['exit_code'] == 0
+             and not any(l.startswith('cards: none found') for l in render(only).split('\n'))),
+        ]
+        other = os.path.join(tmp, 'other')
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            main(['--root', root, '--cards', other, '-q'])
+        out = buf.getvalue().split('\n')
+        over = check(root, cards=other, voice_table={})
+        checks += [
+            ('--cards DIR overrides the default (clean copy elsewhere: 1 file, exit 0)',
+             over['cards']['dir'] == other and over['cards']['files'] == ['cards/ficc-good.md']
+             and over['exit_code'] == 0 and 'cards: %s (ficc-good.md)' % other in out
+             and 'cards 1 files · refs 4 · MISSING 0 · STALE-TITLE 0 · NO-TITLE 0 · rule refs 2 · MISSING-RULE 0' in out),
+        ]
+        none = check(root, cards=os.path.join(tmp, 'nowhere'), voice_table={})
+        checks += [
+            ('no cards dir -> "cards: none found at ...", not a failure (exit 0)',
+             not none['cards']['found'] and none['exit_code'] == 0 and none['counts']['cards_files'] == 0
+             and any(l.startswith('cards: none found at %s' % os.path.join(tmp, 'nowhere'))
+                     for l in render(none).split('\n'))
+             and render(none).split('\n')[-1].endswith(' · cards none' + CQ_CLEAN_TAIL)),
+        ]
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    for name, good in checks:
+        ok &= bool(good)
+        print('  %s  %s' % ('PASS' if good else 'FAIL', name))
+    return ok
 
 
 EX_COMPOSE = ('# FICCCompose\n\n## 1 Openings\n\n'
@@ -1219,14 +1751,15 @@ def _without(line, c):
     return line
 
 
-def selftest_excerpt_s3(root=SKILL_DIR):
+def selftest_excerpt_s3(root=SKILL_DIR, cards=None):
     """--selftest-excerpt (2026-10-24): section 3 of the excerpt against C23, on a temp copy of root.
     Drop one C id from the "- C23" lines, add a defined C id that C23 does not cite, drop every
     "- C23" line: each must be reported (EXCERPT-MISMATCH ids / EXCERPT-MISSING ids) with exit 1 and
     no other count changed; then root itself must pass (exit 0, section 3 OK).  -> 0 or 1."""
     print('== excerpt section 3 selftest (%s "- %s" lines vs FICCCompose.md %s; temp copy of %s)'
           % (EXCERPT, EX_S3_RULE, EX_S3_RULE, root))
-    live = check(root)
+    cards = cards_dir(root, cards)   # the copy's own ../../agents is elsewhere: keep the original's
+    live = check(root, cards=cards)
     s3 = (live.get('excerpt') or {}).get('sec3')
     if not s3 or not s3['lines']:
         print('  FAIL  no FICCCompose.md %s or no "- %s" line in excerpt section 3 under the root'
@@ -1264,7 +1797,7 @@ def selftest_excerpt_s3(root=SKILL_DIR):
         for name, text, want, w_miss, w_extra, (key, inc) in cases:
             with open(os.path.join(dst, EXCERPT), 'w', encoding='utf-8') as fh:
                 fh.write('\n'.join(text))
-            res = check(dst)
+            res = check(dst, cards=cards)
             r3, c = res['excerpt']['sec3'], res['counts']
             tail = render(res).split('\n')[-1]
             good = (r3['result'] == want and r3['missing'] == w_miss and r3['extra'] == w_extra
@@ -1304,8 +1837,14 @@ def main(argv=None):
                     'must copy FICCCompose.md verbatim before its "## 3", hold an intent line per C number, the key '
                     'lines in EXCERPT_REQUIRED and every C01 table row; its "- C23" lines after "## 3" must cite '
                     'exactly the C numbers of FICCCompose.md C23. '
-                    'Exit 1 on any MISSING, STALE?, MISSING-RULE, EXCERPT-MISMATCH, EXCERPT-MISSING '
-                    'or EXCERPT-MISSING-FILE.',
+                    'Agent cards <root>/../../agents/ficc-*.md (or --cards DIR, symlinks followed): section refs '
+                    'named by file must resolve (MISSING) and carry the section title, “...” right after the number '
+                    '(NO-TITLE, STALE-TITLE); rule numbers (MISSING-RULE); counted on their own "cards" line. '
+                    'Rationale quotes: in references/*-rationale.md, "Supports: Xnn “...”" must quote a line of '
+                    'rule Xnn\'s current body (substring; ellipsis segments in order on one line; "Original", '
+                    '"Origin" and "Moved here" history not checked), else STALE-QUOTE. '
+                    'Exit 1 on any MISSING, STALE?, MISSING-RULE, EXCERPT-MISMATCH, EXCERPT-MISSING, '
+                    'EXCERPT-MISSING-FILE, STALE-TITLE, NO-TITLE or STALE-QUOTE.',
         epilog='Not scanned (still valid targets): references/history.md, references/dev-notes.md, '
                'references/FICCVoice-provenance.md and references/migration-2026-10-17.md (historical records, '
                'provenance and the rule-number map; '
@@ -1314,6 +1853,11 @@ def main(argv=None):
                'symlinks (ficc-voice.md -> FICCVoice.md). Run after any change to a heading or section '
                'number of the main files, or any rule definition. Full rules: module docstring and scripts/README.md.')
     ap.add_argument('--root', default=SKILL_DIR, help='skill dir to check (default: %(default)s)')
+    ap.add_argument('--cards', metavar='DIR', default=None,
+                    help='agent-card dir whose ficc-*.md are checked for section refs named by file and V/S/O/C '
+                         'numbers (default: <root>/../../agents, i.e. ~/.claude/agents for the installed skill and '
+                         '<repo>/agents in the public repo; missing or without ficc-*.md -> "cards: none found", '
+                         'not a failure)')
     ap.add_argument('--json', action='store_true', help='machine-readable output')
     ap.add_argument('-q', '--quiet', action='store_true', help='list only MISSING / STALE? refs')
     ap.add_argument('--selftest', action='store_true',
@@ -1322,7 +1866,12 @@ def main(argv=None):
                          'line, cited and in a *-rationale.md file), FICCCompose.md sections; '
                          'seven excerpt cases (verbatim OK, changed word, dropped C number, extra table cell, dropped '
                          'key sub-line, dropped C01 table row, key lines and table complete) '
-                         'and a missing excerpt file')
+                         'and a missing excerpt file; cards (default ../../agents found, ficc-*.md only, titled clean '
+                         'card, skill files need no titles, a card with "F.md 1–5 and 9" (NO-TITLE, MISSING), stale '
+                         'titles and a bad rule number, symlinked cards, --cards override, no cards dir) and rationale '
+                         'quotes (intent line, sub-item after a note, ellipsis in order, two quotes on a line, history '
+                         'lines and suffixes skipped; changed wording, out-of-order ellipsis, unclosed quote, history '
+                         'words inside a stale quote, extra spaces before the quote -> STALE-QUOTE)')
     ap.add_argument('--selftest-excerpt', action='store_true',
                     help='excerpt section 3 on a temp copy of --root: drop one C number from the "- C23" lines, '
                          'add a defined C number C23 does not cite, drop every "- C23" line (each must be reported '
@@ -1331,10 +1880,10 @@ def main(argv=None):
     if a.selftest:
         return selftest()
     if a.selftest_excerpt:
-        s3 = selftest_excerpt_s3(a.root)
-        return selftest_voice_excerpts(a.root) or s3
+        s3 = selftest_excerpt_s3(a.root, a.cards)
+        return selftest_voice_excerpts(a.root, a.cards) or s3
     try:
-        res = check(a.root)
+        res = check(a.root, cards=a.cards)
     except IOError as e:
         print(str(e), file=sys.stderr)
         return 2

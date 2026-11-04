@@ -16,6 +16,12 @@ retired-pointers (2026-11-04, after voice-trim): the author withdrew the 2026-10
 - references/voice-excerpt-polish.md carries V08's intent line; its cap rises 18,372 → 18,450 by the author's ruling of 2026-11-04. The four rule files' caps are lowered to their new sizes.
 - scripts/xref_check.py: the retired-number mechanism (pointer lines, RETIRED-RULE, the "(formerly …)" exemption) is removed; a rule number without a definition line is MISSING-RULE; references/migration-2026-10-17.md is excluded as a record. SKILL.md 4 item 13 states the new rule.
 
+xref-cards-stale (2026-11-04, after retired-pointers): scripts/xref_check.py now also scans the FICC agent cards and checks the rationale quotations. Reviewed by refuter-t1e and a Codex second read.
+
+- Cards: the six agents/ficc-*.md (found at ../../agents from the skill root, so both this repo layout and a home install; skipped with a message when absent; `--cards DIR` overrides) are checked for file-qualified section references and rule numbers (MISSING, MISSING-RULE). A card's section reference carries the section's heading text the first time it cites that section (`FICCStructure.md 7 “Check relations layer by layer”`); a wrong heading is STALE-TITLE, a first mention without one is NO-TITLE. The five changed cards carry these titles; their caps rise by the author's ruling (outliner 2,722→3,173, structurer 2,442→2,549, composer 2,488→2,503, writer 2,599→2,606).
+- Rationale quotations: a `Supports: Xnn “…”` quotation that is not a substring of rule Xnn's current text is STALE-QUOTE (Original/Origin historical quotations are not checked; history markers inside a quotation and extra spaces before it no longer hide it). The 15 stale quotations in FICCStructure-rationale.md and FICCVoice-rationale.md are corrected to the current wording; FICCVoice-rationale.md's V07 section is split into V07 (the semicolon ruling) and C08 (paragraphing), and FICCCompose.md C08 points at C08.
+- The summary line carries the card and quotation counts; scripts/README.md documents both checks.
+
 ## 1.1.0 (2026-11-04)
 
 Rebuilt from the author's tree of 2026-11-04 with the same release rules as 1.0.0. Nine files are new, none removed. FICCStructure.md is unchanged.

@@ -9,10 +9,10 @@
     "skills/ficc-voice/FICCStructure.md": 41582,
     "skills/ficc-voice/references/compose-excerpt.md": 7189,
     "skills/ficc-voice/references/clarity-acceptance.md": 4512,
-    "agents/ficc-outliner.md": 2722,
-    "agents/ficc-structurer.md": 2442,
-    "agents/ficc-composer.md": 2488,
-    "agents/ficc-writer.md": 2599,
+    "agents/ficc-outliner.md": 3173,
+    "agents/ficc-structurer.md": 2549,
+    "agents/ficc-composer.md": 2503,
+    "agents/ficc-writer.md": 2606,
     "skills/ficc-voice/references/voice-excerpt-patch.md": 11795,
     "skills/ficc-voice/references/voice-excerpt-polish.md": 18450,
     "skills/ficc-voice/references/voice-excerpt-draft.md": 7308,
@@ -196,6 +196,28 @@
         "skills/ficc-voice/references/voice-excerpt-polish.md": [
           18372,
           18450
+        ]
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "reason": "user ruling 2026-11-04: card section references carry their heading text (xref STALE-TITLE/NO-TITLE); four card caps raised to post-change sizes",
+      "changes": {
+        "agents/ficc-outliner.md": [
+          2722,
+          3173
+        ],
+        "agents/ficc-structurer.md": [
+          2442,
+          2549
+        ],
+        "agents/ficc-composer.md": [
+          2488,
+          2503
+        ],
+        "agents/ficc-writer.md": [
+          2599,
+          2606
         ]
       }
     }

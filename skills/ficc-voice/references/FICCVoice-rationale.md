@@ -19,22 +19,25 @@ This file holds the rationale and examples moved out of FICCVoice.md in the ters
 - Original (ledger #53): For example, if the text below says both that the overall burden has fallen and that one group is still under pressure, the opening should name both the whole and the divergence. It cannot just say “压力已缓解” (pressure has eased).
   Supports: C02 “When both sides of a contrast or turn belong to this paragraph, make the opening hold both sides”.
 
-## V07
+## C08
 
 - Original (ledger #61): A paragraph serves to show one recognisable argument unit:
-  Supports: the basis for V07's paragraphing actions (staying in the same paragraph, carrying over in a new paragraph, starting a new paragraph by argument unit).
-- User ruling (2026-10-17): the earlier wording “use as few semicolons as possible” was judged too weak. V07 now bans semicolons in body prose, with no exceptions, and gives a search check and a fix, so that an AI writer has a rule rather than a preference. Semicolons that separate items inside a table cell or a list line are not body prose. This is the only semicolon rule. V19 no longer carries one.
+  Supports: the basis for C08's paragraphing actions (staying in the same paragraph, carrying over in a new paragraph, starting a new paragraph by argument unit).
 - Original (wave-3 ledger L2-Voice, L177): Insisting on the original paragraph breaks does not count as faithfulness.
-  Supports: V07 “Reorganize paragraphs by relation, not by length”. Keeping the source's paragraph breaks is no reason to skip reorganizing by relation.
+  Supports: C08 “Reorganize paragraphs by relation, not by length”. Keeping the source's paragraph breaks is no reason to skip reorganizing by relation.
+
+## V07
+
+- User ruling (2026-10-17): the earlier wording “use as few semicolons as possible” was judged too weak. V07 now bans semicolons in body prose, with no exceptions, and gives a search check and a fix, so that an AI writer has a rule rather than a preference. Semicolons that separate items inside a table cell or a list line are not body prose. This is the only semicolon rule. V19 no longer carries one.
 
 ## V11
 
 - Original (ledger #96): For example, when the material establishes “A发行债券、B只为其中200万元担保” (A issues the bonds, and B guarantees only 2 million yuan of them), state each party's responsibility separately. It cannot be shortened to “A和B负责偿债” (A and B are responsible for repayment).
-  Supports: V10, qualifiers still govern the original judgment after a split, and V15 “Do not merge several parties' responsibilities into one subject”.
+  Supports: V11, qualifiers still govern the original judgment after a split, and V15 “Do not merge several parties' responsibilities into one subject”.
 - Original (ledger #97): A comparison, condition, or turn can itself form a complete judgment,
-  Supports: V10 “A comparison, condition, or turn may have several subjects and clauses”.
+  Supports: V11 “Conditions, scope, and exceptions that directly qualify that judgment may stay in the same sentence”.
 - Original (ledger #101): Short sentences serve to reduce the load of holding information and matching it back,
-  Supports: V10 “Do not cut by the number of subjects or clauses”. Split sentences by the reader's load of holding and matching back.
+  Supports: V11 “If a sentence contains several judgments or actions that need separate statement, split them into several sentences”. Split sentences by the reader's load of holding and matching back.
 
 ## V15
 
