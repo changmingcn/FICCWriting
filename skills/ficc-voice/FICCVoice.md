@@ -364,6 +364,7 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
   - Use a Chinese word where readers understand it more easily.
   - Do not make the reader look back repeatedly for definitions to understand one sentence.
   - See references/lecture-terms.md: lecture terms.
+- **V57** **Views and inferences are not objects.** A view, reading, explanation or inference is never the subject or object of a verb that moves it: it does not “加强、变轻、占上风、站在一边、并存”, and it is not counted (“三种读法”). Write who holds it and what they believe (“Barclays看成技术性抛售”), or what we think (“我们认为”, “在我们看来”, “更像是先后”); when several views stand side by side, write “三种说法” once and name each holder. No label for an interpretive move of ours: 读法, 解读, 视角, 框架, 判别读数 and the like are out even when the outline carries them — the outliner translates such words before they reach a claim line (FICCOutline.md O91). Check: grep the node for `读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边` and read each hit; a hit whose subject is a company, a house, a price or 我们 passes; `voice_check.py --clarity` lists the hits as review candidates (H9), never as hard faults. 框架 is read by eye: in house drafts it is a deal or policy term.
 
 ## 6 Metaphors, characters, jokes, and hooks
 
@@ -406,12 +407,12 @@ Paragraph organization moved to FICCCompose.md on 2026-10-17 (map: references/mi
     - A pronoun must be guessed from among several names.
     - The reader must supply causes or regroup content for the author.
   - Avoid AI tone: check each paragraph for the following six. Fix them where they cluster. Handle a single occurrence per its own rule.
-    - Roadmap sentences.
-    - Hollow claims.
-    - Template tone (every paragraph shaped the same).
-    - Term pileups.
-    - End-of-paragraph uplift.
-    - Transition fillers.
+    - Roadmap sentences: FICCCompose.md C01, C06 (script H2).
+    - Hollow claims: FICCCompose.md C02, V38, V36.
+    - Template tone (every paragraph shaped the same): FICCCompose.md C09, C11, C19.
+    - Term pileups: V32.
+    - End-of-paragraph uplift: FICCCompose.md C17, C19 (script density row 段末升华).
+    - Transition fillers: FICCCompose.md C17, V22 (script density row 本质上等五词).
   - See references/FICCVoice-rationale.md V37.
 - **V38** **Then check both ways, from material to new text and from new text to material.**
   - For each meaning split out per V02, find its new location.

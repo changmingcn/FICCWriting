@@ -38,7 +38,7 @@ Anchor format: `D-<摘要编号>·S<源编号> L<原件行>`, or `原件路径:L
 
 Use figures from the originals for important logic (`ficc.py fig`); self-drawn figures only fill gaps, with at most three new figures. Figure titles are set by the writing side.
 
-**5分歧（X）**, **6易混（C）**, **7观察清单（W）**, **8缺口与待核实（G）**: each lists ids and one sentence, pointing to the rows of the corresponding section of the map; do not copy the tables.
+**5分歧（X）**, **6易混（C）**, **7观察清单（W）**, **8缺口与待核实（G）**: each lists ids and one sentence, pointing to the rows of the corresponding section of the map; do not copy the tables. Section 8 lists the important gaps only (unresolved critical dependencies (关键依赖), unresolved explicit must-answers, gaps that bear on a retained judgment), each naming the judgment or must-answer it affects; paused and closed exploratory leads stay in the map's question tree (`R/脉络图.md` section 1, reached through section 9) and are not copied into section 8.
 
 **9工作文件**: `R/brief.md`, `R/inventory.md`, `R/questions.md`, `R/ledger.md`, `R/checks.md`, `R/脉络图.md`, `R/立论.md`, `R/dissent-map.md`, `R/open-threads.md`, `R/cache/`, `T/results/` (digests), each with its path.
 

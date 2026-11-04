@@ -57,3 +57,8 @@ This file holds the rationale and examples moved out of FICCVoice.md in the ters
   Supports: V37, the cold read uses only the finished draft and the name table, and tests as a reader who does not know this piece's names and relations.
 - Original (ledger #323): When the six appear in clusters, they bury the judgment —
   Supports: V37 “Avoid AI tone”, explaining why the six are fixed only when they cluster.
+- Change (2026-10-24): the six AI-tone items point to their home rules (one home per tell, MAINTAINERS.md “Where a rule lives”), so the cold reader takes each item's definition and check from the home. The 09-03 names and the cluster test are unchanged.
+
+## V57
+
+- Change (2026-10-24): the Check regex now equals voice_check H9 after the data-based trim (框架, 让步, 的分量 removed: 0 true hits in the 10 that voice_check gave on the 1009, 1012 and 1018 finals and the 3 on the 1009 pre-clean draft; counts and scopes in FICCVoice-provenance.md 33). The prose is unchanged.

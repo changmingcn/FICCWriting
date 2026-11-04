@@ -22,8 +22,17 @@
     一、改前改后各去掉全部空白，逐字符一致——只可能动了空白；
     二、改后文本＝改前文本删去若干半角空格／制表符——只删不加，换行数不变；
     三、受保护的行与片段（引用行、代码、URL、链接目标）改前改后逐字节一致。
+
+Structured files (2026-10-18, Japan-flows audit: a run over nodemap.tsv ate its
+TABs and shifted the heading map):
+    Files ending in .tsv, .csv, .json or .jsonl (any case) are skipped in both
+    --check and --apply: never read, never written, never counted.  Each skip is
+    printed as it happens and listed again in the summary; skipped files do not
+    change the exit code.
+    In a Markdown table row (first non-blank character is |), a gap that holds a
+    TAB is left as it is; gaps made only of spaces are still removed there.
 """
-import argparse, io, re, sys
+import argparse, io, os, re, sys
 
 HAN, ALNUM = "一-鿿", "A-Za-z0-9"
 GAP = re.compile(rf"(?<=[{HAN}])[ \t]+(?=[{ALNUM}])|(?<=[{ALNUM}])[ \t]+(?=[{HAN}])"
@@ -32,6 +41,8 @@ SYM = r"!-/:-@\[-`{}~"                  # ASCII 符号，不含表格竖线 |
 NEAR = re.compile(rf"(?<=[{HAN}])[ \t]+(?=[{SYM}])|(?<=[{SYM}])[ \t]+(?=[{HAN}])")
 MDMARK = re.compile(r"[ \t]*(?:#{1,6}|[-*+]|\d+[.)])$")
 FENCE = re.compile(r"^[ \t]{0,3}(`{3,}|~{3,})")
+TABLE_ROW = re.compile(r"[ \t]*\|")      # Markdown table row: first non-blank char is |
+STRUCTURED = (".tsv", ".csv", ".json", ".jsonl")  # skipped by extension, any case
 QUOTE = re.compile(r"^[ \t]*>")
 GUARD = re.compile("|".join([
     r"<!--.*?-->",                     # HTML 注释（可跨行）
@@ -40,6 +51,16 @@ GUARD = re.compile("|".join([
     r"<(?:https?|ftp)://[^>\s]*>",     # 尖括号自动链接
     r"(?:https?|ftp)://\S+",           # 裸 URL
 ]), re.S)
+
+
+def is_structured(path):
+    """True for files skipped by extension (.tsv/.csv/.json/.jsonl, any case)."""
+    return os.path.splitext(path)[1].lower() in STRUCTURED
+
+
+def _kept(s, m):
+    """True if gap m is left alone: it holds a TAB and sits in a Markdown table row."""
+    return "\t" in m.group(0) and bool(TABLE_ROW.match(s, s.rfind("\n", 0, m.start()) + 1))
 
 
 def _flat(s):
@@ -86,6 +107,8 @@ def convert(text, include_quotes, show=0, near=False):
             spans.append(m.group(0)); guarded.append(m.group(0)); return f"\x00{len(spans)-1}\x00"
         masked = GUARD.sub(hide, seg)
         for m in GAP.finditer(masked):
+            if _kept(masked, m):
+                continue
             count += 1
             if len(examples) < show:
                 ln = lineno + masked.count("\n", 0, m.start())
@@ -101,7 +124,7 @@ def convert(text, include_quotes, show=0, near=False):
                 ln = lineno + masked.count("\n", 0, m.start())
                 ctx = _ctx(masked, m)
                 nears.append(f"L{ln}: {_flat(ctx)}")
-        out = GAP.sub("", masked)
+        out = GAP.sub(lambda m: m.group(0) if _kept(masked, m) else "", masked)
         new.append(re.sub(r"\x00(\d+)\x00", lambda m: spans[int(m.group(1))], out))
         lineno += seg.count("\n")
     return "".join(new), count, guarded, examples, nears
@@ -164,12 +187,18 @@ def main():
     ap.add_argument("files", nargs="+")
     a = ap.parse_args()
     show = a.show if a.show is not None else (5 if a.check else 0)
-    total, bad = 0, 0
+    total, bad, skipped = 0, 0, []
     for f in a.files:
+        if is_structured(f):
+            skipped.append(f)
+            print(f"-- 跳过 {f.rsplit('/', 1)[-1]}：结构化文件（{os.path.splitext(f)[1]}），不读不改")
+            continue
         c, ok = run(f, a.apply, a.include_quotes, show, a.near)
         total += c; bad += 0 if ok else 1
     verb = "已改" if a.apply else "需改"
     print(f"\n合计{verb} {total:,} 处；自证失败 {bad} 份")
+    if skipped:
+        print(f"跳过结构化文件 {len(skipped)} 份（.tsv/.csv/.json/.jsonl 一律不碰）：" + "、".join(skipped))
     if bad:
         sys.exit(2)
     sys.exit(1 if (a.check and total) else 0)

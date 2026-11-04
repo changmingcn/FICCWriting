@@ -9,6 +9,7 @@ still matches the heading text.  Stdlib only; Python 3.9+.
 
 Usage:
   xref_check.py [--root DIR] [--json] [-q] [--selftest]
+  xref_check.py [--root DIR] --selftest-excerpt
 
 Targets: numbered headings "## N title", "### N.M title", "#### N.M.N title" (title
 may be absent, as in "## 1.2" of the rationale files).  An unnumbered ## heading
@@ -94,8 +95,15 @@ captions and not checked):
 Results: EXCERPT-MISMATCH (the line has no verbatim Compose counterpart; the report gives the
 excerpt line number and the closest Compose line), EXCERPT-MISSING (a C number defined in
 FICCCompose.md has no "- Cnn" intent line in excerpt section 1), EXCERPT-MISSING-FILE (root has
-FICCCompose.md but no references/compose-excerpt.md).  "## 3" and after: only the C numbers are
-checked, by the rule-number check above.  No FICCCompose.md under the root: excerpt skipped.
+FICCCompose.md but no references/compose-excerpt.md).  No FICCCompose.md under the root: excerpt
+skipped.
+Section 3 (added 2026-10-24): "## 3" and after is not compared word for word; its C numbers go
+through the rule-number check above, and its "- C23 ..." lines, taken together, must cite exactly
+the C numbers that FICCCompose.md C23's body cites (from "- **C23**" to the next "- **Cnn**" or
+"## " line; C23 itself and fenced code left out on both sides; ids read as by the rule-number
+check).  Any missing or extra number is one EXCERPT-MISMATCH item, kind ids, on the first "- C23"
+line: "C23 ids: missing [..] extra [..]".  No "- C23" line in section 3 is one EXCERPT-MISSING,
+kind ids.  FICCCompose.md without a C23 definition: this part skipped.
 Key-line completeness (wave 6 patch): each line in EXCERPT_REQUIRED (the limited-grant lead-in,
 two C08 sub-lines, the C17 close condition) is recognised by its opening text; some list line
 before "## 3" must open with it (its wording is checked line by line above), else
@@ -110,9 +118,19 @@ EXCERPT-MISSING or EXCERPT-MISSING-FILE; 2 usage error (root lacks FICCOutline.m
 FICCStructure.md or FICCVoice.md).
 Last line of the text report:
   refs N · MISSING m · STALE? s · rule refs R · MISSING-RULE r · RETIRED-RULE t
-    · excerpt lines N · EXCERPT-MISMATCH m · EXCERPT-MISSING k
-  (one line; " · EXCERPT-MISSING-FILE 1" appended when the excerpt is missing; " · excerpt
-  skipped" instead of the three excerpt items when the root has no FICCCompose.md)
+    · excerpt lines N · EXCERPT-MISMATCH m · EXCERPT-MISSING k · excerpt §3 C23 ids OK
+  (one line; the last item reads OK, MISMATCH, MISSING or skipped as in "Section 3" above;
+  " · EXCERPT-MISSING-FILE 1" replaces the section-3 item when the excerpt is missing; " · excerpt
+  skipped" instead of the excerpt items when the root has no FICCCompose.md)
+Voice excerpts (wave 3, 2026-11-03): each file in VOICE_EXCERPTS (references/voice-excerpt-{patch,polish,draft,
+coldread}.md) must copy FICCVoice.md lines verbatim in its section 1 ("**" removed) and hold the intent line of each V
+number listed for it; results EXCERPT-MISMATCH / EXCERPT-MISSING / EXCERPT-MISSING-FILE (exit 1), one report line per
+file before the last line.  --selftest-excerpt also runs, per voice excerpt, a changed word, a dropped intent line
+and a removed file on a temp copy.
+--selftest-excerpt (2026-10-24): on a temp copy of --root, drop one C number from the excerpt's
+"- C23" lines, add a defined C number C23 does not cite, and drop every "- C23" line; each must
+be reported (EXCERPT-MISMATCH ids, EXCERPT-MISSING ids) with exit 1 and no other count changed;
+then --root itself must pass (exit 0, section 3 OK).  Exit 0 all passed, 1 otherwise.
 When to run: after any change to a heading or a section number of the main files (or of a
 numbered reference file), or to a rule definition, before installing.  Details: scripts/README.md.
 """
@@ -199,6 +217,21 @@ EXCERPT_REQUIRED = (
     'The whole piece and each part must have a close.',              # C17
 )
 EX_TABLE_RULE = 'C01'   # every table row under this C number must appear in excerpt section 2
+EX_S3_RULE = 'C23'      # excerpt section 3: its "- C23" lines must cite exactly the C ids of C23's body
+C_ID = re.compile(r'(?<![A-Za-z0-9_])C\d{2}(?![0-9])')   # a C id as the rule-number check reads it
+# FICCVoice mode excerpts vs FICCVoice.md (wave 3 U09/U10, 2026-11-03): every non-blank line of section 1 equals a
+# FICCVoice.md line once "**" is removed (blanks at both ends ignored); each listed V number has its intent line there.
+VOICE_EXCERPTS = {
+    'references/voice-excerpt-patch.md': ('V04', 'V07', 'V10', 'V11', 'V12', 'V13', 'V14', 'V20', 'V24', 'V26', 'V27',
+                                          'V28', 'V38', 'V57'),
+    'references/voice-excerpt-polish.md': ('V01', 'V02', 'V03', 'V04', 'V07', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15',
+                                           'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25', 'V26',
+                                           'V27', 'V28', 'V29', 'V30', 'V31', 'V32', 'V33', 'V34', 'V35', 'V36', 'V37',
+                                           'V38', 'V39', 'V40', 'V52', 'V53', 'V54', 'V57'),
+    'references/voice-excerpt-draft.md': ('V01', 'V02', 'V03', 'V04', 'V26', 'V27', 'V28', 'V38'),
+    'references/voice-excerpt-coldread.md': ('V22', 'V23', 'V32', 'V36', 'V37', 'V38', 'V39', 'V40', 'V57'),
+}
+EX_V = re.compile(r'^-\s+(V\d{2})\s')
 
 
 def read(path):
@@ -339,14 +372,15 @@ def _nearest(text, cands):
 def check_excerpt(root, required=EXCERPT_REQUIRED):
     """compose-excerpt.md before "## 3" must copy FICCCompose.md verbatim, section 1 must hold
     an intent line for every C number, the lines opening with `required` must be there and section
-    2 must hold every C01 table row.  -> None when root has no FICCCompose.md, else
-    {file, lines, items, missing, missing_file, required, table_rows}; items are the checked
-    excerpt lines; missing entries carry kind rule | required | table | table-count."""
+    2 must hold every C01 table row; section 3 is checked by check_excerpt_s3.  -> None when root
+    has no FICCCompose.md, else {file, lines, items, missing, missing_file, required, table_rows,
+    sec3}; items are the checked excerpt lines (plus one kind-ids item on a section-3 mismatch);
+    missing entries carry kind rule | required | table | table-count | ids."""
     cp = os.path.join(root, 'FICCCompose.md')
     if not os.path.isfile(cp):
         return None
     out = {'file': EXCERPT, 'lines': 0, 'items': [], 'missing': [], 'missing_file': False,
-           'required': [], 'table_rows': None}
+           'required': [], 'table_rows': None, 'sec3': None}
     ep = os.path.join(root, EXCERPT)
     if not os.path.isfile(ep):
         out['missing_file'] = True
@@ -455,7 +489,152 @@ def check_excerpt(root, required=EXCERPT_REQUIRED):
                                'result': 'EXCERPT-MISSING', 'text': '',
                                'detail': 'table rows: excerpt section 2 has %d, %s tables have %d (%s)' % (
                                    len(sec2), EX_TABLE_RULE, len(trows), span)})
+    # section 3 (2026-10-24): the "- C23" lines must cite exactly the C ids of C23's body
+    s3 = out['sec3'] = check_excerpt_s3(cp, ep)
+    if s3 and s3['result'] == 'EXCERPT-MISMATCH':
+        out['items'].append({'line': s3['lines'][0], 'kind': 'ids', 'result': 'EXCERPT-MISMATCH',
+                             'text': '%s ids: missing [%s] extra [%s]' % (
+                                 s3['rule'], ', '.join(s3['missing']), ', '.join(s3['extra'])),
+                             'note': s3['where']})
+    elif s3 and s3['result'] == 'EXCERPT-MISSING':
+        out['missing'].append({'kind': 'ids', 'compose_line': s3['compose_span'][0], 'result': 'EXCERPT-MISSING',
+                               'text': '', 'detail': 'no "- %s" line in excerpt section 3 (%s cites %s)' % (
+                                   s3['rule'], s3['where'], ', '.join(s3['required']) or 'no C id')})
     return out
+
+
+def check_excerpt_s3(compose_path, excerpt_path, rule=EX_S3_RULE):
+    """Excerpt section 3 ("## 3" to the end) against one Compose rule (2026-10-24): the C ids on
+    the excerpt's "- C23" lines, taken together, must equal the C ids in FICCCompose.md C23's body
+    (from "- **C23**" to the next "- **Cnn**" or "## " line); C23 itself and fenced code are left
+    out on both sides.  -> None when FICCCompose.md defines no C23, else {rule, compose_span,
+    required, lines, found, missing, extra, where, result}; result OK | EXCERPT-MISMATCH (an id
+    missing or extra) | EXCERPT-MISSING (no "- C23" line in section 3)."""
+    ids = lambda l: set(C_ID.findall(l)) - {rule}
+    req, span, fence = set(), None, False
+    for no, l in enumerate(read(compose_path).split('\n'), 1):
+        if FENCE.match(l):
+            fence = not fence
+            continue
+        if fence:
+            continue
+        m = C_DEF.match(l)
+        if span and (m or l.startswith('## ')):
+            break
+        if m and m.group(1) == rule:
+            span = [no, no]
+        if span:
+            req |= ids(l)
+            if l.strip():
+                span[1] = no
+    if span is None:
+        return None
+    line_re = re.compile(r'^-\s+%s\s' % re.escape(rule))
+    found, lines, in3, fence = set(), [], False, False
+    for no, l in enumerate(read(excerpt_path).split('\n'), 1):
+        if FENCE.match(l):
+            fence = not fence
+            continue
+        if fence:
+            continue
+        if EX_SEC3.match(l):
+            in3 = True
+        elif in3 and line_re.match(l):
+            lines.append(no)
+            found |= ids(l)
+    missing, extra = sorted(req - found), sorted(found - req)
+    where = 'FICCCompose.md %s L%d–L%d' % (rule, span[0], span[1])
+    if lines:
+        where = 'excerpt section 3 "- %s" lines %s vs %s' % (rule, ', '.join('L%d' % n for n in lines), where)
+    return {'rule': rule, 'compose_span': span, 'required': sorted(req), 'lines': lines,
+            'found': sorted(found), 'missing': missing, 'extra': extra, 'where': where,
+            'result': 'EXCERPT-MISSING' if not lines else 'EXCERPT-MISMATCH' if missing or extra else 'OK'}
+
+
+def check_voice_excerpts(root, table=None):
+    """FICCVoice mode excerpts (wave 3): section 1 ("## 1" to the next "## ") of each file in VOICE_EXCERPTS must copy
+    FICCVoice.md lines verbatim ("**" removed, blanks at both ends ignored, fenced code skipped) and hold the intent
+    line "- Vnn ..." of each V number listed for it.  -> [] when root has no FICCVoice.md, else one dict per file:
+    {file, lines, mismatch [(line, text)], missing [V], required, missing_file}."""
+    vp = os.path.join(root, 'FICCVoice.md')
+    if not os.path.isfile(vp):
+        return []
+    pool = {l.replace('**', '').strip() for l in read(vp).split('\n') if l.strip()}
+    out = []
+    for rel, req in sorted((table or VOICE_EXCERPTS).items()):
+        r = {'file': rel, 'lines': 0, 'mismatch': [], 'missing': [], 'required': list(req), 'missing_file': False}
+        ep = os.path.join(root, rel)
+        if not os.path.isfile(ep):
+            r['missing_file'] = True
+            out.append(r)
+            continue
+        in1, fence, seen = False, False, set()
+        for no, l in enumerate(read(ep).split('\n'), 1):
+            if FENCE.match(l):
+                fence = not fence
+                continue
+            if fence:
+                continue
+            if l.startswith('## '):
+                in1 = bool(EX_SEC1.match(l))
+                continue
+            if not in1 or not l.strip():
+                continue
+            r['lines'] += 1
+            if l.strip() not in pool:
+                r['mismatch'].append((no, l.strip()))
+            m = EX_V.match(l)
+            if m:
+                seen.add(m.group(1))
+        r['missing'] = [v for v in req if v not in seen]
+        out.append(r)
+    return out
+
+
+def selftest_voice_excerpts(root=SKILL_DIR):
+    """--selftest-excerpt, part 2 (wave 3): on a temp copy of root, per voice excerpt: one word changed in a section-1
+    line -> EXCERPT-MISMATCH; one required intent line dropped -> EXCERPT-MISSING; the file removed ->
+    EXCERPT-MISSING-FILE; each with exit 1.  Then root itself must pass.  -> 0 or 1."""
+    print('== voice excerpt selftest (%d files vs FICCVoice.md; temp copy of %s)' % (len(VOICE_EXCERPTS), root))
+    live = check(root)
+    ok = live['exit_code'] == 0 and all(v['lines'] and not (v['mismatch'] or v['missing'] or v['missing_file'])
+                                        for v in live['voice_excerpts'])
+    tmp = tempfile.mkdtemp(prefix='xref_voice_')
+    try:
+        dst = os.path.join(tmp, 'skill')
+        shutil.copytree(root, dst, symlinks=True, ignore=shutil.ignore_patterns('.*', '__pycache__'))
+        for rel, req in sorted(VOICE_EXCERPTS.items()):
+            path = os.path.join(dst, rel)
+            orig = read(path)
+            rows = orig.split('\n')
+            vline = next(i for i, l in enumerate(rows) if EX_V.match(l) and EX_V.match(l).group(1) == req[0])
+            changed = list(rows)
+            changed[vline] = changed[vline].rstrip('.') + ' always.'
+            dropped = [l for i, l in enumerate(rows) if i != vline]
+            for name, text, key in (('one word changed at L%d' % (vline + 1), changed, 'voice_mismatch'),
+                                    ('%s intent line dropped' % req[0], dropped, 'voice_missing'),
+                                    ('file removed', None, 'voice_missing_file')):
+                if text is None:
+                    os.remove(path)
+                else:
+                    with open(path, 'w', encoding='utf-8') as fh:
+                        fh.write('\n'.join(text))
+                res = check(dst)
+                c = res['counts']
+                good = res['exit_code'] == 1 and c[key] >= 1 and all(
+                    c[k] == live['counts'][k] for k in ('missing', 'stale', 'missing_rule', 'excerpt_mismatch',
+                                                        'excerpt_missing', 'excerpt_missing_file'))
+                ok &= good
+                print('  %s  %s: %s -> %s (exit %d)' % ('PASS' if good else 'FAIL', rel, name, key, res['exit_code']))
+                with open(path, 'w', encoding='utf-8') as fh:
+                    fh.write(orig)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    print('  %s  live tree passes (exit %d; voice excerpts %s)' % (
+        'PASS' if ok else 'FAIL', live['exit_code'],
+        ', '.join('%s %d lines' % (os.path.basename(v['file']), v['lines']) for v in live['voice_excerpts'])))
+    print('selftest-excerpt (voice): %s' % ('all passed' if ok else 'FAILED'))
+    return 0 if ok else 1
 
 
 def check(root):
@@ -678,6 +857,7 @@ def check(root):
     stale = sum(r['result'] == 'STALE?' for r in refs)
     miss_rule = sum(r['result'] == 'MISSING-RULE' for r in rules)
     ret_rule = sum(r['result'] == 'RETIRED-RULE' for r in rules)
+    vex = check_voice_excerpts(root)
     exc = check_excerpt(root)
     ex_mis = sum(1 for x in exc['items'] if x['result'] != 'OK') if exc else 0
     ex_miss = len(exc['missing']) if exc else 0
@@ -686,14 +866,18 @@ def check(root):
             'bare': bare, 'rules': rules,
             'rules_defined': {k: len(v) for k, v in defined.items()},
             'rules_retired': {k: v['to'] for k, v in sorted(retired.items())},
-            'excerpt': exc,
+            'excerpt': exc, 'voice_excerpts': vex,
             'counts': {'refs': n, 'missing': miss, 'stale': stale, 'bare': sum(bare.values()),
                        'rule_refs': len(rules), 'missing_rule': miss_rule, 'retired_rule': ret_rule,
                        'retired_anchor': sum(1 for r in rules if r.get('anchor')),
                        'excerpt_lines': exc['lines'] if exc else 0, 'excerpt_mismatch': ex_mis,
                        'excerpt_missing': ex_miss, 'excerpt_missing_file': ex_file,
-                       'excerpt_skipped': exc is None},
-            'exit_code': 1 if (miss or stale or miss_rule or ret_rule or ex_mis or ex_miss or ex_file) else 0}
+                       'excerpt_skipped': exc is None,
+                       'voice_mismatch': sum(len(v['mismatch']) for v in vex),
+                       'voice_missing': sum(len(v['missing']) for v in vex),
+                       'voice_missing_file': sum(1 for v in vex if v['missing_file'])},
+            'exit_code': 1 if (miss or stale or miss_rule or ret_rule or ex_mis or ex_miss or ex_file
+                               or any(v['mismatch'] or v['missing'] or v['missing_file'] for v in vex)) else 0}
 
 
 def render(res, quiet=False):
@@ -746,8 +930,21 @@ def render(res, quiet=False):
                        exc['file'], exc['lines'], c['excerpt_mismatch'], c['excerpt_missing'],
                        sum(1 for r in exc.get('required', []) if r['compose_line'] and r['excerpt_line']),
                        len(exc.get('required', [])), tr['rule'], tr['excerpt'], tr['compose']))
+        s3 = exc.get('sec3')
+        if s3 is None:
+            out.append('excerpt section 3: %s ids skipped (FICCCompose.md defines no %s)' % (EX_S3_RULE, EX_S3_RULE))
+            s3_tail = ' · excerpt §3 %s ids skipped' % EX_S3_RULE
+        else:
+            out.append('excerpt section 3: "- %s" lines %s cite %s; FICCCompose.md %s (L%d–L%d) cites %s -> %s' % (
+                s3['rule'], ', '.join('L%d' % n for n in s3['lines']) or 'none', ', '.join(s3['found']) or 'none',
+                s3['rule'], s3['compose_span'][0], s3['compose_span'][1], ', '.join(s3['required']) or 'none',
+                s3['result']))
+            s3_tail = ' · excerpt §3 %s ids %s' % (s3['rule'], s3['result'].replace('EXCERPT-', ''))
         for x in exc['items']:
             if x['result'] == 'OK':
+                continue
+            if x['kind'] == 'ids':
+                out.append('  L%d [ids] %s -> EXCERPT-MISMATCH  (%s)' % (x['line'], x['text'], x['note']))
                 continue
             out.append('  L%d [%s] %s -> EXCERPT-MISMATCH%s' % (
                 x['line'], x['kind'], snip(x['text']), ('  (%s)' % x['note']) if x.get('note') else ''))
@@ -760,8 +957,20 @@ def render(res, quiet=False):
                 continue
             out.append('  %s (FICCCompose.md L%d) -> EXCERPT-MISSING  (no "- %s" intent line in excerpt section 1)'
                        % (x['rule'], x['compose_line'], x['rule']))
-        tail = ' · excerpt lines %d · EXCERPT-MISMATCH %d · EXCERPT-MISSING %d' % (
-            exc['lines'], c['excerpt_mismatch'], c['excerpt_missing'])
+        tail = ' · excerpt lines %d · EXCERPT-MISMATCH %d · EXCERPT-MISSING %d%s' % (
+            exc['lines'], c['excerpt_mismatch'], c['excerpt_missing'], s3_tail)
+    for v in res.get('voice_excerpts') or []:
+        if v['missing_file']:
+            out.append('voice excerpt %s -> EXCERPT-MISSING-FILE' % v['file'])
+            continue
+        out.append('voice excerpt %s: %d section-1 lines checked against FICCVoice.md; EXCERPT-MISMATCH %d; '
+                   'EXCERPT-MISSING %d (V intent lines %d of %d)' % (v['file'], v['lines'], len(v['mismatch']),
+                                                                   len(v['missing']), len(v['required']) - len(v['missing']),
+                                                                   len(v['required'])))
+        for no, text in v['mismatch']:
+            out.append('  L%d -> EXCERPT-MISMATCH  %s' % (no, snip(text)))
+        for vn in v['missing']:
+            out.append('  %s -> EXCERPT-MISSING  (no "- %s" intent line in section 1)' % (vn, vn))
     out.append('refs %d · MISSING %d · STALE? %d · rule refs %d · MISSING-RULE %d · RETIRED-RULE %d%s' % (
         c['refs'], c['missing'], c['stale'], c['rule_refs'], c['missing_rule'], c['retired_rule'], tail))
     return '\n'.join(out)
@@ -1037,6 +1246,90 @@ def selftest_excerpt():
     return ok
 
 
+def _without(line, c):
+    """line with one C id removed together with its separator: "(C04, C20)" -> "(C04)"."""
+    for pat in (r',\s*%s(?![0-9])' % c, r'(?<![A-Za-z0-9_])%s,\s*' % c, r'\s*\(%s\)' % c,
+                r'(?<![A-Za-z0-9_])%s(?![0-9])' % c):
+        new = re.sub(pat, '', line, count=1)
+        if new != line:
+            return new
+    return line
+
+
+def selftest_excerpt_s3(root=SKILL_DIR):
+    """--selftest-excerpt (2026-10-24): section 3 of the excerpt against C23, on a temp copy of root.
+    Drop one C id from the "- C23" lines, add a defined C id that C23 does not cite, drop every
+    "- C23" line: each must be reported (EXCERPT-MISMATCH ids / EXCERPT-MISSING ids) with exit 1 and
+    no other count changed; then root itself must pass (exit 0, section 3 OK).  -> 0 or 1."""
+    print('== excerpt section 3 selftest (%s "- %s" lines vs FICCCompose.md %s; temp copy of %s)'
+          % (EXCERPT, EX_S3_RULE, EX_S3_RULE, root))
+    live = check(root)
+    s3 = (live.get('excerpt') or {}).get('sec3')
+    if not s3 or not s3['lines']:
+        print('  FAIL  no FICCCompose.md %s or no "- %s" line in excerpt section 3 under the root'
+              % (EX_S3_RULE, EX_S3_RULE))
+        print('selftest-excerpt: FAILED')
+        return 1
+    rows = read(os.path.join(root, EXCERPT)).split('\n')
+    last = s3['lines'][-1] - 1                                  # 0-based index of the last "- C23" line
+    drop = [c for c in C_ID.findall(rows[last]) if c != EX_S3_RULE][-1]
+    defined = sorted(m.group(1) for m in map(C_DEF.match, read(os.path.join(root, 'FICCCompose.md')).split('\n')) if m)
+    add = next(c for c in defined if c != EX_S3_RULE and c not in s3['required'])
+    dropped = list(rows)
+    for n in s3['lines']:
+        while drop in C_ID.findall(dropped[n - 1]):
+            dropped[n - 1] = _without(dropped[n - 1], drop)
+    added = list(rows)
+    k = added[last].rfind(')')
+    added[last] = (added[last][:k] + ', %s' % add + added[last][k:]) if k >= 0 else added[last] + ' (%s)' % add
+    removed = [l for i, l in enumerate(rows, 1) if i not in s3['lines']]
+    keep = ('missing', 'stale', 'missing_rule', 'retired_rule', 'excerpt_missing_file')
+    lc = live['counts']
+    cases = [
+        ('one id (%s) dropped from the "- %s" lines -> EXCERPT-MISMATCH ids, exit 1' % (drop, EX_S3_RULE),
+         dropped, 'EXCERPT-MISMATCH', [drop], [], ('excerpt_mismatch', 1)),
+        ('an extra defined id (%s) added to L%d -> EXCERPT-MISMATCH ids, exit 1' % (add, last + 1),
+         added, 'EXCERPT-MISMATCH', [], [add], ('excerpt_mismatch', 1)),
+        ('every "- %s" line dropped from section 3 -> EXCERPT-MISSING ids, exit 1' % EX_S3_RULE,
+         removed, 'EXCERPT-MISSING', s3['required'], [], ('excerpt_missing', 1)),
+    ]
+    ok = True
+    tmp = tempfile.mkdtemp(prefix='xref_excerpt_s3_')
+    try:
+        dst = os.path.join(tmp, 'skill')
+        shutil.copytree(root, dst, symlinks=True, ignore=shutil.ignore_patterns('.*', '__pycache__'))
+        for name, text, want, w_miss, w_extra, (key, inc) in cases:
+            with open(os.path.join(dst, EXCERPT), 'w', encoding='utf-8') as fh:
+                fh.write('\n'.join(text))
+            res = check(dst)
+            r3, c = res['excerpt']['sec3'], res['counts']
+            tail = render(res).split('\n')[-1]
+            good = (r3['result'] == want and r3['missing'] == w_miss and r3['extra'] == w_extra
+                    and res['exit_code'] == 1 and c[key] == lc[key] + inc
+                    and all(c[x] == lc[x] for x in keep)
+                    and tail.endswith(' · excerpt §3 %s ids %s' % (EX_S3_RULE, want.replace('EXCERPT-', ''))))
+            if want == 'EXCERPT-MISMATCH':
+                bad = [x for x in res['excerpt']['items'] if x['kind'] == 'ids']
+                good = good and len(bad) == 1 and bad[0]['text'] == '%s ids: missing [%s] extra [%s]' % (
+                    EX_S3_RULE, ', '.join(w_miss), ', '.join(w_extra))
+            else:
+                good = good and [x['kind'] for x in res['excerpt']['missing'] if x['kind'] == 'ids'] == ['ids']
+            ok &= good
+            print('  %s  %s (got %s, missing [%s], extra [%s], exit %d)' % (
+                'PASS' if good else 'FAIL', name, r3['result'], ', '.join(r3['missing']),
+                ', '.join(r3['extra']), res['exit_code']))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    good = live['exit_code'] == 0 and s3['result'] == 'OK' and \
+        render(live).split('\n')[-1].endswith(' · excerpt §3 %s ids OK' % EX_S3_RULE)
+    ok &= good
+    print('  %s  live tree passes (exit %d; section 3 %s: "- %s" lines %s cite %s)' % (
+        'PASS' if good else 'FAIL', live['exit_code'], s3['result'], EX_S3_RULE,
+        ', '.join('L%d' % n for n in s3['lines']), ', '.join(s3['found'])))
+    print('selftest-excerpt: %s' % ('all passed' if ok else 'FAILED'))
+    return 0 if ok else 1
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(
         prog='xref_check.py', formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -1045,7 +1338,8 @@ def main(argv=None):
                     'defined as "- **Vnn**" etc. in the main files (C in FICCCompose.md) and must not be retired '
                     '(a pointer-only definition "- **V05** → FICCCompose.md C01"); references/compose-excerpt.md '
                     'must copy FICCCompose.md verbatim before its "## 3", hold an intent line per C number, the key '
-                    'lines in EXCERPT_REQUIRED and every C01 table row. '
+                    'lines in EXCERPT_REQUIRED and every C01 table row; its "- C23" lines after "## 3" must cite '
+                    'exactly the C numbers of FICCCompose.md C23. '
                     'Exit 1 on any MISSING, STALE?, MISSING-RULE, RETIRED-RULE, EXCERPT-MISMATCH, EXCERPT-MISSING '
                     'or EXCERPT-MISSING-FILE.',
         epilog='Not scanned (still valid targets): references/history.md, references/dev-notes.md and '
@@ -1064,9 +1358,16 @@ def main(argv=None):
                          'seven excerpt cases (verbatim OK, changed word, dropped C number, extra table cell, dropped '
                          'key sub-line, dropped C01 table row, key lines and table complete) '
                          'and a missing excerpt file')
+    ap.add_argument('--selftest-excerpt', action='store_true',
+                    help='excerpt section 3 on a temp copy of --root: drop one C number from the "- C23" lines, '
+                         'add a defined C number C23 does not cite, drop every "- C23" line (each must be reported '
+                         'with exit 1); then --root itself must pass (exit 0). Exit 0 all passed, 1 otherwise')
     a = ap.parse_args(argv)
     if a.selftest:
         return selftest()
+    if a.selftest_excerpt:
+        s3 = selftest_excerpt_s3(a.root)
+        return selftest_voice_excerpts(a.root) or s3
     try:
         res = check(a.root)
     except IOError as e:

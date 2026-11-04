@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""voice_check.py v4.3 (2026-10-17) -- FICCVoice fingerprint report.
+"""voice_check.py v4.5 (2026-10-24) -- FICCVoice fingerprint report.
 
 Default mode keeps six hard checks (H1-H6) and the existing result schema,
 plus semantic_reviews holding H7 only (v4.3).
@@ -10,9 +10,11 @@ H7 (cross-paragraph repetition: trigger A long verbatim run, trigger B an
 opening that echoes an earlier preview) is a review candidate in both modes
 and never sets the exit code.
 
-Density counts never change the exit code.  The user-approved 2026-10-13
-style cleanup still applies to flagged 不是……而是 and em-dash rows before
-handoff; other density rows are report-only.  The author corpus and 2026.02
+Density counts never change the exit code.  Handling of the flagged rows
+before handoff is defined in references/clarity-acceptance.md; density
+rows are report-only.  Since v4.5 the 不是……而是 and
+段末升华 rows list each hit's line and quote under the row (text report) and
+in density_hits (--json); positions are reporting only.  The author corpus and 2026.02
 control columns are descriptive, not evidence that a sentence is clear.
 
 The v4 hazard list (隐患清单) remains report-only: 承前省略, 句首代词,
@@ -42,6 +44,10 @@ Checks (H2-H4 are hard only in the compatibility default):
      or difflib ratio >= H7_ECHO_RATIO 0.75; opening >= H7_ECHO_MIN 8 counted
      characters).  FICCCompose.md C23 check items, C04, C20; a re-mention
      carries one more layer per C07
+  H9 (review only, --clarity only, v4.4; trimmed v4.5) nominalized views
+     (FICCVoice V57): 读法, 解读, 视角, 判别读数, 推断加强, 判断…加强, 占上风,
+     站在…一边 in prose lines (list rows included, inline code masked); one
+     entry per hit.  框架, 让步 and 的分量 were removed on 2026-10-24
 Current review: FICCVoice.md V02/V10/V13/V25/V37-V40, FICCCompose.md C01
 (formerly V05) and references/clarity-acceptance.md.  H1 also follows FICCOutline.md 4.2;
 H5 follows references/format-and-maintenance.md 1 (user ruling 2026-10-12:
@@ -58,8 +64,8 @@ import re
 import sys
 import unicodedata
 
-VERSION = '4.3'
-VERSION_DATE = '2026-10-17'
+VERSION = '4.5'
+VERSION_DATE = '2026-10-24'
 HERE = os.path.dirname(os.path.abspath(__file__))
 SKILL_DIR = os.path.dirname(HERE)
 CORPUS_DIR = os.path.join(SKILL_DIR, 'references', 'corpus')
@@ -105,7 +111,7 @@ METRICS = [
     ('parallel3', '三连排比'),
 ]
 LECTURE_SILENT = {'wo', 'paren'}
-SEMANTIC_REVIEW_CODES = {'H2', 'H3', 'H4', 'H7'}
+SEMANTIC_REVIEW_CODES = {'H2', 'H3', 'H4', 'H7', 'H9'}
 FLAG_MIN_COUNT = 3  # "一篇里出现一两处是文章" -- one or two hits never get a flag
 
 # ---------------------------------------------------------------------------
@@ -688,6 +694,25 @@ def sentences(text):
     return [s for s in SENT_SPLIT_RE.split(text) if zi(s) > 0]
 
 
+DENSITY_HIT_KEYS = ('bushi', 'coda')  # rows whose hits are listed (v4.5; reporting only)
+DENSITY_QUOTE_MAX = 40
+
+
+def density_quote(s):
+    s = s.strip()
+    return s if len(s) <= DENSITY_QUOTE_MAX else s[:DENSITY_QUOTE_MAX - 1] + '…'
+
+
+def para_hits(text):
+    """Quotes of the hits counted by para_counts for the rows in DENSITY_HIT_KEYS."""
+    h = {}
+    h['bushi'] = [density_quote(text[m.start():m.end() + 6]) for m in BUSHI_RE.finditer(text)]
+    ss = sentences(text)
+    last = ss[-1].strip().lstrip(LEAD_STRIP) if ss else ''
+    h['coda'] = [density_quote(last)] if (last and CODA_RE.match(last)) else []
+    return h
+
+
 def para_counts(text):
     c = {}
     c['bushi'] = len(BUSHI_RE.findall(text))
@@ -1169,6 +1194,35 @@ def names_public(names):
             'conditional_terms': names['conditional_terms'], 'status': names['status'] or '已查'}
 
 
+# H9: nominalized views (FICCVoice V57; report-only review candidate, --clarity
+# only).  A view, reading or inference written as an object that moves or is
+# counted.  Prose lines (list rows included), inline code masked as in H5.  One
+# entry per hit: line number and the matched word.  Never a hard fault, never
+# the exit code.  v4.5 (2026-10-24, user approval “都同意，升级吧”): 框架, 让步
+# and 的分量 removed -- 0 true hits among the 10 this check gave on the 1009,
+# 1012 and 1018 finals and the 3 on the 1009 pre-clean draft (框架 of a deal,
+# 条款上让步, Oracle的分量 as index weight; FICCVoice-provenance.md 33);
+# 占上风 and 站在…一边 kept (no observations either way).  FICCVoice V57's
+# Check regex is this one.
+H9_RE = re.compile(r'读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边')
+H9_CTX = 12
+
+
+def check_h9(lines):
+    out = []
+    for L in lines:
+        if L.kind != 'prose':
+            continue
+        masked = H5_CODE_RE.sub(lambda m: ' ' * len(m.group(0)), L.content)
+        for m in H9_RE.finditer(masked):
+            i = m.start()
+            out.append({'code': 'H9', 'line': L.no, 'quote': L.quote, 'hit': m.group(0),
+                        'desc': '名词化的看法“%s”：写谁怎么看、我们认为什么（FICCVoice V57；只报不拦）'
+                                % m.group(0),
+                        'text': L.content[max(0, i - H9_CTX):m.end() + H9_CTX].strip()})
+    return out
+
+
 def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False):
     baseline = BASELINE if baseline is None else baseline
     lines = classify(text)
@@ -1180,10 +1234,13 @@ def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False)
         reviews = [h for h in hard if h['code'] in SEMANTIC_REVIEW_CODES]
         hard = [h for h in hard if h['code'] not in SEMANTIC_REVIEW_CODES]
     # H7 is computed apart from `hard`: a review candidate in both modes, never a hard failure
+    if clarity:
+        reviews += check_h9(lines)  # H9 (V57): review candidate under --clarity only
     reviews = sorted(reviews + check_h7(lines), key=lambda h: (h['line'], h['code']))
     paras = [L for L in lines if L.kind == 'prose']
     total = {k: 0 for k, _ in METRICS}
     inq = {k: 0 for k, _ in METRICS}
+    dhits = {k: [] for k in DENSITY_HIT_KEYS}
     n_cjk = 0
     for L in paras:
         body = L.rest if L.starter else L.content
@@ -1193,6 +1250,8 @@ def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False)
             total[k] += pc[k]
             if L.quote:
                 inq[k] += pc[k]
+        for k, qs in para_hits(body).items():
+            dhits[k] += [{'line': L.no, 'quote': q} for q in qs]
     hazards, hcounts, hskipped, hextra = find_hazards(lines, names)
     rows, flags = [], 0
     for k, label in METRICS:
@@ -1200,6 +1259,8 @@ def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False)
         b = (baseline or {}).get(k) or {}
         med, p90, ctl = b.get('median'), b.get('p90'), b.get('control')
         silent = lecture and k in LECTURE_SILENT
+        if silent:
+            dhits.pop(k, None)  # positions follow the row
         flag = bool(p90 is not None and not silent and dens > p90
                     and total[k] >= FLAG_MIN_COUNT)
         flags += 1 if flag else 0
@@ -1213,7 +1274,8 @@ def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False)
             'hazards': hazards, 'hazard_counts': hcounts, 'hazard_skipped': hskipped,
             'clause_histogram': hextra['clause_histogram'],
             'names_conditional_count': hextra['names_conditional_count'],
-            'names': names_public(names), 'semantic_reviews': reviews}
+            'names': names_public(names), 'semantic_reviews': reviews,
+            'density_hits': dhits}
     if clarity:
         result.update(mode='clarity')
     return result
@@ -1231,7 +1293,7 @@ def render(r, hazards=True):
     reg = '讲课档（--lecture：硬伤规则不变，「我」与括号不提示）' if r['register'] == 'lecture' else '书面档'
     out.append('voice_check v%s｜%s｜%s' % (r['version'], r['file'], reg))
     if r.get('mode') == 'clarity':
-        out.append('清晰模式：H1/H5/H6 是硬伤；H2–H4 与 H7 只列语义复核候选，退出码不证明清晰。')
+        out.append('清晰模式：H1/H5/H6 是硬伤；H2–H4、H7 与 H9 只列语义复核候选，退出码不证明清晰。')
     out.append('正文 %d 汉字（查到第一个「## 附」为止；跳过围栏代码、表格行、图片行；'
                '引用块照查并标注；标题行只查 H4；H6、H7 另跳过清单行）' % r['chinese_chars'])
     if r['short_text']:
@@ -1250,7 +1312,7 @@ def render(r, hazards=True):
     out.append('')
     out.append('密度记录（每万汉字；括号里是原始次数；！＝高于作者 90 分位且不少于 %d 处）'
                % FLAG_MIN_COUNT)
-    out.append('风格清理：不是……而是、破折号两行标“！”的，交稿前改掉；其余只报数。'
+    out.append('“不是……而是”、破折号两行标“！”的，按references/clarity-acceptance.md交稿前处理；其余只报数。'
                '密度不改变退出码，也不证明语义清楚。')
     w = [18, 20, 9, 11, 9]
     out.append(pad('项', w[0]) + pad('实测', w[1]) + pad('作者中位', w[2], True)
@@ -1262,6 +1324,8 @@ def render(r, hazards=True):
         out.append(pad(m['label'], w[0]) + pad(cell, w[1]) + pad(fmt(m['author_median']), w[2], True)
                    + pad(fmt(m['author_p90']), w[3], True)
                    + pad(fmt(m['control_2026_02']), w[4], True) + ' ' + mark)
+        for h in r.get('density_hits', {}).get(m['key'], []):
+            out.append('    L%d: %s' % (h['line'], h['quote']))
     if BASELINE:
         meta = BASELINE.get('_meta', {})
         out.append('基线：%s，%s 篇作者文本；算法见脚本头与 README。' % (meta.get('date', '?'), meta.get('docs', '?')))
@@ -1547,7 +1611,7 @@ def hazard_count_line(r):
 def render_semantic_reviews(r):
     reviews = r['semantic_reviews']
     if r.get('mode') == 'clarity':
-        out = ['语义复核候选 %d（H2–H4 字面命中、H7 跨段重复（A 长串重合、B 段首复述），不据此判错；见 references/clarity-acceptance.md）'
+        out = ['语义复核候选 %d（H2–H4 字面命中、H7 跨段重复（A 长串重合、B 段首复述）、H9 名词化的看法，不据此判错；见 references/clarity-acceptance.md）'
                % len(reviews)]
     else:
         out = ['语义复核候选 %d（H7 跨段重复：A 长串重合、B 段首复述，只报不拦；见 FICCCompose.md C23）' % len(reviews)]
@@ -1639,7 +1703,7 @@ def selftest_clarity():
                 '风格清理', clarity=True)
     flags = {m['key'] for m in r['metrics'] if m['over_p90']}
     good = ({'bushi', 'dash'} <= flags and r['exit_code'] == 0
-            and '风格清理：不是……而是、破折号两行' in render(r, hazards=False))
+            and '按references/clarity-acceptance.md交稿前处理' in render(r, hazards=False))
     ok &= good
     print('  %s 两项风格清理保留“！”提示，退出码仍为 %d；不作为清晰度证明'
           % ('通过' if good else '不通过', r['exit_code']))
@@ -1712,6 +1776,78 @@ def selftest_h7(clarity=False):
     return ok
 
 
+# H9 fixture (synthetic sample, same as h9.md in the author's task directory): L3 prose
+# with 读法 and 解读, L5 a list row with 推断加强, L7 读法 inside inline code, L9-L11
+# a table whose cells carry 视角, 框架 and 让步.  Only the three L3/L5 hits count.
+# v4.5: L13 is a prose line with the three words removed on 2026-10-24 (框架,
+# 让步, 的分量) in their ordinary senses; it must give no H9 hit.
+H9_NEG = '融资框架谈妥后，优先档在条款上让步，Oracle的分量还在涨。'
+H9_SYNTH = ('# 测试\n\n三种读法并存，市场的解读在变。\n\n- 清单行：这个推断加强了。\n\n'
+            '行内代码 `读法` 不算。\n\n| 表格 | 视角 |\n|---|---|\n| 框架 | 让步 |\n\n' + H9_NEG + '\n')
+H9_WANT = [(3, '读法'), (3, '解读'), (5, '推断加强')]
+H9_NEG_LINE = 13
+
+
+def selftest_h9():
+    print('== H9 名词化的看法自检（只在 --clarity 下算；只进语义复核候选，不计硬伤、不改退出码）')
+    r = analyze(H9_SYNTH, 'synthetic', clarity=True)
+    d = analyze(H9_SYNTH, 'synthetic')
+    got = [(h['line'], h['hit']) for h in r['semantic_reviews'] if h['code'] == 'H9']
+    skipped = not any(h['code'] == 'H9' and 7 <= h['line'] < H9_NEG_LINE
+                      for h in r['semantic_reviews'])
+    neg_lines = H9_SYNTH.split('\n')
+    neg_ok = (neg_lines[H9_NEG_LINE - 1] == H9_NEG
+              and all(w in H9_NEG for w in ('框架', '让步', '的分量'))
+              and not any(h['code'] == 'H9' and h['line'] == H9_NEG_LINE
+                          for h in r['semantic_reviews']))
+    default_h9 = [h for h in d['semantic_reviews'] + d['hard'] if h['code'] == 'H9']
+    good = (got == H9_WANT and skipped and neg_ok
+            and not r['hard'] and r['exit_code'] == 0
+            and not any(h['code'] == 'H9' for h in r['hard'])
+            and 'H9' in render_semantic_reviews(r)
+            and not default_h9 and d['exit_code'] == 0)
+    print('  %s 清晰模式 H9 %d 条（%s）；行内代码 L7、表格行 L9–L11 %s；'
+          'L%d 平常用法（框架、让步、的分量，10-24 移出）%s；默认模式 H9 %d 条；'
+          '硬伤 %d，退出码 %d／%d' % (
+              '通过' if good else '不通过', len(got), '、'.join('L%d %s' % g for g in got),
+              '不报' if skipped else '误报', H9_NEG_LINE, '不报' if neg_ok else '误报',
+              len(default_h9), len(r['hard']), r['exit_code'], d['exit_code']))
+    return good
+
+
+# Density positions fixture (v4.5): L3 one 不是……而是, L5 a paragraph whose last
+# sentence is a 段末升华.  Counts stay 1 each, no flag (< FLAG_MIN_COUNT), exit 0.
+DENSITY_SYNTH = ('# 测试\n\n利率上行的原因不是需求回升，而是供应收缩。\n\n'
+                 '融资成本一路走高，企业只好推迟投资。这就是本轮放缓的根源。\n')
+DENSITY_WANT = {'bushi': [3], 'coda': [5]}
+
+
+def selftest_density(clarity=False):
+    print('== 密度行位置自检（不是……而是、段末升华逐条列行号与原句；只报，不改计数、“！”和退出码）')
+    r = analyze(DENSITY_SYNTH, 'synthetic', clarity=clarity)
+    text = render(r, hazards=False).split('\n')
+    js = json.loads(json.dumps(r, ensure_ascii=False))
+    counts = dict((m['key'], m['count']) for m in r['metrics'])
+    good = (counts['bushi'] == 1 and counts['coda'] == 1 and r['exit_code'] == 0
+            and r['over_p90_count'] == 0)
+    for key, label in (('bushi', '不是……而是'), ('coda', '段末升华')):
+        want = DENSITY_WANT[key]
+        got = [h['line'] for h in js.get('density_hits', {}).get(key, [])]
+        rows = [i for i, ln in enumerate(text) if ln.startswith(label)]
+        under = text[rows[0] + 1:rows[0] + 1 + len(want)] if rows else []
+        ok = (got == want and len(rows) == 1
+              and all(ln.startswith('    L%d: ' % n) for ln, n in zip(under, want))
+              and len(under) == len(want)
+              and all(len(h['quote']) <= DENSITY_QUOTE_MAX for h in js['density_hits'][key]))
+        good &= ok
+        print('  %s %s：JSON 行号 %s；文本行下 %s' % ('通过' if ok else '不通过', label, got,
+                                              '｜'.join(ln.strip() for ln in under) or '无'))
+    print('  %s 计数 不是……而是 %d、段末升华 %d，高于 90 分位 %d 项，退出码 %d'
+          % ('通过' if good else '不通过', counts['bushi'], counts['coda'],
+             r['over_p90_count'], r['exit_code']))
+    return good
+
+
 def selftest(letters, clarity=False):
     ok = True
     print('== 规则自检（合成样例：H1/H5/H6 保留硬伤，H2–H4 转语义复核）' if clarity else
@@ -1729,8 +1865,12 @@ def selftest(letters, clarity=False):
     print()
     ok &= selftest_h7(clarity)
     print()
+    ok &= selftest_density(clarity)
+    print()
     if clarity:
         ok &= selftest_clarity()
+        print()
+        ok &= selftest_h9()
         print()
     ok &= selftest_hazards()
     print()
@@ -1777,9 +1917,11 @@ def selftest(letters, clarity=False):
 def main(argv=None):
     ap = argparse.ArgumentParser(
         prog='voice_check.py',
-        description='FICCVoice v4.3: default H1-H6 set exit 1; --clarity keeps only H1/H5/H6 hard; '
-                    'H7 (cross-paragraph repetition, triggers A and B) is a review candidate in both modes. '
-                    'Counts never set exit 1; two flagged style rows still need cleanup.')
+        description='FICCVoice v%s (%s): default H1-H6 set exit 1; --clarity keeps only H1/H5/H6 hard; '
+                    'H7 (cross-paragraph repetition, triggers A and B) is a review candidate in both modes; '
+                    'H9 (nominalized views) is a review candidate under --clarity only. '
+                    'Counts never set exit 1; two flagged style rows still need cleanup; '
+                    'the 不是……而是 and 段末升华 rows list each hit.' % (VERSION, VERSION_DATE))
     ap.add_argument('file', nargs='?', help='markdown file to check')
     ap.add_argument('--lecture', action='store_true', help='lecture register: no hints on 我 / brackets')
     ap.add_argument('--clarity', action='store_true',

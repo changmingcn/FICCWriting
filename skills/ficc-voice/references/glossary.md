@@ -4,7 +4,7 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 
 ## 1 Conventions
 
-- Section numbers stay as anchors, in numeric levels: “## 1 English title”, “### 1.1 English title”, “#### 1.1.1 …”. The rationale files (-rationale) and examples-and-rewrites follow the section numbers of the rule files, gaps allowed. Rule IDs V01–V40, S01–S96, O01–O90 are not section numbers and stay unchanged.
+- Section numbers stay as anchors, in numeric levels: “## 1 English title”, “### 1.1 English title”, “#### 1.1.1 …”. The rationale files (-rationale) and examples-and-rewrites follow the section numbers of the rule files, gaps allowed. Rule IDs (V, S, O and C numbers) are not section numbers and stay unchanged.
 - Chinese kept in the English text: words, punctuation, and fixed phrases that the writer produces or must avoid in the Chinese article (connectives, quoted phrases, name-table column names, user-fixed expressions, script arguments). Write the Chinese first, then one English gloss in parentheses, e.g. “既然” (since).
 - File names and pointers: point to a section with the file name, one space, and the section number, e.g. references/connectives.md, FICCStructure.md 3.4 (without .md also works: FICCStructure 3.4). In Chinese context put no space between Han characters and digits (“第35节”); in English context write “section 35”.
 - Spacing: in the English files, put a space between English and kept Chinese as English usage requires. The no-space rule (cjk_space.py) governs Chinese body text only.
@@ -512,7 +512,7 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 | 段落组织（Compose） | paragraph organization (FICCCompose.md) | inside a settled node: how the text opens, carries over, unfolds, moves between layers, pays off previews, and closes. The file is FICCCompose.md |
 | 段落代理 | composer (ficc-composer) | writes the paragraph draft per FICCCompose.md. The writer (ficc-writer) then works on sentences per FICCVoice.md |
 | 段落草稿 | paragraph draft | the composer's output. No separate paragraph plan |
-| C 号 | C number (C01–C23) | rule numbers of FICCCompose.md. Old V, O and S numbers that moved: references/migration-2026-10-17.md |
+| C 号 | C number (C01–C24) | rule numbers of FICCCompose.md. Old V, O and S numbers that moved: references/migration-2026-10-17.md |
 
 ## 7 Added by the English pass on SKILL.md files and agent cards (2026-10-17)
 
@@ -520,6 +520,7 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 |---|---|---|
 | 资料核对席 | source-check seat | the seat that checks facts against sources per shared-protocols/source-check.md; its check is the tie-out (对账) named there |
 | 反方席 | counter-view seat | built from 反方 = counter-view |
+| 标题级反驳席 | 标题级反驳席 (kept in Chinese; new name of the counter-view seat) | 标题级反驳席 = 原 counter-view 席，ficc-voice SKILL.md ⑥，refuter-t1e 卡，2026-10-30 裁定五 |
 | 资料索引 | materials index | FICCHand deliverable `<文稿名>-资料索引.md`; format file references/materials-manifest.md in ficc-hand |
 | 表达修订稿 | revised node | the writer's output in polish mode, as in agents/ficc-writer.md |
 | 观点提纲／观点树 | view outline / view tree | FICCHand deliverable `<文稿名>-提纲.md` |

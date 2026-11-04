@@ -2,7 +2,7 @@
 
 Sections 1–2 copy FICCCompose.md verbatim; section 3 condenses chapter 7.
 
-## 1 Intent lines C01–C23
+## 1 Intent lines C01–C24
 
 - Under a grant limited to splitting or merging paragraphs, add no sentences and keep sentence order. A paragraph left without its claim at the opening is reported as a to-do, not written.
 - C01 At every layer, the conclusion comes at the opening.
@@ -31,6 +31,7 @@ Sections 1–2 copy FICCCompose.md verbatim; section 3 condenses chapter 7.
 - C21 Pay off hook details later in the text.
 - C22 In the body text, state what the figure shows and what to see in it here.
 - C23 Before submitting, check the openings at every layer again on the finished draft.
+- C24 Define once, then combine in short form.
 
 ## 2 C01 tables
 
@@ -62,9 +63,9 @@ Opening form (decides only in which sentence the claim lands):
 - C17 Each layer's openings and closes read as one argument, leave out no side, and do not overstate.
 - C20 The connectives in the claim and carry-over sentence preview the relations the sub-points actually unfold.
 - C23 On the finished draft and name table only, each opening read alone states what its C01 row requires; restating only an attitude, count, or subject fails; a conclusion appears at most twice in adjacent openings (C07).
-- C23 Check first: tone-only opening with no carry-over (C02); carry-over as table of contents, roadmap, or coordinates (C04, C06); counter-views, conclusion, or appendices in the carry-over (C05); close that repeats the opening or uplifts (C17, C19); carry-overs and closes forced onto small nodes (C19); preview repeated as a later opening, verbatim or nearly (C04, C20).
+- C23 Check first: tone-only opening with no carry-over (C02); carry-over as table of contents, roadmap, or coordinates (C04, C06); counter-views, conclusion, or appendices in the carry-over (C05); close that repeats the opening or uplifts (C17, C19); carry-overs and closes forced onto small nodes (C19); preview repeated as a later opening, verbatim or nearly: shorten the preview or let the opening add the relation word and the step (C04, C20).
 
-First full check: run the Check lines of C01–C22 on the paragraph draft, then the whole-draft pass in C23 (check items listed above; open FICCCompose.md 7 only if an item is unclear). A later check after a revision follows FICCCompose.md 7: cover the paragraphs changed and those whose opening, carry-over or close the change touched; untouched paragraphs keep the prior result the packet attaches. Sentence-level cold reading, AI tone, and the material-to-text check stay in FICCVoice.md V37–V40.
+First full check: run the Check lines of C01–C22 and C24 on the paragraph draft, then the whole-draft pass in C23. A later check after a revision follows FICCCompose.md 7: cover the paragraphs changed and those whose opening, carry-over or close the change touched; untouched paragraphs keep the prior result the packet attaches. Sentence-level cold reading, AI tone, and the material-to-text check stay in FICCVoice.md V37–V40.
 
 A unit holding child nodes, a section-level carry-over, or the whole piece's close: read FICCCompose.md C04–C06 and C17–C19 in full.
 

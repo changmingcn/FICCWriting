@@ -1,8 +1,8 @@
-# voice_check.py（4.3，2026-10-17）
+# voice_check.py（4.5，2026-10-24）
 
-FICCVoice 的检查报告。现行写作使用 `--clarity`：H1 内部标签、H5 引号格式和 H6 正文分号仍是硬伤；H2 路线图、H3 短清单、H4 对偶标题改为语义复核候选。候选不改变退出码，须按 FICCVoice.md V02、V10、V13、V25、V37–V40，FICCCompose.md C01（原 V05）与 `references/clarity-acceptance.md` 核读；出现逻辑步骤、列表或相近句式，本身不说明写错。默认不加 `--clarity` 时保留 H1–H5 的旧判定并加 H6，供原有调用兼容。4.3 加 H7 跨段重复（A 长串重合、B 段首复述），两种模式都只作语义复核候选，不改退出码。
+FICCVoice 的检查报告。现行写作使用 `--clarity`：H1 内部标签、H5 引号格式和 H6 正文分号仍是硬伤；H2 路线图、H3 短清单、H4 对偶标题改为语义复核候选。候选不改变退出码，须按 FICCVoice.md V02、V10、V13、V25、V37–V40，FICCCompose.md C01（原 V05）与 `references/clarity-acceptance.md` 核读；出现逻辑步骤、列表或相近句式，本身不说明写错。默认不加 `--clarity` 时保留 H1–H5 的旧判定并加 H6，供原有调用兼容。4.3 加 H7 跨段重复（A 长串重合、B 段首复述），两种模式都只作语义复核候选，不改退出码。4.4加H9名词化的看法，只在`--clarity`下作语义复核候选，不改退出码。4.5（2026-10-24）收窄H9，去掉框架、让步、的分量。密度行“不是……而是”和“段末升华”在报告里逐条列出行号与原句，计数、“！”和退出码都不变。报告里“！”两行的处理说明改为指向`references/clarity-acceptance.md`（2026-10-24合一）。
 
-密度统计不改变退出码。“不是……而是”和破折号两行标“！”的，仍按用户2026-10-13裁定在交稿前清理；其余密度只报数。两项清理是已有句式偏好，不是清晰度证明。作者中位数、90分位和2026.02对照列只提供背景。第四版已有的隐患清单、名字表检查和密度算法保持不变；下面的第三版实测与基线记录仍作历史记录。第二版留在 （作者本机路径），没有改动。
+密度统计不改变退出码。标“！”的行哪两行交稿前要处理、处理到什么程度，只在`references/clarity-acceptance.md`写。作者中位数、90分位和2026.02对照列只提供背景。第四版已有的隐患清单、名字表检查和密度算法保持不变；下面的第三版实测与基线记录仍作历史记录。第二版留在 （作者本机路径），没有改动。
 
 ## 用法
 
@@ -15,14 +15,14 @@ python3 scripts/voice_check.py --baseline --extra <作者文本…> [--letters �
 - 退出码：0 无当前模式的硬伤；1 有硬伤；2 用法错误或找不到文件。退出码 0 不代表语义已核清，也不免除两项风格清理。`--selftest` 全过返回 0，否则 1。
 - `--clarity`：H2–H4 保留命中位置供语义核读，只有 H1/H5/H6 决定退出码。`analyze(..., clarity=True)` 是对应的 Python API；不传时保留原有返回字段与判定，版本号更新为4.2（2026-10-17 加 H6，命令行选项没有变）。4.3（同日）加 H7，命令行选项仍没有变。
 - `--lecture`：讲课档。报告头标注；硬伤规则不变；「我」与括号两行不打任何标记。
-- `--json`：同样内容的机器可读输出（`hard`、`metrics`、`over_p90_count`、`exit_code` 等字段；第四版另有 `hazards`、`hazard_counts`、`hazard_skipped`、`clause_histogram`、`names_conditional_count`、`names`，见“隐患清单（第四版）”）。清晰模式新增 `mode: "clarity"`。`semantic_reviews` 沿用硬伤项的行号、代码、说明、原句字段：清晰模式里放 H2–H4 和 H7，H2–H4 不再出现在 `hard`；4.3 起默认模式也带这个字段，只放 H7。H7 另有 `trigger`、`pair_line`、`pair_end_line`，A 有 `length`、`overlap`，B 有 `ratio`、`contained`、`opening`、`matched`、`matched_sentence`、`echo_count`。
+- `--json`：同样内容的机器可读输出（`hard`、`metrics`、`over_p90_count`、`exit_code` 等字段；第四版另有 `hazards`、`hazard_counts`、`hazard_skipped`、`clause_histogram`、`names_conditional_count`、`names`，见“隐患清单（第四版）”）。清晰模式新增 `mode: "clarity"`。4.5起两种模式都带 `density_hits`：`{"bushi": [{"line": 行号, "quote": 原句}], "coda": [...]}`，逐条列“不是……而是”（bushi）和“段末升华”（coda）两行的命中，条数等于这两行的原始次数，见“密度记录与两项风格清理”。`semantic_reviews` 沿用硬伤项的行号、代码、说明、原句字段：清晰模式里放 H2–H4 和 H7，H2–H4 不再出现在 `hard`；4.3 起默认模式也带这个字段，只放 H7。H7 另有 `trigger`、`pair_line`、`pair_end_line`，A 有 `length`、`overlap`，B 有 `ratio`、`contained`、`opening`、`matched`、`matched_sentence`、`echo_count`。
 - `--names <提纲.md>`：读提纲名字表的“不许用”一栏，逐处报正文和标题里的禁用说法（隐患清单第九类）；提纲文件不存在时退出码 2。
 - `--hazards-only`：只打印复核候选，供写手改稿时反复跑；默认列 H7 候选和原隐患清单，配合 `--clarity` 时也列 H2–H4 的语义复核候选。退出码仍由当前模式的硬伤决定。
 - `--letters` 默认 `~/ficc-letters/letters.txt`。
 
 查的范围：第一个 `# 附`/`## 附` 标题之前；跳过围栏代码、表格行（`|` 开头或含两个以上 `|`）、图片行和 HTML 注释；引用块（`>` 开头，包括案例框）照查，命中处标「〔引用块〕」；标题行在这组规则里只查 H4；H5 另查全文；H6、H7 再跳过清单行。隐患清单用同一范围（名字表禁用词另查标题行）。
 
-## 六组检查与清晰模式
+## 八组检查与清晰模式
 
 | 码 | 字面检查 | `--clarity` 中怎样处理 | 现行依据 |
 |---|---|---|---|
@@ -33,8 +33,9 @@ python3 scripts/voice_check.py --baseline --extra <作者文本…> [--letters �
 | H5 | 直角引号「」『』 | 硬伤 | `references/format-and-maintenance.md` 一：引号用“”，里层用‘’（用户2026-10-12裁定） |
 | H6 | 正文行里的全角分号“；” | 硬伤 | FICCVoice.md V07：正文禁用分号，改成多个短句，表格与真清单例外（用户2026-10-17裁定） |
 | H7 | 跨段重复（4.3）：A 两段逐字重合 ≥20 个汉字和数字；B 不少于 3 个段首复述同一前段 | 语义复核候选（默认模式也是） | FICCCompose.md C23 检查项，C04、C20；再提要多带一层，见 C07 |
+| H9 | 名词化的看法（4.4，4.5收窄）：读法、解读、视角、判别读数、推断加强、判断…加强、占上风、站在…一边 | 语义复核候选（只在`--clarity`下算，默认模式不报） | FICCVoice.md V57（用户2026-10-21裁定保留） |
 
-H1–H6 的字面匹配方法没有改变。默认模式把 H1–H6 都记为硬伤，H7 两种模式都只进 `semantic_reviews`；现行清晰模式只把 H1/H5/H6 记入 `hard`，H2–H4 记入 `semantic_reviews`。实际路线图也会保留为候选，由人依据 FICCCompose.md C01 判断；脚本不会把候选自动认定为正确。核读与处置见 FICCVoice.md 7（V37–V40）及 `references/clarity-acceptance.md`。
+H1–H6 的字面匹配方法没有改变。默认模式把 H1–H6 都记为硬伤，H7 两种模式都只进 `semantic_reviews`；现行清晰模式只把 H1/H5/H6 记入 `hard`，H2–H4、H7、H9 记入 `semantic_reviews`。实际路线图也会保留为候选，由人依据 FICCCompose.md C01 判断；脚本不会把候选自动认定为正确。核读与处置见 FICCVoice.md 7（V37–V40）及 `references/clarity-acceptance.md`。
 
 **H1**：`【S数字`（含 `【S12】`、`【S3, S5】`）、`〔S数字〕`、`[src:`（不分大小写）；〔〕里出现文件名（.md .txt .py .json .csv .pdf .docx 等常见扩展名）、路径（`~/`、`./`、`/Users/`）或行号标记（三位以上的 `L120`、区间 `L12-L30`、`#L5`、`：L12`、`第 3 行`）。不算：〔九节〕〔2018.11〕〔L14、L16〕（讲义线名）〔来源：2025 年 4 月份月报〕，两份指引自己就这样注出处。
 
@@ -78,9 +79,11 @@ H1–H6 的字面匹配方法没有改变。默认模式把 H1–H6 都记为硬
 | 括号插话 | 全角括号内 6–60 个汉字；纯英文术语括注不算插话 |
 | 三连排比 | 同一句里 ≥3 个分句（按 ，；： 切）以同样两个汉字起头 |
 
-**「！」怎么读**：标「！」要同时满足两条：密度高于基线表的90分位，出现不少于3处。统计本身不改变退出码。按用户2026-10-13裁定，只有“不是……而是”和破折号两行交稿前要改到不再标“！”；当前固定清理标准分别为每万汉字高于6.5、0.3，并且出现不少于3处。这是原有风格清理要求，不是歧义检测或清晰度证明，见 `references/clarity-acceptance.md`。脚本仍从基线表读取这两个数，因此重算基线时须保住它们（历史待办 FV-13 是改写为独立常数，本次不改计算）。其余各行只报数，作者语料两列只提供背景；“我们”偏低不打标记（用户2026-09-05裁定不设人称下限）。报告已纠正原来笼统的“只报数”说明。
+**「！」怎么读**：标「！」要同时满足两条：密度高于基线表的90分位，出现不少于3处。统计本身不改变退出码。哪两行交稿前要处理、处理到什么程度见`references/clarity-acceptance.md`。“不是……而是”和破折号两行当前的“！”门槛分别为每万汉字高于6.5、0.3，并且出现不少于3处。脚本仍从基线表读取这两个数，因此重算基线时须保住它们（历史待办 FV-13 是改写为独立常数，本次不改计算）。其余各行只报数，作者语料两列只提供背景；“我们”偏低不打标记（用户2026-09-05裁定不设人称下限）。报告已纠正原来笼统的“只报数”说明。
 
-“我”一行有“！”只报数，放行；破折号一行按用户2026-10-13裁定，标了“！”就要改。作者语料里这几行的情况见下面“历史与维护”。
+**逐条位置（4.5，2026-10-24）**：“不是……而是”和“段末升华”两行下面逐条列出命中，每条一行`    L<行号>: <原句>`，原句最多40个字符，超出的截断并加“…”。“不是……而是”取命中串和它后面6个字符，“段末升华”取段末那一句。`--json` 里同样内容在 `density_hits` 下。只报位置，不加门槛：计数、90分位比较、“！”的条件和退出码都不变（用户2026-09-05裁定不设频次上限）。某一行若被某种模式静默（如 `--lecture` 下的“我”和括号插话），位置跟着静默。这两行现在不受 `--lecture` 影响。
+
+“我”一行和破折号一行标“！”后各怎么处理，见`references/clarity-acceptance.md`。作者语料里这几行的情况见下面“历史与维护”。
 
 ## 隐患清单（第四版）
 
@@ -181,6 +184,8 @@ python3 ~/.claude/skills/ficc-voice/scripts/voice_check.py --baseline \
 
 输出末尾的 `# BEGIN BASELINE … # END BASELINE` 一段，原样替换脚本里同名的那一段。计数规则改了就要重跑。`$S` 是任务目录，若已清理，要另找《论交易员的成长》原文；只给两篇范本时是 81 篇，数会略有变化。合辑里有 13 期短于 1500 字，单篇一两处就能把密度推高，所以 90 分位偏宽。
 
+**H9**（4.4，2026-10-21）：名词化的看法。只在`--clarity`下算。查正文行，清单行也查，跳过围栏代码、表格行、图片行和标题行，行内反引号代码先遮掉再查（同H5）。正则是`读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边`（4.5收窄，与FICCVoice.md V57的查法一致）。每个命中记一条，报行号、命中词和前后各12个字符，说明里写明命中词并指向FICCVoice V57。只进`semantic_reviews`，不计入`hard`，不改退出码。主语是公司、机构、价格或“我们”的命中，核读后放过。依据是FICCVoice.md V57（10-20加入，10-21回退到10-18版后按用户裁定以原号回装）。4.5（2026-10-24，用户“都同意，升级吧”）去掉框架、让步、的分量三项：本脚本在1009、1012、1018三篇定稿上给出这三项10处，在1009删改前草稿上给出3处（全是“让步”），全是平常用法（交易的框架、条款上让步、指数权重的“Oracle的分量”），真命中0处。框架：用户2026-10-24裁定不加回（2026.02对照上13处里9处是谈投资框架那篇随笔的题材用法，本家稿上全是普通用法），本家稿第一次出现“框架”当看法写时，当天带例外`(?<![值险资策析管计律度])框架(?!协议)`加回H9与V57查法。逐文件计数见FICCVoice-provenance.md第33节。读法、解读、视角、判别读数、推断加强、判断…加强留着。占上风、站在…一边两边都没有观测，也留着。
+
 ## 自检
 
 `--selftest` 按默认规则检查；`--selftest --clarity` 按清晰模式检查，包括 H1/H5/H6 仍返回1、H2–H4 进入候选且返回0。清晰模式另测四例：“假设利率上升，首先融资成本增加，其次企业缩减投资，最后产能扩张放缓。”；三个短而完整的因果陈述列表；“固定利率：利息不会改变／浮动利率：利息随市场变”两条等长标题；实际的“本文将从……”路线图。逐例确认默认模式仍报原代码，清晰模式保留同一命中供复核，密度和隐患计数不变；另确认两项风格清理仍标“！”。
@@ -192,6 +197,10 @@ python3 ~/.claude/skills/ficc-voice/scripts/voice_check.py --baseline \
 4.2（2026-10-17）在合成样例里加 H6 四例，两种模式都跑。正例是一行正文带分号，要报 H6。反例三条要放过。一是表格行里的分号。二是清单行里的分号，`- `、`1. `、`2．` 各一行，中间一行超过 20 字，免得凑成 H3。三是标题行、行内反引号代码、围栏代码和 `## 附` 以后的分号。两篇范本各有一处 H6，即《九节》L79 和《熊猫讲期权》L1，都是 10-17 裁定以前的作者原文，属于真命中，不是误报。范本一节只核 H6 以外的硬伤为 0，H6 条数照打印、不计入通过与否。
 
 4.3（2026-10-17）加 H7 六例，两种模式都跑，每例都核硬伤为 0、退出码为 0、H7 不在 `hard`。A 三例：两段共享 22 字，要报 1 条，长度 22，行号 L1 与 L3；只共享其中前 19 字，不报；同样 22 字出现在表格行和清单行，正文只有一段带它，不报。三例里重合串前后的字两段不同，重合长度就是样例串的长度。B 三例：用甲稿 L5 主旨段和三个照抄的段首（2.1、2.3、2.4），要报 3 条，都指向主旨段，后段行号 L5、L7、L9；同一主旨段配三个改写的段首，自检核最高相似度低于 0.6（实测 0.45），不报；乙稿式的两个段首各复述一个分句，不到成组门槛，不报。实测：《九节》H7 0 条，《熊猫讲期权》H7 4 条（全是 A；只计汉字和数字以前是 13 条），2026.02 H7 0 条，都只打印，不计入通过与否。试跑样本：`1012CNBondSep.before.md` H7 0 条；（作者草稿） A 3 条，是同一节点的 Compose 稿和 Voice 稿并排造成的；wave-4 甲稿 B 4 条，乙稿 0 条。
+
+4.4（2026-10-21）加H9一例，只在`--selftest --clarity`下跑，两种模式的期望都在这一例里核。样例同任务目录（作者草稿）里的h9.md：L3正文带“读法”“解读”，L5清单行带“推断加强”，L7的“读法”在行内反引号里，L9–L11表格行带“视角”“框架”“让步”。清晰模式要报H9正好3条（L3读法、L3解读、L5推断加强），行内代码和表格行不报，H9不进`hard`，硬伤0，退出码0。同一样例在默认模式不报H9，退出码0。
+
+4.5（2026-10-24）在这一例末尾加L13正文行“融资框架谈妥后，优先档在条款上让步，Oracle的分量还在涨。”，三个去掉的词都在，要求不报H9。原有L3、L5三条期望和L7–L11不报都不变。另加密度行位置一例，两种模式都跑：L3一处“不是……而是”，L5段末一句“这就是本轮放缓的根源”，要求两行计数各1、不标“！”、退出码0，文本报告紧跟两行各列`L3:`和`L5:`，`density_hits`里bushi为[3]、coda为[5]，每条原句不超过40个字符。原有“风格清理”一例的文字断言照旧通过。
 
 2026-10-08 实测：两篇范本硬伤 0；2026.02 硬伤 6，全是 H4（标题含「不是……而是」），另有三项超过 90 分位（不是……而是 53.3、本质上等五词 5.9、三连排比 10.8）。合辑 81 期、三篇范本、FICCVoice.md、FICCOutline.md 共 86 篇里，只有 2026.02 有硬伤。2026-10-17 加 H6 后实测：两篇范本各 H6 1 处，其余硬伤 0。2026.02 默认模式硬伤 47，其中 H4 仍是 6 处，H6 41 行。清晰模式 H4 转为候选，硬伤 41。`1012CNBondSep.before.md` 两种模式都是 H6 3 行（L3、L5、L7，共 8 个分号），退出码 1。H1–H5 命中、密度和隐患计数与 4.1 逐项相同。旁证：熊猫笔记第五章（2015）里的目录，以及「1. 基本面 / 2. 收益与风险估值 / 3. 技术面」这样的清单，会被 H3 抓到。当时据此建议并进一段；现行清晰模式将它们列为候选，是否合并由具体意思和关系决定。
 
@@ -220,15 +229,33 @@ python3 ~/.claude/skills/ficc-voice/scripts/voice_check.py --baseline \
 
 ## 回滚
 
-删掉 `scripts/voice_check.py`、`scripts/README.md` 和 `references/corpus/` 即回到第二版；第二版从未改动。回到第三版：用安装前的备份（作者草稿）替换这两个文件；第四版没有改基线块、`cjk_space.py`、`xref_check.py`。回到 4.1（去掉 H6）：用任务目录 （作者草稿） 里的这两个文件替换。4.2 没有改基线块和隐患清单。回到 4.2（去掉 H7）：用任务目录 （作者草稿） 替换。4.3 没有改基线块、隐患清单和 H1–H6。
+删掉 `scripts/voice_check.py`、`scripts/README.md` 和 `references/corpus/` 即回到第二版；第二版从未改动。回到第三版：用安装前的备份（作者草稿）替换这两个文件；第四版没有改基线块、`cjk_space.py`、`xref_check.py`。回到 4.1（去掉 H6）：用任务目录 （作者草稿） 里的这两个文件替换。4.2 没有改基线块和隐患清单。回到 4.2（去掉 H7）：用任务目录 （作者草稿） 替换。4.3 没有改基线块、隐患清单和 H1–H6。回到4.3（去掉H9）：用任务目录（作者草稿）里的`voice_check.py`和`README.md`替换，或跑备份目录（作者草稿）里的`rollback.sh`。4.4没有改基线块、隐患清单和H1–H7。回到4.4（恢复框架、让步、的分量，去掉位置行）：用备份目录（作者草稿）里的`voice_check.py`和`README.md`替换，或跑同目录的`rollback.sh`（它也删掉新建的`budget_check.py`和`budget.json`）。4.5没有改基线块、隐患清单、H1–H7和密度计数。
 
-# xref_check.py（2026-10-17，第四波加 FICCCompose，第六波加摘录校核及关键行完整性）
+# budget_check.py（2026-10-24）
+
+规则卡和各席要读的文件的字符数封顶。量法是按UTF-8读进来的`len(text)`（字符，不是字节）。封顶值和历史在同目录`budget.json`，路径相对于其中的`root`（`~/.claude`）。现列十个文件：FICCVoice.md、FICCCompose.md、FICCOutline.md、FICCStructure.md、references/compose-excerpt.md、references/clarity-acceptance.md，以及agents下ficc-outliner、ficc-structurer、ficc-composer、ficc-writer四张卡。2026-10-24的基线是第一波装机后的实测值，不留余量。
+
+```
+python3 scripts/budget_check.py                         # 逐个文件列 used / cap / headroom
+python3 scripts/budget_check.py --set-baseline --reason 理由
+python3 scripts/budget_check.py --raise 路径 N --reason 理由
+python3 scripts/budget_check.py --selftest
+```
+
+- 退出码：0全在封顶内，1有文件超出，2有文件不在或`budget.json`读不了。`--set-baseline`、`--raise`没给`--reason`，或`--raise`的N不高于原值，都拒绝并返回2。
+- `--set-baseline`把所有封顶改成当前实测值，`--raise`只抬一个，两者都在`history`里追加一条（日期、理由、`[旧值, 新值]`）。
+- 抬封顶的规矩（MAINTAINERS.md第19条）：只按一条用户裁定的篇幅抬，而且这条裁定找不到可以腾出来的退役重复内容安放。理由同时记进`history`和本技能的provenance。
+- `--selftest`：把每个封顶文件复制到临时目录，先核原样等于封顶时返回0，再加一个字符，必须返回1。另核文件不在、`budget.json`读不了都返回2，最后对live树跑一遍真检查，必须通过。
+- `shared-protocols/regression/run-local-checks.sh`有一段`== ficc-voice budget_check`，只跑`--selftest`（自检末尾会对现网树跑一遍真检查），非0记失败。
+
+# xref_check.py（2026-10-17，第四波加 FICCCompose，第六波加摘录校核及关键行完整性；2026-10-24加摘录第3节编号校核）
 
 查节号引用。技能里凡是指向FICCOutline.md、FICCStructure.md、FICCVoice.md、FICCCompose.md某一节，或带文件名指向别的参考文件某一节（如references/dev-notes.md第35节）的地方，都要落到一个现存的数字标题上；引号里写了标题的，标题文字还要和现在的一致。只用标准库，Python 3.9可跑。
 
 ```
 python3 scripts/xref_check.py [--root 技能目录] [--json] [-q]
 python3 scripts/xref_check.py --selftest
+python3 scripts/xref_check.py [--root 技能目录] --selftest-excerpt
 ```
 
 - 什么时候跑：改了四份主文件（FICCOutline、FICCStructure、FICCVoice、FICCCompose）或带编号的参考文件的任何一个标题或节号（增删、改名、调序），或改了任何一条条号定义之后，安装之前。
@@ -236,13 +263,33 @@ python3 scripts/xref_check.py --selftest
 - 认哪几种写法：带文件名的“FICCOutline.md 4.2”“FICCOutline 4.2”“FICCOutline4.2”“FICCOutline 4”“FICCCompose.md 3”（.md、空格、Markdown链接、反引号可有可无）；“FICCVoice 5.1 V29”只认5.1，V/S/O/C条号不是节号。别的文件要写出“.md”，可带路径：“dev-notes.md section 35”“references/dev-notes.md第35节”；文件不在本技能树里或没有数字标题的不认（如任务目录里的“results/J-trees.md第3节”）。带标题的“FICCOutline.md “4.2 How to write the outline, and where it goes””，标题须与现行标题一字不差。节号后面紧跟引语的（F 6.2后接引号原文），引语须在该节正文里找得到。references/examples-and-rewrites.md里“## FICCStructure 3.4”这样的标题（写了标题的，须与现行标题一致），以及“本文件FICCX …”（要求该文件里也有这个标题）。跟在引用后面的连写“4.3 and 4.5”“1 to 3”“1到3”“3、8”“2.2, 2.3”“6, 6.1–6.4, 7.1, and 8.3”“4.1和7”，算同一份文件；表示范围的to／到／至／破折号（含短横“–”，第四波起认）须由小到大，“10.3 to 9.3”是挪动，不算连写；短横后面的数若是数量（“1.5–2.0%”“3–5份”“1–2 KB”）不算范围；中文逗号结束连写，括号也结束连写，括号后面的数要重写文件名。四份主文件和它们的中文镜像里不带文件名的“见4.2”“（2.2, 2.3）”“see 3.5”“Section 5”“第5节”“见7。”按本文件的标题解析，带引号的“4.2 标题”也按本文件核对。不认：数字后面紧跟数字、千分位逗号、%、连字符加数字、量词（“40条”“3份”）或KB／bytes／lines；宁可漏认，不误报。报告末尾给出认到的裸引用条数。
 - 旧写法：主文件名后面紧跟中文数字节号（“四（二）”“七”，或带“七、”的引号标题）的，一律记MISSING，改成现行数字节号。
 - 不查：`references/corpus/`（作者原文）、`references/history.md`、`references/dev-notes.md` 与 `references/FICCVoice-provenance.md`（历史记录、来源与迁移沿革；正文里的旧节号照旧保留，不当作现行规则验证；它们仍可作被引用的目标）、脚本自己（自检样例故意写错）、符号链接 `ficc-voice.md`。这几份只列出原始匹配数。
-- 怎么读结果：每条引用后面是它落到的标题；`MISSING` 是节号不存在（或“本文件”指的标题在examples-and-rewrites.md里没有，或是旧写法），改成现行节号；`STALE?` 是节号还在，但引号里的标题和现在的标题对不上，引号里的原文在这一节里也找不到，多半是节号没变、内容挪走了，要回到那一节核对后改引号或改节号。只要有一条MISSING、STALE?、MISSING-RULE或RETIRED-RULE（条号检查，见下），或EXCERPT-MISMATCH、EXCERPT-MISSING、EXCERPT-MISSING-FILE（摘录校核，见下），退出码就是1；全部落到实处是0；找不到FICCOutline.md、FICCStructure.md、FICCVoice.md三份之一是2（FICCCompose.md可缺，缺了指向它的引用记MISSING）。最后一行是 `refs N · MISSING m · STALE? s · rule refs R · MISSING-RULE r · RETIRED-RULE t · excerpt lines N · EXCERPT-MISMATCH m · EXCERPT-MISSING k`；摘录文件缺失时末尾再加 ` · EXCERPT-MISSING-FILE 1`，根目录下没有FICCCompose.md时后三项换成 ` · excerpt skipped`。
+- 怎么读结果：每条引用后面是它落到的标题；`MISSING` 是节号不存在（或“本文件”指的标题在examples-and-rewrites.md里没有，或是旧写法），改成现行节号；`STALE?` 是节号还在，但引号里的标题和现在的标题对不上，引号里的原文在这一节里也找不到，多半是节号没变、内容挪走了，要回到那一节核对后改引号或改节号。只要有一条MISSING、STALE?、MISSING-RULE或RETIRED-RULE（条号检查，见下），或EXCERPT-MISMATCH、EXCERPT-MISSING、EXCERPT-MISSING-FILE（摘录校核，见下），退出码就是1；全部落到实处是0；找不到FICCOutline.md、FICCStructure.md、FICCVoice.md三份之一是2（FICCCompose.md可缺，缺了指向它的引用记MISSING）。最后一行是 `refs N · MISSING m · STALE? s · rule refs R · MISSING-RULE r · RETIRED-RULE t · excerpt lines N · EXCERPT-MISMATCH m · EXCERPT-MISSING k · excerpt §3 C23 ids OK`（末项见下“摘录第3节编号校核”）；摘录文件缺失时没有末项，末尾加 ` · EXCERPT-MISSING-FILE 1`，根目录下没有FICCCompose.md时摘录各项换成 ` · excerpt skipped`。
 - `-q` 只列有问题的引用；`--json` 输出同样内容的机器可读版。
 - `--selftest` 在临时目录里搭一个小样例：几种对的写法（F.md 1.2、F 1.1、F1、F 2 V02、带标题、引语在正文、dev-notes.md section 2与第1节）、一条故意断链（节号不存在）、一条旧写法、一条标题过期，外加examples-and-rewrites.md的编号标题与“本文件”、裸引用（see 1.2、Section 2、(2.1)）、中文镜像、连写继承文件名、由大到小的“to”不算连写、量词与千分位不认、技能树外的文件不认、history.md／dev-notes.md／FICCVoice-provenance.md不查且保留原始匹配数，FICCCompose.md的节号（带文件名的对与错各一条、文件内裸引用一条）、短横范围与“, and”连写、数据区间不算范围；条号检查另有：样例里定义了的O、S、V各一条（含后跟字母的写法）记OK，故意写错的一个V号和没定义的一个O号记MISSING-RULE，迁移文件整份不查，“(formerly Snn)”“(Snn merged)”括号里的旧号不算引用、单写的旧号照报，references/zh/与dev-notes.md里的旧条号不查，定义行本身不算引用；C号：定义了的记OK，故意写错的一个记MISSING-RULE，指针行指向不存在的C号也记MISSING-RULE；退役：只剩指针行的V号单写记RETIRED-RULE，写成“(formerly …)”“（原 …）”的不算引用，指针行下面还有缩进正文的V号照常记OK，rationale锚点（rationale文件内、句中“-rationale.md”之后）只计数不报错；样例没有摘录文件，记一条EXCERPT-MISSING-FILE；摘录校核另在七个临时目录里各搭最小的FICCCompose.md与摘录（样例自带两条关键行和一张C01下的表），测七例：意图句、子行、表格行逐字相同记OK，意图句改一个词记EXCERPT-MISMATCH（并报出最接近的Compose行），第1节少一条C号记EXCERPT-MISSING，表格行多一格只记EXCERPT-MISMATCH、不另记缺，删掉收尾条件子行记一条EXCERPT-MISSING（required line），删掉C01表一行记一条EXCERPT-MISSING（table row），关键行与C01表格行全齐记EXCERPT-MISSING 0；全部符合预期才返回0。（本说明不写样例里的坏条号原文，免得本文件自己被条号检查报出。）
 - 条号检查（2026-10-17 新增，第四波加C号，用法不变）：扫到的文件里凡出现 `V\d\d`、`S\d\d`、`O\d\d`、`C\d\d`（前面不是字母、数字或下划线，后面不紧跟数字；“V07a”算V07，“V123”“RV07”不算），都要在对应主文件里有 `- **Xnn**` 定义：V查FICCVoice.md，S查FICCStructure.md，O查FICCOutline.md，C查FICCCompose.md；没有的记 `MISSING-RULE`，报告里另列一块“rule numbers”，逐条给出文件、行号和条号。定义行本身不算引用。不查条号：上面“不查”的几份文件、references/zh/下全部文件，以及整份references/migration-2026-10-17.md（专记旧号）。挪走或并掉的旧号写成指向新家的形式“C06 (formerly V43)”“C01 (formerly FICCVoice V05, V06)”“C01（原 FICCVoice V05、V06）”“V12 (S34 merged)”时，括号里的旧号不算引用，前面的条号照查。有任何一条MISSING-RULE，退出码也是1；`--json` 多出 `rules`、`rules_defined`、`rules_retired` 和 `counts.rule_refs`、`counts.missing_rule`、`counts.retired_rule`、`counts.retired_anchor`。MISSING-RULE多半是条号挪走或并掉以后引用没跟上，照迁移表改成现行条号，或交T0裁。
 - 退役条号（第四波新增）：三份主文件里只剩一行指针、下面没有缩进正文的定义（“- **Vnn** → FICCCompose.md Cnn”）算退役，指针里的C号照常查定义。别处再单写退役号记 `RETIRED-RULE`，退出码1，报告给出指针所在行和该改成的C号：改成C号，或写“Cnn (formerly Vnn)”。指针行下面还留缩进正文的（如V08留了标记词一句）仍是现行条，照常记OK。rationale锚点不报错、只计数：references/下 `*-rationale.md` 文件里的条号（这些文件按论证时的条号分节），以及别的文件里同一句中“-rationale.md”后面的条号（“See references/FICCVoice-rationale.md V06.”）。
-- 摘录校核（2026-10-17 第六波新增）：`references/compose-excerpt.md` 第 3 节（`## 3`）之前必须逐字抄自FICCCompose.md。只查清单行和表格行，围栏代码跳过，说明文字（如表格上方的说明句）不查。`- Cnn <句>` 要等于FICCCompose.md里 `- **Cnn** **<句>**` 这一条定义行去掉 `**` 后的文字；不带C号的 `- <句>` 要等于Compose里任一清单行（任何缩进）的文字；缩进的 `  - <句>` 要等于Compose里任一缩进清单行的文字，缩进深浅不计；`|` 起头的表格行要等于Compose里同样的一行表格（Compose表格缩进在C01下面，缩进不计）。首尾空白都不计，行内一字不差。找不到逐字对应的记 `EXCERPT-MISMATCH`，报摘录行号，并按相似度报最接近的Compose行号与原文；FICCCompose.md定义了的Cnn，摘录第1节（`## 1`下）没有 `- Cnn` 意图行的记 `EXCERPT-MISSING`；根目录下有FICCCompose.md、没有摘录文件的记一条 `EXCERPT-MISSING-FILE`；三者任一出现退出码1。没有FICCCompose.md的旧树跳过这段。第 3 节及以后是浓缩的检查行，不比文字，只由条号检查查C号存在。`--json` 多出 `excerpt`（`file`、`lines`、`items` 逐行结果、`missing`、`missing_file`）和 `counts.excerpt_lines`、`counts.excerpt_mismatch`、`counts.excerpt_missing`、`counts.excerpt_missing_file`、`counts.excerpt_skipped`。EXCERPT-MISMATCH多半是Compose改了措辞、摘录没跟上，照Compose改摘录；EXCERPT-MISSING是Compose新加了C号，在摘录第1节补意图行。
+- 摘录校核（2026-10-17 第六波新增）：`references/compose-excerpt.md` 第 3 节（`## 3`）之前必须逐字抄自FICCCompose.md。只查清单行和表格行，围栏代码跳过，说明文字（如表格上方的说明句）不查。`- Cnn <句>` 要等于FICCCompose.md里 `- **Cnn** **<句>**` 这一条定义行去掉 `**` 后的文字；不带C号的 `- <句>` 要等于Compose里任一清单行（任何缩进）的文字；缩进的 `  - <句>` 要等于Compose里任一缩进清单行的文字，缩进深浅不计；`|` 起头的表格行要等于Compose里同样的一行表格（Compose表格缩进在C01下面，缩进不计）。首尾空白都不计，行内一字不差。找不到逐字对应的记 `EXCERPT-MISMATCH`，报摘录行号，并按相似度报最接近的Compose行号与原文；FICCCompose.md定义了的Cnn，摘录第1节（`## 1`下）没有 `- Cnn` 意图行的记 `EXCERPT-MISSING`；根目录下有FICCCompose.md、没有摘录文件的记一条 `EXCERPT-MISSING-FILE`；三者任一出现退出码1。没有FICCCompose.md的旧树跳过这段。第 3 节及以后是浓缩的检查行，不比文字，C号存在由条号检查查，C23各行引用的C号另查（见下“摘录第3节编号校核”）。`--json` 多出 `excerpt`（`file`、`lines`、`items` 逐行结果、`missing`、`missing_file`）和 `counts.excerpt_lines`、`counts.excerpt_mismatch`、`counts.excerpt_missing`、`counts.excerpt_missing_file`、`counts.excerpt_skipped`。EXCERPT-MISMATCH多半是Compose改了措辞、摘录没跟上，照Compose改摘录；EXCERPT-MISSING是Compose新加了C号，在摘录第1节补意图行。
 - 关键行完整性（2026-10-17 第六波补丁）：逐字比对只抓错抄，抓不到删漏，所以另查两样。一是四条关键行，常量 `EXCERPT_REQUIRED`，按行首文字认：有限拆并授权导言（“Under a grant limited to splitting or merging paragraphs,”）、C08 的两条子行（“When moving to a sub-question that needs its own unfolding,”“Paragraphs: make sure each paragraph has only one topic.”）、C17 的必须收尾条件（“The whole piece and each part must have a close.”）。摘录 `## 3` 之前要有一条清单行（要点行或子行）以这段文字起头，其余措辞仍由逐字比对管（错一字记EXCERPT-MISMATCH）。整行删掉或行首文字被改，记 `EXCERPT-MISSING`，明细 `required line "…" (Compose Lnn)`。二是C01段型表：FICCCompose.md里C01下的每张表（表头到第一个非 `|` 行，现为段型表与段首形式表两张，含表头和分隔行共12行），每一行都要逐字出现在摘录第2节（`## 2`）。少一行记一条 `EXCERPT-MISSING`，明细 `table row "…" (Compose Lnn)`。行还在、只改了字的只记EXCERPT-MISMATCH，不重复记缺。第2节表格行数要与C01相等，删行之外还多出行（如重复一行）时另记一条 `EXCERPT-MISSING`，明细 `table rows: excerpt section 2 has N, C01 tables have M (Compose Lx–Ly)`。这几种都并入EXCERPT-MISSING计数，退出码规则和最后一行格式不变。文本报告的摘录汇总行末尾加 `required lines k/4; C01 table rows n of m`。`--json` 的 `excerpt.missing` 每条带 `kind`（`rule`、`required`、`table`、`table-count`），后三种另带 `detail`。`excerpt` 另有 `required`（每条关键行的 `prefix`、`compose_line`、`excerpt_line`）和 `table_rows`（`rule`、`compose`、`excerpt`、`span`）。Compose改了关键行的行首措辞，要同步改 `EXCERPT_REQUIRED`，否则报 `required line "…" (not in FICCCompose.md: update EXCERPT_REQUIRED)`。
+- 摘录第3节编号校核（2026-10-24新增）：第3节（`## 3`起到文末，围栏代码跳过）不比文字，但以`- C23`起头的各行合起来引用的C号，要与FICCCompose.md里C23正文（从`- **C23**`行到下一条`- **Cnn**`或`## `行）引用的C号一个不多、一个不少。两边都不算C23自己，C号按条号检查的认法（前面不是字母、数字或下划线，后面不紧跟数字）。现行要求的一组是C01、C02、C04、C05、C06、C07、C17、C19、C20。少了或多了记一条`EXCERPT-MISMATCH`，种类`ids`，挂在第一条`- C23`行上，明细`C23 ids: missing [..] extra [..]`。第3节一条`- C23`行都没有，记一条`EXCERPT-MISSING`（种类`ids`）。Compose里没有C23定义的旧树跳过这一项。两种分别并入EXCERPT-MISMATCH、EXCERPT-MISSING计数，退出码规则不变。文本报告在摘录汇总行下面加一行`excerpt section 3: "- C23" lines … cite …; FICCCompose.md C23 (Lx–Ly) cites … -> OK`，最后一行末尾加` · excerpt §3 C23 ids OK`（或MISMATCH、MISSING、skipped）。`--json`的`excerpt`多出`sec3`（`rule`、`compose_span`、`required`、`lines`、`found`、`missing`、`extra`、`where`、`result`）。Compose改了C23的查验项或其中的C号、摘录没跟上，就会报出来，照Compose改摘录第3节。`--selftest-excerpt`把`--root`指的技能树复制到临时目录，依次从`- C23`行删掉一个C号、加一个C23没引用的已定义C号、删掉全部`- C23`行，三种都要报出、退出码为1、其他计数不变，最后`--root`本身要通过（退出码0，第3节OK）。全部符合返回0，否则返回1。`--selftest`的样例没有C23，不测这一项。
+
+# outline_slice.py（1.0.0，2026-10-25）
+
+按节点编号切提纲（`<文稿名>-提纲.md`，FICCOutline.md 4.2的单文件格式）。结果只打到标准输出，提纲文件仍是唯一的家，脚本不写回。节点块的认法照kit-1.2.0的`node_blocks()`（`##`到`######`后接N编号的标题起一块，非节点的`#`或`##`标题结束节点树），名字表的认法照`voice_check.py`（第一张表头有“名字”和“不许用”两栏的表）。只用标准库，Mac和Linux都能跑。
+
+```
+python3 scripts/outline_slice.py nodes 提纲 [--check]       # 编号、深度、标题；--check：有节点块缺**主旨**行或编号重复，返回2并点名
+python3 scripts/outline_slice.py node 提纲 N3.1 N3.2        # 这些节点块的原文，按文中顺序
+python3 scripts/outline_slice.py chain 提纲 N3.1.2          # 上级链：根在前，含N0，不含本节点；每级取标题行、〔标题〕行、任务：行
+python3 scripts/outline_slice.py names 提纲 --ids N3 N3.1   # 名字表表头加这些节点块用到的行（--text 文件 改按文件正文筛）
+python3 scripts/outline_slice.py view 提纲                  # 简版视图：每个节点的标题行与〔标题〕、**主旨**、任务：、顺序：、关系：行
+python3 scripts/outline_slice.py --self-test
+```
+
+- 退出码：0正常；2是未知编号、`nodes --check`不过、提纲没有名字表（`names`不输出空表）或文件读不了；1是自检失败。
+- `names`的筛法：一行的名字、本篇写法、不许用三栏，去掉括号里的话，按、，,；;/／切开，去掉引号和反引号，两字以上的词只要在这些节点块（或文件）里出现，这一行就留下；标准错误打`kept K of N rows`。
+- `--self-test`：内置一份合成提纲（N0；N1、N1.1、N1.1.1；N2；四行名字表；节点树后面一节非节点的`## `），每个子命令都有断言，含未知编号与缺**主旨**行两种返回2；全过打PASS，有一条不过返回1。
+- `shared-protocols/regression/run-local-checks.sh`有一段`== ficc-voice outline_slice`，只跑`--self-test`，非0记失败。
+- 回滚：跑备份目录（作者草稿）里的`rollback.sh`（加`--dry-run`只打要做的事）。
 
 # tieout.py（ficc-hand/scripts，2026-10-17 第四轮修订）
 
@@ -252,3 +299,29 @@ ficc-hand的数字与名称对账脚本，FICCOutline O38提到它；这里只�
 - 单位补全：区间单位加bn、tn、mn、k、x、pct、pp、万亿、十亿；“3至5bn”“3-5bn”“3–5bn”“3~5bn”等价。
 - 顺序行检查：每个有“任务”行的节点要有“顺序：”行（合写的“任务与顺序：”、段群级的“挂法”行也算），缺了或为空报“顺序行缺失：<节点>”，只写关系库类别名（如“并列”“和N1是因果关系”“并列，可对调”）报“顺序行只写关系名：<节点>”。2026-10-17以前的旧提纲（全文没有“顺序：”行）按O38兼容句，把和任务行同级的“关系：”行当顺序与关系合写，不报缺失，只查是否只写关系名；新提纲里未维护的旧式关系行（不是“和<节点>，通过……”的写法）也照此兼容。顺序行里既没有相邻节点的编号（N编号、2.3这类节号，或相邻节点标题里的中文序号，如“## 2 ……”“### N2 二、……”的“二”），也没有相邻节点主旨行里的实词（两字汉字词、三个字母以上的英文词、两位以上的数），报“顺序行只写套话：<节点>”（如“承上启下”“全篇之首”）；相邻节点取同级的前后两个，某一边没有同级就取文中紧挨着的节点，整份只有一个节点时不查。三类都按待核报。
 - 退出码不变：0全部找到；1有未匹配；2用法或读文件错误；3未检查（0行目标行、写法不认，或没有未匹配但有待核，数型待核与顺序行待核都算）。
+
+# changed_sentences.py（2.0.0，2026-11-03，第三波U09，修补轮r1、r2）
+
+算检查波要收的“凡有改动”句表。切句与比对照shared-protocols/scripts/sentence_diff.py（U02）：去HTML注释，按。！？和换行切，去首尾空白，取最高difflib比值；但每句都算（不含汉字的句子也算，如一个数或一句英文引文），并且看顺序和句末标点。当前稿每句归为一类：原样且顺序不变（不列）、`moved`（原样但不在最长的顺序链里）、`changed`（比值≥0.6）、`added`（比值<0.6）；原样且顺序不变、但和前一句的分段关系变了的句子记`moved-seam`（并段或拆段，段落＝空行隔开的行块）；原样且顺序不变、但句末标点（切句切掉的。！？）变了的句子记`punct`（如。改？，r2）；冻结稿里没有任何当前句认领的句子记`deleted`（行号取下一句保留句在当前稿的位置，另给冻结稿行号）。“凡有改动”＝表里列出的每一行：moved＋moved-seam＋punct＋changed＋added＋deleted。四个检查模式（写手check-clarity与cold-read、关系席check、提纲席check）修补轮之后复查的改动范围就是这张表（dispatch-notes 2.3）。
+
+```
+python3 scripts/changed_sentences.py 冻结稿 当前稿 [--glob 'B*.md'] [--json] [--out 表.tsv]
+python3 scripts/changed_sentences.py --self-test     # 也认--selftest
+```
+先冻结稿（旧）后当前稿（新），和number_set_diff.py同序（2.0.0起；1.x是新稿在前）。两个参数可以是两个文件，也可以是两个目录（按文件名配对，只在当前稿的整份记added，只在冻结稿的整份记deleted）。输出TSV：id、file、line、kind、ratio、old_line、sentence，id是`<文件名>.s<当前稿序号>`（删除句是`.d<冻结稿序号>`），末行是`# 凡有改动 …`汇总，写明冻结稿和当前稿路径。`--out`先写临时文件再改名；拒写软链、目录、任一输入（两个参数和配对到的每个输入文件，解析软链后相同或是同一文件），也拒写任一输入目录里面的路径（解析软链后在里面，或某个上级目录与输入目录是同一目录）；拒写时什么也不写。退出码：0正常（有无改动都是0），2用法错、读不了或拒写。
+
+# number_set_diff.py（2.1.0，2026-11-03，第三波U09，修补轮r1、r2）
+
+开重tick席之前逐句、按顺序比冻结稿和当前稿的数字记号。一个记号＝正负号＋约数标记＋数＋紧跟的量级与单位＋约数标记：全角数字先折成半角（中文逗号不动），千分位逗号去掉，小数保留；正负号取显式的+或-，没有就取紧挨在前的方向词（增长、上升、升、涨等记+，下降、下跌、降、跌、减、负等记-）；紧贴数字的约数标记算进记号（前面的约、近、超过、不到、逾，最近、附近、靠近不算；后面的以上、以下、左右），所以约5%和5%不同；复合量级整个算（千万亿、万亿、千亿、百亿、十亿、千万、百万、十万、亿、万、千、百），所以3千亿元和3千万元不同；单位含%、bp、个百分点、个点、倍、次、成、年、月、日、季度、季、个月、币种（日元先于日）、bn等，阿拉伯数字和中文数字共用同一套正负号、量级、币种和单位；中文数字只在带单位或成分数时算（三成、两成半、一半、三分之一、三季度、两次、三千亿元）；期别Q1–Q4、H1/H2、3Q25、FY25、上半年/下半年也算；`[src: …]`锚点和HTML注释不算。改动句表（changed_sentences.py）里每个changed、moved、moved-seam、punct句的记号序列要和冻结稿里它原位置那一句一样，added、deleted句带数就算差异；所以两句之间对调数字也算差异。没有差异就打印“number sets equal: no re-tick seat”，不开重tick席（source-check.md Validity of a check）；有差异只重tick列出的单元。不带`--units`时输出第一行提示量词名单未限定范围。另列量词短名单交T0人核：改动句（`--all-quant`时全部句子）里带大半、多数、过半、少数，或“近”后接数字或分数词（近3成、近一半）的句子；最近一季、近期、更多数据不算。`--units 文件`（每行一个id，即重tick包的单元表，dispatch-notes 2.3）把判定和量词名单限在这些单元上。id对两稿的全部句子解析，不论改没改：`<文件名>.s<序号>`（当前稿那一句）、`<文件名>.d<序号>`（冻结稿那一句，删了的或还在的，还在的取它在当前稿的对应句）、`<文件名>:<行号>`（当前稿那一行的每一句，和锚在这一行的删除句）。输出写明请求、解析、未解析各几个；有一个id解析不了，或整张表一句也没对上，就不下结论（不报相等，退出3），T0先改单元表。
+
+```
+python3 scripts/number_set_diff.py 冻结稿 当前稿 [--glob 'B*.md'] [--all-quant] [--units 单元表] [--json]
+python3 scripts/number_set_diff.py --self-test        # 也认--selftest
+```
+退出码：0数字集合相等，1有数不同，2用法错或读不了，3单元表有id解析不了或一句也没对上（不下结论）。
+
+# FICCVoice按模式摘录（2026-11-03，第三波U09/U10）
+
+`references/voice-excerpt-patch.md`（修补）、`voice-excerpt-polish.md`（润色）、`voice-excerpt-draft.md`（起草）、`voice-excerpt-coldread.md`（冷读）：第1节逐字抄FICCVoice.md（去掉`**`），第2节是用法说明。xref_check.py的常量`VOICE_EXCERPTS`列出每份必须带的V号意图行；第1节每个非空行都要等于FICCVoice.md某一行，少了意图行记`EXCERPT-MISSING`，抄错记`EXCERPT-MISMATCH`，文件没了记`EXCERPT-MISSING-FILE`，都退出1；`--selftest-excerpt`对每份做改一个词、删一条意图行、删文件三种情形。四份都登记在budget.json（封顶＝装机时大小）。改FICCVoice.md某条正文后，重抄对应摘录行再跑xref_check。
+
+outline_slice.py自2026-11-03起是默认，谁读切片、谁读视图见dispatch-notes 6。`--selftest`是`--self-test`的别名（K-OS-2）。

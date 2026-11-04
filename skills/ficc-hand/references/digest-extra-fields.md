@@ -1,6 +1,6 @@
 # Digest extra fields (FICC)
 
-T0 pastes this section verbatim into every digest packet, after the digest template. It does not change the template; it only adds fields to every FACTS row and a few constraints on how to write.
+T0 pastes this section verbatim into every digest packet, after the digest template. It does not change the template; it only adds fields to every FACTS row and a few constraints on how to write. The packet's State names the trunk question and the role and expected use of the question this source serves (FICCHand 3.1 ⑥); read that line before the source.
 
 Record every load-bearing figure (FACTS row) in full, once; where an item is missing, write “原文没给” and name whose original it is:
 - the indicator's full name; measurement basis: stock or flow, gross or net, transaction basis or valuation adjustment, coverage (all or one category, private or official included or not); units as in the original, not converted by hand; time basis, sample, period, base period, denominator;

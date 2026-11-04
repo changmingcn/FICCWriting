@@ -266,6 +266,8 @@ Supports O87: claim extraction serves only to find the structure, so counter-evi
 
 ## 10 Conclusion
 
+Moved from FICCOutline.md 10 (2026-10-25): Reading only the outline should show where the main line, the counter-views, the material, and the headings each sit, and what each does.
+
 > The order of these nine sections is the order in which one central sentence grows into an outline tree, gives new material its place, is maintained, and then lands on the page.
 
 Supports the whole file: the order of the nine sections is the order in which the outline grows from the center into a tree, places material, is maintained, and lands on the page.
@@ -399,4 +401,5 @@ Per the user's 10-16 instruction, the body text carries no marks of the “（�
 
 Per O90, record here the date and the gist of the original words of each later user correction to the outline. Record the original words verbatim in references/dev-notes.md.
 
-(None yet.)
+- 2026-10-20 — user: “读法”是AI腔；→ O91 (claim lines speak the article's language). Rolled back 2026-10-21 with the 10-18 snapshot and re-kept the same day (“V57和091要保留。”). Verbatim: references/dev-notes.md 49.
+- 2026-10-24 — O64 L483: the former sentence was a page-level instruction left from the pre-2026-10-17 copy shared with FICCStructure; the page-level home is FICCCompose.md C15 (“decide it here”); the line now states the outliner's own step (the annotation names the content the later node pays off) and points to C15. User: “同意，可以改。” Verbatim: references/dev-notes.md 52.

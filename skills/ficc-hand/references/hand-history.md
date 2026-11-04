@@ -35,3 +35,11 @@ Development record kept by the author; not included in the public release.
 ## 附 3.6 旧分工原文（用户2026-10-17裁定3推翻：树只由ficc-outliner搭）
 
 ## 附 分工沿革（2026-10-15、2026-10-17）
+
+## 附 主干问题、明确必答项与探索线索（2026-10-22）
+
+## 附 提示不干扰主线：线索与火花同一排序（2026-10-22）
+
+## 附 保护T0自己的探索：`[explore]`问题不进排序（2026-10-22）
+
+## 附 提纲席读FICCOutline的写法对齐卡片（2026-10-25）

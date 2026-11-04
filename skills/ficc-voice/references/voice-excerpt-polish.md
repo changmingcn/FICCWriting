@@ -1,0 +1,188 @@
+# FICCVoice excerpt: polish mode (ficc-writer polish, step ⑤)
+
+Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_check.py). Full rules: FICCVoice.md.
+
+## 1 Rules
+
+- V01 State this node's task concretely.
+  - Check: follow “支持、递进、并列” (support, progression, parallel) with concrete content. If the relation sheet does not give it, hand it back per V04.
+- V02 Split mixed meanings into statements that can be checked one by one.
+- V03 Attach each item to the judgment it actually explains.
+  - Check: cover words such as “所以、可见、而且” (so, evidently, moreover) and look only at the two sides. You must still be able to say what makes this step hold. If you cannot, hand it back per V04.
+- V04 State the gap clearly, and finish the conflict-free part first.
+- V07 Do not use semicolons (；) in body prose.
+  - Before handing over, search the body for ； and split each such sentence into short sentences with their own subjects. Carry the relation by repeating the noun or with a connective from connectives.md. Only separators inside a table cell or a genuine list line are exempt. Do not turn prose into a list to keep semicolons.
+  - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； goes to T0. The writer neither edits it nor exempts it.
+  - Paragraph organization: FICCCompose.md C08.
+  - See references/FICCVoice-rationale.md V07.
+- V10 Control sentence length.
+  - Prefer short sentences, provided the meaning stays complete and references stay clear.
+  - First delete repetition and redundancy. Then judge whether the sentence needs splitting. Do not delete necessary conditions, scope, or exceptions to shorten a sentence.
+- V11 Keep each sentence focused.
+  - Build each sentence around one main judgment or action. Conditions, scope, and exceptions that directly qualify that judgment may stay in the same sentence.
+  - If a sentence contains several judgments or actions that need separate statement, split them into several sentences. After splitting, make sure each condition and qualifier still clearly maps to its original judgment.
+- V12 Keep wording and reference consistent.
+  - When adjacent sentences discuss the same object, use a consistent name or key term. Avoid needless changes of wording.
+  - When using referring expressions such as “这” (this), “它” (it), or “该情况” (this situation), make sure the reader can clearly identify what they refer to. Otherwise, write the specific name.
+- V13 Make the logic between sentences explicit.
+  - When you need to express a relation such as cause and effect, turn, condition, or progression, first confirm that the source text or context supports it. Then choose the precise connective.
+  - If the support is sufficient but necessary information is missing in between, supply the information first. Then connect the sentences. If the support is insufficient, you must not build the relation with a connective alone.
+- V14 Revise by problem type.
+  - Check sentence by sentence, and apply the matching fix:
+    - Unclear subject of a judgment or action: state the subject, or rewrite the reference.
+    - Unclear necessary condition, scope, or exception: complete it or move it, and make clear what it qualifies.
+    - Several judgments or actions crammed into one sentence: split the sentence, and keep each one's conditions and qualifiers.
+    - Unclear relation to the preceding text: check whether information is missing and whether the order is sound. Then handle it per V13.
+    - Complete meaning but wordy expression: delete redundancy, and split the sentence when needed.
+  - The check guides revision. You need not show the checking process in the output.
+- V15 Write the action and who performs it, then choose active or passive.
+  - Check: circle every “赔”, “损失”, “扛”, and “低估” (underestimate) in the text and find which party is its subject. If you cannot answer, or the answer is two parties, write them separately.
+- V16 Unpack relations compressed into nouns and modifiers.
+- V17 Confirm the logic of the conditions first, then write conditions and results fully paired.
+  - Check: pick any result. You can find all its conditions and exceptions at once.
+- V18 Make both sides of a comparison directly comparable.
+  - Check: the reader can answer directly “whose what, compared with whom or which period, changed how”. If an element is missing, state what these figures cannot compare. Do not guess the measurement basis.
+- V19 Make punctuation carry a definite relation.
+  - Check: treat the sentence before the colon or dash as a question.
+    - Then read the items after it one by one, and see whether each answers it.
+  - Check: after changing punctuation or splitting a sentence, reread conditions, negations, and comparison targets. If their scope has changed, restore the original object or rewrite the whole sentence. Do not just swap the symbol.
+- V20 Check the strength of judgments before and after rewriting.
+  - Map qualifiers in the source such as “可能、预计、多数、短期、约、不超过” (possibly, expected, most, short-term, about, no more than), together with their objects, into the new text.
+  - Before changing a double negative, check the object, scope, or degree of the negation.
+  - “并非所有” (not all) must not become “都不” (none). “并非不可能” (not impossible) must not become “必然” (certain).
+  - When evidence is missing, write only that no judgment can be made. Do not write it as proof of the opposite conclusion.
+  - You may point out an error in the original judgment.
+  - Check: if a qualifier is lost, the scope widened, or the speaker changed, restore it.
+- V21 Establish the content relation first, then choose the connective.
+- V22 Make the relation at each seam visible to the reader, especially turn, cause and effect, condition, limitation, and concession.
+  - Use connectives heavily:
+    - Check: after writing, look first for the most often missing ones: inference, “但是” (but), progression, concession, explication, back-reference, and “甚至” (even) and “其实” (actually).
+  - Check: read only the first few characters of each paragraph-opening sentence and node opening sentence. They show its relation to the level above and to the sibling it follows.
+  - Check: after writing a paragraph, run each seam through the nine checks below. Do not pad with added words.
+    - Where a seam fails, fix the wording if wording can fix it.
+    1. Preview and payoff: FICCCompose.md C20.
+    2. Each same-layer seam carries a word of the class the relation sheet names.
+    3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” must be a cause, and what follows “而且” must go one layer further. The two sides of “但是” (but) sit on the same dimension.
+    4. Whether latter-clause markers are omitted: this rule.
+    5. The antecedent of paragraph-opening and sentence-opening connectives: V53.
+    6. Suppositions and conditions stay hypothetical: V17.
+    7. Where inference belongs, “既然、可见” (since, evidently) is present. Take out the half sentence after “因为” (because) or “所以” (so) on its own. If it restates or splits the first half rather than being its cause or result, use a colon (：), “分几种” (falls into several kinds), or “也就是说” (that is to say) instead, or separate short sentences. Other word misuse: references/connectives.md, rows 转折 and 并列·解说.
+    8. Items after a colon or dash: V19.
+    9. The relation of the paragraph opening and each node's opening sentence: this rule.
+- V52 Put connectives at the seam between two things.
+- V53 Keep a connective right next to its true antecedent.
+  - Check: the sentence right before each paragraph-opening and sentence-opening connective is its true antecedent.
+- V54 When two layers of relation nest, put the outer layer's word at the outer seam and the inner layer's word at the inner seam.
+- V23 Keep the same name pointing to the same object.
+  - Check: replace each “这、它、前者、上述” (this, it, the former, the above) with the full name. Where two objects fit, change it to a naming form such as “这笔贷款、这一偿还义务” (this loan, this repayment obligation). Where no antecedent can be found, reintroduce the object.
+- V24 Lead from an established object to the next new information.
+  - Check: sentence by sentence, confirm that the reader knows what each name refers to and can say which earlier point this sentence picks up from.
+- V25 Use similar syntax to show items that truly correspond.
+- V26 Let the reader identify each number as whose what.
+  - Where a number is first really used, state whose indicator it is, which indicator, the point in time, and the unit.
+  - In the same place, state the measurement basis and any needed sample source.
+  - Within a paragraph, a short name with unchanged meaning may be used. Do not redefine the same measurement basis repeatedly across the piece.
+  - The base period and scope that the current comparison needs must be directly identifiable.
+  - In new writing, verify against the original document where one exists. If the original does not say, leave the gap.
+  - In a style-only edit, do not compute new numbers or fill blanks in the original. List doubtful points as to be verified.
+  - For a fact to be verified, the writer writes sentences without it or leaves a blank. The body text carries no “待补充” (to be supplied) or “待核实” (to be verified) labels. Labels go only into the writer's result sheet.
+  - Do not use deposits, reserves, capital, cash, and liquidity interchangeably.
+  - Keep stock and flow, total and increment, and book value and market value apart.
+- V27 Make the point the subject. Hang the source after it.
+  - Arrange sentences around the object and judgment being argued. Do not report material institution by institution.
+  - By default, put the source at the end of the sentence it supports, as a parenthetical with the institution and the date to the day.
+  - For a number from one institution's own method or measurement basis, write the source as an adverbial of that number.
+  - When several institutions support the same judgment, a combined citation may be used.
+  - Put report titles and details in the source list.
+  - The body text carries a short title in only two cases:
+    - Two reports from the same institution on the same day need to be told apart.
+    - The title itself is the point being made.
+  - Across articles, refer by issue number. Across sections, refer back by name.
+  - When citing your own earlier articles and rules, refer back only with real grounds.
+  - Move the sources for the lead and for each layer's opening to where the later text gives the evidence.
+  - Without a publication date, use the day-precise date in the list. Failing that, use the collection date and mark it “收录” (collected).
+  - Do not guess the missing parts of a date. Across years, write the year.
+  - Check: where an argument paragraph uses institutions as subjects one after another (“X说……X还说……”, X says… X also says…), rewrite it with the point as the subject and the source in a parenthetical at the end of the sentence.
+- V28 Do not let the attribution of views disappear in rewriting.
+  - You may keep “X说／认为” (X says / believes) in these cases:
+    - A single institution's view that the article does not adopt.
+    - Divergent views.
+    - A full-sentence direct quotation.
+    - Institutional actions such as forecasting or revising numbers.
+  - Decide adoption per the outline and the relation sheet. When unsure, keep the speaker.
+  - Merge quotations of one or two words into the judgment.
+  - Do not strip the source from one institution's judgment and turn it into the article's judgment. Keep the source text and our inferences apart.
+- V29 Decide first whether it is a note, then where to put the parenthetical.
+  - Check: mark the notes when checking.
+  - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, or dropping it widens the main judgment's scope, handle it per V30.
+- V30 Keep in the body text the premises without which the conclusion cannot be understood.
+  - Check: skip the parentheses and reread the main judgment. If “样本内” (within the sample) would read as “全部” (all), or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
+- V31 Make figure, figure note, and body text match.
+- V32 Explain the one point the reader lacks. Do not let a term stand in for a mechanism.
+  - For the V34 reader, you need not re-explain basic financial knowledge item by item.
+  - Explain definitions, measurement bases, and ambiguous words specific to this piece at their first actual use.
+  - Explain until the reader can keep reading, and stop there.
+  - Where everyday words can state the action and the mechanism, say it plainly. Use necessary standard terms as they are.
+  - Take names from the outline's name table:
+    - The table holds only coined nouns and nouns with several variant names.
+    - The table has four columns: 名字 (name) ｜ 指什么与口径 (referent and measurement basis) ｜ 本篇写法 (form used in this piece) ｜ 不许用的叫法 (forbidden names).
+    - The outline agent maintains the table.
+  - Every name in the body text is either in the table or a standard term. Send new names outside the table through T0 to the outline agent, which rules on them and maintains the table.
+  - Use market names. For same thing, same name, see V23.
+  - Do not replace indicators, data series, or groups with coined short labels.
+  - Allow at most one coined name per piece. Introduce it in the lead, explain it on the spot, and keep using it.
+  - In sentences with numbers, still use the indicator name.
+  - Where a forbidden word in the name table carries a condition, judge by that condition.
+  - Use few terms:
+    - Put few new nouns in one paragraph. The fewer kinds, the better.
+    - For plain-language parentheticals, see V29.
+    - When something is hard to explain, give the reasoning first and the name after (“这种手法，我们叫做……”, this technique we call…).
+    - Draw comparisons from things the reader has experienced.
+    - Do not insert encyclopedia entries. Use the topic word directly. Do not gloss it repeatedly.
+  - Do not give names to views or mechanisms. Use everyday verbs:
+    - For other people's views, write who holds them and what they believe. Do not compress them into “对手的读法” (the opponent's reading).
+    - State a mechanism in full the first time. Afterwards refer back with a phrase such as “这两条规则” (these two rules). Do not coin a code name.
+    - Do not apply “收敛、付价、标零、兑现” (converge, pay the price, mark to zero, cash in) to economic facts.
+    - Do not let “读数、口径” (reading, measurement basis) appear in place of the numbers and the method.
+- V33 Choose terms, abbreviations, and names by whether the reader can identify the object.
+- V57 Views and inferences are not objects. A view, reading, explanation or inference is never the subject or object of a verb that moves it: it does not “加强、变轻、占上风、站在一边、并存”, and it is not counted (“三种读法”). Write who holds it and what they believe (“Barclays看成技术性抛售”), or what we think (“我们认为”, “在我们看来”, “更像是先后”); when several views stand side by side, write “三种说法” once and name each holder. No label for an interpretive move of ours: 读法, 解读, 视角, 框架, 判别读数 and the like are out even when the outline carries them — the outliner translates such words before they reach a claim line (FICCOutline.md O91). Check: grep the node for `读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边` and read each hit; a hit whose subject is a company, a house, a price or 我们 passes; `voice_check.py --clarity` lists the hits as review candidates (H9), never as hard faults. 框架 is read by eye: in house drafts it is a deal or policy term.
+- V34 Write for the default audience in the right writing persona.
+- V35 Make metaphors, characters, and jokes serve the current question.
+- V36 Convert to written register while keeping information, analysis, and personality. Do not write officialese.
+  - Remove classroom cues and useless restatement.
+  - Lecture notes may use more characters and dialogue. Specific cases may switch back to report style.
+  - Set no minimum for personal pronouns and no quota for jokes.
+  - Use parallelism and strong words only where the content needs them. The second half of “不是……而是” (not… but…) must have concrete grounds.
+  - Do not change original sentences that the author designated to keep verbatim.
+  - See references/written-register.md: transcript details.
+- V37 First use the finished draft to test whether the reader must do organising work.
+  - Without the material or the relation sheet, using only the finished draft and the name table:
+    - Read paragraph by paragraph. State each sentence's object, judgment, conditions, and the layer above that it serves.
+  - Paragraph openings and the openings check: FICCCompose.md C23.
+  - Every place lets the reader know three things:
+    - What is being said now.
+    - Why it is said here.
+    - How the following text makes it clear.
+  - Check: after reading a local passage, you can state its main meaning and why the next sentence connects here.
+  - If you cannot, first handle mixed layers, stray material, missing premises, false turns, and unclear references, then revise the wording.
+  - Mark the following obstacles, then fix that spot:
+    - Responsibility can be matched only by rereading.
+    - A pronoun must be guessed from among several names.
+    - The reader must supply causes or regroup content for the author.
+  - Avoid AI tone: check each paragraph for the following six. Fix them where they cluster. Handle a single occurrence per its own rule.
+    - Roadmap sentences: FICCCompose.md C01, C06 (script H2).
+    - Hollow claims: FICCCompose.md C02, V38, V36.
+    - Template tone (every paragraph shaped the same): FICCCompose.md C09, C11, C19.
+    - Term pileups: V32.
+    - End-of-paragraph uplift: FICCCompose.md C17, C19 (script density row 段末升华).
+    - Transition fillers: FICCCompose.md C17, V22 (script density row 本质上等五词).
+  - See references/FICCVoice-rationale.md V37.
+- V38 Then check both ways, from material to new text and from new text to material.
+- V39 Handle script flags by comprehension obstacle, not by driving counts to zero.
+- V40 Report reading problems that can be located and fixed.
+
+## 2 Use
+
+- Every live V rule appears by its intent line and its Check lines, each with its parent bullets and the items under it (V22: the nine checks); in full: V07, V10–V14 (hard limits), V20, V26–V28, V32, V36 and V37.
+- Open FICCVoice.md at a V number when its action is unclear; outline reads: dispatch-notes 6.
+- Before handover, run `scripts/voice_check.py --clarity --names` and `scripts/cjk_space.py --check` on the node; handle flags per V39.

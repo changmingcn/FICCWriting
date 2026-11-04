@@ -9,21 +9,23 @@ description: "Four-seat relay for Chinese FICC writing: ficc-outliner (outline, 
 
 T0 reads only this file and the outline; agents read the packet, then rules per card mode. Before drafting: one outline per piece, `<文稿名>-提纲.md` beside the draft, path in the packet.
 
+Trial (2026-10-25): at the research→writing handoff T0 may hand this router to `ficc-conductor` (card), which runs it from on-disk state; the protocol is kept in the author's task directory and is not included in this release.
+
 ## 2 Relay table
 
 | Step | Seat | Reads | Input | Output | Fails → |
 |---|---|---|---|---|---|
-| ① Build or summarize outline (Hand handoff outline replaces it: ficc-hand/references/handoff.md 3) | outliner build | FICCOutline.md 1–4 and 8 | goal, material or original draft | outline (name table `名字表`, order, unfolding, 〔标题〕 lines) | outliner |
+| ① Build or summarize outline (Hand handoff outline replaces it: ficc-hand/references/handoff.md 3) | outliner build | FICCOutline.md 1–4, 7–8 (7.3 only if summarizing) | goal, material or original draft | outline (name table `名字表`, order, unfolding, 〔标题〕 lines) | outliner |
 | ② Place | outliner place | FICCOutline.md 4.2 and 5–6 | outline, new material or change | placement record (references/placement-record-template.md), revised outline | outliner |
-| ③ Relate | structurer relate | FICCStructure.md 1–5 and 9 | outline, placement record | relation sheet (references/relation-sheet-template.md) | placement objection (`安放异议`) → outliner |
-| ④ Paragraphs | composer compose | FICCCompose.md | node, relation sheet, material excerpts, adjacent body text | paragraph draft | relation issue → structurer |
-| ⑤ Sentences, wording | writer polish | FICCVoice.md | paragraph draft, name table, material excerpts | revised node, result sheet | paragraph issue → composer |
-| ⑥ Check | all four seats (writer: expression, cold read), source-check and counter-view seats | §3 Check | full text | findings | per §3 |
+| ③ Relate | structurer relate | FICCStructure.md 1–5 and 9 | outline view and node slices (dispatch-notes 6), placement record | relation sheet (references/relation-sheet-template.md) | placement objection (`安放异议`) → outliner |
+| ④ Paragraphs | composer compose | FICCCompose.md | node slice, relation sheet, material excerpts, adjacent body text | paragraph draft | relation issue → structurer |
+| ⑤ Sentences, wording | writer polish | references/voice-excerpt-polish.md (FICCVoice.md by V number) | node slice, paragraph draft, name table, material excerpts | revised node, result sheet | paragraph issue → composer |
+| ⑥ Check | all four seats (writer: expression, cold read), source-check seat (by review tier: `shared-protocols/source-check.md`, Review tiers) and 标题级反驳席 (formerly counter-view) | §3 Check | full text | findings | per §3 |
 | ⑦ Deliver | T0 | §4 | fixed full text | Google Doc | ⑥ |
 
-Cold read gets only full text and name table. T0 consolidates ⑥ findings, returns each to its seat with location, conflict and needed decision, sends missing evidence to research in parallel, rechecks only affected ranges, does not rule on content.
+Cold read gets only full text and name table. T0 consolidates ⑥ findings, returns each to its seat with location, conflict and needed decision, sends missing evidence to research in parallel, rechecks only affected ranges (dispatch-notes 2.3), does not rule on content. Outline reads: dispatch-notes.md 6 (view, tie-out, cold read).
 
-Short piece (body ≤600 Chinese characters, O44 count, any node scale): one seat, writer draft, does ④⑤ per references/compose-excerpt.md (child nodes, section-level carry-over or whole-piece close: plus C04–C06, C17–C19), then FICCVoice.md; no separate paragraph draft. Wording-only: ⑤ only (writer patch). Holding two steps does not widen authorization.
+Short piece (body ≤600 Chinese characters, O44 count, any node scale): one seat, writer draft, does ④⑤ per references/compose-excerpt.md (child nodes, section-level carry-over or whole-piece close: plus C04–C06, C17–C19), then references/voice-excerpt-draft.md and voice-excerpt-polish.md; no separate paragraph draft. Wording-only: ⑤ only (writer patch, references/voice-excerpt-patch.md). Holding two steps does not widen authorization.
 
 ## 3 Acceptance and return table
 
@@ -35,7 +37,7 @@ Short piece (body ≤600 Chinese characters, O44 count, any node scale): one sea
 | hard-to-follow sentence, unclear reference, vague condition or scope, unmarked seam | FICCVoice.md 2–4 | writer | FICCVoice.md 7 |
 | figure without measurement basis, lost attribution, misplaced note, two names for one thing | FICCVoice.md 5, name table | writer | FICCVoice.md 7 |
 | fact contradicts source | source-check.md | source-check seat | tie-out |
-| heading-level overstatement | source-check.md | counter-view seat | counter-view seat |
+| heading-level overstatement | source-check.md | 标题级反驳席 | 标题级反驳席 |
 | format and spacing | references/format-and-maintenance.md | writer | references/clarity-acceptance.md 3 |
 
 ## 4 Kept rulings and pointers
@@ -45,9 +47,9 @@ Short piece (body ≤600 Chinese characters, O44 count, any node scale): one sea
 3. A T0-set default touching ≥100 sentences: ask the user in one sentence before dispatch, or trial it on one piece.
 4. Style-only edit or written-register conversion: summarize the outline from the original; no rebuild.
 5. T0 routes consolidated to-dos to their owners; drafting seats do not edit the outline, placement record or relation sheet on the side.
-6. No seat deletes a fact the placement record keeps, only compresses its wording and detail; a needed deletion goes to the outliner for placement review.
+6. No seat deletes a fact the placement record keeps, only compresses its wording and detail; a needed deletion goes to the outliner for placement review (FICCOutline.md O58).
 7. Never skip the counter-view seat on research articles; only it catches heading-level overstatement.
-8. Before submitting, run scripts/voice_check.py --clarity and scripts/cjk_space.py --check; clear confirmed hard errors. Fix the two “！” lines (“不是……而是”, dash) per current preference; other “！” items: count only.
+8. Before submitting, run scripts/voice_check.py --clarity and scripts/cjk_space.py --check; handle hard errors, review candidates and the “！” rows per references/clarity-acceptance.md.
 9. After changing rule-file headings or section numbers, run scripts/xref_check.py.
 10. The four rule files hold only rules. Rewrite examples: references/examples-and-rewrites.md; clarity rewrites: clarity-rewrites.md; connectives: connectives.md; model texts: exemplars.md; format: format-and-maintenance.md; grounds: dev-notes.md.
 11. The user's current request comes first. Do not draft by comparing against the author's original text. Write user corrections into the relevant rule file.

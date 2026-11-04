@@ -291,6 +291,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
   - After saving, check the outline per 9.
   - Post it in the conversation first, then write the body text. By default, do not wait for approval.
   - When the user says they want to see the outline first, wait for the user's reply before writing. T0 handles this step.
+- **O91** **Claim lines speak the article's language.** 主旨, 任务, 展开 lines and name-table rows are written as the article will say it. Research vocabulary from rulings, ledgers or dissent maps (读法, 判别读数, 对手假设, 反例, 口径 used as a thing) is translated into who thinks what and which number is watched before it enters a line; the name table admits no name for an interpretive move of ours. A ruling that arrives in research vocabulary is carried out in article language and the translation is noted in the placement record. Check: grep the outline's claim lines for `读法|判别读数|对手假设|反例`; zero hits.
 
 ### 4.3 Summarizing and length
 
@@ -479,7 +480,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
   - Whether cross-chapter echoes, foreshadowing, contrasts, and dependencies hold, and which kind each is, is judged per FICCStructure.md 5.
   - For those judged to hold, the relation agent writes them into the relation sheet. The outline agent adds annotations under the relevant nodes as given.
   - Format: references/relation-sheet-template.md 3.
-  - Carry foreshadowing by named content, not by signpost sentences such as “留到……讲” (left for … to discuss).
+  - The foreshadowing annotation names the content the later node pays off; on the page: FICCCompose.md C15.
   - See references/FICCOutline-rationale.md 6.3.
 
 ## 7 Genre scaling and rewrite permissions
@@ -668,7 +669,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
 
 ## 10 Conclusion
 
-Reading only the outline should show where the main line, the counter-views, the material, and the headings each sit, and what each does. Rationale: references/FICCOutline-rationale.md, Conclusion.
+Moved to references/FICCOutline-rationale.md (Conclusion), 2026-10-25.
 
 ## 11 Appendix: Sources and on-demand references
 

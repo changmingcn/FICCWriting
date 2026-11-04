@@ -277,7 +277,7 @@ This chapter covers how the body text uses a figure. Figure titles, figure notes
 
 ## 7 Compose checks
 
-Run the Check lines of C01–C22 on the paragraph draft, then the whole-draft pass in C23. Sentence-level cold reading, AI tone, and the material-to-text check stay in FICCVoice.md V37–V40.
+Run the Check lines of C01–C22 and C24 on the paragraph draft, then the whole-draft pass in C23. Sentence-level cold reading, AI tone, and the material-to-text check stay in FICCVoice.md V37–V40.
 
 A later check (check mode, or a check after a revision) covers the paragraphs changed and every paragraph whose opening, carry-over or close the change touched; paragraphs untouched since the last check keep that check's result, which the packet attaches. A whole-draft assembly that changes carry-overs, openings or closes re-runs C23 on the affected range only.
 
@@ -295,6 +295,10 @@ A later check (check mode, or a check after a revision) covers the paragraphs ch
     - A close that repeats the opening or uplifts (C17, C19).
     - Carry-overs and closes forced onto small nodes (C19).
     - A preview in the claim or carry-over paragraph repeated as a later opening, word for word or nearly so: shorten the preview or let the opening add the relation word and the step (C04, C20).
+- **C24** **Define once, then combine in short form.**
+  - When a paragraph gives the outcomes of two or three indicators, define the indicators by full name once, then write each outcome in one sentence with short names and counts (“三项都不动”, “前两项动、第三项不动”); never restate every full name in every branch, never open with a sentence that announces the outcomes will now be listed, never close with a hedge already given at the definition.
+  - More than three outcomes, or outcomes that each need a qualifier, go into a table.
+  - Check: count the full indicator names in the paragraph; each appears once.
 
 ## 8 On-demand references
 

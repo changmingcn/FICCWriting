@@ -1,0 +1,141 @@
+{
+  "unit": "chars",
+  "measure": "len(text) of the UTF-8 file",
+  "root": "~/.claude",
+  "files": {
+    "skills/ficc-voice/FICCVoice.md": 42635,
+    "skills/ficc-voice/FICCCompose.md": 31377,
+    "skills/ficc-voice/FICCOutline.md": 52473,
+    "skills/ficc-voice/FICCStructure.md": 42292,
+    "skills/ficc-voice/references/compose-excerpt.md": 7189,
+    "skills/ficc-voice/references/clarity-acceptance.md": 4515,
+    "agents/ficc-outliner.md": 2722,
+    "agents/ficc-structurer.md": 2442,
+    "agents/ficc-composer.md": 2488,
+    "agents/ficc-writer.md": 2599,
+    "skills/ficc-voice/references/voice-excerpt-patch.md": 11895,
+    "skills/ficc-voice/references/voice-excerpt-polish.md": 18691,
+    "skills/ficc-voice/references/voice-excerpt-draft.md": 7312,
+    "skills/ficc-voice/references/voice-excerpt-coldread.md": 11069
+  },
+  "history": [
+    {
+      "date": "2026-10-24",
+      "reason": "baseline after wave 1 of humanizer-ficcvoice-upgrade (user approval 2026-10-24)",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          null,
+          42652
+        ],
+        "skills/ficc-voice/FICCCompose.md": [
+          null,
+          31377
+        ],
+        "skills/ficc-voice/FICCOutline.md": [
+          null,
+          52473
+        ],
+        "skills/ficc-voice/FICCStructure.md": [
+          null,
+          42292
+        ],
+        "skills/ficc-voice/references/compose-excerpt.md": [
+          null,
+          7191
+        ],
+        "skills/ficc-voice/references/clarity-acceptance.md": [
+          null,
+          4535
+        ],
+        "agents/ficc-outliner.md": [
+          null,
+          2722
+        ],
+        "agents/ficc-structurer.md": [
+          null,
+          2442
+        ],
+        "agents/ficc-composer.md": [
+          null,
+          2488
+        ],
+        "agents/ficc-writer.md": [
+          null,
+          2599
+        ]
+      }
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "2026-10-24 user-approved completion of C23 L297's fix in the excerpt (L66); no retirable duplicate in the 7,191-char excerpt; delta = 42 chars",
+      "changes": {
+        "skills/ficc-voice/references/compose-excerpt.md": [
+          7191,
+          7233
+        ]
+      }
+    },
+    {
+      "date": "2026-10-24",
+      "reason": "2026-10-24 T0: revert the 42-char raise on compose-excerpt.md (the L68 parenthetical duplicated L72 and was retired instead; file now 7,189); caps re-set to current sizes per the design rule caps = post-install sizes, which also tightens FICCVoice.md 42,652→42,635 and clarity-acceptance.md 4,535→4,515 after today's retirements",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          42652,
+          42635
+        ],
+        "skills/ficc-voice/references/compose-excerpt.md": [
+          7233,
+          7189
+        ],
+        "skills/ficc-voice/references/clarity-acceptance.md": [
+          4535,
+          4515
+        ]
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "reason": "wave 3 U09/U10 (overall plan v5): four new FICCVoice mode excerpts (patch, polish, draft, cold-read) registered at their install sizes (caps = post-install sizes); no existing cap changed; the four cards edited within their caps",
+      "changes": {
+        "skills/ficc-voice/references/voice-excerpt-patch.md": [
+          null,
+          9568
+        ],
+        "skills/ficc-voice/references/voice-excerpt-polish.md": [
+          null,
+          10402
+        ],
+        "skills/ficc-voice/references/voice-excerpt-draft.md": [
+          null,
+          7321
+        ],
+        "skills/ficc-voice/references/voice-excerpt-coldread.md": [
+          null,
+          7353
+        ]
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "reason": "wave 3 fix round r1 (packet 04; refuter F4/F5, lesson L2): the polish, cold-read and patch excerpts carry the full text of their load-bearing rules (V22 nine checks; Check lines with their parent bullets); the four new wave-3 excerpt files are re-registered at their post-fix sizes (new-file caps, not a raise of a ruled cap); no other cap changed",
+      "changes": {
+        "skills/ficc-voice/references/voice-excerpt-patch.md": [
+          9568,
+          11895
+        ],
+        "skills/ficc-voice/references/voice-excerpt-polish.md": [
+          10402,
+          18691
+        ],
+        "skills/ficc-voice/references/voice-excerpt-draft.md": [
+          7321,
+          7312
+        ],
+        "skills/ficc-voice/references/voice-excerpt-coldread.md": [
+          7353,
+          11069
+        ]
+      }
+    }
+  ]
+}

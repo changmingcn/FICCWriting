@@ -1,0 +1,114 @@
+# FICCVoice excerpt: patch mode (ficc-writer patch, fix rounds)
+
+Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_check.py). Full rules: FICCVoice.md.
+
+## 1 Rules
+
+- V04 State the gap clearly, and finish the conflict-free part first.
+  - When the relation is unclear, the material is insufficient, or the relation sheet contradicts itself, write the conflict-free part first.
+  - Hand back the planned judgment or relation, how far the material actually supports it, and what is still missing. T0 forwards relation problems to the relation agent and placement, claim, or order problems to the outline agent.
+  - Do not add causes, add facts, or pick one unsettled explanation for the sake of flow.
+  - As the writer, do not change placement, claims, or node relations. Hand back any needed change per this rule.
+  - In a style-only edit, keep the existing content and structure.
+  - If a requirement such as a governing paragraph opening can be met only by changing order or structure, report it separately.
+  - See V29–V30: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
+- V07 Do not use semicolons (；) in body prose.
+  - Before handing over, search the body for ； and split each such sentence into short sentences with their own subjects. Carry the relation by repeating the noun or with a connective from connectives.md. Only separators inside a table cell or a genuine list line are exempt. Do not turn prose into a list to keep semicolons.
+  - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； goes to T0. The writer neither edits it nor exempts it.
+  - Paragraph organization: FICCCompose.md C08.
+  - See references/FICCVoice-rationale.md V07.
+- V10 Control sentence length.
+  - Prefer short sentences, provided the meaning stays complete and references stay clear.
+  - First delete repetition and redundancy. Then judge whether the sentence needs splitting. Do not delete necessary conditions, scope, or exceptions to shorten a sentence.
+- V11 Keep each sentence focused.
+  - Build each sentence around one main judgment or action. Conditions, scope, and exceptions that directly qualify that judgment may stay in the same sentence.
+  - If a sentence contains several judgments or actions that need separate statement, split them into several sentences. After splitting, make sure each condition and qualifier still clearly maps to its original judgment.
+- V12 Keep wording and reference consistent.
+  - When adjacent sentences discuss the same object, use a consistent name or key term. Avoid needless changes of wording.
+  - When using referring expressions such as “这” (this), “它” (it), or “该情况” (this situation), make sure the reader can clearly identify what they refer to. Otherwise, write the specific name.
+- V13 Make the logic between sentences explicit.
+  - When you need to express a relation such as cause and effect, turn, condition, or progression, first confirm that the source text or context supports it. Then choose the precise connective.
+  - If the support is sufficient but necessary information is missing in between, supply the information first. Then connect the sentences. If the support is insufficient, you must not build the relation with a connective alone.
+- V14 Revise by problem type.
+  - Check sentence by sentence, and apply the matching fix:
+    - Unclear subject of a judgment or action: state the subject, or rewrite the reference.
+    - Unclear necessary condition, scope, or exception: complete it or move it, and make clear what it qualifies.
+    - Several judgments or actions crammed into one sentence: split the sentence, and keep each one's conditions and qualifiers.
+    - Unclear relation to the preceding text: check whether information is missing and whether the order is sound. Then handle it per V13.
+    - Complete meaning but wordy expression: delete redundancy, and split the sentence when needed.
+  - The check guides revision. You need not show the checking process in the output.
+- V20 Check the strength of judgments before and after rewriting.
+  - Map qualifiers in the source such as “可能、预计、多数、短期、约、不超过” (possibly, expected, most, short-term, about, no more than), together with their objects, into the new text.
+  - Before changing a double negative, check the object, scope, or degree of the negation.
+  - “并非所有” (not all) must not become “都不” (none). “并非不可能” (not impossible) must not become “必然” (certain).
+  - When evidence is missing, write only that no judgment can be made. Do not write it as proof of the opposite conclusion.
+  - You may point out an error in the original judgment.
+  - Check: if a qualifier is lost, the scope widened, or the speaker changed, restore it.
+- V24 Lead from an established object to the next new information.
+  - Find the object or judgment to carry over from in the finished draft, per the relation sheet.
+  - Do not treat information that is in the notes but not yet written into the draft as known to the reader.
+  - Put the added state, action, or limit after it.
+  - When the main judgment can be understood only after a new object, introduce that object and its role first. Then give its attributes.
+  - The introduction may sit inside the sentence. If the two interfere, use a separate sentence. Handle pure notes per V29.
+  - Necessary points in time, conditions, and relation markers may come first.
+  - Do not build passives or repeat whole sentences for the sake of a fixed word order.
+  - Do not hang a topic first and then switch subjects. Do not open with “X和Y是什么关系，材料没说” (what the relation between X and Y is, the material does not say).
+  - Write first which judgment the gap limits. Then write what the material lacks.
+  - When analysing the sources themselves, the sources and the question may be the focus.
+  - Make the subject the thing this sentence judges, with its full name:
+    - Do not use “这个回答” (this answer) or “这一点” (this point) as the first subject, except right after a preceding sentence that states it in full.
+  - Check: sentence by sentence, confirm that the reader knows what each name refers to and can say which earlier point this sentence picks up from.
+  - Showing the relation at a paragraph or node opening, which connective to use, and when a relation may stay unmarked: see V22.
+- V26 Let the reader identify each number as whose what.
+  - Where a number is first really used, state whose indicator it is, which indicator, the point in time, and the unit.
+  - In the same place, state the measurement basis and any needed sample source.
+  - Within a paragraph, a short name with unchanged meaning may be used. Do not redefine the same measurement basis repeatedly across the piece.
+  - The base period and scope that the current comparison needs must be directly identifiable.
+  - In new writing, verify against the original document where one exists. If the original does not say, leave the gap.
+  - In a style-only edit, do not compute new numbers or fill blanks in the original. List doubtful points as to be verified.
+  - For a fact to be verified, the writer writes sentences without it or leaves a blank. The body text carries no “待补充” (to be supplied) or “待核实” (to be verified) labels. Labels go only into the writer's result sheet.
+  - Do not use deposits, reserves, capital, cash, and liquidity interchangeably.
+  - Keep stock and flow, total and increment, and book value and market value apart.
+- V27 Make the point the subject. Hang the source after it.
+  - Arrange sentences around the object and judgment being argued. Do not report material institution by institution.
+  - By default, put the source at the end of the sentence it supports, as a parenthetical with the institution and the date to the day.
+  - For a number from one institution's own method or measurement basis, write the source as an adverbial of that number.
+  - When several institutions support the same judgment, a combined citation may be used.
+  - Put report titles and details in the source list.
+  - The body text carries a short title in only two cases:
+    - Two reports from the same institution on the same day need to be told apart.
+    - The title itself is the point being made.
+  - Across articles, refer by issue number. Across sections, refer back by name.
+  - When citing your own earlier articles and rules, refer back only with real grounds.
+  - Move the sources for the lead and for each layer's opening to where the later text gives the evidence.
+  - Without a publication date, use the day-precise date in the list. Failing that, use the collection date and mark it “收录” (collected).
+  - Do not guess the missing parts of a date. Across years, write the year.
+  - Check: where an argument paragraph uses institutions as subjects one after another (“X说……X还说……”, X says… X also says…), rewrite it with the point as the subject and the source in a parenthetical at the end of the sentence.
+- V28 Do not let the attribution of views disappear in rewriting.
+  - You may keep “X说／认为” (X says / believes) in these cases:
+    - A single institution's view that the article does not adopt.
+    - Divergent views.
+    - A full-sentence direct quotation.
+    - Institutional actions such as forecasting or revising numbers.
+  - Decide adoption per the outline and the relation sheet. When unsure, keep the speaker.
+  - Merge quotations of one or two words into the judgment.
+  - Do not strip the source from one institution's judgment and turn it into the article's judgment. Keep the source text and our inferences apart.
+- V57 Views and inferences are not objects. A view, reading, explanation or inference is never the subject or object of a verb that moves it: it does not “加强、变轻、占上风、站在一边、并存”, and it is not counted (“三种读法”). Write who holds it and what they believe (“Barclays看成技术性抛售”), or what we think (“我们认为”, “在我们看来”, “更像是先后”); when several views stand side by side, write “三种说法” once and name each holder. No label for an interpretive move of ours: 读法, 解读, 视角, 框架, 判别读数 and the like are out even when the outline carries them — the outliner translates such words before they reach a claim line (FICCOutline.md O91). Check: grep the node for `读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边` and read each hit; a hit whose subject is a company, a house, a price or 我们 passes; `voice_check.py --clarity` lists the hits as review candidates (H9), never as hard faults. 框架 is read by eye: in house drafts it is a deal or policy term.
+- V38 Then check both ways, from material to new text and from new text to material.
+  - For each meaning split out per V02, find its new location.
+  - Lose no judgment, fact, number, base period, condition, exception, negation, degree, or attribution, and do not shift any of them to another object.
+  - Check the new text back sentence by sentence. Every added action, causal word, generalisation, and note of certainty must have grounds.
+  - In a complex reorganisation, you may temporarily mark new locations beside the source sentences. Stop once the check is done.
+  - Finally, look specifically at split and merged sentences, and check each item:
+    - Whether a shared condition now governs only the first sentence.
+    - Whether an exception wrongly extends to everything.
+    - Whether several subjects' responsibilities have been merged.
+  - Then check subject–predicate fit, modifier placement, and missing characters.
+  - The writer fixes wording problems.
+
+## 2 Use
+
+- A patch round changes only the sentences and to-dos the packet names; the rest of the node stays as it is.
+- New facts: dispatch-notes 1.5; paragraph organization: references/compose-excerpt.md (FICCCompose.md C08, C12).
+- Result sheet: each change as file:line before → after. Check wave and re-tick after a patch: dispatch-notes 2.3.
+- Run `scripts/voice_check.py --clarity --names` and `scripts/cjk_space.py --check` on the node before handover.

@@ -44,5 +44,5 @@ Use （作者本机路径） when it exists on the current host and this round n
 - `heading_check.py <file.md> --len`: checks levels, ordinals, and section length; its warnings on statement headings and posed-question headings are reminders only.
 - `punct_normalize.py --check <file.md>`; `--apply` is for authorized punctuation conversion, and content integrity must still be confirmed.
 - `prose_mechanics.py`, `EDITOR-BRIEF-template.md`: use as the editing task requires.
-- Before submission, run `scripts/voice_check.py <稿件> --clarity --names <提纲>` and `scripts/cjk_space.py <稿件> --check` per references/clarity-acceptance.md. H1/H5 and spacing errors must be fixed; H2–H4 and the hazard list are checked for meaning. Of the “！” items, only “不是……而是” (not … but) and the dash keep the requirement to be handled before submission.
+- Before submission, run `scripts/voice_check.py <稿件> --clarity --names <提纲>` and `scripts/cjk_space.py <稿件> --check`; handle the report per references/clarity-acceptance.md.
 - After changing any heading or section number of the four main files (FICCOutline.md, FICCStructure.md, FICCCompose.md, FICCVoice.md), run `scripts/xref_check.py`, fix every MISSING and STALE? it reports, then install.
