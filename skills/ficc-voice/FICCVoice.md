@@ -32,29 +32,13 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
 
 ## 2 Carry the relations into sentences and paragraphs
 
-Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md).
-
-- **V05** → FICCCompose.md C01
-- **V06** → FICCCompose.md C02
-- **V41** → FICCCompose.md C04
-- **V42** → FICCCompose.md C05
-- **V43** → FICCCompose.md C06
-- **V44** → FICCCompose.md C07
 - **V07** **Do not use semicolons (；) in body prose.**
   - Before handing over, search the body for ； and split each such sentence into short sentences with their own subjects. Carry the relation by repeating the noun or with a connective from connectives.md. Only separators inside a table cell or a genuine list line are exempt. Do not turn prose into a list to keep semicolons.
   - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； goes to T0. The writer neither edits it nor exempts it.
   - Paragraph organization: FICCCompose.md C08.
   - See references/FICCVoice-rationale.md V07.
-- **V45** → FICCCompose.md C09
-- **V46** → FICCCompose.md C10
-- **V47** → FICCCompose.md C11
-- **V08** → FICCCompose.md C13
+- **V08** **Mark the add-on relation between parallel child nodes of the same kind.**
   - The add-on relation between parallel child nodes of the same kind (where to mark it: FICCCompose.md C13): mark it with a repetition, emphasis, or deepening marker (references/connectives.md, row 并列·附加关系). Where it truly cannot be marked, link to the preceding item with a back-reference.
-- **V48** → FICCCompose.md C14
-- **V49** → FICCCompose.md C15
-- **V09** → FICCCompose.md C17
-- **V50** → FICCCompose.md C18
-- **V51** → FICCCompose.md C19
 
 ## 3 Sentences and cohesion
 
@@ -196,7 +180,6 @@ Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md)
   - When the true antecedent is not adjacent and the order is fixed by the relation sheet, use a named back-reference instead of a connective.
   - Check: the sentence right before each paragraph-opening and sentence-opening connective is its true antecedent.
 - **V54** **When two layers of relation nest, put the outer layer's word at the outer seam and the inner layer's word at the inner seam.**
-- **V55** → FICCCompose.md C20
 
 ### 4.3 Back-reference and the same word
 
@@ -289,7 +272,6 @@ Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md)
   - Merging a pure note back where it serves counts as a wording change. Keep facts, qualifiers, and degree words as they are.
   - Check: mark the notes when checking.
   - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, or dropping it widens the main judgment's scope, move it into the body text as an argument step; if “样本内” (within the sample) would read as “全部” (all) or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
-- **V30** → V29
 - **V31** **Make figure, figure note, and body text match.**
   - Prefer a figure title that states a finding the data support. Distribution or measurement-basis figures may have descriptive titles.
   - Paragraph organization: FICCCompose.md C22.
@@ -408,6 +390,6 @@ Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md)
 
 ## 8 On-demand references
 
-Paragraph organization: FICCCompose.md. Connectives: references/connectives.md. Revision examples: references/clarity-rewrites.md. Borrowed sources, scope of application, and rule migration: references/FICCVoice-provenance.md. Do not read the maintenance records for everyday writing. Format: references/format-and-maintenance.md. Submission checks: references/clarity-acceptance.md. Rationale by V number: references/FICCVoice-rationale.md. Examples and the user's own edits: references/examples-and-rewrites.md (headings by section and V number).
+Paragraph organization: FICCCompose.md. Connectives: references/connectives.md. Revision examples: references/clarity-rewrites.md. Borrowed sources, scope of application, and rule migration: references/FICCVoice-provenance.md and references/migration-2026-10-17.md. Do not read the maintenance records for everyday writing. Format: references/format-and-maintenance.md. Submission checks: references/clarity-acceptance.md. Rationale by rule number: references/FICCVoice-rationale.md. Examples and the user's own edits: references/examples-and-rewrites.md (headings by section and V number).
 
-Rules migrated from FICCStructure.md chapters 6–8 that stay here (V15, V16, V19, V21, V22, V25, V27, V29, V52–V54): reasoning in references/FICCStructure-rationale.md 6–8.
+Reasoning for V15, V16, V19, V21, V22, V25, V27, V29 and V52–V54: references/FICCStructure-rationale.md 6–8.

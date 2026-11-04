@@ -134,9 +134,9 @@ Supports O89: once the outline is checked, the body text only unfolds each node 
 
 Supports O41: of the seven invariants, summarizing, completeness, and length belong to this file.
 
-> The other four (grouping, attachment, hanging, and re-mention) govern whether content is placed right: for attachment and hanging, see 5.3; for grouping and re-mention, see FICCStructure.md 3.2 and FICCVoice.md V44.
+> The other four (grouping, attachment, hanging, and re-mention) govern whether content is placed right: for attachment and hanging, see 5.3; for grouping and re-mention, see FICCStructure.md 3.2 and FICCCompose.md C07.
 
-Supports O41: the other four govern whether content is placed right. For attachment and hanging, see 5.3. For grouping and re-mention, see FICCStructure.md 3.2 and FICCVoice.md V44.
+Supports O41: the other four govern whether content is placed right. For attachment and hanging, see 5.3. For grouping and re-mention, see FICCStructure.md 3.2 and FICCCompose.md C07.
 
 (O41) When any layer breaks one of them, rewording cannot repair it.
 
@@ -300,7 +300,7 @@ Opening sentence of the history record.
 
 Records the origin of the introduction's division-of-labour sentences.
 
-> Placement (5) moved here from FICCStructure.md 1 on 2026-10-13, under the three-agent relay plan the user approved (within it, placing material by task follows the user's instructions and posted text of 2026-10-12, and the handling of new stories or new material is taken from the writing-structure editing reference the user posted the same day); the seven-part hand-back was split into the placement record here and the relation sheet in FICCStructure.md 9; judging cross-branch annotations moved to FICCStructure.md 5; the annotation format is in references/relation-sheet-template.md;
+> Placement (5) moved here from FICCStructure.md 1 on 2026-10-13, under the three-agent relay plan the user approved (within it, placing material by task follows the user's instructions and posted text of 2026-10-12, and the handling of new stories or new material is taken from the writing-structure editing reference the user posted the same day); the seven-part hand-back was split into the placement record here and the relation sheet in FICCStructure.md 6; judging cross-branch annotations moved to FICCStructure.md 5; the annotation format is in references/relation-sheet-template.md;
 
 Records the origin of 5, O50, and O64.
 
@@ -354,9 +354,9 @@ Records the origin of the parts of 2.3 and 4.2 merged back into FICCVoice.md.
 
 > Arranging sources by point within a paragraph in 5.1, how citations point in 5.3, how identity is made explicit and checked in 5.4, and the text–figure match in 5.5 have their home in FICCVoice.md V07, V25, V27 and FICCVoice.md V15, V16, V19, V21, V29;
 
-Records the origin of several rules moving to FICCStructure.md 7.
+Records the origin of several rules now in FICCVoice.md.
 
-> The parent–child and subtree tests moved from FICCStructure.md 10.3 to 9.3 here;
+> The parent–child and subtree tests moved from FICCStructure.md 7.3 to FICCOutline.md 9.3;
 
 Records the origin of O89's parent–child and subtree tests.
 

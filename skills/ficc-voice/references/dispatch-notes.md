@@ -41,7 +41,7 @@ Usable in rule sweep-edit rounds and revision rounds. A script first locates the
 7. The author's model texts, references/exemplars.md, are kept for reference; no need to compare against them. Grounds, audits, and history, references/dev-notes.md, are not read for daily writing. FICCVoice's sources and maintenance record: references/FICCVoice-provenance.md. The glossary is references/glossary.md.
 8. The writer may have a style of its own.
 9. Update an existing draft in place by its stable Doc ID. Make HTML, PDF, or Word only when the user asks. When the user wants only the article, do not attach writing notes, self-assessment, or generic disclaimers.
-10. Rule numbers V01–V40, S01–S96, O01–O90 are frozen. Rules moved from FICCStructure.md 6–8 into FICCVoice.md are numbered after V40, with pointers left in place in FICCStructure. On 2026-10-17 the paragraph-organization rules moved into FICCCompose.md with their own C numbers (C01–C23; C24 added 2026-10-20, re-installed 2026-10-21), pointers left in place, old numbers not reused; map: references/migration-2026-10-17.md.
+10. Rule numbers: SKILL.md 4, item 13. Old-to-new map: references/migration-2026-10-17.md.
 
 ## 6 Outline slices (default)
 

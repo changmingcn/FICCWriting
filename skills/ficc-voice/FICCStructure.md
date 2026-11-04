@@ -172,7 +172,6 @@ This file governs the relations between nodes, from the whole piece down to comp
   - See references/FICCStructure-rationale.md 2.4.
 - **S15** **A satellite may unfold layer by layer, as deep as the content requires.**
   - Paragraph organization: FICCCompose.md C16.
-- **S16** → FICCCompose.md C19
 
 ## 3 Horizontal: the relation between it and its sibling nodes
 
@@ -317,26 +316,14 @@ This file governs the relations between nodes, from the whole piece down to comp
   - How cross-branch foreshadowing lands on the page: FICCCompose.md C15.
   - See references/FICCStructure-rationale.md 5.
 
-## 6 Relations in the body text: openings, carry-overs, between layers, and closes (moved to FICCVoice.md)
-
-(moved to FICCVoice.md, and on 2026-10-17 mostly on to FICCCompose.md; map: references/migration-2026-10-17.md)
-
-## 7 Relations in paragraphs and sentences (moved to FICCVoice.md)
-
-(moved to FICCVoice.md, and on 2026-10-17 mostly on to FICCCompose.md; map: references/migration-2026-10-17.md)
-
-## 8 Seams: where to mark relations (moved to FICCVoice.md)
-
-(moved to FICCVoice.md, and on 2026-10-17 mostly on to FICCCompose.md; map: references/migration-2026-10-17.md)
-
-## 9 Relation sheet: what goes to the writer
+## 6 Relation sheet: what goes to the writer
 
 - **S74** **Write the results of relation judgment and seam relation classes into a relation sheet for Compose and Voice.**
   - The relation sheet records only relations: for each, the endpoints, the type, the grounds, and the limits or open items.
   - The placement record decides where this content goes: add, move, merge, replace, or leave out.
   - Relation sheet format: see references/relation-sheet-template.md.
 
-### 9.1 Items per node
+### 6.1 Items per node
 
 - **S75** **Write the items the relation-sheet template defines (references/relation-sheet-template.md is the single definition of the fields).**
   - With no new placement, do not ask for a placement record just to go through the procedure.
@@ -351,7 +338,6 @@ This file governs the relations between nodes, from the whole piece down to comp
 - **S79** **relation-sheet-template.md 2.6 and 2.7, facts and author's original sentences: cite where they are, do not copy them. The packet attaches readable source excerpts.**
   - Facts to be verified: per relation-sheet-template.md 2.6, with the writer's handling in FICCVoice.md.
   - Writing rules: FICCCompose.md 1–5 and FICCVoice.md 3–4. The writer's at-hand summary is references/writing-checklist.md.
-- **S80** → FICCCompose.md C12. Length caps and full-statement places: FICCOutline.md O44, O51.
 - **S81** **relation-sheet-template.md 4, to-do items for other nodes: per S84.**
 - **S82** **Which name the whole piece uses for the same thing: per the name table in the outline header.**
   - The name table: see FICCOutline.md 4.2. The writer uses it as given. Rules: see FICCVoice.md 5.
@@ -361,7 +347,7 @@ This file governs the relations between nodes, from the whole piece down to comp
   - Do not write a relation you know to be wrong as a settled fact.
   - Send the specific disagreement to T0, who forwards relations to the relation agent and placement or order to the outline agent. Finish the conflict-free part first.
 
-### 9.2 To-do items for other nodes
+### 6.2 To-do items for other nodes
 
 - **S84** **What the writer may change outside this node: references/dispatch-notes.md 2.**
   - When a block is placed here and relations change, list as to-do items the body text elsewhere that must change accordingly:
@@ -373,7 +359,7 @@ This file governs the relations between nodes, from the whole piece down to comp
   - When carrying out settled decisions, do not judge them again.
   - When outline maintenance substantively changes a settled claim, content, or order, add the affected relations.
 
-## 10 Check relations layer by layer
+## 7 Check relations layer by layer
 
 - **S85** **Check layer by layer, pair by pair, group by group, and seam by seam. Every piece goes through this.**
   - First check whether the relations on the tree hold.
@@ -385,7 +371,7 @@ This file governs the relations between nodes, from the whole piece down to comp
     - Check grouping and whole sets group by group (S24, S32).
     - Check from places with deeper unfolding and more turns all the way down to clauses (S91).
 
-### 10.1 Check by layer
+### 7.1 Check by layer
 
 - **S86** **The focus of the check changes with the layer the node is in.**
   - Whether the whole book's or article's center is clear and whether necessary tasks are covered: check per FICCOutline.md 9.
@@ -403,7 +389,7 @@ This file governs the relations between nodes, from the whole piece down to comp
   - State what role it plays in the whole.
   - State whether later text pays it off, and where.
 
-### 10.2 Representative nodes
+### 7.2 Representative nodes
 
 - **S88** **For representative parallel nodes such as several stories, points, or pieces of evidence, check the focus for each in the table below.**
   - Complementarity, contrast, progression, and counterexample in the table correspond to four relation types in 1.1: complementarity, comparison and contrast, progression and deepening, and objection and response.
@@ -419,16 +405,16 @@ This file governs the relations between nodes, from the whole piece down to comp
 | Several methods or steps | Whether there are sequential dependencies, conditional branches, parallel relations, and check-and-feedback loops |
 | Several concepts or models | Whether they stand in inclusion, overlap, or opposition, or apply to different scales or conditions; whether they are mixed up |
 
-### 10.3 Parent–child, grouping, subtree
+### 7.3 Parent–child, grouping, subtree
 
 - **S89** **Parent–child tests and subtree tests examine the outline itself and belong to FICCOutline.md 9. This file checks only grouping.**
   - The grouping test follows the check in S24.
 
-### 10.4 Seam check
+### 7.4 Seam check
 
 - **S90** **Seam check: the relation agent checks that each seam carries the relation the sheet names, as a proposition; the marker and wording check is the writer's (FICCVoice.md V22).**
 
-### 10.5 What to check first, and where to start
+### 7.5 What to check first, and where to start
 
 - **S91** **Start from places with deeper unfolding, denser material, and more turns. Check layer by layer down to sentences and clauses.**
   - Check layer by layer whether each statement below it has a use.
@@ -450,10 +436,10 @@ This file governs the relations between nodes, from the whole piece down to comp
   - Where a layer does not go through, hand that layer's opening back for rewriting per FICCCompose.md C01. Do not patch the wording.
   - Where content is misplaced or relations are mismarked, return a placement objection to the outline agent through T0.
 
-## 11 Conclusion
+## 8 Conclusion
 
 What this file does as a whole: see the opening paragraph.
 
-## 12 Appendix: Sources and on-demand references
+## 9 Appendix: Sources and on-demand references
 
-Openings, carry-overs, and closes: FICCCompose.md. Wording and seams: FICCVoice.md, connective choice in FICCVoice.md 4.1. The user's original words and past rulings: see references/dev-notes.md section 35, and for rule history the same file. Rationale, examples, and history moved out of this file, by this file's section numbers: see references/FICCStructure-rationale.md. Classical sources and evidence grades, and the sources of examples and revision examples: see references/examples-and-rewrites.md, Appendix: Sources. Supplementary connectives, and the classification disagreements between the two classical systems: see references/connectives.md. Write the user's new corrections on relations into the section that governs them. The body text carries no date markers.
+Openings, carry-overs, and closes: FICCCompose.md. Wording and seams: FICCVoice.md, connective choice in FICCVoice.md 4.1. The user's original words and past rulings: see references/dev-notes.md section 35, and for rule history the same file. Rationale, examples, and history moved out of this file: see references/FICCStructure-rationale.md (numbering mapped in its header). Classical sources and evidence grades, and the sources of examples and revision examples: see references/examples-and-rewrites.md, Appendix: Sources. Supplementary connectives, and the classification disagreements between the two classical systems: see references/connectives.md. Write the user's new corrections on relations into the section that governs them. The body text carries no date markers.

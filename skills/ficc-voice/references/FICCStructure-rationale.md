@@ -1,6 +1,6 @@
 # FICCStructure rationale and distinctions
 
-This file holds the rationale, examples, transition sentences, and history moved out of FICCStructure.md in the terse rewrite, in sections by the section numbers of the version in force. Each entry first gives the original sentence, then one sentence on which rule it supports. The original sentences come from the FICCStructure.md then in force (first 16 hex digits of sha256: 2cbf30ff2ccbd905). Ledger numbers are in the task directory, （作者草稿）. Here each original sentence appears in English translation, and Chinese example phrases inside it stay in Chinese with an English gloss. The Chinese originals are in references/zh/FICCStructure-rationale.md. Write per FICCStructure.md. Consult this file only when a rule is unclear. “Origin” entries record the date and ruling markers that the terse version removed. For the user's original words and rulings, references/dev-notes.md section 35 governs.
+This file holds the rationale, examples, transition sentences, and history moved out of FICCStructure.md in the terse rewrite, in sections by the section numbers of the version in force. Each entry first gives the original sentence, then one sentence on which rule it supports. The original sentences come from the FICCStructure.md then in force (first 16 hex digits of sha256: 2cbf30ff2ccbd905). Ledger numbers are in the task directory, （作者草稿）. Here each original sentence appears in English translation, and Chinese example phrases inside it stay in Chinese with an English gloss. The Chinese originals are in references/zh/FICCStructure-rationale.md. Write per FICCStructure.md. Consult this file only when a rule is unclear. “Origin” entries record the date and ruling markers that the terse version removed. For the user's original words and rulings, references/dev-notes.md section 35 governs. Section numbers here follow the FICCStructure.md layout of 2026-10-16; since 2026-11-04 sections 9, 10 and 11 here are FICCStructure.md 6, 7 and 8.
 
 ## 1.2
 
@@ -31,7 +31,7 @@ This file holds the rationale, examples, transition sentences, and history moved
 - Original (ledger L171): These uses differ, and they must not be set side by side just because “都有关” (they are all related).
   Supports: S14 “Hang a satellite beside the step it serves. Do not set it side by side with the trunk.” The reason a satellite states which kind of unfolding it is: the uses differ, so “都有关” (all related) is no reason to set them side by side.
 - Original (ledger L182a): An aside that is not brought back dilutes the close of the node it sits in:
-  Supports: S16 “After a story, example, or scene, state in one sentence what it shows.” The reason to delete tails that do not lead back to the conclusion: an aside not brought back dilutes the close of its node.
+  Supports: C19 “After a story, example, or scene, state in one sentence what it shows.” The reason to delete tails that do not lead back to the conclusion: an aside not brought back dilutes the close of its node.
 
 ## 3
 
@@ -94,98 +94,98 @@ This file holds the rationale, examples, transition sentences, and history moved
 ## 6
 
 - Original (ledger L301): With cross-branch relations also judged, the next step is to place them in positions in the body text, starting with openings, carry-overs, between layers, and closes at section level and above.
-  Supports: V05 (S34 merged) “At every layer, the conclusion comes at the opening. Keep this at each layer.” The transition from section 5 to section 6: after cross-branch relations are judged, place them first in the openings, carry-overs, between layers, and closes at section level and above.
+  Supports: C01 “At every layer, the conclusion comes at the opening. Keep this at each layer.” The transition from section 5 to section 6: after cross-branch relations are judged, place them first in the openings, carry-overs, between layers, and closes at section level and above.
 
 ## 6.1
 
-- Origin (ledger L309): the original sentence carried “（依用户2026-10-10“主旨—承接—分论点—总结收尾”的格式和2026-10-11（六）用到所有层级的裁定）” (per the user's 2026-10-10 format “claim–carry-over–sub-points–summary close” and the 2026-10-11 (六) ruling applying it to all levels). Per the contract, the terse version drops the marker; the rule stays in V05 (S34 merged).
+- Origin (ledger L309): the original sentence carried “（依用户2026-10-10“主旨—承接—分论点—总结收尾”的格式和2026-10-11（六）用到所有层级的裁定）” (per the user's 2026-10-10 format “claim–carry-over–sub-points–summary close” and the 2026-10-11 (六) ruling applying it to all levels). Per the contract, the terse version drops the marker; the rule stays in C01.
 
 ## 6.2
 
 - Original (ledger L350b): If it brings in facts right away, it is already the first child node;
-  Supports: V43 (formerly S40) “A carry-over sits one layer above the child nodes. It states only each step's conclusion and the relations between steps.” The reason a carry-over carries no facts: if it brings in facts right away, it is already the first child node.
+  Supports: C06 “A carry-over sits one layer above the child nodes. It states only each step's conclusion and the relations between steps.” The reason a carry-over carries no facts: if it brings in facts right away, it is already the first child node.
 
 ## 6.3
 
-- Origin (ledger L362): the original sentence carried “（依用户2026-10-10的格式裁定）” (per the user's 2026-10-10 format ruling). Per the contract, the terse version drops the marker; the rule stays in V08 (S42 merged).
+- Origin (ledger L362): the original sentence carried “（依用户2026-10-10的格式裁定）” (per the user's 2026-10-10 format ruling). Per the contract, the terse version drops the marker; the rule stays in C13.
 - Original (ledger L372): When a block sits inside the main line but is not a link of it, what follows has to be reconnected;
-  Supports: V49 (formerly S43) “A signpost sentence points only to the block right after it. Move a stray block out per the hanging rules.” The reason a stray block is moved out: it sits inside the main line without being a link of it, so what follows has to be reconnected.
+  Supports: C15 “A signpost sentence points only to the block right after it. Move a stray block out per the hanging rules.” The reason a stray block is moved out: it sits inside the main line without being a link of it, so what follows has to be reconnected.
 - Original (ledger L375): Without all four, the reader must guess every relation.
-  Supports: V48 (formerly S41) “Allocate markers between layers by scale. Above section level, let four devices together make the relations readable.” The reason for combining the four devices: without all four, the reader must guess every relation.
-- (V48) The most common group relations above section level are four: induction, sequence, deduction, and contrast.
+  Supports: C14 “Allocate markers between layers by scale. Above section level, let four devices together make the relations readable.” The reason for combining the four devices: without all four, the reader must guess every relation.
+- (C14) The most common group relations above section level are four: induction, sequence, deduction, and contrast.
 
 ## 6.4
 
 - Original (ledger L377a): Openings and seams govern how a block comes in; the close governs how it goes out:
-  Supports: V09 (S44 merged) “The close gathers the child nodes back into this block's claim and moves one step forward.” The division of labor of the close: openings and seams govern how a block comes in, and the close governs how it goes out.
+  Supports: C17 “The close gathers the child nodes back into this block's claim and moves one step forward.” The division of labor of the close: openings and seams govern how a block comes in, and the close governs how it goes out.
 - Original (ledger L385): The opening foreshadows the middle, and the ending recalls the earlier claim; only then are beginning and end one body.
-  Supports: V09 (S45 merged) “A close moves one step forward. Do not restate the claim in other words.” The rationale for beginning and end as one body: the opening foreshadows the middle, and the ending recalls the earlier claim.
-- Origin (ledger L396): the original sentence carried “（依用户2026-10-10“总结收尾”的格式）” (per the user's 2026-10-10 “summary close” format). Per the contract, the terse version drops the marker; the rule stays in V09 (S44 merged).
+  Supports: C17 “A close moves one step forward. Do not restate the claim in other words.” The rationale for beginning and end as one body: the opening foreshadows the middle, and the ending recalls the earlier claim.
+- Origin (ledger L396): the original sentence carried “（依用户2026-10-10“总结收尾”的格式）” (per the user's 2026-10-10 “summary close” format). Per the contract, the terse version drops the marker; the rule stays in C17.
 - Original (ledger L400b): Writing it for every block turns it into end-of-paragraph uplift.
-  Supports: V51 (formerly S47) “Do not write every layer as ‘总起—分述—总之’ (overall opening–itemized account–in sum).” The reason “这意味着什么” (what this means) is not written for every block: writing it for every block turns it into end-of-paragraph uplift.
+  Supports: C19 “Do not write every layer as ‘总起—分述—总之’ (overall opening–itemized account–in sum).” The reason “这意味着什么” (what this means) is not written for every block: writing it for every block turns it into end-of-paragraph uplift.
 - Original (ledger L401b): It reads as a formula; better not to add it.
-  Supports: V51 (formerly S47) “Do not write every layer as ‘总起—分述—总之’ (overall opening–itemized account–in sum).” The reason not to force carry-overs and closes to fill a format: it reads as a formula, so it is better not to add them.
-- (V09) This does not conflict with a claim at the opening.
+  Supports: C19 “Do not write every layer as ‘总起—分述—总之’ (overall opening–itemized account–in sum).” The reason not to force carry-overs and closes to fill a format: it reads as a formula, so it is better not to add them.
+- (C17) This does not conflict with a claim at the opening.
 
 ## 7
 
 - Original (ledger L408): With positions at section level and above settled, the same rules go further down to paragraphs and sentences.
-  Supports: V15 (S63 merged) “Reading a sentence, you can find who or what is in what state, did what, and mainly shows which point.” The transition from section 6 to section 7: with section level and above settled, the same rules go down to paragraphs and sentences.
+  Supports: V15 “Reading a sentence, you can find who or what is in what state, did what, and mainly shows which point.” The transition from section 6 to section 7: with section level and above settled, the same rules go down to paragraphs and sentences.
 - Original (ledger L413): Here we add only what is specific to paragraphs and sentences.
-  Supports: V15 (S63 merged) “Reading a sentence, you can find who or what is in what state, did what, and mainly shows which point.” The scope of section 7: it adds only what is specific to paragraphs and sentences.
+  Supports: V15 “Reading a sentence, you can find who or what is in what state, did what, and mainly shows which point.” The scope of section 7: it adds only what is specific to paragraphs and sentences.
 
 ## 7.1
 
-- Origin (ledger L416): the original sentence carried “（用户2026-10-10）” (user, 2026-10-10). Per the contract, the terse version drops the marker; the rule stays in V05 (S49 merged).
+- Origin (ledger L416): the original sentence carried “（用户2026-10-10）” (user, 2026-10-10). Per the contract, the terse version drops the marker; the rule stays in C01.
 - Original (ledger L417a): The same day, item (五) added a requirement on information content:
-  Supports: V05 (S49 merged) “The first sentence summarizes the whole paragraph's view: reading only it, the reader should know what the paragraph asserts, and ideally on what main grounds.” The origin of the first sentence “stating the view itself”: the user's 10-10 item (五) added the requirement on information content.
-- Origin (ledger L418a): the original sentence carried “（用户2026-10-14）” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in V05 (S50 merged).
+  Supports: C01 “The first sentence summarizes the whole paragraph's view: reading only it, the reader should know what the paragraph asserts, and ideally on what main grounds.” The origin of the first sentence “stating the view itself”: the user's 10-10 item (五) added the requirement on information content.
+- Origin (ledger L418a): the original sentence carried “（用户2026-10-14）” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in C01.
 - Original (ledger L418c): The user's example is “所谓财政重新定价的观点有很大争议” (the so-called fiscal repricing view is highly contested).
-  Supports: V05 (S50 merged) “A paragraph opening must be the paragraph's claim or its topic.” The user's example of a topic sentence, showing that “the topic states the subject's current state”.
+  Supports: C01 “A paragraph opening must be the paragraph's claim or its topic.” The user's example of a topic sentence, showing that “the topic states the subject's current state”.
 - Original (ledger L419): The following items are defaults T0 derived on 2026-10-14 from the user's example and the 10-10 ruling; they are not the user's original words.
-  Supports: V05 (S50 merged) “A paragraph opening must be the paragraph's claim or its topic.” Origin: the items in V05 (S50 merged) on topic, material sentences, and disagreement paragraphs are defaults T0 set on 10-14 from the user's example and the 10-10 ruling.
+  Supports: C01 “A paragraph opening must be the paragraph's claim or its topic.” Origin: the items in C01 on topic, material sentences, and disagreement paragraphs are defaults T0 set on 10-14 from the user's example and the 10-10 ruling.
 - Original (ledger L433b): (User 2026-10-14: “读者的眼光会第一眼落到主语上” (the reader's eye lands first on the subject), and the sentence must “体现出与上级、同级和下级节点极其明确的关系，否则很容易读偏” (show an extremely clear relation to the nodes above, beside, and below, or it is easily misread).)
-  Supports: V22 (S52 merged) “In a paragraph-opening sentence or a node's opening sentence, show at the very start its relation to the level above and to the sibling it follows.” The grounds for showing the relation at the sentence start: the user's original words of 10-14.
+  Supports: V22 “In a paragraph-opening sentence or a node's opening sentence, show at the very start its relation to the level above and to the sibling it follows.” The grounds for showing the relation at the sentence start: the user's original words of 10-14.
 - Original (ledger L436): The following items are defaults T0 set the same day from the user's words; they are not the user's original words.
-  Supports: V22 (S52 merged) “In a paragraph-opening sentence or a node's opening sentence, show at the very start its relation to the level above and to the sibling it follows.” Origin: the connective list in V22 (S52 merged) and the two exceptions in V22 (S53 merged) are defaults T0 set the same day from the user's words.
-- Origin (ledger L444): the original sentence carried “（T0同日的默认）” (T0's default of the same day). Per the contract, the terse version drops the marker; the rule stays in V22 (S52 merged).
+  Supports: V22 “In a paragraph-opening sentence or a node's opening sentence, show at the very start its relation to the level above and to the sibling it follows.” Origin: the connective list in V22 and the two exceptions in V22 are defaults T0 set the same day from the user's words.
+- Origin (ledger L444): the original sentence carried “（T0同日的默认）” (T0's default of the same day). Per the contract, the terse version drops the marker; the rule stays in V22.
 
 ## 7.3
 
-- Origin (ledger L475): the original sentence carried “（用户10-16）” (user, 10-16). Per the contract, the terse version drops the marker; the rule stays in V25 (S58 merged).
+- Origin (ledger L475): the original sentence carried “（用户10-16）” (user, 10-16). Per the contract, the terse version drops the marker; the rule stays in V25.
 
 ## 7.5
 
 - Original (ledger L512): Sentences also have main and subordinate.
-  Supports: V29 (S66 merged) “Separate main and subordinate between sentences. A note does not count as a step in a sentence group.” Lead-in sentence: sentences also have main and subordinate.
+  Supports: V29 “Separate main and subordinate between sentences. A note does not count as a step in a sentence group.” Lead-in sentence: sentences also have main and subordinate.
 - (V29) Layout line breaks are not the only basis for judging structure.
 
 ## 8
 
 - Original (ledger L529): With paragraphs written correctly and each sentence attached, the relations have reached the leaves;
-  Supports: V52 (formerly S69) “Put connectives at the seam between two things.” The transition from section 7 to section 8: with paragraphs and sentences each attached, the relations have reached the leaves.
+  Supports: V52 “Put connectives at the seam between two things.” The transition from section 7 to section 8: with paragraphs and sentences each attached, the relations have reached the leaves.
 - Original (ledger L530): What remains is to mark them at every seam.
-  Supports: V52 (formerly S69) “Put connectives at the seam between two things.” The transition from section 7 to section 8: what remains is to mark the relations at every seam.
+  Supports: V52 “Put connectives at the seam between two things.” The transition from section 7 to section 8: what remains is to mark the relations at every seam.
 
 ## 8.1
 
-- Origin (ledger L542): the original sentence carried “（用户2026-10-14）” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in V52 (formerly S69).
+- Origin (ledger L542): the original sentence carried “（用户2026-10-14）” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in V52.
 - Original (ledger L545): With an inserted sentence or route sentence in between, the reader takes the adjacent sentence as the antecedent;
-  Supports: V53 (formerly S70) “Keep a connective right next to its true antecedent.” The reason a connective stays next to its true antecedent: with an inserted sentence in between, the reader takes the adjacent sentence as the antecedent.
+  Supports: V53 “Keep a connective right next to its true antecedent.” The reason a connective stays next to its true antecedent: with an inserted sentence in between, the reader takes the adjacent sentence as the antecedent.
 
 ## 8.2
 
 - Original (ledger L551): Grammar research calls this a general rule of colloquial complex sentences.
-  Supports: V22 (S72 merged) “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” The grounds for not omitting latter-clause markers: grammar research calls this a general rule of colloquial complex sentences.
+  Supports: V22 “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” The grounds for not omitting latter-clause markers: grammar research calls this a general rule of colloquial complex sentences.
 - Original (ledger L552): A progression often has only a latter-clause marker; the earlier sentence carries no word, and the relation is still clear;
-  Supports: V22 (S72 merged) “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” A progression has only a latter-clause marker; the earlier sentence carries no word, and the relation is still clear.
+  Supports: V22 “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” A progression has only a latter-clause marker; the earlier sentence carries no word, and the relation is still clear.
 - Original (ledger L553): Conversely, keeping only “虽然” (although) and dropping “但是” (but) leaves the reader unable to follow.
-  Supports: V22 (S72 merged) “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” Counterexample: keeping only “虽然” (although) and dropping “但是” (but) leaves the reader unable to follow.
+  Supports: V22 “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” Counterexample: keeping only “虽然” (although) and dropping “但是” (but) leaves the reader unable to follow.
 
 ## 8.3
 
 - Original (ledger L561): When preview and payoff do not match, the reader thinks a paragraph is missing.
-  Supports: V55 (formerly S73) “As many steps as the claim and carry-over sentence preview, the sub-points pay off, in the same order.” The reason preview and payoff must match: if they do not, the reader thinks a paragraph is missing.
+  Supports: C20 “As many steps as the claim and carry-over sentence preview, the sub-points pay off, in the same order.” The reason preview and payoff must match: if they do not, the reader thinks a paragraph is missing.
 
 ## 9
 
@@ -196,9 +196,9 @@ This file holds the rationale, examples, transition sentences, and history moved
 
 - Origin (ledger L582): the original sentence carried “用户2026-10-14” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in S79.
 - Original (ledger L587b): The same story placed in different positions and written in different ways can have completely different effects,
-  Supports: S80 “Item 5, writing advice: set the position first, then the way of writing.” The reason to set position before the way of writing: the same story in different positions and written differently has completely different effects.
+  Supports: C12 “Item 5, writing advice: set the position first, then the way of writing.” The reason to set position before the way of writing: the same story in different positions and written differently has completely different effects.
 - Original (ledger L595): That the length cap still holds after adding full names and base periods rests on exactly this rule; it compresses restatement, not facts;
-  Supports: S80 “Item 5, writing advice: set the position first, then the way of writing.” The role of the designated full-statement place: the length cap still holds after adding full names and base periods; it compresses restatement, not facts.
+  Supports: C12 “Item 5, writing advice: set the position first, then the way of writing.” The role of the designated full-statement place: the length cap still holds after adding full names and base periods; it compresses restatement, not facts.
 
 ## 10
 

@@ -4,7 +4,7 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 
 ## 1 Conventions
 
-- Section numbers stay as anchors, in numeric levels: “## 1 English title”, “### 1.1 English title”, “#### 1.1.1 …”. The rationale files (-rationale) and examples-and-rewrites follow the section numbers of the rule files, gaps allowed. Rule IDs (V, S, O and C numbers) are not section numbers and stay unchanged.
+- Section numbers stay as anchors, in numeric levels: “## 1 English title”, “### 1.1 English title”, “#### 1.1.1 …”. The rationale files (-rationale) and examples-and-rewrites follow the section numbers of the rule files, gaps allowed. FICCStructure-rationale.md keeps the FICCStructure.md numbering of 2026-10-16, mapped in its header. Rule IDs (V, S, O and C numbers) are not section numbers and stay unchanged.
 - Chinese kept in the English text: words, punctuation, and fixed phrases that the writer produces or must avoid in the Chinese article (connectives, quoted phrases, name-table column names, user-fixed expressions, script arguments). Write the Chinese first, then one English gloss in parentheses, e.g. “既然” (since).
 - File names and pointers: point to a section with the file name, one space, and the section number, e.g. references/connectives.md, FICCStructure.md 3.4 (without .md also works: FICCStructure 3.4). In Chinese context put no space between Han characters and digits (“第35节”); in English context write “section 35”.
 - Spacing: in the English files, put a space between English and kept Chinese as English usage requires. The no-space rule (cjk_space.py) governs Chinese body text only.
@@ -604,8 +604,8 @@ One row per concept with no earlier English name, from the B1–B4 change notes 
 | 反驳席 | refuter seat | |
 | 研究席 | research seat | |
 | 本文件 | this file | kept as the token glued before a numbered ref in examples-and-rewrites.md (xref_check.py) |
-| 原（条号、节号） | formerly | as in “Cnn (formerly Vnn)” |
-| 最早为 | originally | as in “(originally section N.N of FICCStructure)” |
+| 原（条号、节号） | formerly | records only; live files cite current numbers (SKILL.md 4, item 13) |
+| 最早为 | originally | records only; live files cite current numbers (SKILL.md 4, item 13) |
 | 改动对照表 | change comparison table | |
 | 节点稿 | node draft | |
 | 源泉（作者比喻） | wellspring | author's liquidity metaphor; not 出处 = source |

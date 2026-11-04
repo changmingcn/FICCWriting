@@ -49,7 +49,7 @@ Checks (H2-H4 are hard only in the compatibility default):
      站在…一边 in prose lines (list rows included, inline code masked); one
      entry per hit.  框架, 让步 and 的分量 were removed on 2026-10-24
 Current review: FICCVoice.md V02/V10/V13/V25/V37-V40, FICCCompose.md C01
-(formerly V05) and references/clarity-acceptance.md.  H1 also follows FICCOutline.md 4.2;
+and references/clarity-acceptance.md.  H1 also follows FICCOutline.md 4.2;
 H5 follows references/format-and-maintenance.md 1 (user ruling 2026-10-12:
 quotes are “”, with ‘’ inside).  H6 follows FICCVoice.md V07 (user ruling
 2026-10-17: no semicolons in prose; tables and real lists excepted).

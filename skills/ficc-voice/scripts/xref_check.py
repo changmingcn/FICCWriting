@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-r"""xref_check.py (2026-10-17, wave 4) -- section references must resolve to numbered
-headings; V/S/O/C rule numbers must be defined and not retired.
+r"""xref_check.py (2026-10-17, wave 4; no retired numbers since 2026-11-04) -- section references
+must resolve to numbered headings; V/S/O/C rule numbers must be defined.
 
 Checks that every reference to a section of FICCOutline.md, FICCStructure.md,
 FICCVoice.md or FICCCompose.md (and to a numbered section of any other .md file in
@@ -23,6 +23,7 @@ Scanned: every *.md and *.py under <root>, except
   references/history.md               historical record: old numbering stays as it was
   references/dev-notes.md             historical development record, body not renumbered
   references/FICCVoice-provenance.md  provenance and migration history, not active rules
+  references/migration-2026-10-17.md  rule-number migration record: old numbers stay as they were
   scripts/xref_check.py               this script (its fixtures are deliberately broken)
   symlinks (ficc-voice.md -> FICCVoice.md is scanned once, under its real name)
   hidden directories.
@@ -65,24 +66,17 @@ Results per ref: the resolved heading, MISSING (no such section / no such headin
 examples-and-rewrites.md / legacy numbering), or STALE? (quoted title or quotation no
 longer matches).
 
-Rule numbers (added 2026-10-17): every V\d\d, S\d\d, O\d\d, C\d\d in a scanned file (not
-preceded by a letter, digit or "_", not followed by a digit) must be defined as "- **Vnn**"
-in FICCVoice.md, "- **Snn**" in FICCStructure.md, "- **Onn**" in FICCOutline.md, "- **Cnn**"
-in FICCCompose.md; otherwise MISSING-RULE.  Not checked for rule numbers: the files excluded
-above, everything under references/zh/, and references/migration-2026-10-17.md as a whole
-(its purpose is the old numbers).  A retired number written as a pointer to its new home,
-"Vnn (formerly Snn)", "Cnn (formerly Vnn)", "Cnn (formerly FICCVoice V05, V06)", "Vnn (Snn
-merged)" or "Cnn（原 FICCVoice Vnn、Vnn）", is not a ref; the number in front is checked as usual.
-
-Retired numbers (added 2026-10-17, wave 4): a V/S/O definition that is only a pointer line,
-"- **V05** → FICCCompose.md C01" with no indented body line under it, retires that number.
-Its target (C01) is checked as a ref like any other.  Any other ref to a retired number is
-RETIRED-RULE: cite the new number, or write "C01 (formerly V05)".  A pointer line that keeps an
-indented body ("- **V08** → FICCCompose.md C13" followed by "  - ...") is still a live rule.
-Rationale anchors are exempt (counted, not failed): refs inside references/*-rationale.md
-(those files stay keyed by the number a rule had when it was argued), and refs after a
-"-rationale.md" mention up to the end of that sentence ("See references/FICCVoice-rationale.md
-V06.").
+Rule numbers (added 2026-10-17; retired-number pointers dropped 2026-11-04): every V\d\d, S\d\d,
+O\d\d, C\d\d in a scanned file (not preceded by a letter, digit or "_", not followed by a digit)
+must have a definition line "- **Vnn** **<intent>**" in FICCVoice.md ("- **Snn** **...**" in
+FICCStructure.md, "- **Onn** **...**" in FICCOutline.md, "- **Cnn** **...**" in FICCCompose.md);
+otherwise MISSING-RULE.  Not checked for rule numbers: the files excluded above (the records,
+references/migration-2026-10-17.md among them, keep old numbers) and everything under
+references/zh/.  There are no retired numbers, pointer lines or exemptions (user ruling
+2026-11-04): a retired number is deleted with its line and live files cite current numbers only,
+so a number without a definition line is MISSING-RULE wherever it stands -- in a "(formerly ...)"
+note, in a *-rationale.md file, or on a leftover line "- **V05** → FICCCompose.md C01", which is
+not a definition line (its own number is reported there too).
 
 Excerpt (added 2026-10-17, wave 6): references/compose-excerpt.md must copy FICCCompose.md
 verbatim before its "## 3" heading.  Checked lines there (fenced code skipped; other lines are
@@ -113,11 +107,11 @@ EXCERPT-MISSING "required line ... (Compose Lnn)".  Every table row under C01 in
 is EXCERPT-MISMATCH only.  Section 2 must hold as many table rows as C01 has; a surplus left
 after the missing rows adds one EXCERPT-MISSING "table rows: ...".  All count as EXCERPT-MISSING.
 
-Exit codes: 0 clean; 1 any MISSING, STALE?, MISSING-RULE, RETIRED-RULE, EXCERPT-MISMATCH,
+Exit codes: 0 clean; 1 any MISSING, STALE?, MISSING-RULE, EXCERPT-MISMATCH,
 EXCERPT-MISSING or EXCERPT-MISSING-FILE; 2 usage error (root lacks FICCOutline.md,
 FICCStructure.md or FICCVoice.md).
 Last line of the text report:
-  refs N · MISSING m · STALE? s · rule refs R · MISSING-RULE r · RETIRED-RULE t
+  refs N · MISSING m · STALE? s · rule refs R · MISSING-RULE r
     · excerpt lines N · EXCERPT-MISMATCH m · EXCERPT-MISSING k · excerpt §3 C23 ids OK
   (one line; the last item reads OK, MISMATCH, MISSING or skipped as in "Section 3" above;
   " · EXCERPT-MISSING-FILE 1" replaces the section-3 item when the excerpt is missing; " · excerpt
@@ -156,6 +150,7 @@ EXCLUDE_FILES = {
     'references/history.md': 'historical record, old numbering kept',
     'references/dev-notes.md': 'historical development record',
     'references/FICCVoice-provenance.md': 'historical provenance and rule migration',
+    'references/migration-2026-10-17.md': 'rule-number migration record, old numbers kept',
     'scripts/xref_check.py': 'this script; fixtures are deliberately broken',
 }
 
@@ -191,16 +186,9 @@ B_SEE = re.compile(r'(?:(?<=见)|(?<=[Ss]ee ))(\d{1,2})(?=[。，；：）、)\s
 HEADNUM = re.compile(r'^#{2,4} (%s)(?:\s+(.*?))?\s*$' % NUMS)
 FENCE = re.compile(r'^\s{0,3}(```|~~~)')
 RULE_REF = re.compile(r'(?<![A-Za-z0-9_])([VSOC])(\d{2})(?![0-9])')
-RULE_DEF = re.compile(r'^\s*-\s+\*\*([VSOC]\d{2})\*\*')
+# definition line "- **V07** **<intent>**"; "- **V05** → ..." (a pointer) is not one (2026-11-04)
+RULE_DEF = re.compile(r'^\s*-\s+\*\*([VSOC]\d{2})\*\*\s+\*\*')
 RULE_FILE = {'V': 'FICCVoice.md', 'S': 'FICCStructure.md', 'O': 'FICCOutline.md', 'C': 'FICCCompose.md'}
-MIGRATION = 'references/migration-2026-10-17.md'   # old-to-new record: not scanned for rule numbers
-_OLDN = r'(?:FICC[A-Za-z]+(?:\.md)?\s?)?[VSO]\d{2}'
-RULE_OLD = re.compile(r'\(formerly %s(?:(?:, |、| and )%s)*\)|\([VSO]\d{2} merged\)|（原\s?%s(?:[、，,]\s?%s)*）'
-                      % (_OLDN, _OLDN, _OLDN, _OLDN))   # "V43 (formerly S40)", "V05 (S34 merged)", "C01（原 V05）"
-# retired number: "- **V05** → FICCCompose.md C01" with no indented body line under it
-RULE_PTR = re.compile(r'^\s*-\s+\*\*([VSO]\d{2})\*\*\s*→\s*(?:(FICC[A-Za-z]+)(?:\.md)?\s+)?([VSOC]\d{2})')
-RATIONALE = re.compile(r'-rationale\.md\b')        # "references/FICCVoice-rationale.md V06": an anchor there
-SENT_END = re.compile(r'。|\.(?=\s|$)')
 # compose-excerpt.md vs FICCCompose.md (wave 6)
 EXCERPT = 'references/compose-excerpt.md'
 EX_C = re.compile(r'^-\s+(C\d{2})\s+(.*?)\s*$')        # excerpt intent line "- C01 <sentence>"
@@ -224,9 +212,9 @@ C_ID = re.compile(r'(?<![A-Za-z0-9_])C\d{2}(?![0-9])')   # a C id as the rule-nu
 VOICE_EXCERPTS = {
     'references/voice-excerpt-patch.md': ('V04', 'V07', 'V10', 'V11', 'V12', 'V13', 'V14', 'V20', 'V24', 'V26', 'V27',
                                           'V28', 'V38', 'V57'),
-    'references/voice-excerpt-polish.md': ('V01', 'V02', 'V03', 'V04', 'V07', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15',
-                                           'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25', 'V26',
-                                           'V27', 'V28', 'V29', 'V31', 'V32', 'V33', 'V34', 'V35', 'V36', 'V37',
+    'references/voice-excerpt-polish.md': ('V01', 'V02', 'V03', 'V04', 'V07', 'V08', 'V10', 'V11', 'V12', 'V13', 'V14',
+                                           'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25',
+                                           'V26', 'V27', 'V28', 'V29', 'V31', 'V32', 'V33', 'V34', 'V35', 'V36', 'V37',
                                            'V38', 'V39', 'V40', 'V52', 'V53', 'V54', 'V57'),
     'references/voice-excerpt-draft.md': ('V01', 'V02', 'V03', 'V04', 'V26', 'V27', 'V28', 'V38'),
     'references/voice-excerpt-coldread.md': ('V22', 'V23', 'V32', 'V36', 'V37', 'V38', 'V39', 'V40', 'V57'),
@@ -683,50 +671,29 @@ def check(root):
     exb = exblocks(os.path.join(root, EXAMPLES))
     refs, per = [], []
     bare = {}
-    # rule numbers: "- **Vnn**" in FICCVoice.md, "- **Snn**" in FICCStructure.md, "- **Onn**" in FICCOutline.md,
-    # "- **Cnn**" in FICCCompose.md; a V/S/O definition that is only a pointer line retires its number
-    defined, retired = {}, {}
+    # rule numbers: a definition line "- **Vnn** **...**" in FICCVoice.md, "- **Snn** **...**" in FICCStructure.md,
+    # "- **Onn** **...**" in FICCOutline.md, "- **Cnn** **...**" in FICCCompose.md; no retired numbers (2026-11-04)
+    defined = {}
     for letter, fname in RULE_FILE.items():
         fp = os.path.join(root, fname)
         lines = read(fp).split('\n') if os.path.isfile(fp) else []
         defined[letter] = {m.group(1) for m in (RULE_DEF.match(l) for l in lines) if m and m.group(1)[0] == letter}
-        for i, l in enumerate(lines):
-            m = RULE_PTR.match(l)
-            if m and m.group(1)[0] == letter and not re.match(r'^\s+\S', lines[i + 1] if i + 1 < len(lines) else ''):
-                new = m.group(3)
-                retired[m.group(1)] = {'to': '%s %s' % (RULE_FILE[new[0]], new), 'new': new,
-                                       'at': '%s L%d' % (fname, i + 1)}
     rules = []
 
     def scan_rules(rel, text):
-        if rel.startswith(ZH) or rel == MIGRATION:
+        if rel.startswith(ZH):
             return
-        whole_anchor = bool(re.search(r'(?:^|/)[^/]*-rationale\.md$', rel))
         for i, l in enumerate(text.split('\n'), 1):
-            old = [(m.start(), m.end()) for m in RULE_OLD.finditer(l)]
-            anchor = []
-            for m in RATIONALE.finditer(l):
-                e = SENT_END.search(l, m.end())
-                anchor.append((m.end(), e.start() if e else len(l)))
             d = RULE_DEF.match(l)
             own_def = d.start(1) if d and RULE_FILE[d.group(1)[0]] == rel else -1  # the definition itself is not a ref
             for m in RULE_REF.finditer(l):
-                if m.start() == own_def or any(a <= m.start() < b for a, b in old):
+                if m.start() == own_def:
                     continue
                 rid = m.group(0)
                 r = {'file': rel, 'line': i, 'ref': rid, 'result': 'OK', 'note': ''}
                 if rid not in defined[m.group(1)]:
                     r['result'] = 'MISSING-RULE'
-                    r['note'] = 'no "- **%s**" in %s' % (rid, RULE_FILE[m.group(1)])
-                elif rid in retired:
-                    t = retired[rid]
-                    if whole_anchor or any(a <= m.start() < b for a, b in anchor):
-                        r['note'] = 'retired -> %s; rationale anchor' % t['to']
-                        r['anchor'] = True
-                    else:
-                        r['result'] = 'RETIRED-RULE'
-                        r['note'] = '%s is a pointer to %s (%s); cite %s, or write "%s (formerly %s)"' % (
-                            rid, t['to'], t['at'], t['new'], t['new'], rid)
+                    r['note'] = 'no "- **%s** **...**" in %s' % (rid, RULE_FILE[m.group(1)])
                 rules.append(r)
 
     def resolve(rel, i, kind, tgt, num, raw, quote, local):
@@ -856,7 +823,6 @@ def check(root):
     miss = sum(r['result'] == 'MISSING' for r in refs)
     stale = sum(r['result'] == 'STALE?' for r in refs)
     miss_rule = sum(r['result'] == 'MISSING-RULE' for r in rules)
-    ret_rule = sum(r['result'] == 'RETIRED-RULE' for r in rules)
     vex = check_voice_excerpts(root)
     exc = check_excerpt(root)
     ex_mis = sum(1 for x in exc['items'] if x['result'] != 'OK') if exc else 0
@@ -865,18 +831,16 @@ def check(root):
     return {'root': root, 'refs': refs, 'per_file': per, 'excluded': ex_list,
             'bare': bare, 'rules': rules,
             'rules_defined': {k: len(v) for k, v in defined.items()},
-            'rules_retired': {k: v['to'] for k, v in sorted(retired.items())},
             'excerpt': exc, 'voice_excerpts': vex,
             'counts': {'refs': n, 'missing': miss, 'stale': stale, 'bare': sum(bare.values()),
-                       'rule_refs': len(rules), 'missing_rule': miss_rule, 'retired_rule': ret_rule,
-                       'retired_anchor': sum(1 for r in rules if r.get('anchor')),
+                       'rule_refs': len(rules), 'missing_rule': miss_rule,
                        'excerpt_lines': exc['lines'] if exc else 0, 'excerpt_mismatch': ex_mis,
                        'excerpt_missing': ex_miss, 'excerpt_missing_file': ex_file,
                        'excerpt_skipped': exc is None,
                        'voice_mismatch': sum(len(v['mismatch']) for v in vex),
                        'voice_missing': sum(len(v['missing']) for v in vex),
                        'voice_missing_file': sum(1 for v in vex if v['missing_file'])},
-            'exit_code': 1 if (miss or stale or miss_rule or ret_rule or ex_mis or ex_miss or ex_file
+            'exit_code': 1 if (miss or stale or miss_rule or ex_mis or ex_miss or ex_file
                                or any(v['mismatch'] or v['missing'] or v['missing_file'] for v in vex)) else 0}
 
 
@@ -909,10 +873,8 @@ def render(res, quiet=False):
     c = res['counts']
     bad = [r for r in res['rules'] if r['result'] != 'OK']
     d = res['rules_defined']
-    out.append('rule numbers: %d refs to V/S/O/C (defined V %d, S %d, O %d, C %d; retired to pointers %d); '
-               'MISSING-RULE %d; RETIRED-RULE %d (rationale anchors to retired numbers, not failed: %d)' % (
-                   c['rule_refs'], d.get('V', 0), d.get('S', 0), d.get('O', 0), d.get('C', 0),
-                   len(res['rules_retired']), c['missing_rule'], c['retired_rule'], c['retired_anchor']))
+    out.append('rule numbers: %d refs to V/S/O/C (defined V %d, S %d, O %d, C %d); MISSING-RULE %d' % (
+        c['rule_refs'], d.get('V', 0), d.get('S', 0), d.get('O', 0), d.get('C', 0), c['missing_rule']))
     for r in bad:
         out.append('  %s L%d %s -> %s  (%s)' % (r['file'], r['line'], r['ref'], r['result'], r['note']))
     exc = res.get('excerpt')
@@ -971,8 +933,8 @@ def render(res, quiet=False):
             out.append('  L%d -> EXCERPT-MISMATCH  %s' % (no, snip(text)))
         for vn in v['missing']:
             out.append('  %s -> EXCERPT-MISSING  (no "- %s" intent line in section 1)' % (vn, vn))
-    out.append('refs %d · MISSING %d · STALE? %d · rule refs %d · MISSING-RULE %d · RETIRED-RULE %d%s' % (
-        c['refs'], c['missing'], c['stale'], c['rule_refs'], c['missing_rule'], c['retired_rule'], tail))
+    out.append('refs %d · MISSING %d · STALE? %d · rule refs %d · MISSING-RULE %d%s' % (
+        c['refs'], c['missing'], c['stale'], c['rule_refs'], c['missing_rule'], tail))
     return '\n'.join(out)
 
 
@@ -994,12 +956,11 @@ FIXTURE = {
     'FICCVoice.md': '# FICCVoice\n\n## 1 Who speaks\n\nBody.\n\n## 2 How to state a judgment\n\nBody, 我们认为.\n'
                     '\n- **V02** **State the judgment.**\n'
                     '- **V05** → FICCCompose.md C01\n'
-                    '- **V06** → FICCCompose.md C98\n'
-                    '- **V08** → FICCCompose.md C01\n'
+                    '- **V08** **Mark the add-on relation.**\n'
                     '  - The marker word stays here.\n',
     'FICCCompose.md': '# FICCCompose\n\n## 1 Paragraph openings\n\nSee 1.1 and C01.\n\n### 1.1 Opening\n\n'
-                      '- **C01** **Conclusion first.** See references/FICCVoice-rationale.md Introduction and V05. Not V05.\n',
-    'references/FICCVoice-rationale.md': '# rationale\n\n## V05\n\nSupports: V05 at every layer.\n',
+                      '- **C01** **Conclusion first.** See references/FICCVoice-rationale.md C01 and V05.\n',
+    'references/FICCVoice-rationale.md': '# rationale\n\n## C01\n\nSupports: C01 at every layer. Old V05 is checked here too.\n',
     'SKILL.md': '# skill\n\n'
                 'GOOD: FICCOutline.md 1.2.\n\n'
                 'GOOD2: FICCOutline 1.1; FICCVoice1; FICCVoice 2 V02.\n\n'
@@ -1010,13 +971,12 @@ FIXTURE = {
                 'DEV: references/dev-notes.md section 2; dev-notes.md第1节; results/J-trees.md第3节.\n\n'
                 'LEGACY: FICCOutline.md四（二）; FICCOutline三份 is a measure word.\n\n'
                 'RULES: O01 and S01 resolve; V99 is a deliberately broken rule number; O02 is defined nowhere.\n\n'
-                'RETIRED: V02 (formerly S38); V02 (S34 merged); bare S38 is still a broken ref.\n\n'
-                'COMPOSE: FICCCompose.md 1.1 and FICCCompose 9; C01 resolves; C99 is a broken C number; V05 is retired; '
-                'C01 (formerly V05), C01 (formerly FICCVoice V05, V06) and C01（原 FICCVoice V05、V06） are pointers; '
-                'V08 keeps a body.\n\n'
+                'OLD: V02 (formerly S38); V02 (S34 merged); a history note is checked like any other text.\n\n'
+                'COMPOSE: FICCCompose.md 1.1 and FICCCompose 9; C01 resolves; C99 is a broken C number; '
+                'V05 has only a leftover pointer line; C01（原 V05） is checked too; V08 is defined.\n\n'
                 'RANGE: FICCOutline.md 1.1–1.2, and 2.1; FICCOutline 1–3份 is a quantity.\n',
     'references/migration-2026-10-17.md': '# Migration\n\n| Old | New |\n|---|---|\n| V77 | V02 |\n\n'
-                                          'Prose line: V88 is checked.\n',
+                                          'Prose line: V88 and FICCVoice.md 9.9 are not checked.\n',
     'references/zh/FICCOutline.md': '# FICCOutline\n\n## 1 提纲是一棵树\n\n见1.2；“1.2 位置”。\n\n### 1.1 节点\n\n'
                                     '### 1.2 位置\n\n## 2 根主旨\n\n### 2.1 界定问题\n\n旧条号 V66 不查。\n',
     'references/examples-and-rewrites.md': '## FICCOutline 1.1\n\n例。\n\n## FICCVoice 2 How to state a judgment\n\n'
@@ -1127,31 +1087,34 @@ def selftest():
              not any(r['ref'] in ('V12', 'V05') for r in rr if r['file'] == 'FICCStructure.md')
              and rule('FICCStructure.md', 'V02') == ['OK']
              and rule('FICCStructure.md', 'S01') == ['OK']),
-            ('migration file not scanned for rule numbers (table V77, prose V88)',
-             not any(r['file'] == 'references/migration-2026-10-17.md' for r in rr)),
-            ('"(formerly S38)" and "(S34 merged)" are not refs; bare S38 is MISSING-RULE; V02 in front is checked',
-             rule('SKILL.md', 'S34') == [] and rule('SKILL.md', 'S38') == ['MISSING-RULE']
+            ('migration record excluded: no section refs (FICCVoice.md 9.9), no rule refs (V77, V88); raw matches listed',
+             not any(r['file'] == 'references/migration-2026-10-17.md' for r in rr)
+             and not any(r['file'] == 'references/migration-2026-10-17.md' for r in res['refs'])
+             and any(x['file'] == 'references/migration-2026-10-17.md' and x['raw_matches'] == 1
+                     for x in res['excluded'])),
+            ('"(formerly S38)" and "(S34 merged)" are not exempt: S38, S34 -> MISSING-RULE; V02 in front -> OK',
+             rule('SKILL.md', 'S34') == ['MISSING-RULE'] and rule('SKILL.md', 'S38') == ['MISSING-RULE']
              and [r['result'] for r in rr if r['file'] == 'SKILL.md' and r['line'] == 21 and r['ref'] == 'V02']
              == ['OK', 'OK']),
             ('references/zh/ and dev-notes.md not scanned for rule numbers (V66, S55)',
              not any(r['ref'] in ('V66', 'S55') for r in rr)),
             ('C01 defined in FICCCompose.md -> OK; C99 -> MISSING-RULE',
              [r['result'] for r in rr if r['file'] == 'SKILL.md' and r['line'] == 23 and r['ref'] == 'C01']
-             == ['OK'] * 4 and rule('SKILL.md', 'C99') == ['MISSING-RULE']),
-            ('pointer line target is checked: V06 -> C98 undefined -> MISSING-RULE; V05 -> C01 -> OK',
-             rule('FICCVoice.md', 'C98') == ['MISSING-RULE'] and rule('FICCVoice.md', 'C01') == ['OK', 'OK']),
-            ('pointer-only V05 is retired: bare V05 -> RETIRED-RULE; V05 in "(formerly ...)" / "（原 ...）" not refs',
-             rule('SKILL.md', 'V05') == ['RETIRED-RULE'] and rule('SKILL.md', 'V06') == []),
-            ('pointer line with an indented body (V08) is still live -> OK', rule('SKILL.md', 'V08') == ['OK']),
-            ('rationale anchors: V05 after "-rationale.md" in the same sentence, and inside *-rationale.md, '
-             'are not failed; V05 in the next sentence is',
-             rule('FICCCompose.md', 'V05') == ['OK', 'RETIRED-RULE']
-             and rule('references/FICCVoice-rationale.md', 'V05') == ['OK', 'OK']),
-            ('counts 5 MISSING-RULE (V99, O02, bare S38, C99, C98), 2 RETIRED-RULE, 3 rationale anchors',
-             (res['counts']['missing_rule'], res['counts']['retired_rule'], res['counts']['retired_anchor'])
-             == (5, 2, 3)),
-            ('retired map: V05 and V06 (pointer-only, even with a broken target); V08 (has a body) is not',
-             sorted(res['rules_retired']) == ['V05', 'V06']),
+             == ['OK'] * 2 and rule('SKILL.md', 'C99') == ['MISSING-RULE']),
+            ('a leftover pointer line "- **V05** → FICCCompose.md C01" is not a definition: V05 -> MISSING-RULE '
+             'on it and where cited, "（原 V05）" included; its C01 -> OK',
+             rule('FICCVoice.md', 'V05') == ['MISSING-RULE'] and rule('FICCVoice.md', 'C01') == ['OK']
+             and rule('SKILL.md', 'V05') == ['MISSING-RULE'] * 2),
+            ('definition lines only: V02 and V08 defined (V08 with an indented body -> OK), the pointer line is not',
+             res['rules_defined']['V'] == 2 and rule('SKILL.md', 'V08') == ['OK']),
+            ('no rationale exemption: V05 after "-rationale.md" and inside *-rationale.md -> MISSING-RULE; '
+             'C01 there -> OK',
+             rule('FICCCompose.md', 'V05') == ['MISSING-RULE']
+             and rule('references/FICCVoice-rationale.md', 'V05') == ['MISSING-RULE']
+             and rule('references/FICCVoice-rationale.md', 'C01') == ['OK', 'OK']),
+            ('counts 10 MISSING-RULE (V99, O02, S38, S34, C99, V05 x5); no retired-number fields in the result',
+             res['counts']['missing_rule'] == 10 and 'rules_retired' not in res
+             and not any(k.startswith('retired') for k in res['counts'])),
             ('FICCCompose.md without references/compose-excerpt.md -> one EXCERPT-MISSING-FILE',
              res['excerpt']['missing_file'] and res['counts']['excerpt_missing_file'] == 1
              and render(res).split('\n')[-1].endswith('EXCERPT-MISSING-FILE 1')),
@@ -1283,7 +1246,7 @@ def selftest_excerpt_s3(root=SKILL_DIR):
     k = added[last].rfind(')')
     added[last] = (added[last][:k] + ', %s' % add + added[last][k:]) if k >= 0 else added[last] + ' (%s)' % add
     removed = [l for i, l in enumerate(rows, 1) if i not in s3['lines']]
-    keep = ('missing', 'stale', 'missing_rule', 'retired_rule', 'excerpt_missing_file')
+    keep = ('missing', 'stale', 'missing_rule', 'excerpt_missing_file')
     lc = live['counts']
     cases = [
         ('one id (%s) dropped from the "- %s" lines -> EXCERPT-MISMATCH ids, exit 1' % (drop, EX_S3_RULE),
@@ -1335,15 +1298,17 @@ def main(argv=None):
         prog='xref_check.py', formatter_class=argparse.RawDescriptionHelpFormatter,
         description='Section references (F 4.2, F.md 4.2, file.md section 35, 第35节, “4.2 title”) '
                     'must resolve to numbered headings; quoted titles must match; V/S/O/C rule numbers must be '
-                    'defined as "- **Vnn**" etc. in the main files (C in FICCCompose.md) and must not be retired '
-                    '(a pointer-only definition "- **V05** → FICCCompose.md C01"); references/compose-excerpt.md '
+                    'defined by a line "- **Vnn** **...**" etc. in the main files (C in FICCCompose.md); a number '
+                    'without one is MISSING-RULE wherever it stands (no retired numbers or pointer lines since '
+                    '2026-11-04); references/compose-excerpt.md '
                     'must copy FICCCompose.md verbatim before its "## 3", hold an intent line per C number, the key '
                     'lines in EXCERPT_REQUIRED and every C01 table row; its "- C23" lines after "## 3" must cite '
                     'exactly the C numbers of FICCCompose.md C23. '
-                    'Exit 1 on any MISSING, STALE?, MISSING-RULE, RETIRED-RULE, EXCERPT-MISMATCH, EXCERPT-MISSING '
+                    'Exit 1 on any MISSING, STALE?, MISSING-RULE, EXCERPT-MISMATCH, EXCERPT-MISSING '
                     'or EXCERPT-MISSING-FILE.',
-        epilog='Not scanned (still valid targets): references/history.md, references/dev-notes.md and '
-               'references/FICCVoice-provenance.md (historical records and provenance; '
+        epilog='Not scanned (still valid targets): references/history.md, references/dev-notes.md, '
+               'references/FICCVoice-provenance.md and references/migration-2026-10-17.md (historical records, '
+               'provenance and the rule-number map; '
                'old section numbers stay as written); references/corpus/ '
                '(author texts, not rules); this script (its selftest fixtures are deliberately broken); '
                'symlinks (ficc-voice.md -> FICCVoice.md). Run after any change to a heading or section '
@@ -1353,8 +1318,8 @@ def main(argv=None):
     ap.add_argument('-q', '--quiet', action='store_true', help='list only MISSING / STALE? refs')
     ap.add_argument('--selftest', action='store_true',
                     help='temp fixture: good refs, one broken link, one legacy ref, one stale title, '
-                         'bad rule numbers (V99, O02, a bare retired S38, C99, a pointer to C98), retired-number '
-                         'pointers, a retired V05 cited bare, rationale anchors, FICCCompose.md sections; '
+                         'bad rule numbers (V99, O02, C99; S38 and S34 in history notes; V05 on a leftover pointer '
+                         'line, cited and in a *-rationale.md file), FICCCompose.md sections; '
                          'seven excerpt cases (verbatim OK, changed word, dropped C number, extra table cell, dropped '
                          'key sub-line, dropped C01 table row, key lines and table complete) '
                          'and a missing excerpt file')

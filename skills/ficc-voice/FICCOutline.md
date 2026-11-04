@@ -193,7 +193,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
   - Step 1: write the outline header and the one-sentence root claim, and choose the overall structure (see 2).
   - Step 2: list the trunk sub-points, and write each one's four things (O18). For the check, see O27.
   - Step 3: decide where satellites and non-trunk nodes hang (see O53). For how counter-views change the judgment, see 6.
-  - Step 4: set the root claim's position: it sits at the start of the lead (see O77).
+  - Step 4: set the root claim's position: it sits at the start of the lead (see FICCCompose.md C03).
   - Step 5: repeat Steps 2 and 3 for each trunk sub-point, down to paragraph groups or to the layer that is enough (O24).
   - Step 6: allocate length by weight (see O44).
   - Step 7: write headings (see O79, O81).
@@ -361,7 +361,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
 - **O48** **Look at it together with the material on the same branch. State what it adds beyond the existing material.**
   - If it only repeats the role of existing material, delete it, merge it, or replace it with the more expressive one.
   - If it offers a new angle or takes a step further, write what it adds and which block it follows.
-  - For complement, contrast, or progression, and for writing suggestions, see FICCStructure.md 9.
+  - For complement, contrast, or progression, and for writing suggestions, see FICCStructure.md 6.
 - **O49** **After placing it, look back at the level above.**
   - Check whether the judgments, transitions, and conclusions above, and the echoes elsewhere, need to change with it.
   - For changing the tree itself, see O62.
@@ -432,7 +432,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
   - Do not add appendices automatically.
   - For facts the placement record keeps, later compress only wording and detail.
   - When a fact really must be deleted, re-examine the placement decision within the selection scope the task allows, update the placement record, and apply the changes.
-  - Where this changes relations, list them for T0 to forward to the relation agent, who updates the relation sheet (see FICCStructure.md 9).
+  - Where this changes relations, list them for T0 to forward to the relation agent, who updates the relation sheet (see FICCStructure.md 6).
   - See references/FICCOutline-rationale.md 5.5.
 
 ## 6 Maintaining the outline: how counter-views and new material change the tree
@@ -557,14 +557,13 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
 ## 8 Onto the page: the lead and headings
 
 - **O76** **The outline's root becomes the lead. Its second layer becomes headings and section opening sentences.**
-  - Lead: see O77.
+  - Lead: see FICCCompose.md C03 (the lead and its three arrangements).
+    - In all three, the heading states a judgment.
   - How to write headings: see O79.
   - For the length cap, see O82.
 
 ### 8.1 The lead
 
-- **O77** → FICCCompose.md C03 (the lead and its three arrangements)
-  - In all three, the heading states a judgment.
 - **O78** **In a list month made of several adjacent stories, make the claim in the lead their common question.**
   - The overall title may be a common question, an observation method, or the reason for choosing these stories.
   - Each story then sets up its own main line.
@@ -616,7 +615,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
   - Then check the eight most common faults one by one (see O88).
   - Also check that each piece of material's attachment and hanging carry out the placement decision (see 5.3).
   - Check only whether each layer's opening reads as a conclusion with content. Do not check whether the nodes are all present.
-  - Openings at each layer of the finished draft: FICCCompose.md C23. Marked relations: the relation agent checks per FICCStructure.md 10.
+  - Openings at each layer of the finished draft: FICCCompose.md C23. Marked relations: the relation agent checks per FICCStructure.md 7.
 
 ### 9.1 Center and openings
 
@@ -662,7 +661,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
 
 - **O89** **Write the outline before writing the body text. For how to write it, see 4.2.**
   - In new writing or an authorized reorganization, the outline must also pass the parent–child and subtree tests below before you write.
-  - The grouping test belongs to the relation agent (see FICCStructure.md 10.3).
+  - The grouping test belongs to the relation agent (see FICCStructure.md 7.3).
   - Check:
     - Parent–child test: write the parent node's claim, and list the child nodes' claims beneath it. Check the summary for excess, shortfall, and strength (see O42).
     - Subtree test: take one part and two sections, and read each alone. See whether each is a complete small article (see O05).
