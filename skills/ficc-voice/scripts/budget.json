@@ -3,7 +3,7 @@
   "measure": "len(text) of the UTF-8 file",
   "root": "~/.claude",
   "files": {
-    "skills/ficc-voice/FICCVoice.md": 39361,
+    "skills/ficc-voice/FICCVoice.md": 39413,
     "skills/ficc-voice/FICCCompose.md": 31377,
     "skills/ficc-voice/FICCOutline.md": 52473,
     "skills/ficc-voice/FICCStructure.md": 42292,
@@ -14,7 +14,7 @@
     "agents/ficc-composer.md": 2488,
     "agents/ficc-writer.md": 2599,
     "skills/ficc-voice/references/voice-excerpt-patch.md": 11795,
-    "skills/ficc-voice/references/voice-excerpt-polish.md": 18327,
+    "skills/ficc-voice/references/voice-excerpt-polish.md": 18372,
     "skills/ficc-voice/references/voice-excerpt-draft.md": 7308,
     "skills/ficc-voice/references/voice-excerpt-coldread.md": 10773
   },
@@ -143,7 +143,7 @@
       "changes": {
         "skills/ficc-voice/FICCVoice.md": [
           42635,
-          39361
+          39413
         ],
         "skills/ficc-voice/references/voice-excerpt-patch.md": [
           11895,
@@ -151,7 +151,7 @@
         ],
         "skills/ficc-voice/references/voice-excerpt-polish.md": [
           18691,
-          18327
+          18372
         ],
         "skills/ficc-voice/references/voice-excerpt-coldread.md": [
           11069,

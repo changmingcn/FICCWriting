@@ -59,7 +59,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - Check: read only the first few characters of each paragraph-opening sentence and node opening sentence. They show its relation to the level above and to the sibling it follows.
   - Check: after writing a paragraph, run each seam through the seven checks below. Where a seam fails, fix the wording if wording can fix it. Do not pad with added words.
     1. Preview and payoff: FICCCompose.md C20.
-    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent’s check, FICCStructure.md S90; the word is the writer’s).
+    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent's check, FICCStructure.md S90; the word is the writer's).
     3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” (so) must be a cause, what follows “而且” (moreover) must go one layer further, and the two sides of “但是” (but) sit on the same dimension. Where inference belongs, “既然、可见” (since, evidently) is present. A “因为” (because) or “所以” that only restates or splits the first half: FICCStructure.md S28.
     4. Latter-clause markers not omitted, and the relation of each paragraph opening and node opening sentence shown: this rule.
     5. The antecedent of paragraph-opening and sentence-opening connectives: V53.
@@ -110,7 +110,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - Do not strip the source from one institution's judgment and turn it into the article's judgment. Keep the source text and our inferences apart.
 - V29 Decide first whether it is a note, then where to put the parenthetical.
   - Check: mark the notes when checking.
-  - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, if dropping it widens the main judgment’s scope, or if “样本内” (within the sample) would read as “全部” (all) or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
+  - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, or dropping it widens the main judgment's scope, move it into the body text as an argument step; if “样本内” (within the sample) would read as “全部” (all) or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
 - V31 Make figure, figure note, and body text match.
 - V32 Explain the one point the reader lacks. Do not let a term stand in for a mechanism.
   - For the V34 reader, you need not re-explain basic financial knowledge item by item.

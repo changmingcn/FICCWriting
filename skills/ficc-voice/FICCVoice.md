@@ -167,9 +167,9 @@ Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md)
     - The relation is to the level above and to the sibling it follows. By default, the sibling it follows is the previous one. When it follows an earlier one, name that one with a back-reference.
     - There are two ways to show it (the user's two edits of 2026-10-14: references/examples-and-rewrites.md, Revision example 4):
       - Put a connective that states the relation at the start of the sentence, with the named judgment as the subject.
+        - Or state the answer once first, then open the next sentence with “但是” (but) to state the limit.
       - Start the sentence with a back-reference that names which judgment or which thing it follows (wording: 4.3).
     - Choose the word by relation from references/connectives.md 1: turn “但是、不过” (but, however); cause and effect “所以、因此” (so, therefore); conditions and limits “只是” (only) or “但……只有” (but… only when); concession “虽然” (although); progression “而且、更” (moreover, even more).
-      - Or state the answer once first, then open the next sentence with “但是” (but) to state the limit.
     - The relation to the level below is carried by preview and payoff (FICCCompose.md C20), not marked at the sentence start.
     - How to write the subject: see 4.4.
   - At an opening, these four relations must not go unmarked: turn, cause and effect, conditions and limits, and concession.
@@ -181,7 +181,7 @@ Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md)
   - Check: read only the first few characters of each paragraph-opening sentence and node opening sentence. They show its relation to the level above and to the sibling it follows.
   - Check: after writing a paragraph, run each seam through the seven checks below. Where a seam fails, fix the wording if wording can fix it. Do not pad with added words.
     1. Preview and payoff: FICCCompose.md C20.
-    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent’s check, FICCStructure.md S90; the word is the writer’s).
+    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent's check, FICCStructure.md S90; the word is the writer's).
     3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” (so) must be a cause, what follows “而且” (moreover) must go one layer further, and the two sides of “但是” (but) sit on the same dimension. Where inference belongs, “既然、可见” (since, evidently) is present. A “因为” (because) or “所以” that only restates or splits the first half: FICCStructure.md S28.
     4. Latter-clause markers not omitted, and the relation of each paragraph opening and node opening sentence shown: this rule.
     5. The antecedent of paragraph-opening and sentence-opening connectives: V53.
@@ -285,10 +285,10 @@ Paragraph organization: FICCCompose.md (map: references/migration-2026-10-17.md)
   - Place aliases, English names, and “下称” (hereafter) after the word.
   - Write measurement basis, sample, and period first as an attributive or adverbial of the number. Use a parenthetical only if they do not fit.
   - Handle sources per V27. Put a figure's measurement basis in the figure note, without parentheses.
-  - A note is an argument step when its definition is this paragraph’s core, the next sentence must build on it, its measurement basis decides the conclusion, or this paragraph must explain why it holds: unfold it per the relation sheet, and do not hide such premises, counter-evidence, or new points in parentheses.
+  - A note is an argument step when its definition is this paragraph's core, the next sentence must build on it, its measurement basis decides the conclusion, or this paragraph must explain why it holds: unfold it per the relation sheet, and do not hide important premises, counter-evidence, or new points in parentheses.
   - Merging a pure note back where it serves counts as a wording change. Keep facts, qualifiers, and degree words as they are.
   - Check: mark the notes when checking.
-  - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, if dropping it widens the main judgment’s scope, or if “样本内” (within the sample) would read as “全部” (all) or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
+  - Check: assume the reader knows the word, drop the explanation, and read on. If the later text still needs a fact or condition from it, or dropping it widens the main judgment's scope, move it into the body text as an argument step; if “样本内” (within the sample) would read as “全部” (all) or “可能” (possibly) as “确定” (certain), move the limit back into the judgment.
 - **V30** → V29
 - **V31** **Make figure, figure note, and body text match.**
   - Prefer a figure title that states a finding the data support. Distribution or measurement-basis figures may have descriptive titles.
