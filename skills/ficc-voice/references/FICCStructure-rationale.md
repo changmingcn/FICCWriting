@@ -94,7 +94,7 @@ This file holds the rationale, examples, transition sentences, and history moved
 ## 6
 
 - Original (ledger L301): With cross-branch relations also judged, the next step is to place them in positions in the body text, starting with openings, carry-overs, between layers, and closes at section level and above.
-  Supports: C01 “At every layer, the conclusion comes at the opening. Keep this at each layer.” The transition from section 5 to section 6: after cross-branch relations are judged, place them first in the openings, carry-overs, between layers, and closes at section level and above.
+  Supports: C01 “At every layer, the conclusion comes at the opening.” The transition from section 5 to section 6: after cross-branch relations are judged, place them first in the openings, carry-overs, between layers, and closes at section level and above.
 
 ## 6.1
 
@@ -109,7 +109,7 @@ This file holds the rationale, examples, transition sentences, and history moved
 
 - Origin (ledger L362): the original sentence carried “（依用户2026-10-10的格式裁定）” (per the user's 2026-10-10 format ruling). Per the contract, the terse version drops the marker; the rule stays in C13.
 - Original (ledger L372): When a block sits inside the main line but is not a link of it, what follows has to be reconnected;
-  Supports: C15 “A signpost sentence points only to the block right after it. Move a stray block out per the hanging rules.” The reason a stray block is moved out: it sits inside the main line without being a link of it, so what follows has to be reconnected.
+  Supports: C15 “A signpost sentence points only to the block right after it. A stray block is reported per FICCVoice.md V04 for re-hanging; do not move it yourself.” The reason a stray block is reported for re-hanging, not moved by the writer: it sits inside the main line without being a link of it, so what follows has to be reconnected.
 - Original (ledger L375): Without all four, the reader must guess every relation.
   Supports: C14 “Allocate markers between layers by scale. Above section level, let four devices together make the relations readable.” The reason for combining the four devices: without all four, the reader must guess every relation.
 - (C14) The most common group relations above section level are four: induction, sequence, deduction, and contrast.
@@ -119,7 +119,7 @@ This file holds the rationale, examples, transition sentences, and history moved
 - Original (ledger L377a): Openings and seams govern how a block comes in; the close governs how it goes out:
   Supports: C17 “The close gathers the child nodes back into this block's claim and moves one step forward.” The division of labor of the close: openings and seams govern how a block comes in, and the close governs how it goes out.
 - Original (ledger L385): The opening foreshadows the middle, and the ending recalls the earlier claim; only then are beginning and end one body.
-  Supports: C17 “A close moves one step forward. Do not restate the claim in other words.” The rationale for beginning and end as one body: the opening foreshadows the middle, and the ending recalls the earlier claim.
+  Supports: C17 “The close gathers the child nodes back into this block's claim and moves one step forward” and C17 “Do not restate the claim in other words.” The rationale for beginning and end as one body: the opening foreshadows the middle, and the ending recalls the earlier claim.
 - Origin (ledger L396): the original sentence carried “（依用户2026-10-10“总结收尾”的格式）” (per the user's 2026-10-10 “summary close” format). Per the contract, the terse version drops the marker; the rule stays in C17.
 - Original (ledger L400b): Writing it for every block turns it into end-of-paragraph uplift.
   Supports: C19 “Do not write every layer as ‘总起—分述—总之’ (overall opening–itemized account–in sum).” The reason “这意味着什么” (what this means) is not written for every block: writing it for every block turns it into end-of-paragraph uplift.
@@ -138,16 +138,16 @@ This file holds the rationale, examples, transition sentences, and history moved
 
 - Origin (ledger L416): the original sentence carried “（用户2026-10-10）” (user, 2026-10-10). Per the contract, the terse version drops the marker; the rule stays in C01.
 - Original (ledger L417a): The same day, item (五) added a requirement on information content:
-  Supports: C01 “The first sentence summarizes the whole paragraph's view: reading only it, the reader should know what the paragraph asserts, and ideally on what main grounds.” The origin of the first sentence “stating the view itself”: the user's 10-10 item (五) added the requirement on information content.
+  Supports: C01 “The first sentence not only governs what follows but also states the view itself” and C01 “The second sentence then carries the main reasons.” The origin of the first sentence “stating the view itself”: the user's 10-10 item (五) added the requirement on information content.
 - Origin (ledger L418a): the original sentence carried “（用户2026-10-14）” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in C01.
 - Original (ledger L418c): The user's example is “所谓财政重新定价的观点有很大争议” (the so-called fiscal repricing view is highly contested).
   Supports: C01 “A paragraph opening must be the paragraph's claim or its topic.” The user's example of a topic sentence, showing that “the topic states the subject's current state”.
 - Original (ledger L419): The following items are defaults T0 derived on 2026-10-14 from the user's example and the 10-10 ruling; they are not the user's original words.
   Supports: C01 “A paragraph opening must be the paragraph's claim or its topic.” Origin: the items in C01 on topic, material sentences, and disagreement paragraphs are defaults T0 set on 10-14 from the user's example and the 10-10 ruling.
 - Original (ledger L433b): (User 2026-10-14: “读者的眼光会第一眼落到主语上” (the reader's eye lands first on the subject), and the sentence must “体现出与上级、同级和下级节点极其明确的关系，否则很容易读偏” (show an extremely clear relation to the nodes above, beside, and below, or it is easily misread).)
-  Supports: V22 “In a paragraph-opening sentence or a node's opening sentence, show at the very start its relation to the level above and to the sibling it follows.” The grounds for showing the relation at the sentence start: the user's original words of 10-14.
+  Supports: V22 “In a paragraph opening and a node's opening sentence, show the relation at the very start” and V22 “The relation is to the level above and to the sibling it follows.” The grounds for showing the relation at the sentence start: the user's original words of 10-14.
 - Original (ledger L436): The following items are defaults T0 set the same day from the user's words; they are not the user's original words.
-  Supports: V22 “In a paragraph-opening sentence or a node's opening sentence, show at the very start its relation to the level above and to the sibling it follows.” Origin: the connective list in V22 and the two exceptions in V22 are defaults T0 set the same day from the user's words.
+  Supports: V22 “In a paragraph opening and a node's opening sentence, show the relation at the very start” and V22 “The relation is to the level above and to the sibling it follows.” Origin: the connective list in V22 and the two exceptions in V22 are defaults T0 set the same day from the user's words.
 - Origin (ledger L444): the original sentence carried “（T0同日的默认）” (T0's default of the same day). Per the contract, the terse version drops the marker; the rule stays in V22.
 
 ## 7.3
@@ -176,11 +176,11 @@ This file holds the rationale, examples, transition sentences, and history moved
 ## 8.2
 
 - Original (ledger L551): Grammar research calls this a general rule of colloquial complex sentences.
-  Supports: V22 “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” The grounds for not omitting latter-clause markers: grammar research calls this a general rule of colloquial complex sentences.
+  Supports: V22 “Do not omit the latter-clause relation marker” and V22 “Add a former-clause marker only when the relation needs to show early.” The grounds for not omitting latter-clause markers: grammar research calls this a general rule of colloquial complex sentences.
 - Original (ledger L552): A progression often has only a latter-clause marker; the earlier sentence carries no word, and the relation is still clear;
-  Supports: V22 “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” A progression has only a latter-clause marker; the earlier sentence carries no word, and the relation is still clear.
+  Supports: V22 “Do not omit the latter-clause relation marker” and V22 “Add a former-clause marker only when the relation needs to show early.” A progression has only a latter-clause marker; the earlier sentence carries no word, and the relation is still clear.
 - Original (ledger L553): Conversely, keeping only “虽然” (although) and dropping “但是” (but) leaves the reader unable to follow.
-  Supports: V22 “Latter-clause markers bear the load and are not omitted. Add former-clause markers as needed.” Counterexample: keeping only “虽然” (although) and dropping “但是” (but) leaves the reader unable to follow.
+  Supports: V22 “Do not omit the latter-clause relation marker” and V22 “Add a former-clause marker only when the relation needs to show early.” Counterexample: keeping only “虽然” (although) and dropping “但是” (but) leaves the reader unable to follow.
 
 ## 8.3
 
@@ -190,15 +190,15 @@ This file holds the rationale, examples, transition sentences, and history moved
 ## 9
 
 - Original (ledger L562): With relations marked, the results of judgment and placement are to be written into a relation sheet for the writer.
-  Supports: S74 “Write the results of relation judgment and seam marking into a relation sheet for the writer.” The transition from section 8 to section 9: with relations marked, the results go into a relation sheet for the writer.
+  Supports: S74 “Write the results of relation judgment and seam relation classes into a relation sheet for Compose and Voice.” The transition from section 8 to section 9: with relations marked, the results go into a relation sheet for Compose and Voice.
 
 ## 9.1
 
 - Origin (ledger L582): the original sentence carried “用户2026-10-14” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in S79.
 - Original (ledger L587b): The same story placed in different positions and written in different ways can have completely different effects,
-  Supports: C12 “Item 5, writing advice: set the position first, then the way of writing.” The reason to set position before the way of writing: the same story in different positions and written differently has completely different effects.
+  Supports: C12 “A story's length, level of detail, narrative angle, and order of appearance are all decided by its task in the whole tree.” The reason to set position before the way of writing: the same story in different positions and written differently has completely different effects.
 - Original (ledger L595): That the length cap still holds after adding full names and base periods rests on exactly this rule; it compresses restatement, not facts;
-  Supports: C12 “Item 5, writing advice: set the position first, then the way of writing.” The role of the designated full-statement place: the length cap still holds after adding full names and base periods; it compresses restatement, not facts.
+  Supports: C12 “‘压缩’ (compress) cuts only wording and detail.” The role of the designated full-statement place: the length cap still holds after adding full names and base periods; it compresses restatement, not facts.
 
 ## 10
 
