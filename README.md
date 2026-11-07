@@ -40,7 +40,7 @@ FICCWriting/
 - Claude Code（技能目录 `~/.claude/skills/`，代理卡目录 `~/.claude/agents/`）。
 - Python 3.9或更新版本，只用标准库，不需要安装第三方包。
 - POSIX sh，用于安装和卸载脚本。
-- `skills/ficc-voice/scripts/` 下各脚本的用法见同目录的 `README.md`。其中 `changed_sentences.py` 和 `number_set_diff.py` 要调用shared-protocols的 `sentence_diff.py`，本仓库不含它，缺它时这两个脚本跑不起来，其余脚本和六项自检不受影响。
+- `skills/ficc-voice/scripts/` 下各脚本的用法见同目录的 `README.md`。其中 `changed_sentences.py` 和 `number_set_diff.py` 要调用shared-protocols的 `sentence_diff.py`，本仓库不含它，缺它时这两个脚本跑不起来，其余脚本和六项自检不受影响。各脚本每一版改了什么也记在那份`README.md`里。
 
 ## 安装、测试、卸载
 
@@ -105,11 +105,12 @@ Hand（`ficc-hand`）依赖以下技能和代理卡，本仓库不包含它们�
 - 中文存档：`skills/ficc-voice/references/zh/`。规则文件2026-10-16改为英文后，中文原版只作存档，代理不读，所以不收。三份rationale文件的英文版指向各自的中文原版，所以 `zh/` 下留了这三份的占位文件。
 - Codex侧元数据：`skills/ficc-voice/agents/openai.yaml`。它只供另一套代理环境使用，Claude Code用不到。
 - 调度卡 `ficc-conductor`：作者2026-10-25起试用的代理卡，绑在作者自己的任务流程上，所以不收。`skills/ficc-voice/SKILL.md` 第1节、`FICCHand.md` 第7步（交接）和 `ficc-hand/references/handoff.md` 提到它，都是试验说明。没有这张卡时，交接后照常由主会话按 `ficc-voice/SKILL.md` 路由。
+- 内联写手席脚本`skills/ficc-voice/scripts/inline-seat/`：`references/dispatch-notes.md`第7节说的DeepSeek起草席所用的一套脚本，绑在作者自己的模型路由上（作者的模型分级登记，以及dynamic-workflow下的模型适配器，本仓库都不含），所以不收。`skills/ficc-voice/SKILL.md`第2节④⑤两行和短篇一段、`dispatch-notes.md`第7节、`scripts/README.md`的inline-seat一节提到它。没有这套脚本时，接力照常用ficc-writer卡起草和修补。
 - 维护说明`MAINTAINERS.md`：作者放在shared-protocols下的维护笔记，不随公开版发布。`skills/ficc-voice/`下的`references/FICCVoice-rationale.md`、`scripts/README.md`和`scripts/budget_check.py`提到它，指的是作者改规则时守的规矩，脚本不读这个文件。
 
 ## 版本与许可证
 
-当前版本1.1.0（2026-11-04），见 `VERSION` 和 `CHANGELOG.md`。
+当前版本1.2.0（2026-11-07），见 `VERSION` 和 `CHANGELOG.md`。
 
 许可证分两部分，详见 `LICENSE`：
 

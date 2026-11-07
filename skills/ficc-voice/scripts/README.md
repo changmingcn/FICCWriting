@@ -275,7 +275,7 @@ python3 scripts/xref_check.py [--root 技能目录] [--cards 卡片目录] --sel
 - 引句校核STALE-QUOTE（2026-11-04新增）：`references/`下的`*-rationale.md`（现为FICCVoice、FICCStructure、FICCOutline三份，以后有FICCCompose的也查）里，以“Supports”起头的行上，条号后面（隔任意个空格，或隔一个括号注释再隔任意个空格，如“Xnn (the sub-line) ‘……’”）紧跟一对“”里的引句，要引的是该条现行正文。该条正文从规则文件里的定义行算起，到下一条`- **Xmm**`行或标题为止；比对时每行去掉首尾空白和`**`，定义行再去掉“- Xnn ”（剩下的就是意图句），其他清单行去掉行首“- ”。引句去掉首尾空白和末尾一个句号后，是正文某一行的子串，就算通过；引句里有省略号（“……”“…”“...”）的，按省略号切段，每段都要在同一行里按先后顺序找到。引句里嵌套的引号按惯例写‘’，比对时‘’与“”当作同一种引号。对不上记`STALE-QUOTE`，报文件、行号、条号、引句前40字和该条正文里相似度最高的一行。引号在本行没有闭合的，也记STALE-QUOTE，不静默跳过。历史原句不查：“- Original (ledger …)”“- Origin (…)”“- Moved here (…)”这些行，以及Supports行里从第一个落在引号之外的“Original (…):”“Origin:”“Moved here”起的后半行。这几个词出现在引句里面时只是引句的文字，不截行，引句照查。条号没有定义行的，只由条号检查报MISSING-RULE，引句不再另报（记SKIPPED）。文本报告加一行`rationale quotes: N "Supports: Xnn “...”" quotes in 文件 checked against the rule bodies; STALE-QUOTE s`，下面逐条列出失效引句；`--json`多出`quotes`（每条带`file`、`line`、`rule`、`quote`、`result`、`rule_file`、`match_line`、`nearest_line`、`nearest`、`similarity`、`note`）、`quote_files`和`counts.quotes`、`counts.stale_quote`。有任何一条STALE-QUOTE，退出码也是1。STALE-QUOTE多半是规则句改了措辞、rationale没跟上：把引句改成该条现行正文里对应的那句，规则文件不动；规则句已删或并入别条的，改引最接近的现行句，拿不准的交T0。
 - 卡片行和引句行排在最后一行之前，两项计数也并进最后一行：插在末项（`excerpt §3 C23 ids OK`，摘录缺失时是`EXCERPT-MISSING-FILE 1`，没有FICCCompose.md时是`excerpt skipped`）之前，写作` · cards N files · cards MISSING m · cards STALE-TITLE s · cards NO-TITLE n · cards MISSING-RULE r · quotes Q · STALE-QUOTE q`，没找到卡片的写` · cards none`，末项本身不变（2026-11-04 T0裁定，`--selftest`逐例核对最后一行这几项）。`--selftest`另在一个干净的最小技能树（`<临时目录>/skills/ficc-voice`，卡片在`<临时目录>/agents`）里测：默认的`../../agents`找得到、只读`ficc-*.md`；干净卡片的三条带标题引用与两个条号都对，裸节号和不带文件名的引号标题不读；卡片计数不并进技能计数；坏卡片退出码1（明细见本条末尾）；`--cards`改指别处生效；卡片目录不存在只打“none found”、退出码0。引句：意图句（去掉句号和`**`）、括号注释后的子项行、带省略号且按顺序（嵌套‘’）、一行两处引句四种通过，Original与Moved here两整行不查，Supports行里引号之外“Origin:”起的后半行不查（引句里的“Origin:”不截行）。改了措辞（报出最接近的意图行）、省略号各段顺序颠倒、引号未闭合、引句里夹着“Origin:”“Original (…):”“Moved here”的失效引句、条号后或括号注释后多一个空格的失效引句，都记STALE-QUOTE。卡片另测：带标题的干净卡片（标题大小写不敏感），技能文件不要求标题；同一节第一次带标题、第二次不带的通过；坏卡片“F.md 1–5 and 9”式连写加同一节再出现一次、两次都不带标题，报NO-TITLE 2、MISSING 2，两处过期标题报STALE-TITLE 2，错条号报MISSING-RULE 1；软链卡片照读（指向别处的坏卡片照报，同目录的链接与原文件只读一次，断链跳过），只有软链卡片的目录不报“none found”。
 
-# outline_slice.py（1.0.0，2026-10-25）
+# outline_slice.py（1.0.1，2026-11-05；1.0.0，2026-10-25）
 
 按节点编号切提纲（`<文稿名>-提纲.md`，FICCOutline.md 4.2的单文件格式）。结果只打到标准输出，提纲文件仍是唯一的家，脚本不写回。节点块的认法照kit-1.2.0的`node_blocks()`（`##`到`######`后接N编号的标题起一块，非节点的`#`或`##`标题结束节点树），名字表的认法照`voice_check.py`（第一张表头有“名字”和“不许用”两栏的表）。只用标准库，Mac和Linux都能跑。
 
@@ -292,6 +292,7 @@ python3 scripts/outline_slice.py --self-test
 - `names`的筛法：一行的名字、本篇写法、不许用三栏，去掉括号里的话，按、，,；;/／切开，去掉引号和反引号，两字以上的词只要在这些节点块（或文件）里出现，这一行就留下；标准错误打`kept K of N rows`。
 - `--self-test`：内置一份合成提纲（N0；N1、N1.1、N1.1.1；N2；四行名字表；节点树后面一节非节点的`## `），每个子命令都有断言，含未知编号与缺**主旨**行两种返回2；全过打PASS，有一条不过返回1。
 - `shared-protocols/regression/run-local-checks.sh`有一段`== ficc-voice outline_slice`，只跑`--self-test`，非0记失败。
+- 1.0.1（2026-11-05）：节点标题行改用同目录`cjk_ids.py`的`NODE_HEADING_RE`读，编号后直接接汉字（`## N1一、…`、`### N1.9总起`）也切对。1.0.0的`\b`把`N1.9总起`读成N1、漏掉`## N1一、…`（1104成稿任务81对91节点）。`--self-test`加粘连编号四条断言，没有`cjk_ids.py`就跑不起来。
 - 回滚：跑备份目录（作者草稿）里的`rollback.sh`（加`--dry-run`只打要做的事）。
 
 # tieout.py（ficc-hand/scripts，2026-10-17 第四轮修订）
@@ -328,3 +329,46 @@ python3 scripts/number_set_diff.py --self-test        # 也认--selftest
 `references/voice-excerpt-patch.md`（修补）、`voice-excerpt-polish.md`（润色）、`voice-excerpt-draft.md`（起草）、`voice-excerpt-coldread.md`（冷读）：第1节逐字抄FICCVoice.md（去掉`**`），第2节是用法说明。xref_check.py的常量`VOICE_EXCERPTS`列出每份必须带的V号意图行；第1节每个非空行都要等于FICCVoice.md某一行，少了意图行记`EXCERPT-MISSING`，抄错记`EXCERPT-MISMATCH`，文件没了记`EXCERPT-MISSING-FILE`，都退出1；`--selftest-excerpt`对每份做改一个词、删一条意图行、删文件三种情形。四份都登记在budget.json（封顶＝装机时大小）。改FICCVoice.md某条正文后，重抄对应摘录行再跑xref_check。
 
 outline_slice.py自2026-11-03起是默认，谁读切片、谁读视图见dispatch-notes 6。`--selftest`是`--self-test`的别名（K-OS-2）。
+
+# cjk_ids.py（1.0.0，2026-11-05）
+
+在中文文本里抓标号的统一写法：节点号`N1.9`、行号`L383`、块号`B11b`、单元号`U18`。Python的`\b`把汉字算作词字符，“L383仍写”“N1.9总起”这类数字后直接接汉字的标号会漏抓或截短，所以这里一律用显式前后断言`(?<![A-Za-z0-9])…(?![0-9])`，只认ASCII数字。本目录别的脚本在中文里抓标号都从这里取（`import cjk_ids`），不再各写一份。
+
+```
+python3 scripts/cjk_ids.py find line 文件 [--strip-sources]   # 一行一个，不给文件读标准输入（node／line／block／unit）
+python3 scripts/cjk_ids.py --selftest
+```
+
+- `strip_source_refs(text)`：先去掉指向别的文件的行号引用，再读本稿行号。认的前缀是四位数文件名（1027、1104）、提纲、账本、本篇，后接L号，顿号串（每个都带L）和区间（–、至、到）一并去掉。
+- `--selftest`：“L383仍写”“N2.2的”“〔1105〕段里的N9.1.1”“B11b，”要抓到，“XL383”“L12345”“UB11”不抓，“N22.”只给N22，另有来源引用的去法和旧`\b`写法的漏抓对照。
+
+# heading_list.py（1.0.0，2026-11-05）
+
+从提纲生成标题清单（`# 题目`加各级标题，空行隔开），即1101、1104成稿任务里两个建标题清单脚本（作者草稿）的通用版。有标题的节点：标题行末尾带〔标题〕（其后可再带〔本轮引入〕之类标记），或节点块里有`- 〔标题〕…`行（“〔标题〕无…”算没有）。编号后可以不带空格。级别照提纲行的`#`数。
+
+```
+python3 scripts/heading_list.py 提纲 [--title 题目] [--after N10 '### （一）各节出处' ...] [--out 文件]
+python3 scripts/heading_list.py 提纲 --ids      # 编号、级别、标题，供核对
+python3 scripts/heading_list.py --selftest
+```
+
+- 题目：`--title`，否则取提纲头里`**题目与版次行**：题目“…”`，都没有就不出题目行（标准错误提示）。
+- 2026-11-05对1104提纲（`--after N10`两行）的输出与作者任务里的标题清单（作者草稿）逐字节相同（79个标题）。退出码：0正常，2提纲读不了、没有任何节点标题或`--after`指向没有标题的节点，1自检失败。
+
+# findings_map.py（1.0.0，2026-11-05）
+
+把检查结果里的发现行按组装稿行号分到提纲节点，输出按节点分节的markdown（每节一行裁定、若干发现行），给修补轮派单用。即1105AIHouse任务里发现映射脚本（作者草稿）的通用版。
+
+```
+python3 scripts/findings_map.py 组装稿 提纲 发现文件 [--ruling 裁定文本] [--out 文件] [--skip 编号 ...] [--map] [--expect 旧的按节点文件]
+python3 scripts/findings_map.py --selftest
+```
+
+- 对位：组装稿的二级以下标题要和提纲里有标题的节点（`heading_list.py`的认法）级别、文字、顺序都一致，组装稿本来就不写的节点用`--skip`点名（如出处清单）。有标题对不上、缺了、多了或顺序不同，返回2并逐个点名，不输出（Codex第二读第7条）。第一个标题之前算N0。自己没有标题、紧跟在祖先节点正文里的节点（如N9.1.1）随祖先同送。
+- 发现行：表格行里有一格以open或new开头、或正好是delta（`--cell-re`可改）。首格是`s0028（L9）`这类单元号的行只认括号里的行号，其余行先去掉来源行号引用（`cjk_ids.strip_source_refs`，来源与L之间有无空格都认，如“1104L232–235、L296”）再取L号。
+- 指向标题行的行号：该节点在组装稿里有正文就算该节点，只有标题没有正文的节点（不设开头段的部）放进“标题行”一节交提纲席改〔标题〕（`--heading-to-outliner`，默认开；`--no-heading-to-outliner`改算该节点）。没有本稿行号的行放进“未定位”一节。这两节在节点各节之前。
+- `--expect`：与旧的按节点文件比节点集合，不同返回1。2026-11-05对1105任务的复查表与组装稿（作者草稿）加`--skip N11`跑出的结果与旧的按节点文件（作者草稿）的18个节点一致，逐行也一致。退出码：0正常，1`--expect`不一致或自检失败，2输入读不了、标题对不上、`--skip`编号不存在或`--cell-re`写错。
+
+# inline-seat/
+
+本包未收录这组脚本：内联席绑在作者自己的模型路由和dynamic-workflow的适配器上（见`references/dispatch-notes.md`第7节），公开包里的写作接力用ficc-writer卡。

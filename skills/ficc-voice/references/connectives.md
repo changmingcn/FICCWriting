@@ -113,7 +113,7 @@ Between items of the same kind under one basis of division (swapped, they are st
 | 深化 | “而且我们有个强烈的感觉，现在的市场参与者其实都清楚AI表外这笔账。看上去糊涂未必是真糊涂，也可能是在装糊涂以诱引韭菜接盘。”〔亲改〕: “而且” opens the paragraph and goes one step beyond the previous paragraph. This paragraph progresses layer by layer in five steps. “而且” links to the previous paragraph and goes one layer further. “其实都清楚” states the actual situation. “看上去……未必……也可能” turns it over one layer. “如果……就能看到……真正的原因” lands on the main line. “吵吵闹闹的市场中……而……” lands on a picture contrasting the two ends and closes |
 | 深化 | “再考虑到飙涨的国债利率和油价，莫非AI的资金游戏即将迎来审判日？”〔亲改〕: “再考虑到” adds a layer, and a posed question closes the paragraph |
 
-How to identify a relation: FICCStructure.md 3. Which layer and which point in the paragraph to mark: FICCCompose.md C13, C14. Where the word sits in the sentence: FICCVoice.md V22, V52–V54. Principles of expression: FICCVoice.md 4.
+How to identify a relation: FICCStructure.md 3. Which layer and which point in the paragraph to mark: FICCCompose.md C13, C14. Where the word sits in the sentence: FICCVoice.md V22, V53, V54. Principles of expression: FICCVoice.md 4.
 
 ## 6 Supplement on easily confused uses
 

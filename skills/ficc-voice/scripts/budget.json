@@ -3,20 +3,20 @@
   "measure": "len(text) of the UTF-8 file",
   "root": "~/.claude",
   "files": {
-    "skills/ficc-voice/FICCVoice.md": 38883,
-    "skills/ficc-voice/FICCCompose.md": 31194,
+    "skills/ficc-voice/FICCVoice.md": 42268,
+    "skills/ficc-voice/FICCCompose.md": 31171,
     "skills/ficc-voice/FICCOutline.md": 52345,
-    "skills/ficc-voice/FICCStructure.md": 41582,
+    "skills/ficc-voice/FICCStructure.md": 41577,
     "skills/ficc-voice/references/compose-excerpt.md": 7189,
     "skills/ficc-voice/references/clarity-acceptance.md": 4512,
     "agents/ficc-outliner.md": 3173,
     "agents/ficc-structurer.md": 2549,
     "agents/ficc-composer.md": 2503,
     "agents/ficc-writer.md": 2606,
-    "skills/ficc-voice/references/voice-excerpt-patch.md": 11795,
-    "skills/ficc-voice/references/voice-excerpt-polish.md": 18450,
-    "skills/ficc-voice/references/voice-excerpt-draft.md": 7308,
-    "skills/ficc-voice/references/voice-excerpt-coldread.md": 10773
+    "skills/ficc-voice/references/voice-excerpt-patch.md": 15488,
+    "skills/ficc-voice/references/voice-excerpt-polish.md": 18385,
+    "skills/ficc-voice/references/voice-excerpt-draft.md": 11054,
+    "skills/ficc-voice/references/voice-excerpt-coldread.md": 14402
   },
   "history": [
     {
@@ -218,6 +218,90 @@
         "agents/ficc-writer.md": [
           2599,
           2606
+        ]
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "reason": "user ruling 2026-11-06 (同意，按你的建议来): wave 1 contract layer, +3875 chars",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          38883,
+          42758
+        ]
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "reason": "user ruling 2026-11-06 (同意，按你的建议来): wave 1 contract layer, +3763 chars",
+      "changes": {
+        "skills/ficc-voice/references/voice-excerpt-patch.md": [
+          11795,
+          15558
+        ]
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "reason": "user ruling 2026-11-06 (同意，按你的建议来): wave 1 contract layer, +3763 chars",
+      "changes": {
+        "skills/ficc-voice/references/voice-excerpt-draft.md": [
+          7308,
+          11071
+        ]
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "reason": "user ruling 2026-11-06 (同意，按你的建议来): wave 1 contract layer, +3888 chars",
+      "changes": {
+        "skills/ficc-voice/references/voice-excerpt-coldread.md": [
+          10773,
+          14661
+        ]
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "reason": "user ruling 2026-11-06 (同意，按你的建议来): wave 1 contract layer, +181 chars",
+      "changes": {
+        "skills/ficc-voice/references/voice-excerpt-polish.md": [
+          18450,
+          18631
+        ]
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "reason": "wave 2 consolidation (user 2026-11-06 \"Start wave 2 as a new task\"): caps set to post-install sizes (after the R1 review fixes X1-X16); FICCVoice.md: 42758→42268; FICCCompose.md: 31194→31171; FICCStructure.md: 41582→41577; voice-excerpt-patch.md: 15558→15488; voice-excerpt-polish.md: 18631→18385; voice-excerpt-draft.md: 11071→11054; voice-excerpt-coldread.md: 14661→14402; all lowered, none raised",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          42758,
+          42268
+        ],
+        "skills/ficc-voice/FICCCompose.md": [
+          31194,
+          31171
+        ],
+        "skills/ficc-voice/FICCStructure.md": [
+          41582,
+          41577
+        ],
+        "skills/ficc-voice/references/voice-excerpt-patch.md": [
+          15558,
+          15488
+        ],
+        "skills/ficc-voice/references/voice-excerpt-polish.md": [
+          18631,
+          18385
+        ],
+        "skills/ficc-voice/references/voice-excerpt-draft.md": [
+          11071,
+          11054
+        ],
+        "skills/ficc-voice/references/voice-excerpt-coldread.md": [
+          14661,
+          14402
         ]
       }
     }

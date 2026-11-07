@@ -184,7 +184,7 @@ This file governs the relations between nodes, from the whole piece down to comp
 - **S18** **Judge the relation before choosing words. The answer to the diagnostic question decides which class of word to use.**
   - This section judges the eight complex-sentence relations at the seam between two sentences or two blocks. Their mapping to the relation library: per S06.
   - Put the two sentences together and go through the table below question by question.
-  - Once the class is identified, which seam to mark: per FICCVoice.md V22, V52.
+  - Once the class is identified, which seam to mark: per FICCVoice.md V22.
   - Check: if a question yields no answer, first check whether the two sentences are in the same layer, or whether the thinking is not yet clear.
   - Mark separately whether each item is a fact, an expectation, or a supposition. A relation type alone does not show that a purpose was achieved or a condition was met (back-test: S28, supposition written as fact).
 
@@ -195,7 +195,7 @@ This file governs the relations between nodes, from the whole piece down to comp
 | 并列·解说 (parallel · explication) | The later item explains, illustrates, or restates the earlier one; then the later item is most likely a satellite of the earlier one, hung per 1.4; it counts as parallel only when the two items truly sit in the same layer | The explaining item follows what it explains | — |
 | 承接关系（先后） (sequence) | The two items have a temporal or logical order that cannot be reversed | Fixed; coming first in time does not by itself make a cause | — |
 | 递进 (progression) | The later item goes one layer further than the earlier one in scope, quantity, degree, or time; without the earlier item, the later item's weight changes | Fixed; a swap loses the added step | — |
-| 转折 (turn) | The later item turns to an opposite or contrasting meaning; opposed meanings are a strong turn, a mere mismatch is a light turn; mark a light turn as usual, and do not substitute a re-mention of earlier text (FICCVoice.md V52) | The turned-to meaning comes second | — |
+| 转折 (turn) | The later item turns to an opposite or contrasting meaning; opposed meanings are a strong turn, a mere mismatch is a light turn; mark a light turn as usual, and do not substitute a re-mention of earlier text (FICCVoice.md V22) | The turned-to meaning comes second | — |
 | 转折·让步 (turn · concession) | First grant or suppose something, then say the result is unaffected by it; granting a fact is a factual concession, supposing is a hypothetical concession, “怎样都一样” (it is the same either way) is a total concession | The granted or supposed item comes first | Factual concession: the granted item is a fact; hypothetical concession: it is only supposed |
 | 因果 (cause and effect) | The earlier item is an objective cause of the later item | Usually cause first; a “因为” (because) clause may follow its result | — |
 | 因果·推断 (cause and effect · inference) | The earlier item is a premise the reader already accepts, and the later item is a conclusion the text draws from it | Premise first, then the conclusion | — |

@@ -12,7 +12,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
 - V04 State the gap clearly, and finish the conflict-free part first.
 - V07 Do not use semicolons (；) in body prose.
   - Before handing over, search the body for ； and split each such sentence into short sentences with their own subjects. Carry the relation by repeating the noun or with a connective from connectives.md. Only separators inside a table cell or a genuine list line are exempt. Do not turn prose into a list to keep semicolons.
-  - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； goes to T0. The writer neither edits it nor exempts it.
+  - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； is handed back per V04, neither edited nor exempted.
   - Paragraph organization: FICCCompose.md C08.
   - See references/FICCVoice-rationale.md V07.
 - V08 Mark the add-on relation between parallel child nodes of the same kind.
@@ -60,16 +60,15 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - Check: read only the first few characters of each paragraph-opening sentence and node opening sentence. They show its relation to the level above and to the sibling it follows.
   - Check: after writing a paragraph, run each seam through the seven checks below. Where a seam fails, fix the wording if wording can fix it. Do not pad with added words.
     1. Preview and payoff: FICCCompose.md C20.
-    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent's check, FICCStructure.md S90; the word is the writer's).
+    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition: FICCStructure.md S90; the word: this rule).
     3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” (so) must be a cause, what follows “而且” (moreover) must go one layer further, and the two sides of “但是” (but) sit on the same dimension. Where inference belongs, “既然、可见” (since, evidently) is present. A “因为” (because) or “所以” that only restates or splits the first half: FICCStructure.md S28.
     4. Latter-clause markers not omitted, and the relation of each paragraph opening and node opening sentence shown: this rule.
     5. The antecedent of paragraph-opening and sentence-opening connectives: V53.
     6. Suppositions and conditions stay hypothetical: V17.
     7. Items after a colon or dash: V19.
-- V52 Put connectives at the seam between two things.
 - V53 Keep a connective right next to its true antecedent.
   - Check: the sentence right before each paragraph-opening and sentence-opening connective is its true antecedent.
-- V54 When two layers of relation nest, put the outer layer's word at the outer seam and the inner layer's word at the inner seam.
+- V54 When one seam carries two layers of relation, mark the layer the relation sheet names (FICCStructure.md S29); when two layers nest across two seams, the outer layer's word goes at the outer seam and the inner layer's word at the inner seam.
 - V23 Keep the same name pointing to the same object.
   - Check: replace each “这、它、前者、上述” (this, it, the former, the above) with the full name. Where two objects fit, change it to a naming form such as “这笔贷款、这一偿还义务” (this loan, this repayment obligation). Where no antecedent can be found, reintroduce the object.
 - V24 Lead from an established object to the next new information.
@@ -82,7 +81,7 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - The base period and scope that the current comparison needs must be directly identifiable.
   - In new writing, verify against the original document where one exists. If the original does not say, leave the gap.
   - In a style-only edit, do not compute new numbers or fill blanks in the original. List doubtful points as to be verified.
-  - For a fact to be verified, the writer writes sentences without it or leaves a blank. The body text carries no “待补充” (to be supplied) or “待核实” (to be verified) labels. Labels go only into the writer's result sheet.
+  - For a fact to be verified, the writer writes sentences without it or leaves a blank. The body text carries no “待补充” (to be supplied) or “待核实” (to be verified) labels. Labels go into the hand-back per V04, never the body.
   - Do not use deposits, reserves, capital, cash, and liquidity interchangeably.
   - Keep stock and flow, total and increment, and book value and market value apart.
 - V27 Make the point the subject. Hang the source after it.
@@ -118,15 +117,12 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
   - Explain definitions, measurement bases, and ambiguous words specific to this piece at their first actual use.
   - Explain until the reader can keep reading, and stop there.
   - Where everyday words can state the action and the mechanism, say it plainly. Use necessary standard terms as they are.
-  - Take names from the outline's name table:
-    - The table holds only coined nouns and nouns with several variant names.
-    - The table has four columns: 名字 (name) ｜ 指什么与口径 (referent and measurement basis) ｜ 本篇写法 (form used in this piece) ｜ 不许用的叫法 (forbidden names).
-    - The outline agent maintains the table.
-  - Every name in the body text is either in the table or a standard term. Send new names outside the table through T0 to the outline agent, which rules on them and maintains the table.
+  - Take names from the outline's name table (what it holds, its four columns, who maintains it: FICCOutline.md O32–O33).
+  - Every name in the body text is either in the table or a standard term; a new name outside the table is handed back per V04 for the name table's ruling (FICCOutline.md O32), not coined.
   - Use market names. For same thing, same name, see V23.
   - Do not replace indicators, data series, or groups with coined short labels.
   - Allow at most one coined name per piece. Introduce it in the lead, explain it on the spot, and keep using it.
-  - In sentences with numbers, still use the indicator name.
+  - In sentences with numbers, use the indicator name, or the short name V26 allows within the paragraph; never a coined label.
   - Where a forbidden word in the name table carries a condition, judge by that condition.
   - Use few terms:
     - Put few new nouns in one paragraph. The fewer kinds, the better.
@@ -135,12 +131,12 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
     - Draw comparisons from things the reader has experienced.
     - Do not insert encyclopedia entries. Use the topic word directly. Do not gloss it repeatedly.
   - Do not give names to views or mechanisms. Use everyday verbs:
-    - For other people's views, write who holds them and what they believe. Do not compress them into “对手的读法” (the opponent's reading).
+    - Other people's views: V57.
     - State a mechanism in full the first time. Afterwards refer back with a phrase such as “这两条规则” (these two rules). Do not coin a code name.
     - Do not apply “收敛、付价、标零、兑现” (converge, pay the price, mark to zero, cash in) to economic facts.
     - Do not let “读数、口径” (reading, measurement basis) appear in place of the numbers and the method.
 - V33 Choose terms, abbreviations, and names by whether the reader can identify the object.
-- V57 Views and inferences are not objects. A view, reading, explanation or inference is never the subject or object of a verb that moves it: it does not “加强、变轻、占上风、站在一边、并存”, and it is not counted (“三种读法”). Write who holds it and what they believe (“Barclays看成技术性抛售”), or what we think (“我们认为”, “在我们看来”, “更像是先后”); when several views stand side by side, write “三种说法” once and name each holder. No label for an interpretive move of ours: 读法, 解读, 视角, 框架, 判别读数 and the like are out even when the outline carries them — the outliner translates such words before they reach a claim line (FICCOutline.md O91). Check: grep the node for `读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边` and read each hit; a hit whose subject is a company, a house, a price or 我们 passes; `voice_check.py --clarity` lists the hits as review candidates (H9), never as hard faults. 框架 is read by eye: in house drafts it is a deal or policy term.
+- V57 Views and inferences are not objects. A view, reading, explanation or inference is never the subject or object of a verb that moves it: it does not “加强、变轻、占上风、站在一边、并存”, and it is not counted (“三种读法”). Write who holds it and what they believe (“Barclays看成技术性抛售”), or what we think (“我们认为”, “在我们看来”, “更像是先后”); when several views stand side by side, write “三种说法” once and name each holder. No label for an interpretive move of ours: 读法, 解读, 视角, 框架, 判别读数 and the like are out even when the outline carries them (the outline side: FICCOutline.md O91). Check: grep the node for `读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边` and read each hit; a hit whose subject is a company, a house, a price or 我们 passes; `voice_check.py --clarity` lists the hits as review candidates (H9), never as hard faults. 框架 is read by eye: in house drafts it is a deal or policy term.
 - V34 Write for the default audience in the right writing persona.
 - V35 Make metaphors, characters, and jokes serve the current question.
 - V36 Convert to written register while keeping information, analysis, and personality. Do not write officialese.
@@ -179,5 +175,6 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
 ## 2 Use
 
 - Every live V rule appears by its intent line and its Check lines, each with its parent bullets and the items under it (V22: the seven checks); in full: V07, V10–V14 (hard limits), V20, V26–V28, V32, V36 and V37.
+- Contract: FICCVoice.md 0 (the twelve invariants I1–I12); this excerpt leaves them out to stay under the inline seat's 20,480-byte gate; the polish seat reads FICCVoice.md 0 once.
 - Open FICCVoice.md at a V number when its action is unclear; outline reads: dispatch-notes 6.
 - Before handover, run `scripts/voice_check.py --clarity --names` and `scripts/cjk_space.py --check` on the node; handle flags per V39.

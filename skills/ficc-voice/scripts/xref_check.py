@@ -263,7 +263,7 @@ VOICE_EXCERPTS = {
     'references/voice-excerpt-polish.md': ('V01', 'V02', 'V03', 'V04', 'V07', 'V08', 'V10', 'V11', 'V12', 'V13', 'V14',
                                            'V15', 'V16', 'V17', 'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25',
                                            'V26', 'V27', 'V28', 'V29', 'V31', 'V32', 'V33', 'V34', 'V35', 'V36', 'V37',
-                                           'V38', 'V39', 'V40', 'V52', 'V53', 'V54', 'V57'),
+                                           'V38', 'V39', 'V40', 'V53', 'V54', 'V57'),
     'references/voice-excerpt-draft.md': ('V01', 'V02', 'V03', 'V04', 'V26', 'V27', 'V28', 'V38'),
     'references/voice-excerpt-coldread.md': ('V22', 'V23', 'V32', 'V36', 'V37', 'V38', 'V39', 'V40', 'V57'),
 }
