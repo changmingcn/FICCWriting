@@ -200,7 +200,7 @@ FICCCompose governs, inside a settled outline node, how the text opens, carries 
   - Write the connection into actual statements. Do not substitute “形成支撑、构成闭环” (forms support, closes the loop).
   - Check: after restating both items, you can say why they connect this way. If you cannot, hand it back per FICCVoice.md V04.
 - **C14** **Allocate markers between layers by scale. Above section level, let four devices together make the relations readable.**
-  - At paragraph level and below, mark relations fully with connectives: which seam, per FICCVoice.md V52; how densely, see FICCVoice.md V22.
+  - At paragraph level and below, mark relations fully with connectives: which seam and how densely: FICCVoice.md V22.
   - At section level and above, first lay out by genre stage: lead, trunk, counter-views, conclusion section.
   - Mark relations above section level with these four devices:
     - Judgment headings: reading only the heading tells what the block asserts (how to write them: see FICCOutline.md 8.2).

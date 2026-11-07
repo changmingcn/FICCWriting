@@ -21,3 +21,17 @@ State what the decision changes things to, as changes still to be carried out; w
 ## 5 待核实或待补充 (to be verified or to be supplied)
 
 Facts still to be verified, material still to be supplied, and structural problems not yet solved; mark each “待核实” (to be verified) or “待补充” (to be supplied).
+
+## 6 内联席字段 (inline-seat fields)
+
+Written by the outliner when the inline seat drafts or patches (dispatch-notes.md 7): one `### <node number>` section per node, one line per field, markers verbatim with the full-width colon, because the packer reads them as written. A field with nothing to say reads 无.
+
+- 底稿 (base text): `底稿：<draft name> <heading>｜L<start>–L<end>`, by line range, never by heading; a new node: `底稿：无`.
+- 来源 (source text): `来源：<source name> <section>｜L<start>–L<end>`, several joined by ；.
+- 带入 (carry-in): each new fact with institution and date, as it may appear in the body.
+- 更新 (update): base-text statements to bring up to date, with the current wording and its date.
+- 保留 (keep): what stays, 〔作者亲写·逐字〕 sentences and analogy limits included.
+- 不写 (do-not-write): what this node leaves out, and which node holds it.
+- 上限 (cap): `上限：N字`, or `上限：见提纲` and the packer reads the cap from the node's unfolding line in the outline.
+- 伏笔 (foreshadow): the thread taken from the previous node and the one left for the next.
+- 必改句 (must-change sentences): one line each, `原句 → 现行说法` (base sentence → current wording), for base-text sentences that contradict a current judgment.

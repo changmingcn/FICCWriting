@@ -163,13 +163,13 @@ This file holds the rationale, examples, transition sentences, and history moved
 ## 8
 
 - Original (ledger L529): With paragraphs written correctly and each sentence attached, the relations have reached the leaves;
-  Supports: V52 “Put connectives at the seam between two things.” The transition from section 7 to section 8: with paragraphs and sentences each attached, the relations have reached the leaves.
+  Supports: V22 “Make the relation at each seam visible to the reader, especially turn, cause and effect, condition, limitation, and concession.” The transition from section 7 to section 8: with paragraphs and sentences each attached, the relations have reached the leaves.
 - Original (ledger L530): What remains is to mark them at every seam.
-  Supports: V52 “Put connectives at the seam between two things.” The transition from section 7 to section 8: what remains is to mark the relations at every seam.
+  Supports: V22 “Make the relation at each seam visible to the reader, especially turn, cause and effect, condition, limitation, and concession.” The transition from section 7 to section 8: what remains is to mark the relations at every seam.
 
 ## 8.1
 
-- Origin (ledger L542): the original sentence carried “（用户2026-10-14）” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in V52.
+- Origin (ledger L542): the original sentence carried “（用户2026-10-14）” (user, 2026-10-14). Per the contract, the terse version drops the marker; the rule stays in V22.
 - Original (ledger L545): With an inserted sentence or route sentence in between, the reader takes the adjacent sentence as the antecedent;
   Supports: V53 “Keep a connective right next to its true antecedent.” The reason a connective stays next to its true antecedent: with an inserted sentence in between, the reader takes the adjacent sentence as the antecedent.
 

@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""outline_slice.py (2026-10-25) -- slice a FICC outline (<文稿名>-提纲.md) by node id.
+"""outline_slice.py (2026-10-25; 1.0.1 2026-11-05) -- slice a FICC outline (<文稿名>-提纲.md) by node id.
 
 Outline format: FICCOutline.md 4.2; node ids N-prefixed, dotted, positional (N0 is the root,
 N3.1 sits under N3).  The outline file stays the one home: every slice is printed to stdout
 and nothing is written back.  Standard library only; parsing adapted from kit-1.2.0
-(kitlib.node_blocks) and voice_check.py (name table).
+(kitlib.node_blocks) and voice_check.py (name table).  Node headings are read with
+cjk_ids.NODE_HEADING_RE (same directory, required): the id may be glued to the heading text
+("## N1一、…", "### N1.9总起"); 1.0.0 used `\b` there, which cut "N1.9总起" to N1 and dropped
+"## N1一、…" (1104 draft task: 81 of 91 nodes found).
 
 Usage:
   outline_slice.py nodes OUTLINE [--check]      id, depth, heading text per node block;
@@ -33,8 +36,11 @@ import re
 import sys
 import tempfile
 
-VERSION = '1.0.0'
-NODE_RE = re.compile(r'^(#{2,6})\s+(N\d+(?:\.\d+)*)\b\s*(.*)$')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cjk_ids  # noqa: E402  (sibling module; the one home of the id patterns)
+
+VERSION = '1.0.1'
+NODE_RE = cjk_ids.NODE_HEADING_RE
 TREE_END_RE = re.compile(r'^#{1,2}\s+(?!N\d)')          # a non-node '#'/'##' heading ends the tree
 FIELD_RE = r'^\s*(?:[-*+]\s+)?'
 GIST_RE = re.compile(FIELD_RE + r'\*\*主旨(?:\*\*|：\*\*)')
@@ -295,6 +301,39 @@ FIXTURE = """# 样例-提纲
 - 不属于任何节点的一行。
 """
 
+# 1.0.1 regression: ids glued to the heading text (1104 draft task, 81 of 91 nodes found).
+GLUED = """# 粘连-提纲
+
+## N0 根〔段群〕
+
+- **主旨**：根。
+
+## N1一、外部账户〔标题〕
+
+- **主旨**：一。
+
+### N1.0总起〔段群〕
+
+- **主旨**：总起。
+
+### N1.1 （一）零售〔标题〕
+
+- **主旨**：一一。
+
+### N1.9收束〔段群〕
+
+- **主旨**：收束。
+
+### N1.10尾声
+
+- **主旨**：尾声。
+
+## N2：二、缓冲
+
+- **主旨**：二。
+"""
+OLD_NODE_RE = re.compile(r'^(#{2,6})\s+(N\d+(?:\.\d+)*)\b\s*(.*)$')  # 1.0.0, kept as the oracle
+
 
 def run(argv):
     """main(argv) in-process -> (exit code, stdout, stderr)."""
@@ -382,6 +421,25 @@ def self_test():
 
         c, o, e = run(['--version'])
         check('--version', c == 0 and o.strip() == VERSION)
+
+        glued = os.path.join(tmp, 'glued-提纲.md')
+        with open(glued, 'w', encoding='utf-8') as fh:
+            fh.write(GLUED)
+        old_ids = [m.group(2) for m in map(OLD_NODE_RE.match, GLUED.split('\n')) if m]
+        check('glued ids, 1.0.0 regex: “## N1一” lost, N1.0/N1.9/N1.10 read as N1 (the defect)',
+              old_ids == ['N0', 'N1', 'N1.1', 'N1', 'N1', 'N2'])
+        c, o, e = run(['nodes', glued, '--check'])
+        rows = [l.split('\t') for l in o.splitlines() if '\t' in l]
+        check('glued ids: 7 blocks, ids and heading text cut right, --check exit 0', c == 0
+              and [r[0] for r in rows] == ['N0', 'N1', 'N1.0', 'N1.1', 'N1.9', 'N1.10', 'N2']
+              and rows[1][2] == '一、外部账户〔标题〕' and rows[4][2] == '收束〔段群〕'
+              and rows[5][2] == '尾声' and rows[6][2] == '：二、缓冲'
+              and 'check: 7 node blocks, 7 with a **主旨** line, 0 duplicate ids' in o)
+        c, o, e = run(['node', glued, 'N1.9'])
+        check('glued ids: node N1.9 is its own block', c == 0 and o == '### N1.9收束〔段群〕\n\n- **主旨**：收束。\n')
+        c, o, e = run(['chain', glued, 'N1.10'])
+        check('glued ids: chain of N1.10 = N0, N1', c == 0
+              and [l for l in o.splitlines() if l.startswith('#')] == ['## N0 根〔段群〕', '## N1一、外部账户〔标题〕'])
 
     ok = all(results)
     print('outline_slice self-test: %s (%d checks)' % ('PASS' if ok else 'FAIL', len(results)))

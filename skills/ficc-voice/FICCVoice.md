@@ -2,6 +2,23 @@
 
 FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCompose as clear, explicit, concrete sentences. Leave the reader nothing to take apart, pair up, or fill in logically. Decide sentence splitting and glossing by this standard, not by cutting at a character count. Use breakdown and checking for drafting and revising. They impose no fixed sentence pattern and add no fixed deliverable table.
 
+## 0 Contract
+
+Twelve invariants the writer accepts before writing a sentence; the rules below are their method, and V04 (when to hand back) stands outside them. Each line names its home. A check marked (fails) can fail a node; a check marked (reports) only raises a flag for judgment.
+
+- **I1** **Each paragraph makes one point, and each sentence does one job for it.** Home: FICCCompose.md C01, C09. Voice's share: name each sentence's job (e.g. the claim, grounds, a step, a qualifier, an element of the example, a carry-over, a close, an attributed view); a sentence with no job goes back per V04 (fails). Method: V01, V02, V03, V37.
+- **I2** **The paragraph's close opens no point the opening lacks.** Home: FICCCompose.md C01, C17. Voice's share: the last sentence introduces no point the opening lacks (fails); an echo or a consequence is allowed, not required (C17, C19), and C01's paragraph types keep their own endings.
+- **I3** **A connective stands only for a settled relation, and its two sides share content.** Home: FICCVoice.md. For every “所以、因此、但是、因为、如果” name the relation and the shared content; material that supports only juxtaposition is set side by side (fails). Method: V08, V13, V21, V22, V53, V54.
+- **I4** **A claim's qualifiers travel with it through every rewrite.** Home: FICCVoice.md. A condition stays hypothetical, a rebuttal condition or concession stays attached, a dependent finding keeps its own certainty, one hedge word keeps one strength across the piece; a qualifier the material carries but the author's passage itself omits is named and handed back per V04, never added silently, and a qualifier lost in rewriting is restored (V20) (fails). Method: V17, V20, V38.
+- **I5** **The subject is what the sentence judges, and the action is in the verb.** Home: FICCVoice.md. Subject and verb stay close, the topic stays stable across a paragraph, each party's responsibility is stated separately, and merged responsibilities fail (V15 Check, V38) (reports). Method: V15, V16, V24.
+- **I6** **One object, one name; one term, one meaning.** Home: the names in FICCOutline.md O32–O33, their use in this file. Replace each pronoun with the full name as a test, and rewrite where two objects fit or none does (fails). Method: V12, V23, V32, V33.
+- **I7** **Every number, at its first real use, says whose, which indicator, when, in what unit, on what basis.** Home: FICCVoice.md. Both sides of a comparison are comparable; where the material gives no basis, say what cannot be compared (V18) (fails). Method: V18, V26, V31.
+- **I8** **The point is the subject, the source hangs after it, and a view has a holder.** Home: FICCVoice.md. No passive sourcing, no plural for one source; hits on “据悉、市场担忧、多家机构、读法、解读” are review candidates checked against the actual sources (reports); a confirmed lost holder or a plural for one source fails (V28). Method: V27, V28, V57.
+- **I9** **One sentence, one judgment; punctuation carries a definite relation.** Home: FICCVoice.md. Conditions may share the sentence, a colon follows a complete judgment, body prose has no semicolons (fails: V07, and V14's matching item; the script's length flags report per V39). Method: V07, V10, V11, V14, V19, V25.
+- **I10** **The reader decodes nothing.** Home: FICCVoice.md. Notes stand apart from argument steps, a term is explained once at its first real use, a metaphor follows the mechanism with its limits stated (reports). Method: V29, V32, V35.
+- **I11** **One audience, one persona, written register.** Home: FICCVoice.md. A change of persona or condition is stated (reports). Method: V34, V36.
+- **I12** **Check before submitting, and cold-read with the finished draft and the name table only.** Home: FICCVoice.md. Revise by problem type (V14), check both ways against the material (V38), report problems that can be located and fixed (V40); a report missing an item fails. Method: V14, V37, V38, V39, V40.
+
 ## 1 Break the meaning down first
 
 - **V01** **State this node's task concretely.**
@@ -23,18 +40,17 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
   - Check: cover words such as “所以、可见、而且” (so, evidently, moreover) and look only at the two sides. You must still be able to say what makes this step hold. If you cannot, hand it back per V04.
 - **V04** **State the gap clearly, and finish the conflict-free part first.**
   - When the relation is unclear, the material is insufficient, or the relation sheet contradicts itself, write the conflict-free part first.
-  - Hand back the planned judgment or relation, how far the material actually supports it, and what is still missing. T0 forwards relation problems to the relation agent and placement, claim, or order problems to the outline agent.
+  - Hand back the planned judgment or relation, how far the material actually supports it, and what is still missing (where a hand-back goes: SKILL.md 3).
   - Do not add causes, add facts, or pick one unsettled explanation for the sake of flow.
-  - As the writer, do not change placement, claims, or node relations. Hand back any needed change per this rule.
-  - In a style-only edit, keep the existing content and structure.
+  - What a revision may touch is set by the task's permissions (FICCOutline.md 7.3, O69–O74: a style-only edit keeps content and structure); a change of placement, claim, or node relation beyond them is handed back per this rule.
   - If a requirement such as a governing paragraph opening can be met only by changing order or structure, report it separately.
-  - See V29: merge pure notes back where they serve. See FICCOutline.md 7.3: rewrite permissions.
+  - See V29: merge pure notes back where they serve.
 
 ## 2 Carry the relations into sentences and paragraphs
 
 - **V07** **Do not use semicolons (；) in body prose.**
   - Before handing over, search the body for ； and split each such sentence into short sentences with their own subjects. Carry the relation by repeating the noun or with a connective from connectives.md. Only separators inside a table cell or a genuine list line are exempt. Do not turn prose into a list to keep semicolons.
-  - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； goes to T0. The writer neither edits it nor exempts it.
+  - An author's original sentence marked 〔作者亲写·逐字〕 that contains ； is handed back per V04, neither edited nor exempted.
   - Paragraph organization: FICCCompose.md C08.
   - See references/FICCVoice-rationale.md V07.
 - **V08** **Mark the add-on relation between parallel child nodes of the same kind.**
@@ -132,7 +148,6 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
 - **V21** **Establish the content relation first, then choose the connective.**
   - Words and relation classes: references/connectives.md 1.
   - Keep exemplification distinct from proof, explication from progression, and supposition from condition. Do not change the relation by swapping words. Relation diagnosis: FICCStructure.md S04, S18, S27.
-  - When the material supports only side-by-side observation, set the observations side by side. Do not add a connective that implies more relation than that.
 
 ### 4.2 Use enough, do not pile up
 
@@ -142,7 +157,7 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
     - Do not omit the connecting “但是、所以、就、才、也、还、却” (but, so, then, only then, also, still, yet) in the latter clause.
     - Add a former-clause marker only when the relation needs to show early.
     - In a pair, when both clauses share a subject, put the former-clause word after the subject. When the subjects differ, put the former-clause word before the first subject.
-  - Do not mechanically repeat the same word in adjacent sentences.
+  - Do not repeat a connective or a filler mechanically in adjacent sentences; repeating the noun to carry the relation (V07, V12) is not this.
   - Do not let transition fillers such as “值得注意的是” (it is worth noting that) or “进一步来看” (looking further) stand in for a relation.
   - Replace a vague clause-initial “而、则、并、且” (and/while, then, and, also) with a word that states the relation; fixed words are exempt (references/connectives.md 6).
   - Numbering inside a sentence or at a paragraph opening: references/connectives.md 6, FICCCompose.md C10.
@@ -156,6 +171,7 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
     - Choose the word by relation from references/connectives.md 1: turn “但是、不过” (but, however); cause and effect “所以、因此” (so, therefore); conditions and limits “只是” (only) or “但……只有” (but… only when); concession “虽然” (although); progression “而且、更” (moreover, even more).
     - The relation to the level below is carried by preview and payoff (FICCCompose.md C20), not marked at the sentence start.
     - How to write the subject: see 4.4.
+    - After the reader's question in a lead (FICCCompose.md C03), the next sentence opens with a back-reference or an add-on marker (references/connectives.md, row 并列·附加关系).
   - At an opening, these four relations must not go unmarked: turn, cause and effect, conditions and limits, and concession.
     - Only two cases allow no connective:
       - The sentence continues the earlier text in a straight line.
@@ -165,21 +181,19 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
   - Check: read only the first few characters of each paragraph-opening sentence and node opening sentence. They show its relation to the level above and to the sibling it follows.
   - Check: after writing a paragraph, run each seam through the seven checks below. Where a seam fails, fix the wording if wording can fix it. Do not pad with added words.
     1. Preview and payoff: FICCCompose.md C20.
-    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition is the relation agent's check, FICCStructure.md S90; the word is the writer's).
+    2. Each same-layer seam carries a word of the class the relation sheet names (the proposition: FICCStructure.md S90; the word: this rule).
     3. Back-test each marked word against its row in references/connectives.md: what precedes “所以” (so) must be a cause, what follows “而且” (moreover) must go one layer further, and the two sides of “但是” (but) sit on the same dimension. Where inference belongs, “既然、可见” (since, evidently) is present. A “因为” (because) or “所以” that only restates or splits the first half: FICCStructure.md S28.
     4. Latter-clause markers not omitted, and the relation of each paragraph opening and node opening sentence shown: this rule.
     5. The antecedent of paragraph-opening and sentence-opening connectives: V53.
     6. Suppositions and conditions stay hypothetical: V17.
     7. Items after a colon or dash: V19.
-- **V52** **Put connectives at the seam between two things.**
-  - After the reader's question in the lead, place a back-reference or add-on marker (references/connectives.md, row 并列·附加关系).
 - **V53** **Keep a connective right next to its true antecedent.**
   - A paragraph-opening connective connects to the previous paragraph's claim or close, not to its last example.
   - The same holds for linking-back sentences above section level: they gather the whole preceding story and push forward from the preceding paragraphs' conclusions.
   - Where an inserted sentence or route sentence sits in between, move it away.
   - When the true antecedent is not adjacent and the order is fixed by the relation sheet, use a named back-reference instead of a connective.
   - Check: the sentence right before each paragraph-opening and sentence-opening connective is its true antecedent.
-- **V54** **When two layers of relation nest, put the outer layer's word at the outer seam and the inner layer's word at the inner seam.**
+- **V54** **When one seam carries two layers of relation, mark the layer the relation sheet names (FICCStructure.md S29); when two layers nest across two seams, the outer layer's word goes at the outer seam and the inner layer's word at the inner seam.**
 
 ### 4.3 Back-reference and the same word
 
@@ -209,12 +223,10 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
 ### 4.5 Parallel syntax
 
 - **V25** **Use similar syntax to show items that truly correspond.**
-  - When several parallel items are discussed separately, each number governs one thing, and the items share one basis of division.
-  - First identify the question the items answer together. Confirm that they sit at the same level and on the same dimension.
+  - Whether the items sit at the same level, on one dimension, and share one basis of division is settled before writing (FICCStructure.md S24, S19, S14); write only items so settled, each number governing one thing.
   - Then write each item in a similar order, such as “subject, action, result” or “condition, applicable result”.
   - If one item has an extra condition, add it as it is. If data are missing, state the gap.
   - Do not delete limits or invent items for the sake of symmetry.
-  - Do not line up a cause, its example, and its result as three same-level items.
   - After a long group, state together what the items mean for the current question. Do not force a tie-back onto a short group.
   - Group size: FICCStructure.md S25.
 
@@ -229,7 +241,7 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
   - The base period and scope that the current comparison needs must be directly identifiable.
   - In new writing, verify against the original document where one exists. If the original does not say, leave the gap.
   - In a style-only edit, do not compute new numbers or fill blanks in the original. List doubtful points as to be verified.
-  - For a fact to be verified, the writer writes sentences without it or leaves a blank. The body text carries no “待补充” (to be supplied) or “待核实” (to be verified) labels. Labels go only into the writer's result sheet.
+  - For a fact to be verified, the writer writes sentences without it or leaves a blank. The body text carries no “待补充” (to be supplied) or “待核实” (to be verified) labels. Labels go into the hand-back per V04, never the body.
   - Do not use deposits, reserves, capital, cash, and liquidity interchangeably.
   - Keep stock and flow, total and increment, and book value and market value apart.
 - **V27** **Make the point the subject. Hang the source after it.**
@@ -284,15 +296,12 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
   - Explain definitions, measurement bases, and ambiguous words specific to this piece at their first actual use.
   - Explain until the reader can keep reading, and stop there.
   - Where everyday words can state the action and the mechanism, say it plainly. Use necessary standard terms as they are.
-  - Take names from the outline's name table:
-    - The table holds only coined nouns and nouns with several variant names.
-    - The table has four columns: 名字 (name) ｜ 指什么与口径 (referent and measurement basis) ｜ 本篇写法 (form used in this piece) ｜ 不许用的叫法 (forbidden names).
-    - The outline agent maintains the table.
-  - Every name in the body text is either in the table or a standard term. Send new names outside the table through T0 to the outline agent, which rules on them and maintains the table.
+  - Take names from the outline's name table (what it holds, its four columns, who maintains it: FICCOutline.md O32–O33).
+  - Every name in the body text is either in the table or a standard term; a new name outside the table is handed back per V04 for the name table's ruling (FICCOutline.md O32), not coined.
   - Use market names. For same thing, same name, see V23.
   - Do not replace indicators, data series, or groups with coined short labels.
   - Allow at most one coined name per piece. Introduce it in the lead, explain it on the spot, and keep using it.
-  - In sentences with numbers, still use the indicator name.
+  - In sentences with numbers, use the indicator name, or the short name V26 allows within the paragraph; never a coined label.
   - Where a forbidden word in the name table carries a condition, judge by that condition.
   - Use few terms:
     - Put few new nouns in one paragraph. The fewer kinds, the better.
@@ -301,7 +310,7 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
     - Draw comparisons from things the reader has experienced.
     - Do not insert encyclopedia entries. Use the topic word directly. Do not gloss it repeatedly.
   - Do not give names to views or mechanisms. Use everyday verbs:
-    - For other people's views, write who holds them and what they believe. Do not compress them into “对手的读法” (the opponent's reading).
+    - Other people's views: V57.
     - State a mechanism in full the first time. Afterwards refer back with a phrase such as “这两条规则” (these two rules). Do not coin a code name.
     - Do not apply “收敛、付价、标零、兑现” (converge, pay the price, mark to zero, cash in) to economic facts.
     - Do not let “读数、口径” (reading, measurement basis) appear in place of the numbers and the method.
@@ -311,13 +320,13 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
   - Use a Chinese word where readers understand it more easily.
   - Do not make the reader look back repeatedly for definitions to understand one sentence.
   - See references/lecture-terms.md: lecture terms.
-- **V57** **Views and inferences are not objects.** A view, reading, explanation or inference is never the subject or object of a verb that moves it: it does not “加强、变轻、占上风、站在一边、并存”, and it is not counted (“三种读法”). Write who holds it and what they believe (“Barclays看成技术性抛售”), or what we think (“我们认为”, “在我们看来”, “更像是先后”); when several views stand side by side, write “三种说法” once and name each holder. No label for an interpretive move of ours: 读法, 解读, 视角, 框架, 判别读数 and the like are out even when the outline carries them — the outliner translates such words before they reach a claim line (FICCOutline.md O91). Check: grep the node for `读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边` and read each hit; a hit whose subject is a company, a house, a price or 我们 passes; `voice_check.py --clarity` lists the hits as review candidates (H9), never as hard faults. 框架 is read by eye: in house drafts it is a deal or policy term.
+- **V57** **Views and inferences are not objects.** A view, reading, explanation or inference is never the subject or object of a verb that moves it: it does not “加强、变轻、占上风、站在一边、并存”, and it is not counted (“三种读法”). Write who holds it and what they believe (“Barclays看成技术性抛售”), or what we think (“我们认为”, “在我们看来”, “更像是先后”); when several views stand side by side, write “三种说法” once and name each holder. No label for an interpretive move of ours: 读法, 解读, 视角, 框架, 判别读数 and the like are out even when the outline carries them (the outline side: FICCOutline.md O91). Check: grep the node for `读法|解读|视角|判别读数|推断加强|判断.{0,4}加强|占上风|站在.{1,8}一边` and read each hit; a hit whose subject is a company, a house, a price or 我们 passes; `voice_check.py --clarity` lists the hits as review candidates (H9), never as hard faults. 框架 is read by eye: in house drafts it is a deal or policy term.
 
 ## 6 Metaphors, characters, jokes, and hooks
 
 - **V34** **Write for the default audience in the right writing persona.**
   - The default audience is practitioners with a master's background in finance or economics who know basic financial concepts.
-  - Publish as the author. Your own style is allowed. Imitating model texts is not required. Correct per user feedback.
+  - Publish as the author. Your own style is allowed. Imitating model texts is not required.
   - Use “我” (I) for real first-hand experience. Use “我们” (we) by default in argument. Use “你” (you) when working through how the reader would choose.
   - State any change of condition or persona explicitly.
   - When writing in someone else's name, adopt that person's persona. Do not invent trades, positions, research visits, client conversations, or past judgments.
@@ -382,14 +391,14 @@ FICCVoice writes the judgments settled by FICCOutline, FICCStructure and FICCCom
   - Do not lower counts by deleting qualifiers, hiding them in parentheses, or switching to abbreviations.
   - The paragraph length cap (FICCCompose.md C08) is a hard limit. This rule covers only the script's other flags.
 - **V40** **Report reading problems that can be located and fixed.**
-  - Writer: cold-read your own node before submitting. After the draft is assembled, a separate cold reader reads with only the finished draft and the name table (dispatch: SKILL.md 2).
-  - The cold read reports only and does not edit. For each spot, list the node, line number, original sentence, and matching rule.
+  - Cold-read your own node before submitting, with only the finished draft and the name table (the separate cold read after assembly: SKILL.md 2).
+  - A cold read of another's draft reports only and does not edit. For each spot, list the node, line number, original sentence, and matching rule.
   - For each spot, write what it might be misread as or what must be looked back for, and where the text is actually lacking.
   - Mark A for a likely misreading and B for slowed reading. Do not report only “长、绕、不顺” (long, convoluted, not smooth).
-  - Resolve both kinds of real problems before submitting. Send uncertain ones to T0. Give a reason for each false alarm.
+  - In your own node, resolve both kinds of real problems before submitting; hand uncertain ones back per V04; give a reason for each false alarm.
 
 ## 8 On-demand references
 
 Paragraph organization: FICCCompose.md. Connectives: references/connectives.md. Revision examples: references/clarity-rewrites.md. Borrowed sources, scope of application, and rule migration: references/FICCVoice-provenance.md and references/migration-2026-10-17.md. Do not read the maintenance records for everyday writing. Format: references/format-and-maintenance.md. Submission checks: references/clarity-acceptance.md. Rationale by rule number: references/FICCVoice-rationale.md. Examples and the user's own edits: references/examples-and-rewrites.md (headings by section and V number).
 
-Reasoning for V15, V16, V19, V21, V22, V25, V27, V29 and V52–V54: references/FICCStructure-rationale.md 6–8.
+Reasoning for V15, V22, V29 and V53: references/FICCStructure-rationale.md 6–8.
