@@ -177,4 +177,4 @@ Section 1 copies FICCVoice.md verbatim (`**` removed; checked by scripts/xref_ch
 - Every live V rule appears by its intent line and its Check lines, each with its parent bullets and the items under it (V22: the seven checks); in full: V07, V10–V14 (hard limits), V20, V26–V28, V32, V36 and V37.
 - Contract: FICCVoice.md 0 (the twelve invariants I1–I12); this excerpt leaves them out to stay under the inline seat's 20,480-byte gate; the polish seat reads FICCVoice.md 0 once.
 - Open FICCVoice.md at a V number when its action is unclear; outline reads: dispatch-notes 6.
-- Before handover, run `scripts/voice_check.py --clarity --names` and `scripts/cjk_space.py --check` on the node; handle flags per V39.
+- Before handover, run `scripts/voice_check.py --clarity --names` on the node; handle flags per V39.

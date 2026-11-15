@@ -8,8 +8,8 @@ ficc-outliner starts from here when it builds the tree at FICCHand step 5b (`ref
 ## N0 根主旨
 - **主旨**：对决策问题的判断（一两句）＋把握度和限制它的那一环；预测式的问题先改写成条件式
   N1 导语：读者的问题与答案；根主旨落在开头（FICCOutline 8.1）
-  N2 发生了什么：时间线分段，每段的变化与转折（脉络图第2节）
-  N3 为什么：主线的机制，按环或按参与方展开（脉络图第3、4节）
+  N2 发生了什么：时间线分段，每段起止日期写定，每段的变化与转折，一段一节点或节点内一段（脉络图第2节）
+  N3 为什么：主线的机制，按环或按参与方展开，每环标坐实／被反驳／反向（脉络图第3、4节）
      N3.x 支线发现（必要时纳入）：对回答主干有用的支线发现，挂在它服务的那一步下面，不另起一级，除非它能单独改变根主旨；探索线索的发现撑起主线的一步时，写成主线节点；探索线索本身不自动成节、不自动有标题
   N4 容易读错的地方：分歧是要点时写分歧的状态；易混的两样在这里辨开（脉络图第6、7节）
   N5 影响：按条件写，触发—渠道—受影响者—信号—时间窗（脉络图第5节）
@@ -19,4 +19,4 @@ ficc-outliner starts from here when it builds the tree at FICCHand step 5b (`ref
   N8 出处清单：机构、正文日期到日、报告名；不计篇幅（FICCOutline 4.2）
 ```
 
-Common changes: give the most space to the step with the most evidence and the strongest pull between directions; when correcting a popular view, refute then build (first take apart its premise, then build our reading); for a topic that can be told clearly by time, merge N2 and N3 into an unfolding by segment; with no previous version, delete N7. Each explicit must-answer keeps the delivery place the head names, whatever else is cut or merged (FICCHand 3.1 ⑥).
+Common changes: give the most space to the step with the most evidence and the strongest pull between directions; when correcting a popular view, refute then build (first take apart its premise, then build our reading); for a topic that can be told clearly by time, merge N2 and N3 into an unfolding by segment; with no previous version, delete N7. Each explicit must-answer keeps the delivery place the head names, whatever else is cut or merged (research-agent `references/framing.md` (Task roles)).

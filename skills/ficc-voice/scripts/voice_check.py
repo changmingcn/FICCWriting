@@ -162,13 +162,17 @@ LIST_START_RE = re.compile(
     r'|第[一二三四五六七八九十\d]{1,3}[、，,：:]'
     r'|其[一二三四五六七八九十](?=[、，,：:\s]))\s*')
 
-# Heading ordinal prefixes stripped before H4 comparisons
+# Heading ordinal prefixes stripped before H4 comparisons.  2026-11-07 numeric
+# ordinals: a bare level-1 integer needs whitespace after it (so "2025年" is never
+# cut), and 附录N / 附录N.M is an ordinal too.
 HEAD_ORD_RE = re.compile(
     r'^(?:第[一二三四五六七八九十百零〇\d]{1,4}[章节部分篇讲课][\s：:、．.]*'
     r'|[一二三四五六七八九十]{1,3}(?:[、，,]|[．.](?!\d))\s*'
     r'|[（(][一二三四五六七八九十\d]{1,3}[）)]\s*'
     r'|\d{1,2}(?:\.\d{1,2})*(?:、|[.．](?!\d))\s*'
-    r'|\d{1,2}(?:\.\d{1,2})+\s+)')
+    r'|\d{1,2}(?:\.\d{1,2})+\s+'
+    r'|\d{1,2}\s+'
+    r'|附录\d{1,2}(?:\.\d{1,2})*\s*)')
 
 
 class Line(object):
@@ -1436,6 +1440,7 @@ SYNTH = [
     ('H2', '本文将从三个方面讨论美元流动性。\n\n第二段。\n'),
     ('H3', '几点观察：\n\n- 资金面偏紧\n- 政策面观望\n- 情绪面低迷\n'),
     ('H4', '## 一、负债端：钱从哪里来\n\n正文。\n\n## 二、资产端：钱到哪里去\n\n正文。\n'),
+    ('H4', '## 1 负债端：钱从哪里来\n\n正文。\n\n## 2 资产端：钱到哪里去\n\n正文。\n'),
     ('H4', '## 美元不是避险资产，而是融资货币\n\n正文。\n'),
     ('H5', '他说「美元荒」只是『表面』现象。\n'),
     ('H6', '利差走阔了；利率也在降，资金面并不宽松。\n'),
@@ -1448,6 +1453,17 @@ SYNTH = [
            '第一，本文将大量使用案例而不是公式，第二，本文将会尽量削弱随机分析的存在。第一个办法：打多份工。\n\n## 四、取舍节与收尾\n\n正文。\n\n## 五、第一段怎么进\n\n正文。\n\n'
            '1. 结构越复杂，塞进来的东西越多，越Exotic，Sales收费越High\n\n2. ATM附近，Gamma最大。\n\n'
            '3. 转嫁尾部风险。\n'),
+]
+
+# head_core fixtures (2026-11-07 numeric ordinals): (heading title, expected core).
+HEAD_CORE_SYNTH = [
+    ('1 负债端：钱从哪里来', '负债端：钱从哪里来'),
+    ('1 2025年的账', '2025年的账'),
+    ('2025年的账', '2025年的账'),
+    ('1.1.1 零售定价', '零售定价'),
+    ('附录1 出处', '出处'),
+    ('附录1.2 口径', '口径'),
+    ('一、负债端', '负债端'),
 ]
 
 
@@ -1862,6 +1878,11 @@ def selftest(letters, clarity=False):
             good &= reviews == ([want] if want in SEMANTIC_REVIEW_CODES else [])
         ok &= good
         print('  %s 期望 %s，得到 %s' % ('通过' if good else '不通过', expected or '无硬伤', got or '无硬伤'))
+    for title, want in HEAD_CORE_SYNTH:
+        got = head_core(title)
+        good = got == want
+        ok &= good
+        print('  %s 标题序数剥离 “%s” → “%s”（期望 “%s”）' % ('通过' if good else '不通过', title, got, want))
     print()
     ok &= selftest_h7(clarity)
     print()

@@ -1,5 +1,49 @@
 # Changelog
 
+## 1.3.0 (2026-11-14)
+
+Rebuilt from the author's tree of 2026-11-14 with the release rules of 1.2.0, changed as listed under “Release build”. It carries the author's changes of 2026-11-07 to 2026-11-14: numeric heading ordinals, the section-close line on the outline, the ancestor chain in outline slices, the merged check wave, and the 2026-11-14 restructure of how seats hand work over. Three files are gone (references/source-style-notes.md, references/writing-checklist.md, scripts/cjk_space.py) and the three placeholder files under references/zh/ with them; no file is new. FICCVoice.md and FICCCompose.md are unchanged.
+
+Heading ordinals (`skills/ficc-voice`, user ruling 2026-11-07):
+
+- FICCOutline.md O83: headings are numbered by depth with numerals, “1”, “1.1”, “1.1.1”, five levels at most (Markdown `##` to `######`), replacing “一、（一）1.（1）”. `## 结语` takes no ordinal; appendices form their own series, `## 附录1 …`, inside `### 附录1.1 …`. references/format-and-maintenance.md and references/FICCOutline-rationale.md follow; pieces delivered in the old style are converted only in an authorized format tidy.
+- scripts/voice_check.py: H4 strips numeric and 附录 ordinals before it compares headings. A bare level-1 integer needs whitespace after it, so “2025年的账” keeps its year. The self-test gains seven ordinal-stripping cases.
+- ficc-hand/scripts/tieout.py: an ordinal in a node heading line or a 〔标题〕 line is not extracted as a number, and an order line may name its neighbour by numeric ordinal (“接1.2”). The regression set (tieout_probes.json) gains the eleven n5.* cases.
+- scripts/xref_check.py: a dotted number right after an opening curly quote or a backtick is a quoted example, not a section reference.
+
+cjk_space retired (user ruling 2026-11-07): scripts/cjk_space.py is removed. The convention itself stays (no space between Han characters and Latin letters or digits) and is tidied by hand. The step is gone from SKILL.md 4 item 8, references/clarity-acceptance.md, format-and-maintenance.md, the patch and polish excerpts, the glossary and the writer card.
+
+Section close on the outline (user ruling 2026-11-11):
+
+- FICCOutline.md O31: a node with three or more children carries a close line, `收尾：<节点编号>；<收拢什么，交出什么>`, naming the node whose end carries the close, what it gathers and what it hands on. A waiver, `收尾：不设（<裁定>）`, needs a ruling and never applies to N0. references/FICCOutline-rationale.md records the grounds. FICCOutline.md goes from 52,345 to 53,293 characters (O83 and O31 together).
+- scripts/outline_slice.py 1.1.0: field lines are read in the plain and the bold spelling (1.0.1 lost every 任务, 顺序 and 关系 line of a bold outline). `chain` takes all node ids of a writing unit and prints each ancestor once. `--path [N]` adds, per ancestor, the opening of its claim, the relation to its parent and its order line. `nodes --check --closes` validates the close lines (six `CLOSE-*` results, exit 2). `chain` prints a duty line, `收尾（本单元写…）`, for the unit that holds the end of the node a close line names. `view` prints close lines. scripts/README.md documents all of it.
+- references/dispatch-notes.md 6: slicing runs `nodes --check --closes` first, and a unit packet passes all the unit's ids to one `chain` call. Item 5, the per-piece record of four metrics, is gone.
+
+Check wave and short pieces (`skills/ficc-voice/SKILL.md`):
+
+- Step ⑥: one structure check replaces three separate seat checks. The structurer's check mode reads FICCOutline.md 9, FICCStructure.md 7 and FICCCompose.md 7 on the full text once, and each finding names its rule file. The writer's cold read comes first, on the full text and the name table alone; the same seat opens the `voice_check.py --clarity` output only after its cold-read findings are written, then checks clarity. The acceptance table and the structurer and writer cards follow.
+- SKILL.md 4 item 15 (new): a short piece, or an addition capped at about 1,000 characters, takes one drafting seat and is posted once the draft passes voice_check.py. No tie-out wave or counter-view seat holds the post.
+- references/dispatch-notes.md: a settled literal replacement in a relay file is applied by the lead with a script, never by a seat (1 item 4); a patch takes one round plus one targeted recheck of the changed sentences by default (2 item 4, new).
+- SKILL.md 1: the writing phase may go to `ficc-conductor`, standing for a ficc-hand report, a fresh one for each wave. The 2026-10-25 trial wording is gone. The card is still not included (see README).
+- FICCStructure.md S79 no longer points at references/writing-checklist.md.
+
+Handoffs carry state (2026-11-14, the author's restructure of how seats hand work over):
+
+- The five cards: every seat writes a result file (`## Head`, then its result sheet or report, then `Trace:`, `Lesson:` and `Open:` lines), and the four relay cards name that file in their write scope. Descriptions are shortened and no longer carry the model-tier tag. scripts/budget.json raises the caps of the four relay cards; the new caps equal the cards' sizes in bytes, 89 to 190 above their character counts, which is the unit budget_check.py measures.
+- ficc-hand/SKILL.md and FICCHand.md are rewritten as a FICC delta on the research-agent Investigation route. FICCHand.md goes from 36,563 to 15,330 characters and from six sections to four: per step it gives the product, the seat, the gate and the FICC-only done-condition. The task-roles doctrine now lives in research-agent (references/framing.md, not in this repository). The map-to-outline table gives way to references/map-template.md, report-skeleton.md and materials-manifest.md, which gained the lines they lacked, and the outline's done-conditions moved into references/outline-from-research.md (new “Done when” list). The cost and lessons-index sections are gone; the estimate stays in references/cost-estimate.md.
+- FICCHand.md 3.7: the acceptance counter-view is seated only when the thesis changed after step 4 or when a contested core conclusion, a key data conflict or thin evidence calls for it; otherwise the acceptance record says it was not seated. Outline and index findings go to fresh seats, one fix round per list.
+- ficc-hand/references/handoff.md: the handoff note is a state card of four blocks (position, lessons, settled, open and trace) at the head of the materials index. The twelve-field list, its mapping table and the 2026-10-25 trial paragraph are gone; 8,096 → 4,009 characters.
+- ficc-hand/references/cost-estimate.md: prices of the fresh-eyes wave added; the red team and the acceptance counter-view are priced as running only on their triggers.
+- references/dispatch-notes.md: the COMMON packet's state card has four blocks; the inline seat's card (7 item 3) carries the path to the root, up to five lessons from the task's trace file, and the close duty in its constraints block.
+
+Release build:
+
+- The Chinese archive left the author's skill directory on 2026-11-14, so the three placeholder files under references/zh/ are no longer generated. The three rationale files and SKILL.md 4 item 13 say that the Chinese originals are not included (wording fixes W19–W22, in place of a path into the author's archive).
+- Code and label fixes C6–C12: staging names of the author's task in docstrings, a comment and one self-test label of outline_slice.py, a task file name in a note of tieout_probes.json, and the count of n5 cases in its `about` field (eleven, not eight). No behaviour changes.
+- Wording fixes W18, W23 and W24 where a placeholder or a task file name broke a sentence; W4 rewritten for the standing `ficc-conductor` sentence; W2 and W3 retired with references/source-style-notes.md.
+- README: the dependency section is rewritten for the FICCHand delta, the result-file format and the two shared-protocols scripts dispatch-notes.md newly names; the entries on the Chinese archive and `ficc-conductor` are updated; the three removed files are listed.
+- The leak scan gains three patterns (a path into the author's skill archive, the author's machine name, staging names of a task), the build runs `outline_slice.py --self-test` as a seventh check, and the private-name inventory now covers short titles of October and November pieces.
+
 ## 1.2.0 (2026-11-07)
 
 Rebuilt from the author's tree of 2026-11-07 with the same release rules as 1.1.0. It carries the three sets of changes made on main after 1.1.0 (voice-trim, retired-pointers, xref-cards-stale) and the author's changes of 2026-11-05 to 2026-11-07 (from “Contract layer” on). Three scripts are new, none removed. ficc-hand, FICCOutline.md and the agent cards are unchanged in this build.

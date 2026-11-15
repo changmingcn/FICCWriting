@@ -219,6 +219,7 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
   - Order (`顺序：`): the reason for the order. The outline agent settles the final order and writes it per O19.
   - Relation (`关系：`): backfilled from the relation sheet (O18, O63). The outline agent enters it as `关系：和<节点编号>，通过<什么内容>，是<关系库哪一类>`. The sheet gives the relation type and how the relation holds, and only confirms the order reason.
   - Unfolding: child nodes, existing material, and material still missing.
+  - Close (`收尾：<节点编号>；<收拢什么，交出什么>`), when the node has three or more children: name the node whose end carries the close, what the close gathers and what it hands on (to the next block; for the whole piece, what it leaves the reader with). A last paragraph that doubles as the close is an assignment. A waiver, `收尾：不设（<裁定>）`, needs a ruling and never applies to N0 (FICCCompose.md C17). Check: `scripts/outline_slice.py nodes <提纲> --check --closes`.
   - For nodes near the leaves, the four lines may merge into one.
   - At the paragraph-group level, merge the task and the order into one sentence on its hanging (挂法). The backfilled relation may join that sentence. Then write which material it uses.
   - Do not write the argument on the outline.
@@ -600,7 +601,9 @@ Examples and revision examples: references/examples-and-rewrites.md, filed by th
   - In principle, a lowest-level prose section of the body text does not exceed 2000 characters.
   - Near the cap, divide at a question or argument boundary, by sub-point. Do not cut mechanically, and do not divide by topic.
   - When a large chapter contains several subsections, the chapter's total length is not bound by this cap.
-- **O83** **Number headings in the established style, such as “一、（一）1.（1）”. Keep it consistent within a level. Do not skip levels or numbers.**
+- **O83** **Number headings by depth with numerals: “1”, “1.1”, “1.1.1”, “1.1.1.1”, “1.1.1.1.1”; no dot after a single-level number; one half-width space between the ordinal and the text. Keep it consistent within a level. Do not skip levels or numbers.**
+  - Five heading levels at most (Markdown `##` to `######`; `#` is the title). Deeper logical layers get no heading; sort out their relations inside the section (O24).
+  - The outline's 〔标题〕 line carries the ordinal (O81). `## 结语` takes no ordinal. Appendices form their own series after it: `## 附录1 …`, `## 附录2 …`, inside `### 附录1.1 …`. User ruling 2026-11-07, replacing “一、（一）1.（1）”.
   - Paragraph organization: FICCCompose.md C10.
   - Do not let long numbering itself become a reading burden.
   - For the check, see O87.

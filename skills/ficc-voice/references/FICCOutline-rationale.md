@@ -1,6 +1,6 @@
 # FICCOutline rationale and distinctions
 
-This file holds the rationale, examples, and history moved out of the FICCOutline.md body text, in sections by the body's section numbers. Each entry first gives the original sentence in a block quote, then one sentence on which rule in the body it supports. Here each original sentence appears in English translation, and Chinese phrases inside it stay in Chinese with an English gloss. The Chinese originals are in references/zh/FICCOutline-rationale.md. Consult it as needed while writing.
+This file holds the rationale, examples, and history moved out of the FICCOutline.md body text, in sections by the body's section numbers. Each entry first gives the original sentence in a block quote, then one sentence on which rule in the body it supports. Here each original sentence appears in English translation, and Chinese phrases inside it stay in Chinese with an English gloss. The Chinese originals are kept in the author's archive and are not included in this release. Consult this file as needed while writing.
 
 ## Introduction
 
@@ -115,6 +115,8 @@ Supports O25: the original's transition sentence from 3 to 4.
 > The argument is the body text's business.
 
 Supports O31: leave the argument to the body text, and do not write it on the outline.
+
+Supports O31 (close line): FICCCompose.md C17 already requires a close for the whole piece and for a section with three or more children, but the outline did not say which node writes it. The line names the node whose end carries the close. A last paragraph that doubles as the close is still an assignment. Only a ruled waiver (`收尾：不设（<裁定>）`) leaves a section without a close, and N0 never gets one, because the whole piece must close. On the outline of the 2026-11-08 retail piece (《1025散户》), in the 2026-11-11 A/B, the two composers of unit B04 (old arm and new arm) each returned the N3 close as a to-do, although N3.3's order line already said “N3 收尾，答案交给 N4”. T0's reading, not measured: the writers took that line as an ordering reason. Provenance: user 2026-11-11 (original words: “交接部分你的意见也很重要，我认为值得做”; “加，开始吧”).
 
 > With this table, two writers working in parallel still write the same set of names.
 
@@ -254,7 +256,7 @@ Supports O80: logical levels need not all become headings, and many headings do 
 
 > This is the common appearance; it does not mean that logical depth can reach only four layers.
 
-Supports O83: the ordinal convention is appearance, and it does not limit logical depth.
+Supports O83: the ordinal convention is appearance, and it does not limit logical depth. Since 2026-11-07 the appearance is numeric by depth with five heading levels: the user found “一、（一）1.（1）” too shallow (“最多分三层，我觉得这样不够”) and asked for “1”“1.1”“1.1.1” extended to five layers, with appendices named 附录 and numbered. Below the fifth level, relations are sorted out inside the section without headings.
 
 ## 9 Check the outline
 

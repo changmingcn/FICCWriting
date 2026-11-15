@@ -6,7 +6,7 @@ General requirements: every row carries an anchor pointing to a digest's fact ro
 
 ## 1 问题树
 
-The root is the decision question (the trunk question, 主干问题) and the provisional answer; under it hangs the spine of questions and leads (consistent with `R/questions.md`), divided into main line, branch lines and layers. Copy each row's task role (任务角色) from the packet's role list (`R/brief.md`, and `R/questions.md` for rows added later); never infer it; a row with no role in the list gets “缺：角色未定” and a flag for T0. Never derive the role from the 主线／支线 column (role ≠ position: FICCHand 3.1 ⑥).
+The root is the decision question (the trunk question, 主干问题) and the provisional answer; under it hangs the spine of questions and leads (consistent with `R/questions.md`), divided into main line, branch lines and layers. Copy each row's task role (任务角色) from the packet's role list (`R/brief.md`, and `R/questions.md` for rows added later); never infer it; a row with no role in the list gets “缺：角色未定” and a flag for T0. Never derive the role from the 主线／支线 column (role ≠ position: research-agent `references/framing.md` (Task roles)).
 
 | 编号 | 问题／线索 | 任务角色（主干／明确必答／探索线索） | 主线／支线 | 上级 | 对主干的作用／是否关键依赖 | 什么发现会翻转结论 | 状态与继续／暂停理由 | 当前发现（可未定）与证据锚点 | 成文去向（论证节点／必答位置／背景／仅工作记录） | 成文排序依据（仅拟纳入项；为什么排在这里，用相邻两块的内容说；提纲顺序行照这一列写） |
 |---|---|---|---|---|---|---|---|---|---|---|

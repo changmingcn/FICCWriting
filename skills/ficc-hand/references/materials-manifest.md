@@ -24,7 +24,7 @@ Date order: the date printed on the original (cover, masthead, disclosure append
 | 编号 | 说的是什么（判断或数） | 口径（指标全名、存量／流量、毛／净、交易／估值调整、覆盖范围、单位原样、时间基准、基期、分母） | 谁算的（说话人类别；我们自算标出） | 版本 | 正文日期 | 锚点 | 确认／推断 | 来源数与tier | 采纳／对照 | 提示节点（给定位代理参考） | 标记 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 
-Anchor format: `D-<摘要编号>·S<源编号> L<原件行>`, or `原件路径:L<行>`; it is compatible with the `[src: …]` of shared-protocols/source-check.md (Anchors), and the writer can turn it directly into a sentence anchor. Marks: 有争议（X<编号>） (disputed), 待核实（G<编号>） (to be verified), 易混（C<编号>） (confusable), 单一来源 (single source), 登记（行号） (register, with line number). Keep each figure with its own subject: do not merge two independent assertions into one row.
+For an update topic, each change-worksheet row (map section 11: the old version's original words, the new judgment, a change of conclusion or of degree) is also an E row. Anchor format: `D-<摘要编号>·S<源编号> L<原件行>`, or `原件路径:L<行>`; it is compatible with the `[src: …]` of shared-protocols/source-check.md (Anchors), and the writer can turn it directly into a sentence anchor. Marks: 有争议（X<编号>） (disputed), 待核实（G<编号>） (to be verified), 易混（C<编号>） (confusable), 单一来源 (single source), 登记（行号） (register, with line number). Keep each figure with its own subject: do not merge two independent assertions into one row.
 
 **3数据序列（Q）**
 

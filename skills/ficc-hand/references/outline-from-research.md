@@ -24,6 +24,14 @@ Name table per FICCOutline O32–O34; node lines per O31; depth per O24 (to para
 7. Node ids N-prefixed only; line numbers of other files go in backticks.
 8. Carry register rows' `now` (line number + now text) under the nodes that use them. Mark the author's own sentences 〔作者亲写·逐字〕 and droppable nodes 〔可舍〕 at the end of the claim line.
 
+## Done when
+
+T0 accepts the tree against this list and the rest of this file (FICCHand.md 3.6).
+- No node exists only because an exploratory lead was listed; each explicit must-answer sits where `brief.md` names.
+- The order line says so where the two adjacent blocks could swap (FICCOutline 3.1); nodes near the leaves are written combined (FICCOutline 4.2).
+- No body-text sentences. Everything that can be settled on the outline is: measurement bases and indicators, data windows, the name table, the change worksheet.
+- Droppable nodes carry 〔可舍〕: the text runs 30% to 50% longer than the outline and deleting repetition trims only 10%, so a short piece makes its cuts on the outline.
+
 ## Before handing back
 
 - Headings: check per FICCOutline.md O81 (with `--names <提纲文件>`).

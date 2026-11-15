@@ -1,18 +1,25 @@
 ---
 name: ficc-hand
-description: "Use when given a FICC or macro topic and a large corpus (research library, data, old drafts) and asked for a research report that lays out the lines of analysis, organizes material and supports decisions: screen material, form views, deliver a view outline (FICCOutline format) and an index of main materials and data; placement, relations and writing then go to the ficc-voice relay. Not for monthly short pieces, Q&A or data lookups, or rewriting finished articles (ficc-voice). Keywords: 专题研究报告, 主线支线, 脉络, 组织材料, 协助决策, 给题目和语料, 更新上一版判断, 宏观题目, 语料, 研报库, 旧稿, 观点提纲. Not for: 月报短文, 问答取数, 改写已成的文章."
+description: "Use for a FICC or macro topic with a large corpus needing a research report: screen material, form views, deliver a view outline; prose goes to ficc-voice. Keywords: 专题研究报告, 主线支线, 脉络, 组织材料, 协助决策, 给题目和语料, 更新上一版判断, 宏观题目, 语料, 研报库, 旧稿, 观点提纲. Not for: 月报短文, 问答取数, 改写已成的文章."
 ---
 
 # ficc-hand
 
-This file is T0's router. T0 reads `FICCHand.md`, and that suffices; agents read only their own card and the templates the packet names (files under `references/`), never FICCHand.md. Only the outliner reads FICCOutline.md, by the sections its card names for each mode (`~/.claude/agents/ficc-outliner.md`, Modes), to build the tree and to check (every agent reading the rule files in full was the largest avoidable cost on the bill).
+T0's router. A run is a research-agent Investigation plus a FICC delta: T0 loads research-agent `SKILL.md` and `FICCHand.md`, and a gate's reference only when producing its artifact. Seats read their card and the reference their packet names, never FICCHand.md.
 
-Does: from topic and corpus, run eight steps (FICCHand.md 3): framing, corpus inventory, digests, map, thesis and counter-views, outline and materials index, acceptance, handoff. Deliver `<文稿名>-提纲.md` (view tree, format per `~/.claude/skills/ficc-voice/FICCOutline.md`) and `<文稿名>-资料索引.md` (pointers, not excerpts; format in `references/materials-manifest.md`). The outline-and-index step has two halves (FICCHand.md 2, 5a and 5b): ficc-mapper builds the materials index, ficc-outliner builds the tree; only ficc-outliner builds trees. After handoff, ficc-voice takes over per `references/handoff.md`: tree building, placement and outline maintenance to ficc-outliner (FICCOutline), relations to ficc-structurer (FICCStructure), style, sentence patterns and tone to FICCVoice.
+Does: deliver `<文稿名>-提纲.md` (view tree, `~/.claude/skills/ficc-voice/FICCOutline.md` format) and `<文稿名>-资料索引.md` (pointers, `references/materials-manifest.md`), with the handoff card at the index head (`references/handoff.md`). Roles: the trunk question governs, explicit must-answers keep their delivery duty, leads owe no answer (FICCHand.md 3.1 ⑥).
 
-Roles: the trunk question governs the research and the delivery, explicit must-answers keep their delivery duty, and hint branch questions are exploratory leads that owe no answer or section of their own (FICCHand.md 3.1 ⑥).
+Does not: write body text, run body-text acceptance, deliver articles or sweep-edit (ficc-voice); add gates (research-agent), corpus retrieval (ficc-research-kit), task records (first-secretary), dispatch rules (dynamic-workflow).
 
-Does not: write body text, run body-text acceptance (tone check, cold read), deliver articles, or sweep-edit; all are in ficc-voice. Adds no gates: research routes and the four gates belong to research-agent, corpus retrieval to ficc-research-kit, task records to first-secretary, dispatch and caps to dynamic-workflow. Each rule lives in its own home; FICCHand.md only points there.
+| Step | Seat | FICCHand.md |
+|---|---|---|
+| 0 Framing | T0 | 3.1 |
+| 1 Corpus inventory | T0, scout, triage seat | 3.2 |
+| 2 Digests | digester per source | 3.3 |
+| 3 Map | collator, ficc-mapper (map) | 3.4 |
+| 4 Thesis and counter-view | T0, dissenter | 3.5 |
+| 5a Index / 5b Outline | ficc-mapper (index) / ficc-outliner (build) | 3.6 |
+| 6 Acceptance | ficc-outliner (check), `scripts/tieout.py` | 3.7 |
+| 7 Handoff | T0, then a fresh `ficc-conductor` per writing-phase wave (relay, check wave, close), each started from the card and `conductor-progress.md` | 3.8 |
 
-Proof: the self-test samples must report unmatched items, and `scripts/tieout.py --self-test` must report PASS (per group the actual unmatched count, at least one, as expected). Each run's acceptance keeps three results (outline check, tieout, counter-view). Recovery: install with `install.sh` in the task directory, undo with `rollback.sh`. If the user changes a view after handoff, change the tree in ficc-voice first; do not rerun this skill. Priority: the user's current request and CLAUDE.md outrank this skill; where research-agent or ficc-voice rules differ, the rule's home wins.
-
-Agents: `ficc-mapper` (T1E, this skill's card, `~/.claude/agents/ficc-mapper.md`) fills the map (`脉络图`), builds the materials index (`资料索引`) and revises it per index findings from acceptance. `ficc-outliner` builds the tree (reads FICCOutline.md per its card's build mode plus `references/outline-from-research.md`), checks the outline in check mode at acceptance, and fixes outline findings in rule or maintain mode. Other seats use existing cards (digester, collator, dissenter, `refuter-t1e` for the red team per shared-protocols/model-tiers.md (Refuter on the T1E model), scout). Script: `scripts/tieout.py` checks that every number, date and institution in outline claims and 〔标题〕 lines is in the materials index or the ledger.
+Cards: `~/.claude/agents/ficc-mapper.md` (map, index, index fixes), `ficc-outliner.md` (build, check, fix). Script: `scripts/tieout.py` (outline numbers, dates and institutions found in the index or ledger; `--self-test` must PASS). After handoff a changed view changes the tree in ficc-voice; this skill is not rerun. Rollback is git. The user's request and CLAUDE.md outrank this skill; where research-agent or ficc-voice differ, the rule's home wins.

@@ -337,7 +337,7 @@ This file governs the relations between nodes, from the whole piece down to comp
   - Judge per S33. How each piece of foreshadowing lands on the page: FICCCompose.md C15.
 - **S79** **relation-sheet-template.md 2.6 and 2.7, facts and author's original sentences: cite where they are, do not copy them. The packet attaches readable source excerpts.**
   - Facts to be verified: per relation-sheet-template.md 2.6, with the writer's handling in FICCVoice.md.
-  - Writing rules: FICCCompose.md 1–5 and FICCVoice.md 3–4. The writer's at-hand summary is references/writing-checklist.md.
+  - Writing rules: FICCCompose.md 1–5 and FICCVoice.md 3–4.
 - **S81** **relation-sheet-template.md 4, to-do items for other nodes: per S84.**
 - **S82** **Which name the whole piece uses for the same thing: per the name table in the outline header.**
   - The name table: see FICCOutline.md 4.2. The writer uses it as given. Rules: see FICCVoice.md 5.

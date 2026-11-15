@@ -4,9 +4,9 @@ Read section 1 when tidying format; also read section 2 when maintaining a lectu
 
 ## 1 Format details
 
-Core levels and section-length requirements: [FICCOutline.md](../FICCOutline.md) 8.3. Use what follows only when this round is authorized to tidy format; a written-register conversion that leaves content and structure unchanged does not normalize headings, numbering, or sectioning on the side. Headings use full-width parentheses; a colon used inside as a separator may stay, as in “信贷：银行的第三个功能”. A heading must be understandable on its own; delete repeated cues, e.g. change “1. 第一步：建立欠条机制” to “1. 建立欠条机制”. Under an appendix, still number with “（一）（二）”. The close of the whole piece uses `## 结语`; like `## 附：……`, it takes no body ordinal (it is the root node's close, not one more parallel part; as of 2026-10-11 heading_check does not yet recognize it, so ignore its warning). In Google Docs, fonts are rendered by heading level.
+Core levels and section-length requirements: [FICCOutline.md](../FICCOutline.md) 8.3. Use what follows only when this round is authorized to tidy format; a written-register conversion that leaves content and structure unchanged does not normalize headings, numbering, or sectioning on the side. Headings use full-width parentheses; a colon used inside as a separator may stay, as in “信贷：银行的第三个功能”. A heading must be understandable on its own; delete repeated cues, e.g. change “1.1.1 第一步：建立欠条机制” to “1.1.1 建立欠条机制”. Ordinals are numeric by depth, five levels (FICCOutline.md O83). Appendices are `## 附录1 …`, `## 附录2 …`, numbered in their own series after `## 结语`; inside an appendix `### 附录1.1 …`. The close of the whole piece uses `## 结语` and takes no ordinal (it is the root node's close, not one more parallel part). Pieces delivered in the old “一、（一）1.（1）” style are converted only in an authorized format tidy. In Google Docs, fonts are rendered by heading level.
 
-Section length counts only prose, not table rows, fenced code blocks, or image reference lines. Verification ledgers, source lists, and comparison records under `## 附：……` are not subject to the 2000-character limit; neither are list-dominated parts where numbered or bulleted lines make up 35% or more of the non-empty lines. A knowledge point that runs to 1500 characters need not be cut by force; two knowledge points squeezed into 800 characters may be split.
+Section length counts only prose, not table rows, fenced code blocks, or image reference lines. Verification ledgers, source lists, and comparison records under `## 附录N ……` are not subject to the 2000-character limit; neither are list-dominated parts where numbered or bulleted lines make up 35% or more of the non-empty lines. A knowledge point that runs to 1500 characters need not be cut by force; two knowledge points squeezed into 800 characters may be split.
 
 Figures: no numbers; under each figure, note the measurement basis and the source.
 
@@ -16,7 +16,7 @@ Chinese punctuation conversion must protect the following:
 - Thousands separators and punctuation in English context, such as `1,507.5`, `January 15, 2015`, `[0.02, 0.05]`, `pp. 1499–1556`, `Insider's`.
 - Parentheses pairing an English term with a Chinese note, such as `货币(money)`, `做市(Market Making)`: keep the whole class half-width and internally consistent.
 
-Spacing between Chinese and Western text is settled: the user ruled on 2026-10-08 that no space goes between Han characters and English or digits (e.g. “2025年11月”). New drafts follow this; keep a half-width space inside English phrases and between an English word and a number (DDTL 5.0). Old drafts are unified during an authorized format tidy: convert with `scripts/cjk_space.py --apply` and self-verify as for punctuation conversion (with all whitespace removed, before and after match character by character); author-quote lines starting with “>” stay untouched.
+Spacing between Chinese and Western text is settled: the user ruled on 2026-10-08 that no space goes between Han characters and English or digits (e.g. “2025年11月”). New drafts follow this; keep a half-width space inside English phrases and between an English word and a number (DDTL 5.0). No script step: the user tidies spaces (ruling 2026-11-07, retiring cjk_space.py); old drafts are unified only in an authorized format tidy.
 
 Quotation marks are settled: use “”, and ‘’ for a quote inside a quote; do not use 「」『』 (user ruling of 2026-10-12). When quoting English words, still use “” outside, and keep the English quotation marks inside the English original as they are. Before submission, H5 of `scripts/voice_check.py` blocks 「」『』.
 
@@ -41,8 +41,8 @@ Keep evidence and process apart. Keep the records of verification ledgers, sourc
 
 Use （作者本机路径） when it exists on the current host and this round needs it; if it does not exist, check by hand.
 
-- `heading_check.py <file.md> --len`: checks levels, ordinals, and section length; its warnings on statement headings and posed-question headings are reminders only.
+- `heading_check.py <file.md> --len`: checks the five numeric levels, ordinal continuity, the 附录 series, `## 结语` and section length; its warnings on statement headings and posed-question headings are reminders only.
 - `punct_normalize.py --check <file.md>`; `--apply` is for authorized punctuation conversion, and content integrity must still be confirmed.
 - `prose_mechanics.py`, `EDITOR-BRIEF-template.md`: use as the editing task requires.
-- Before submission, run `scripts/voice_check.py <稿件> --clarity --names <提纲>` and `scripts/cjk_space.py <稿件> --check`; handle the report per references/clarity-acceptance.md.
+- Before submission, run `scripts/voice_check.py <稿件> --clarity --names <提纲>`; handle the report per references/clarity-acceptance.md.
 - After changing any heading or section number of the four main files (FICCOutline.md, FICCStructure.md, FICCCompose.md, FICCVoice.md), run `scripts/xref_check.py`, fix every MISSING and STALE? it reports, then install. Run it too after rewording any line of a rule body (fix each STALE-QUOTE in the rationale files) and after editing a `ficc-*.md` card (fix each card MISSING, STALE-TITLE, NO-TITLE or MISSING-RULE).

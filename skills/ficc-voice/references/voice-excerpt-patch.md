@@ -124,4 +124,4 @@ Twelve invariants the writer accepts before writing a sentence; the rules below 
 - A patch round changes only the sentences and to-dos the packet names; the rest of the node stays as it is.
 - New facts: dispatch-notes 1.5; paragraph organization: references/compose-excerpt.md (FICCCompose.md C08, C12).
 - Result sheet: each change as file:line before → after. Check wave and re-tick after a patch: dispatch-notes 2.3.
-- Run `scripts/voice_check.py --clarity --names` and `scripts/cjk_space.py --check` on the node before handover.
+- Run `scripts/voice_check.py --clarity --names` on the node before handover.

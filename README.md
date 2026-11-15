@@ -83,11 +83,13 @@ sh uninstall.sh [--prefix DIR] --restore ~/.claude/ficc-writing-backup-<UTC时�
 Hand（`ficc-hand`）依赖以下技能和代理卡，本仓库不包含它们：
 
 - 技能：research-agent、dynamic-workflow、first-secretary、shared-protocols、ficc-research-kit。
-- 代理卡：scout、digester、collator、dissenter、refuter、refuter-t1e。refuter-t1e是作者给refuter配的固定模型版本，卡的正文和refuter相同，只是绑定的模型不同。作者的流程派它做红队和核数，`FICCHand.md`和`ficc-hand/SKILL.md`点名的就是它，没有这张卡时用refuter即可。另有一个席位用Claude Code内置的general-purpose代理，不需要卡。
+- 代理卡：scout、digester、collator、dissenter、refuter。另有一个席位用Claude Code内置的general-purpose代理，不需要卡。
 
-没有这些依赖时，`ficc-hand` 的规则文件仍可阅读，它的对账脚本 `tieout.py` 也能单独跑，但完整流程跑不通。
+1.3.0起，`FICCHand.md`写成research-agent调研流程上的一层FICC增量。各步的关卡和任务角色（主干问题、明确必答项、探索线索）的完整规则在research-agent里，摘要模板在digester卡里，`FICCHand.md`只写每一步交什么、谁来做、FICC特有的完成条件。`FICCHand.md`说的top-review席（红队）和`ficc-voice/SKILL.md`第⑥步的标题级反驳席是同一类席位，作者按shared-protocols的`model-tiers.md`给它配卡和模型，用的是refuter卡。`references/glossary.md`里的refuter-t1e是作者给refuter配的固定模型版本，卡的正文和refuter相同，没有这张卡时用refuter即可。没有这些依赖时，`ficc-hand`的规则文件仍可阅读，它的对账脚本`tieout.py`也能单独跑，但完整流程跑不通。
 
-后四个写作席位（outliner、structurer、composer、writer）自己就能跑，不依赖别的技能。只有 `ficc-voice/SKILL.md` 第⑥步（检查）另用两样本仓库不含的东西：查来源的席位按shared-protocols的 `source-check.md` 工作，反方席位用refuter或dissenter代理卡。没有它们时，四个席位照常跑各自的检查，即FICCOutline.md 9、FICCStructure.md 10、FICCCompose.md 7和FICCVoice.md 7。研究文章的反方席位不能省（SKILL.md 4第7条），没有这两张卡就由使用者另配一个等效的反方读者。
+后四个写作席位（outliner、structurer、composer、writer）自己就能跑。1.3.0起，各席的卡要求把结果写成一份结果文件：开头一段`## Head`，中间是结果单或检查报告，末尾是`Trace:`、`Lesson:`、`Open:`几行。这个格式出自作者shared-protocols下的`handoff.md`，本仓库不含它，卡里已经把要点写全，照卡写即可。`references/dispatch-notes.md`这一版新点到shared-protocols的两个脚本：`handoff.py`生成派单开头的状态卡，`replace_once.py`按清单做已经定好的字面替换。没有它们时，状态卡手写，字面替换由主会话自己改。
+
+`ficc-voice/SKILL.md`第⑥步（检查）另用两样本仓库不含的东西：查来源的席位按shared-protocols的`source-check.md`工作，标题级反驳席用refuter或dissenter代理卡。没有它们时，另外两项检查照常跑：结构检查由structurer的check模式一次读完FICCOutline.md 9、FICCStructure.md 7和FICCCompose.md 7，表达检查由writer先冷读、再按FICCVoice.md 7查清晰。研究文章的反方席位不能省（SKILL.md 4第7条），没有这两张卡就由使用者另配一个等效的反方读者。
 
 `voice_check.py` 的月报基线模式（`--baseline`，以及 `--selftest` 里的2026.02对照）读你自己的月报合辑文件，用 `scripts/README.md` 里写的 `--letters` 选项指定，默认路径是 `~/ficc-letters/letters.txt`。文件不存在时，自检跳过2026.02对照，其余照常。
 
@@ -98,19 +100,21 @@ Hand（`ficc-hand`）依赖以下技能和代理卡，本仓库不包含它们�
 - 代理卡和规则文件里的T0、T1、T1E、T3是作者给模型分档的标签。T0指主会话，其余几档标明各席位用哪一档模型，按自己的模型配置理解即可。
 - 例子出处里的1012Six、《1012散户》、《1009AI表外》等短名是作者自己文章的名字。
 - “（作者草稿）”“（作者本机路径）”“（作者的用量审计报告）”“（审计数据表）”是公开版替换掉的本机路径和工作目录，原文件不随仓库发布。
+- 规则里写的“CLAUDE.md, Proportion”指作者全局指令里的比例原则：核查和返工的力度看它能不能改变结论，默认一轮审查加一次针对改动处的复读。“memory `…`”指作者本机的记忆条目。这两样都不随仓库发布，按字面理解即可。
 
 ## 未包含的内容
 
 - 开发记录：`skills/ficc-voice/references/` 下的 `dev-notes.md`、`FICCVoice-provenance.md`、`history.md`，以及 `skills/ficc-hand/references/hand-history.md`。这些是作者的开发过程记录，含私人项目和工作目录，不随公开版发布。仓库里保留同名的占位文件，只留原有各级标题，保证其他文件里指向这些章节的引用仍然有效。
-- 中文存档：`skills/ficc-voice/references/zh/`。规则文件2026-10-16改为英文后，中文原版只作存档，代理不读，所以不收。三份rationale文件的英文版指向各自的中文原版，所以 `zh/` 下留了这三份的占位文件。
+- 中文存档：规则文件2026-10-16改为英文后，中文原版只作存档，代理不读，所以不收。1.2.0及以前，仓库在`skills/ficc-voice/references/zh/`下留了三份rationale的占位文件。2026-11-14作者把中文存档移出了技能目录，1.3.0起仓库里不再有`zh/`，三份rationale文件和`SKILL.md`第4节第13条只写明中文原版不随本版发布。`scripts/README.md`和`xref_check.py`里按`references/zh/`同名文件核对标题的那一项，1.3.0起不会触发。
 - Codex侧元数据：`skills/ficc-voice/agents/openai.yaml`。它只供另一套代理环境使用，Claude Code用不到。
-- 调度卡 `ficc-conductor`：作者2026-10-25起试用的代理卡，绑在作者自己的任务流程上，所以不收。`skills/ficc-voice/SKILL.md` 第1节、`FICCHand.md` 第7步（交接）和 `ficc-hand/references/handoff.md` 提到它，都是试验说明。没有这张卡时，交接后照常由主会话按 `ficc-voice/SKILL.md` 路由。
+- 调度卡`ficc-conductor`：写作阶段的指挥席，2026-10-25起试用，2026-11-14起成为ficc-hand成稿任务的常设做法。主会话为写作阶段的每一波（接力、检查、收尾）各派一个新的指挥席，它从卡和任务目录里的`conductor-progress.md`起步。这张卡绑在作者自己的任务记录和交接脚本上（first-secretary，以及shared-protocols的`handoff.py`），所以不收。`skills/ficc-voice/SKILL.md`第1节、`references/dispatch-notes.md`、`ficc-hand/SKILL.md`、`FICCHand.md`第7步（交接）和`ficc-hand/references/handoff.md`提到它。没有这张卡时，交接后由主会话自己按`ficc-voice/SKILL.md`路由。
 - 内联写手席脚本`skills/ficc-voice/scripts/inline-seat/`：`references/dispatch-notes.md`第7节说的DeepSeek起草席所用的一套脚本，绑在作者自己的模型路由上（作者的模型分级登记，以及dynamic-workflow下的模型适配器，本仓库都不含），所以不收。`skills/ficc-voice/SKILL.md`第2节④⑤两行和短篇一段、`dispatch-notes.md`第7节、`scripts/README.md`的inline-seat一节提到它。没有这套脚本时，接力照常用ficc-writer卡起草和修补。
 - 维护说明`MAINTAINERS.md`：作者放在shared-protocols下的维护笔记，不随公开版发布。`skills/ficc-voice/`下的`references/FICCVoice-rationale.md`、`scripts/README.md`和`scripts/budget_check.py`提到它，指的是作者改规则时守的规矩，脚本不读这个文件。
+- 1.3.0撤下的三个文件：`skills/ficc-voice/references/`下的`source-style-notes.md`和`writing-checklist.md`，以及`scripts/cjk_space.py`。前两份作者已经归档，规则文件不再指向它们。`cjk_space.py`按作者2026-11-07的裁定退役，中文与英文、数字之间不留空格的约定不变，改由人工整理。
 
 ## 版本与许可证
 
-当前版本1.2.0（2026-11-07），见 `VERSION` 和 `CHANGELOG.md`。
+当前版本1.3.0（2026-11-14），见 `VERSION` 和 `CHANGELOG.md`。
 
 许可证分两部分，详见 `LICENSE`：
 

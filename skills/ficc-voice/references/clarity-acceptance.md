@@ -23,10 +23,9 @@ The writer runs these before submitting a node, and T0 runs them after assemblin
 
 ```sh
 python3 ~/.claude/skills/ficc-voice/scripts/voice_check.py <稿件路径> --clarity --names <提纲路径>
-python3 ~/.claude/skills/ficc-voice/scripts/cjk_space.py <稿件路径> --check
 ```
 
-- H1 internal working labels, H5 quotation-mark format, H6 semicolons in prose, and spacing errors between Chinese and English must be fixed. Necessary retentions in verbatim quotes of the original go to T0.
+- H1 internal working labels, H5 quotation-mark format and H6 semicolons in prose must be fixed. Necessary retentions in verbatim quotes of the original go to T0.
 - In clarity mode, H2 roadmap, H3 short list, and H4 antithetical headings are only listed for review. The real problems are reporting the arrangement without a judgment, using labels in place of statements, and distorting the meaning for symmetry. Clear steps, complete points, and parallel headings that aid comparison may stay.
 - “！” rows (user ruling 2026-10-13): only “不是……而是” (not … but; criterion FICCVoice.md V36) and the dash (FICCVoice.md V19) are handled before submission, until the row no longer carries “！”; the rest are only counted. This is not a clarity standard. A fix must not harm the original meaning; report conflicts, such as a sentence kept verbatim, to T0.
 - Verify the hazard list (`隐患清单`) item by item. Sentence length, clause count, noun-string length, and character frequency are only search clues; set no new thresholds (except the ten-sentence paragraph cap of FICCCompose.md C08). A hit with no reason for a misreading may pass once explained.

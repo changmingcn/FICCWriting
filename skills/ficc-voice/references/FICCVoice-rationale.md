@@ -1,6 +1,6 @@
 # FICCVoice rationale and distinctions
 
-This file holds the rationale and examples moved out of FICCVoice.md in the terse rewrite, in sections by rule number. Each section first gives the original sentence, then one sentence on which rule it supports. The original sentences come from the FICCVoice.md then in force (first 16 hex digits of sha256: c62441e813405456). Ledger numbers are in （作者草稿）. Here each original sentence appears in English translation, and Chinese example phrases inside it stay in Chinese with an English gloss. The Chinese originals are in references/zh/FICCVoice-rationale.md. Write per FICCVoice.md. Consult this file only when a rule is unclear.
+This file holds the rationale and examples moved out of FICCVoice.md in the terse rewrite, in sections by rule number. Each section first gives the original sentence, then one sentence on which rule it supports. The original sentences come from the FICCVoice.md then in force (first 16 hex digits of sha256: c62441e813405456). Ledger numbers are in （作者草稿）. Here each original sentence appears in English translation, and Chinese example phrases inside it stay in Chinese with an English gloss. The Chinese originals are kept in the author's archive and are not included in this release. Write per FICCVoice.md. Consult this file only when a rule is unclear.
 
 ## Introduction
 

@@ -139,3 +139,7 @@ Development record kept by the author; not included in the public release.
 ### 同日另一件（不在本节三件之内）
 
 ## 60 2026-11-06第二波：强重叠并入、归属错迁出、流程话删改、歧义修、V54分清同缝两层与跨缝嵌套
+
+## 61 2026-11-07标题序数五级数字化、附录编号、cjk_space退役
+
+## 62 2026-11-11写作席切片：上级链默认内容、--path开关、节收尾指派

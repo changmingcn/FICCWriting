@@ -228,7 +228,9 @@ RLEG = re.compile(r'(?<![A-Za-z0-9_-])(%s)(?:\.md)?(?:\]\([^)]*\))?`?\s?'
 CONN = r'(?:\s?(?:和|与|及|或|、|到|至|—|–)\s?|,\s(?:(?:and|or)\s)?|\s(?:and|or|to)\s)'   # ", and 8.3" too
 RCONT = re.compile('(' + CONN + r')(%s)%s' % (NUMS, GUARD))
 RANGE = ('到', '至', '—', '–', 'to')   # a range must ascend: "10.3 to 9.3" is a move, not a range
-B_DOT = re.compile(r'(?<![A-Za-z0-9_./\-$¥])(\d{1,2}\.\d{1,2}(?:\.\d{1,2})?)%s' % GUARD)
+# a dotted number right after an opening curly quote or a backtick is a quoted example, not a bare reference
+# (FICCOutline O83 “1.1”, “1.1.1”; 2026-11-07)
+B_DOT = re.compile(r'(?<![A-Za-z0-9_./\-$¥“`])(\d{1,2}\.\d{1,2}(?:\.\d{1,2})?)%s' % GUARD)
 B_SECT = re.compile(r'(?:(?<![A-Za-z])[Ss]ection\s|(?P<di>第\s?))(\d{1,2}(?:\.\d{1,2}){0,2})(?(di)\s?节)%s' % GUARD)
 B_SEE = re.compile(r'(?:(?<=见)|(?<=[Ss]ee ))(\d{1,2})(?=[。，；：）、)\s,.;:]|$|和|与|及)')
 HEADNUM = re.compile(r'^#{2,4} (%s)(?:\s+(.*?))?\s*$' % NUMS)
@@ -1280,7 +1282,8 @@ FIXTURE = {
                       '### 1.2 Position\n\nBody; “1.2 Position” is quoted.\n\n## 2 Root claim\n\n'
                       'Section 2 of this file; back to (2.1). Moved from FICCOutline 2.1 to 1.2.\n\n### 2.1 Define the question\n\nBody.\n'
                       '\n- **O01** **Write the claim first.** See V02 and S01.\n'
-                      'Yields of 1.5–2.0% are data, not sections; see 1.1–1.2, and 2.\n',
+                      'Yields of 1.5–2.0% are data, not sections; see 1.1–1.2, and 2.\n'
+                      'Examples “1.1.1” and `1.1.1` are quoted, not refs; see 1.1.\n',
     'FICCStructure.md': '# FICCStructure\n\n## 1 Set position\n\nSee FICCOutline.md 2.1 and 1.2; FICCOutline 1到2.\n\n'
                         '### 1.1 Ask the task\n\nBody.\n\n- **S01** **Ask the task.** Not a rule: V02a? RV05, V123, S01x.\n',
     'FICCVoice.md': '# FICCVoice\n\n## 1 Who speaks\n\nBody.\n\n## 2 How to state a judgment\n\nBody, 我们认为.\n'
@@ -1397,6 +1400,9 @@ def selftest():
              sorted(r['raw'] for r in res['refs'] if r['file'] == 'FICCOutline.md' and r['line'] == 24)
              == ['1.1', '1.2', '2'] and all(r['result'] == 'OK' for r in res['refs']
                                             if r['file'] == 'FICCOutline.md' and r['line'] == 24)),
+            ('a dotted number right after “ or in backticks is not a ref (“1.1.1”, `1.1.1`); a bare see 1.1 still is',
+             [(r['raw'], r['kind'], r['result']) for r in res['refs'] if r['file'] == 'FICCOutline.md' and r['line'] == 25]
+             == [('1.1', 'B', 'OK')]),
             ('counts 3 MISSING (broken link + legacy + FICCCompose 9), 1 STALE?',
              (res['counts']['missing'], res['counts']['stale']) == (3, 1)),
             ('exit code 1', res['exit_code'] == 1),

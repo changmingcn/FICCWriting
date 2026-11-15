@@ -5,16 +5,16 @@
   "files": {
     "skills/ficc-voice/FICCVoice.md": 42268,
     "skills/ficc-voice/FICCCompose.md": 31171,
-    "skills/ficc-voice/FICCOutline.md": 52345,
+    "skills/ficc-voice/FICCOutline.md": 53293,
     "skills/ficc-voice/FICCStructure.md": 41577,
     "skills/ficc-voice/references/compose-excerpt.md": 7189,
-    "skills/ficc-voice/references/clarity-acceptance.md": 4512,
-    "agents/ficc-outliner.md": 3173,
-    "agents/ficc-structurer.md": 2549,
-    "agents/ficc-composer.md": 2503,
-    "agents/ficc-writer.md": 2606,
-    "skills/ficc-voice/references/voice-excerpt-patch.md": 15488,
-    "skills/ficc-voice/references/voice-excerpt-polish.md": 18385,
+    "skills/ficc-voice/references/clarity-acceptance.md": 4395,
+    "agents/ficc-outliner.md": 3571,
+    "agents/ficc-structurer.md": 3056,
+    "agents/ficc-composer.md": 2843,
+    "agents/ficc-writer.md": 3262,
+    "skills/ficc-voice/references/voice-excerpt-patch.md": 15453,
+    "skills/ficc-voice/references/voice-excerpt-polish.md": 18350,
     "skills/ficc-voice/references/voice-excerpt-draft.md": 11054,
     "skills/ficc-voice/references/voice-excerpt-coldread.md": 14402
   },
@@ -302,6 +302,64 @@
         "skills/ficc-voice/references/voice-excerpt-coldread.md": [
           14661,
           14402
+        ]
+      }
+    },
+    {
+      "date": "2026-11-07",
+      "reason": "user ruling 2026-11-07: heading ordinals numeric by depth, five levels (O83 grows); cjk_space step retired (clarity-acceptance, patch and polish excerpts, writer card shrink)",
+      "changes": {
+        "skills/ficc-voice/FICCOutline.md": [
+          52345,
+          52843
+        ],
+        "skills/ficc-voice/references/clarity-acceptance.md": [
+          4512,
+          4395
+        ],
+        "agents/ficc-writer.md": [
+          2606,
+          2579
+        ],
+        "skills/ficc-voice/references/voice-excerpt-patch.md": [
+          15488,
+          15453
+        ],
+        "skills/ficc-voice/references/voice-excerpt-polish.md": [
+          18385,
+          18350
+        ]
+      }
+    },
+    {
+      "date": "2026-11-11",
+      "reason": "user ruling 2026-11-11 (“交接部分你的意见也很重要，我认为值得做”; “加，开始吧”): the section-close assignment line under O31 (`收尾：<节点编号>；…`, waiver `收尾：不设（<裁定>）`), +450 chars after the review fix round (T0 R16); no other cap changed",
+      "changes": {
+        "skills/ficc-voice/FICCOutline.md": [
+          52843,
+          53293
+        ]
+      }
+    },
+    {
+      "date": "2026-11-14",
+      "reason": "user grant 2026-11-14 (skill-system restructure: handoffs carry state): each relay card's output section follows shared-protocols/handoff.md §4 (Head, then the card's sheet, then Trace/Lesson/Open lines) and its write scope names its result file; four card caps raised to post-change sizes; no rule file changed",
+      "changes": {
+        "agents/ficc-outliner.md": [
+          3173,
+          3571
+        ],
+        "agents/ficc-structurer.md": [
+          2549,
+          3056
+        ],
+        "agents/ficc-composer.md": [
+          2503,
+          2843
+        ],
+        "agents/ficc-writer.md": [
+          2579,
+          3262
         ]
       }
     }

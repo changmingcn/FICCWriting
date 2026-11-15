@@ -31,15 +31,23 @@
     数：去掉日期后的阿拉伯数字（去千分位、去小数末尾的零），数字后面紧跟的单位（bp、bn、tn、% 等）不截断数字：25bp 抽成 25，4.2bp 抽成 4.2；按数值字符串比，不按子串。
         索引里的日期和分数各位不拿来满足提纲的金额：9月22日、09-22 里的 22 不算有 22 万亿；1/3 里的 3 只能报待核。
     英文名称：大写字母开头的拉丁词或词组（如 JPMorgan、Goldman Sachs、ACM、T10YIE）；区分大小写，按子串比。
-不抽：编号（R12、G2、N1.2、RT13、S02、L123、Q3 这类字母加数字）、三段以上的节号（6.3.1）、反引号里的内容、中文数词、中文机构名。
+不抽：编号（R12、G2、N1.2、RT13、S02、L123、Q3 这类字母加数字）、三段以上的节号（6.3.1）、反引号里的内容、中文数词、中文机构名，
+    以及标题序数（2026-11-07 起标题按层用数字序数）：节点标题行（# 号加 N 编号）里紧跟节点号和其后〔…〕标记的“1”“1.1”“附录1”，
+    如“## N1 1 外部账户〔标题〕”“### N1.1 1.1 零售定价〔标题〕”“## N9 附录1 出处〔标题〕”；字段行里紧跟〔标题〕标签的，
+    如“- 〔标题〕1.1.1 一例”。序数每段一两位数字，后面要隔空白或到行尾（“## N1 2025年的账〔标题〕”的2025照抽）；
+    标题行里序数的段数要等于 # 号数减一（## 一段、### 两段……），“附录”开头的不论段数，段数不符的照抽（“### N1.1 35 个基点〔标题〕”的35照抽）；
+    残余：〔标题〕字段行不看段数，标题行里第一个数碰巧是该层段数的也当序数不抽（“## N3 35 个基点〔标题〕”的35、“### N3.1 1.5 倍杠杆〔标题〕”的1.5）；
+    主旨行不动。旧中文序号“一、”“（一）”本来就不是数，照旧。
 约定：提纲的节点编号只用 N 前缀；引别的文件的行号、文件号放进反引号，否则会被当数报出。
 顺序行（--outline 同一份提纲，只看提纲，不看索引）：每个有“任务”行的节点（# 标题下一节；一节里有几行“**主旨**”就按主旨行再分），
     要有“顺序：”行（“- **顺序**：”“- 顺序：”，或合写的“任务与顺序：”、任务行里的“顺序：”）；段群级用“挂法”行合写任务与顺序的，算有。
     缺了或只有空行、“待补充”，报“顺序行缺失：<节点>”；顺序行除关系库类别名、节点号和虚词外不剩内容（如“并列”“和N1是因果关系”），
     报“顺序行只写关系名：<节点>”；顺序行里既没有相邻节点的编号（N 编号或 2.3 这类节号），也没有相邻节点主旨行里的实词
     （两字汉字词，不含虚字；三个字母以上的英文词；两位以上的数），报“顺序行只写套话：<节点>”（如“承上启下”）。
-    相邻节点标题里的中文序号（“### N2 二、……”的“二”、“（二）”，以及“## 2 ……”整数节号对应的“二”）也算它的编号，顺序行里单独出现即可（“二到五”“七之前”算；
-    “二者”“一半”“第一”不算）。
+    相邻节点标题里的序号也算它的编号，顺序行里单独出现即可：中文序号（“### N2 二、……”的“二”、“（二）”）；
+    数字序数（2026-11-07 起，“### N1.2 1.2 ……”的“1.2”、“## N2 2 ……”和“## 2 ……”的“2”、“## N9 附录1 ……”的“附录1”），
+    顺序行里要写整个序数，前后不连数字、点或字母（“接1.2”算，“1.25”“N1.2”“附录12”不算 1.2、附录1）；
+    整数序数还对应中文数字（“2”对应“二”，“二到五”“七之前”算；“二者”“一半”“第一”不算）。
     相邻节点：同级的前一个、后一个节点；某一边没有同级，取文中紧挨着的那个节点；整份只有一个节点时不查套话。类别名：FICCStructure.md 1.1 二十一类（中文名照 glossary.md，连同“与”前后两半）
     和 connectives.md“现行连接词表”的行名（并列、承接、递进、转折、让步、因果、推断、目的、假设、选择、条件等）。
     兼容（FICCOutline O38）：2026-10-17 以前的旧提纲（全文没有一行“顺序：”），节点和任务行同级的“关系：”行算顺序与关系合写，不报缺失，
@@ -86,6 +94,11 @@ CAND_RE = re.compile(r"^\s*(?:#+\s*)?(?:[-*+]\s+|\d+[.、)]\s*)?(?:\*{1,2}|_{1,2
                      r"(?:主旨[句行段]?|名字表)\s*(?:\*{1,2}|_{1,2})?\s*(?:[（(][^）)]*[）)])?"
                      r"\s*(?:\*{1,2}|_{1,2})?\s*(?:[:：]|$)")
 HEAD_RE = re.compile(r"^(#+)\s")
+# 标题序数（2026-11-07 起五层数字序数）：节点标题行里紧跟 N 编号和其后〔…〕标记的“1”“1.1”“附录1”，字段行里紧跟〔标题〕标签的
+# “1.1.1”，后面隔空白或到行尾，是序数不是数（见文件头“不抽”）。每段一两位数字，不吃“2025年”这类年份。
+ORD_TOKEN = r"(?:附录)?\d{1,2}(?:\.\d{1,2})*(?=\s|$)"
+HEAD_ORDINAL_RE = re.compile(r"^(\s*(#+)\s*N\d+(?:\.\d+)*[a-z]?(?![A-Za-z0-9.])\s*(?:〔[^〕]*〕\s*)*)(" + ORD_TOKEN + ")")
+FIELD_ORDINAL_RE = re.compile(r"^(\s*(?:[-*+]\s+)?〔标题〕\s*)" + ORD_TOKEN)
 
 
 def norm_num(intpart, frac):
@@ -101,6 +114,20 @@ def nnum(s):
 
 def strip_ids(text):
     return SECNUM_RE.sub(" ", ID_RE.sub(" ", CODE_RE.sub(" ", text)))
+
+
+def strip_ordinal(line):
+    """提纲目标行去掉标题序数（节点标题行、〔标题〕字段行）；主旨行和别的行原样返回。
+    标题行的序数段数要等于 # 号数减一（## 一段、### 两段……），或以“附录”开头，才去掉；〔标题〕字段行不看段数。"""
+    if "**主旨**" in line:
+        return line
+
+    def head(m):
+        tok = m.group(3)
+        if tok.startswith("附录") or tok.count(".") + 1 == len(m.group(2)) - 1:
+            return m.group(1) + " "
+        return m.group(0)
+    return FIELD_ORDINAL_RE.sub(r"\1 ", HEAD_ORDINAL_RE.sub(head, line, count=1), count=1)
 
 
 def classify_short(a, sep, b, before, after):
@@ -314,7 +341,7 @@ def run(outline_text, against_texts):
         return None
 
     for ln, line in scan(outline_text.splitlines())[0]:
-        e = extract(line)
+        e = extract(strip_ordinal(line))
         for y, m, d in sorted(e["dates"], key=str):
             tok = f"{y + '年' if y else ''}{m}月{d}日"
             if y:
@@ -420,10 +447,14 @@ STOP_CHARS = set("的是在了和与及或也都这那其此之一不有为把�
                  "看要会能可来去出起过着地得给")
 NODE_ID_RE = re.compile(r"N\d+(?:\.\d+)*|(?<![\d.])\d+\.\d+(?:\.\d+)*(?![\d.])")
 CN_NUM = "一二三四五六七八九十"
-HEAD_ORD_RE = re.compile(r"^#+\s*(?:N?\d+(?:\.\d+)*\s+)?(?:〔[^〕]*〕\s*)?(?:([%s]{1,3})、|[（(]([%s]{1,3})[）)])" % (CN_NUM, CN_NUM))
+# 标题序号：中文“二、”“（二）”（第 1、2 组），或 2026-11-07 起的数字序数“2”“1.2”“附录1”（第 3 组，后面隔空白或到行尾）。
+HEAD_ORD_RE = re.compile(r"^#+\s*(?:N?\d+(?:\.\d+)*\s+)?(?:〔[^〕]*〕\s*)*(?:([%s]{1,3})、|[（(]([%s]{1,3})[）)]|(%s))"
+                         % (CN_NUM, CN_NUM, ORD_TOKEN))
 CN_ORD = [""] + list(CN_NUM) + ["十" + c for c in CN_NUM[:9]] + ["二十"]   # 1→一 … 20→二十：“## 2 ……”这种整数节号的中文序号
 ORD_IN_LINE = re.compile(r"(?<![%s第])([%s]{1,3})(?![%s者手级成半方些个种次是起样致般直定旦边面切共同])"
                          % (CN_NUM, CN_NUM, CN_NUM))
+# 顺序行里的数字序数：整个序数，前后不连数字、点或字母（“接1.2”“附录1之后”；“1.25”“N1.2”不算 1.2）。
+NUM_ORD_IN_LINE = re.compile(r"(?<![\d.A-Za-z第])((?:附录)?\d{1,2}(?:\.\d{1,2})*)(?![\d.A-Za-z个年月日倍次种条项点者])")
 
 
 def content_terms(text):
@@ -494,7 +525,7 @@ def order_issues(lines):
         if h:
             om = HEAD_ORD_RE.match(s)
             cur = {"label": node_label(s), "rows": [], "claim": False, "level": len(h.group(1)), "text": "",
-                   "ord": (om.group(1) or om.group(2)) if om else None}
+                   "ord": (om.group(1) or om.group(2) or om.group(3)) if om else None}
             blocks.append(cur)
             continue
         if cur is None:
@@ -563,9 +594,13 @@ def order_issues(lines):
         if not nb:
             continue  # 整份只有一个节点：没有相邻节点可比
         ids = {x["label"].split("·")[0] for x in nb}
-        ords = {x["ord"] for x in nb if x.get("ord")}
+        all_ords = {x["ord"] for x in nb if x.get("ord")}
+        num_ords = {o for o in all_ords if o[0] not in CN_NUM}   # 数字序数“2”“1.2”“附录1”
+        ords = all_ords - num_ords
         ords |= {CN_ORD[int(x["label"])] for x in nb if x["label"].isdigit() and 0 < int(x["label"]) < len(CN_ORD)}
-        if ids & set(NODE_ID_RE.findall(src[4])) or ords & set(ORD_IN_LINE.findall(src[4])):
+        ords |= {CN_ORD[int(o)] for o in num_ords if o.isdigit() and 0 < int(o) < len(CN_ORD)}  # 整数序数也对中文数字
+        if ids & set(NODE_ID_RE.findall(src[4])) or ords & set(ORD_IN_LINE.findall(src[4])) \
+                or num_ords & set(NUM_ORD_IN_LINE.findall(src[4])):
             continue
         near_terms = set().union(*(content_terms(x["text"].split("**主旨**", 1)[-1]) for x in nb))
         if content_terms(src[4]) & near_terms:
