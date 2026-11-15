@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- scripts/budget.json: the caps of the four relay cards are now their character counts (outliner 3,381, structurer 2,936, composer 2,754, writer 3,157), the unit budget_check.py measures. 1.3.0 carried the cards' byte sizes, which left these caps 89 to 190 characters loose.
+
 ## 1.3.0 (2026-11-14)
 
 Rebuilt from the author's tree of 2026-11-14 with the release rules of 1.2.0, changed as listed under “Release build”. It carries the author's changes of 2026-11-07 to 2026-11-14: numeric heading ordinals, the section-close line on the outline, the ancestor chain in outline slices, the merged check wave, and the 2026-11-14 restructure of how seats hand work over. Three files are gone (references/source-style-notes.md, references/writing-checklist.md, scripts/cjk_space.py) and the three placeholder files under references/zh/ with them; no file is new. FICCVoice.md and FICCCompose.md are unchanged.
