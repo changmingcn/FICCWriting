@@ -1,10 +1,10 @@
 {
- "about": "tieout.py 回归集（F-S，2026-10-17）。合并三份探针文件的每个用例与对照：tieout-probes.json（与 baseline-tieout-probes.json 逐字节相同，第二轮）、hand-review.json 28 例（第三轮）、parent-probes.json 5 例（主会话），加自检五组和 F-S 新例。预期：exit 退出码；misses 未匹配 [类, 词元]；pending 待核词元；unchecked 写法不认行数；targets 目标行数（有才比）。控制例取当时观察值；缺陷例按修复后的应有结果写。　S2（2026-10-17 第四轮）：加 hand-review.json independent_probes 16 例（r4.*）与 parent-probes.json 6 例（r4p.*），缺陷例按修复后的应有结果写（分数、日期、歧义各保类型，跨类型只报待核；bn、tn 等单位区间等价）；S2 新例 s2.*（类型 7、单位 22）与顺序行检查 o.*（正例 7、反例 6）。　R5 F5：顺序行套话检查 o.filler_fails（正例）与 o.neighbour_id_passes、o.keyword_passes、o.dotted_id_passes、o.ordinal_alias_passes（反例）。　N5（2026-11-07，数字序数）：标题行和〔标题〕字段行里的数字序数（“1”“1.1”“附录1”）不当数，顺序行里相邻节点的数字序数算编号，新例 n5.*（十一例）。",
+ "about": "tieout.py 回归集（F-S，2026-10-17）。合并作者三份探针文件（本包不收）的每个用例与对照：第二轮探针（两份逐字节相同的副本）、第三轮评审探针 28 例、主会话探针 5 例，加自检五组和 F-S 新例。预期：exit 退出码；misses 未匹配 [类, 词元]；pending 待核词元；unchecked 写法不认行数；targets 目标行数（有才比）。控制例取当时观察值；缺陷例按修复后的应有结果写。　S2（2026-10-17 第四轮）：加第三轮评审探针的 independent_probes 16 例（r4.*）与主会话探针 6 例（r4p.*），缺陷例按修复后的应有结果写（分数、日期、歧义各保类型，跨类型只报待核；bn、tn 等单位区间等价）；S2 新例 s2.*（类型 7、单位 22）与顺序行检查 o.*（正例 7、反例 6）。　R5 F5：顺序行套话检查 o.filler_fails（正例）与 o.neighbour_id_passes、o.keyword_passes、o.dotted_id_passes、o.ordinal_alias_passes（反例）。　N5（2026-11-07，数字序数）：标题行和〔标题〕字段行里的数字序数（“1”“1.1”“附录1”）不当数，顺序行里相邻节点的数字序数算编号，新例 n5.*（十一例）。",
  "runner": "python3 test_tieout.py（走 CLI）；python3 tieout.py --self-test（进程内）跑同一份用例",
  "cases": [
   {
    "id": "tp.bp_truncation",
-   "source": "tieout-probes.json#bp_truncation",
+   "source": "第二轮探针#bp_truncation",
    "outline": "- **主旨**：收益率上升25bp。",
    "against": [
     "收益率上升25个基点。"
@@ -19,7 +19,7 @@
   },
   {
    "id": "tp.bp_truncation.c1",
-   "source": "tieout-probes.json#bp_truncation.controls[0]",
+   "source": "第二轮探针#bp_truncation.controls[0]",
    "outline": "- **主旨**：收益率上升25bp。",
    "against": [
     "收益率上升2个基点。"
@@ -39,7 +39,7 @@
   },
   {
    "id": "tp.bp_truncation.c2",
-   "source": "tieout-probes.json#bp_truncation.controls[1]",
+   "source": "第二轮探针#bp_truncation.controls[1]",
    "outline": "- **主旨**：收益率上升25 bp。",
    "against": [
     "收益率上升25个基点。"
@@ -53,7 +53,7 @@
   },
   {
    "id": "tp.decimal_bp_truncation",
-   "source": "tieout-probes.json#decimal_bp_truncation",
+   "source": "第二轮探针#decimal_bp_truncation",
    "outline": "- **主旨**：收益率上升4.2bp。",
    "against": [
     "收益率上升4.2个基点。"
@@ -68,7 +68,7 @@
   },
   {
    "id": "tp.explicit_year",
-   "source": "tieout-probes.json#explicit_year",
+   "source": "第二轮探针#explicit_year",
    "outline": "- **主旨**：2026年9月30日见顶。",
    "against": [
     "| E1 | 2025-09-30 见顶 |"
@@ -88,7 +88,7 @@
   },
   {
    "id": "tp.explicit_year.c1",
-   "source": "tieout-probes.json#explicit_year.controls[0]",
+   "source": "第二轮探针#explicit_year.controls[0]",
    "outline": "- **主旨**：2026年9月30日见顶。",
    "against": [
     "| E1 | 2026-09-30 见顶 |"
@@ -102,7 +102,7 @@
   },
   {
    "id": "tp.explicit_year.c2",
-   "source": "tieout-probes.json#explicit_year.controls[1]",
+   "source": "第二轮探针#explicit_year.controls[1]",
    "outline": "- **主旨**：2026年9月30日见顶。",
    "against": [
     "| E1 | 2025-09-29 见顶 |"
@@ -121,7 +121,7 @@
   },
   {
    "id": "tp.date_number_leak",
-   "source": "tieout-probes.json#date_number_leak",
+   "source": "第二轮探针#date_number_leak",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 09-22 |"
@@ -141,7 +141,7 @@
   },
   {
    "id": "tp.date_number_leak.c1",
-   "source": "tieout-probes.json#date_number_leak.controls[0]",
+   "source": "第二轮探针#date_number_leak.controls[0]",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 09/22 |"
@@ -160,7 +160,7 @@
   },
   {
    "id": "tp.date_number_leak.c2",
-   "source": "tieout-probes.json#date_number_leak.controls[1]",
+   "source": "第二轮探针#date_number_leak.controls[1]",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 9月22日 |"
@@ -179,7 +179,7 @@
   },
   {
    "id": "tp.date_number_leak.c3",
-   "source": "tieout-probes.json#date_number_leak.controls[2]",
+   "source": "第二轮探针#date_number_leak.controls[2]",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 增加22万亿美元 |"
@@ -193,7 +193,7 @@
   },
   {
    "id": "tp.plain_claim_zero_coverage",
-   "source": "tieout-probes.json#plain_claim_zero_coverage",
+   "source": "第二轮探针#plain_claim_zero_coverage",
    "outline": "- 主旨：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -209,7 +209,7 @@
   },
   {
    "id": "tp.plain_claim_zero_coverage.c1",
-   "source": "tieout-probes.json#plain_claim_zero_coverage.controls[0]",
+   "source": "第二轮探针#plain_claim_zero_coverage.controls[0]",
    "outline": "- **主旨**：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -228,7 +228,7 @@
   },
   {
    "id": "tp.plain_claim_zero_coverage.c2",
-   "source": "tieout-probes.json#plain_claim_zero_coverage.controls[1]",
+   "source": "第二轮探针#plain_claim_zero_coverage.controls[1]",
    "outline": "- **主旨：**4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -243,7 +243,7 @@
   },
   {
    "id": "tp.name_table_zero_coverage",
-   "source": "tieout-probes.json#name_table_zero_coverage",
+   "source": "第二轮探针#name_table_zero_coverage",
    "outline": "**名字表**\n\n| 名字 | 指什么与口径 | 本篇写法 | 不许用的叫法 |\n|---|---|---|---|\n| Barclays | 机构 | Barclays | 巴克莱 |",
    "against": [
     "无相关资料"
@@ -258,7 +258,7 @@
   },
   {
    "id": "tp.name_table_zero_coverage.c1",
-   "source": "tieout-probes.json#name_table_zero_coverage.controls[0] (**名字表** -> ## 名字表)",
+   "source": "第二轮探针#name_table_zero_coverage.controls[0] (**名字表** -> ## 名字表)",
    "outline": "## 名字表\n\n| 名字 | 指什么与口径 | 本篇写法 | 不许用的叫法 |\n|---|---|---|---|\n| Barclays | 机构 | Barclays | 巴克莱 |",
    "against": [
     "无相关资料"
@@ -277,7 +277,7 @@
   },
   {
    "id": "tp.global_token_boundary",
-   "source": "tieout-probes.json#global_token_boundary",
+   "source": "第二轮探针#global_token_boundary",
    "outline": "- **主旨**：Citi 预计赤字为 4.2 万亿美元。",
    "against": [
     "| E1 | Citi 预计赤字为 2 万亿美元 |\n| E2 | Goldman Sachs 预计通胀为 4.2% |"
@@ -292,7 +292,7 @@
   },
   {
    "id": "tp.global_token_boundary.c1",
-   "source": "tieout-probes.json#global_token_boundary.control (E2 deleted)",
+   "source": "第二轮探针#global_token_boundary.control (E2 deleted)",
    "outline": "- **主旨**：Citi 预计赤字为 4.2 万亿美元。",
    "against": [
     "| E1 | Citi 预计赤字为 2 万亿美元 |"
@@ -311,7 +311,7 @@
   },
   {
    "id": "self.基础",
-   "source": "tieout.py SELF_CASES / tieout-probes.json#self_test",
+   "source": "tieout.py SELF_CASES / 第二轮探针#self_test",
    "outline": "# 提纲\n## 名字表\n- 期限溢价（ACM）：按 ACM 模型算\n## 根主旨\n- **主旨**：9月22日到30日长端领涨，长端升了39个基点（R01，见 6.3.1），JPMorgan 说政策路径占40。\n- **主旨**：Barclays 估计4.2万亿。〔标题〕长端：九月先涨在加息\n### N1 〔标题 一、〕Citi 看长端：九月先涨在加息\n",
    "against": [
     "| E1 | 长端 9月30日 5.64%，升39个基点 | 09-22 起长端领涨 | ACM | JPMorgan 2026-09-12 政策路径占 40 |"
@@ -415,7 +415,7 @@
   },
   {
    "id": "hr.normal_full",
-   "source": "hand-review.json#normal_full",
+   "source": "第三轮评审探针#normal_full",
    "outline": "## 名字表\n| 名字 | 机构 |\n| Citi | 银行 |\n## 根\n- **主旨**：2026年9月30日，Citi预计增加4.2万亿美元，收益率升25bp。",
    "against": [
     "Citi 2026-09-30 增加4.2万亿美元，收益率升25个基点。"
@@ -430,7 +430,7 @@
   },
   {
    "id": "hr.bp_bad",
-   "source": "hand-review.json#bp_bad",
+   "source": "第三轮评审探针#bp_bad",
    "outline": "- **主旨**：收益率上升25bp。",
    "against": [
     "收益率上升2个基点。"
@@ -450,7 +450,7 @@
   },
   {
    "id": "hr.bp_good",
-   "source": "hand-review.json#bp_good",
+   "source": "第三轮评审探针#bp_good",
    "outline": "- **主旨**：收益率上升25bp。",
    "against": [
     "收益率上升25个基点。"
@@ -465,7 +465,7 @@
   },
   {
    "id": "hr.bp_decimal_bad",
-   "source": "hand-review.json#bp_decimal_bad",
+   "source": "第三轮评审探针#bp_decimal_bad",
    "outline": "- **主旨**：收益率上升4.2bp。",
    "against": [
     "收益率上升4个基点。"
@@ -485,7 +485,7 @@
   },
   {
    "id": "hr.bp_decimal_good",
-   "source": "hand-review.json#bp_decimal_good",
+   "source": "第三轮评审探针#bp_decimal_good",
    "outline": "- **主旨**：收益率上升4.2bp。",
    "against": [
     "收益率上升4.2个基点。"
@@ -500,7 +500,7 @@
   },
   {
    "id": "hr.explicit_year_bad",
-   "source": "hand-review.json#explicit_year_bad",
+   "source": "第三轮评审探针#explicit_year_bad",
    "outline": "- **主旨**：2026年9月30日见顶。",
    "against": [
     "| E1 | 2025-09-30 见顶 |"
@@ -520,7 +520,7 @@
   },
   {
    "id": "hr.explicit_year_good",
-   "source": "hand-review.json#explicit_year_good",
+   "source": "第三轮评审探针#explicit_year_good",
    "outline": "- **主旨**：2026年9月30日见顶。",
    "against": [
     "| E1 | 2026-09-30 见顶 |"
@@ -535,7 +535,7 @@
   },
   {
    "id": "hr.yearless_allowed",
-   "source": "hand-review.json#yearless_allowed",
+   "source": "第三轮评审探针#yearless_allowed",
    "outline": "- **主旨**：2026年9月30日见顶。",
    "against": [
     "| E1 | 09-30 见顶 |"
@@ -551,7 +551,7 @@
   },
   {
    "id": "hr.short_date_dash_no_amount",
-   "source": "hand-review.json#short_date_dash_no_amount",
+   "source": "第三轮评审探针#short_date_dash_no_amount",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 09-22 |"
@@ -571,7 +571,7 @@
   },
   {
    "id": "hr.short_date_slash_no_amount",
-   "source": "hand-review.json#short_date_slash_no_amount",
+   "source": "第三轮评审探针#short_date_slash_no_amount",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 09/22 |"
@@ -591,7 +591,7 @@
   },
   {
    "id": "hr.short_date_chinese_no_amount",
-   "source": "hand-review.json#short_date_chinese_no_amount",
+   "source": "第三轮评审探针#short_date_chinese_no_amount",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 9月22日 |"
@@ -611,7 +611,7 @@
   },
   {
    "id": "hr.amount_present",
-   "source": "hand-review.json#amount_present",
+   "source": "第三轮评审探针#amount_present",
    "outline": "- **主旨**：增加22万亿美元。",
    "against": [
     "| E1 | 增加22万亿美元 |"
@@ -626,7 +626,7 @@
   },
   {
    "id": "hr.plain_claim_zero",
-   "source": "hand-review.json#plain_claim_zero",
+   "source": "第三轮评审探针#plain_claim_zero",
    "outline": "- 主旨：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -641,7 +641,7 @@
   },
   {
    "id": "hr.bold_colon_claim_zero",
-   "source": "hand-review.json#bold_colon_claim_zero",
+   "source": "第三轮评审探针#bold_colon_claim_zero",
    "outline": "- **主旨：**4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -656,7 +656,7 @@
   },
   {
    "id": "hr.recognized_claim_missing",
-   "source": "hand-review.json#recognized_claim_missing",
+   "source": "第三轮评审探针#recognized_claim_missing",
    "outline": "- **主旨**：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -676,7 +676,7 @@
   },
   {
    "id": "hr.bold_names_zero",
-   "source": "hand-review.json#bold_names_zero",
+   "source": "第三轮评审探针#bold_names_zero",
    "outline": "**名字表**\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
    "against": [
     "无相关资料"
@@ -691,7 +691,7 @@
   },
   {
    "id": "hr.heading_names_missing",
-   "source": "hand-review.json#heading_names_missing",
+   "source": "第三轮评审探针#heading_names_missing",
    "outline": "## 名字表\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
    "against": [
     "无相关资料"
@@ -711,7 +711,7 @@
   },
   {
    "id": "hr.heading_names_present",
-   "source": "hand-review.json#heading_names_present",
+   "source": "第三轮评审探针#heading_names_present",
    "outline": "## 名字表\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
    "against": [
     "Barclays"
@@ -726,7 +726,7 @@
   },
   {
    "id": "hr.zero_target",
-   "source": "hand-review.json#zero_target",
+   "source": "第三轮评审探针#zero_target",
    "outline": "普通文本，无主旨行和名字表。",
    "against": [
     "无相关资料"
@@ -741,7 +741,7 @@
   },
   {
    "id": "hr.mixed_plain_claim",
-   "source": "hand-review.json#mixed_plain_claim",
+   "source": "第三轮评审探针#mixed_plain_claim",
    "outline": "- **主旨**：市场变化。\n- 主旨：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -756,7 +756,7 @@
   },
   {
    "id": "hr.mixed_heading_claim",
-   "source": "hand-review.json#mixed_heading_claim",
+   "source": "第三轮评审探针#mixed_heading_claim",
    "outline": "- **主旨**：市场变化。\n### 主旨：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -772,7 +772,7 @@
   },
   {
    "id": "hr.mixed_bold_colon_names",
-   "source": "hand-review.json#mixed_bold_colon_names",
+   "source": "第三轮评审探针#mixed_bold_colon_names",
    "outline": "- **主旨**：市场变化。\n**名字表：**\n\n| 名字 | 机构 |\n| Barclays | 银行 |",
    "against": [
     "无相关资料"
@@ -788,7 +788,7 @@
   },
   {
    "id": "hr.mixed_numbered_claim",
-   "source": "hand-review.json#mixed_numbered_claim",
+   "source": "第三轮评审探针#mixed_numbered_claim",
    "outline": "- **主旨**：市场变化。\n- N1 主旨：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -804,7 +804,7 @@
   },
   {
    "id": "hr.numeric_range_hyphen",
-   "source": "hand-review.json#numeric_range_hyphen",
+   "source": "第三轮评审探针#numeric_range_hyphen",
    "outline": "- **主旨**：增长率为3%至5%。",
    "against": [
     "| E1 | 增长率为3-5% |"
@@ -820,7 +820,7 @@
   },
   {
    "id": "hr.numeric_range_chinese_control",
-   "source": "hand-review.json#numeric_range_chinese_control",
+   "source": "第三轮评审探针#numeric_range_chinese_control",
    "outline": "- **主旨**：增长率为3%至5%。",
    "against": [
     "| E1 | 增长率为3%至5% |"
@@ -835,7 +835,7 @@
   },
   {
    "id": "hr.fraction",
-   "source": "hand-review.json#fraction",
+   "source": "第三轮评审探针#fraction",
    "outline": "- **主旨**：比例为1/3。",
    "against": [
     "| E1 | 比例为1/3 |"
@@ -851,7 +851,7 @@
   },
   {
    "id": "hr.fraction_chinese_control",
-   "source": "hand-review.json#fraction_chinese_control",
+   "source": "第三轮评审探针#fraction_chinese_control",
    "outline": "- **主旨**：分子为1，分母为3。",
    "against": [
     "| E1 | 分子为1，分母为3 |"
@@ -866,7 +866,7 @@
   },
   {
    "id": "hr.global_token_scope",
-   "source": "hand-review.json#global_token_scope",
+   "source": "第三轮评审探针#global_token_scope",
    "outline": "- **主旨**：Citi预计赤字为4.2万亿美元。",
    "against": [
     "| E1 | Citi预计赤字为2万亿美元 |\n| E2 | Goldman Sachs预计通胀为4.2% |"
@@ -882,7 +882,7 @@
   },
   {
    "id": "pp.range",
-   "source": "parent-probes.json#range",
+   "source": "主会话探针#range",
    "outline": "- **主旨**：增长率为3%至5%。",
    "against": [
     "增长率为3-5%"
@@ -897,7 +897,7 @@
   },
   {
    "id": "pp.fraction",
-   "source": "parent-probes.json#fraction",
+   "source": "主会话探针#fraction",
    "outline": "- **主旨**：比例为1/3。",
    "against": [
     "比例为1/3"
@@ -912,7 +912,7 @@
   },
   {
    "id": "pp.range_control",
-   "source": "parent-probes.json#range_control",
+   "source": "主会话探针#range_control",
    "outline": "- **主旨**：增长率为3%至5%。",
    "against": [
     "增长率为3%至5%"
@@ -926,7 +926,7 @@
   },
   {
    "id": "pp.mixed_claim",
-   "source": "parent-probes.json#mixed_claim",
+   "source": "主会话探针#mixed_claim",
    "outline": "- **主旨**：收益率回落。\n### 主旨：4.2万亿美元。",
    "against": [
     "收益率回落。"
@@ -941,7 +941,7 @@
   },
   {
    "id": "pp.bp_control",
-   "source": "parent-probes.json#bp_control",
+   "source": "主会话探针#bp_control",
    "outline": "- **主旨**：收益率升25bp。",
    "against": [
     "收益率升25个基点。"
@@ -1424,7 +1424,7 @@
   },
   {
    "id": "r4.canonical_normal",
-   "source": "hand-review.json#independent_probes/canonical_normal（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/canonical_normal（Codex 第四轮）",
    "outline": "## 名字表\n| 名字 | 机构 |\n| Citi | 银行 |\n## N0 根主旨\n- **主旨**：Citi预计2026年9月30日增长率为3-5%，收益率升25bp，约1/3的资金流入。",
    "against": [
     "Citi 2026-09-30 增长率为3%至5%，收益率升25个基点，约1/3的资金流入。"
@@ -1439,7 +1439,7 @@
   },
   {
    "id": "r4.mixed_heading_now_blocked",
-   "source": "hand-review.json#independent_probes/mixed_heading_now_blocked（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/mixed_heading_now_blocked（Codex 第四轮）",
    "outline": "- **主旨**：市场变化。\n### 主旨：4.2万亿美元。",
    "against": [
     "无相关资料"
@@ -1454,7 +1454,7 @@
   },
   {
    "id": "r4.mixed_names_now_blocked",
-   "source": "hand-review.json#independent_probes/mixed_names_now_blocked（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/mixed_names_now_blocked（Codex 第四轮）",
    "outline": "- **主旨**：市场变化。\n**名字表：**\n| Barclays | 银行 |",
    "against": [
     "无相关资料"
@@ -1469,7 +1469,7 @@
   },
   {
    "id": "r4.percent_range_good",
-   "source": "hand-review.json#independent_probes/percent_range_good（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/percent_range_good（Codex 第四轮）",
    "outline": "- **主旨**：增长率为3%至5%。",
    "against": [
     "增长率为3-5%"
@@ -1483,7 +1483,7 @@
   },
   {
    "id": "r4.percent_range_bad",
-   "source": "hand-review.json#independent_probes/percent_range_bad（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/percent_range_bad（Codex 第四轮）",
    "outline": "- **主旨**：增长率为3%至5%。",
    "against": [
     "增长率为3-4%"
@@ -1502,7 +1502,7 @@
   },
   {
    "id": "r4.fraction_good",
-   "source": "hand-review.json#independent_probes/fraction_good（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/fraction_good（Codex 第四轮）",
    "outline": "- **主旨**：比例为1/3。",
    "against": [
     "比例为1/3"
@@ -1516,7 +1516,7 @@
   },
   {
    "id": "r4.fraction_bad",
-   "source": "hand-review.json#independent_probes/fraction_bad（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/fraction_bad（Codex 第四轮）",
    "outline": "- **主旨**：比例为1/3。",
    "against": [
     "比例为1/4"
@@ -1535,7 +1535,7 @@
   },
   {
    "id": "r4.fraction_replaced_by_date",
-   "source": "hand-review.json#independent_probes/fraction_replaced_by_date（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/fraction_replaced_by_date（Codex 第四轮）",
    "outline": "- **主旨**：比例为1/3。",
    "against": [
     "日期为1月3日。"
@@ -1552,7 +1552,7 @@
   },
   {
    "id": "r4.date_replaced_by_fraction",
-   "source": "hand-review.json#independent_probes/date_replaced_by_fraction（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/date_replaced_by_fraction（Codex 第四轮）",
    "outline": "- **主旨**：1月3日见顶。",
    "against": [
     "比例为1/3。"
@@ -1569,7 +1569,7 @@
   },
   {
    "id": "r4.year_bad_control",
-   "source": "hand-review.json#independent_probes/year_bad_control（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/year_bad_control（Codex 第四轮）",
    "outline": "- **主旨**：2026年1月3日见顶。",
    "against": [
     "2025-01-03见顶。"
@@ -1588,7 +1588,7 @@
   },
   {
    "id": "r4.year_bad_with_fraction",
-   "source": "hand-review.json#independent_probes/year_bad_with_fraction（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/year_bad_with_fraction（Codex 第四轮）",
    "outline": "- **主旨**：2026年1月3日见顶。",
    "against": [
     "2025-01-03见顶；比例为1/3。"
@@ -1608,7 +1608,7 @@
   },
   {
    "id": "r4.range_bp",
-   "source": "hand-review.json#independent_probes/range_bp（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/range_bp（Codex 第四轮）",
    "outline": "- **主旨**：收益率升3至5bp。",
    "against": [
     "收益率升3-5bp。"
@@ -1622,7 +1622,7 @@
   },
   {
    "id": "r4.range_bn",
-   "source": "hand-review.json#independent_probes/range_bn（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/range_bn（Codex 第四轮）",
    "outline": "- **主旨**：规模为3至5bn。",
    "against": [
     "规模为3-5bn。"
@@ -1637,7 +1637,7 @@
   },
   {
    "id": "r4.range_tn",
-   "source": "hand-review.json#independent_probes/range_tn（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/range_tn（Codex 第四轮）",
    "outline": "- **主旨**：规模为3至5tn。",
    "against": [
     "规模为3-5tn。"
@@ -1652,7 +1652,7 @@
   },
   {
    "id": "r4.range_chinese_unit",
-   "source": "hand-review.json#independent_probes/range_chinese_unit（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/range_chinese_unit（Codex 第四轮）",
    "outline": "- **主旨**：规模为3至5十亿美元。",
    "against": [
     "规模为3-5十亿美元。"
@@ -1667,7 +1667,7 @@
   },
   {
    "id": "r4.short_date_good",
-   "source": "hand-review.json#independent_probes/short_date_good（Codex 第四轮）",
+   "source": "第三轮评审探针#independent_probes/short_date_good（Codex 第四轮）",
    "outline": "- **主旨**：9月10日见顶。",
    "against": [
     "9/10见顶。"
@@ -1681,7 +1681,7 @@
   },
   {
    "id": "r4p.fraction_correct",
-   "source": "parent-probes.json#fraction_correct（主会话核例）",
+   "source": "主会话探针#fraction_correct（主会话核例）",
    "outline": "- **主旨**：比例为1/3。",
    "against": [
     "比例为1/3。"
@@ -1695,7 +1695,7 @@
   },
   {
    "id": "r4p.fraction_from_date",
-   "source": "parent-probes.json#fraction_from_date（主会话核例）",
+   "source": "主会话探针#fraction_from_date（主会话核例）",
    "outline": "- **主旨**：比例为1/3。",
    "against": [
     "1月3日。"
@@ -1712,7 +1712,7 @@
   },
   {
    "id": "r4p.year_mismatch_only",
-   "source": "parent-probes.json#year_mismatch_only（主会话核例）",
+   "source": "主会话探针#year_mismatch_only（主会话核例）",
    "outline": "- **主旨**：2026年1月3日见顶。",
    "against": [
     "2025年1月3日见顶。"
@@ -1731,7 +1731,7 @@
   },
   {
    "id": "r4p.year_mismatch_plus_fraction",
-   "source": "parent-probes.json#year_mismatch_plus_fraction（主会话核例）",
+   "source": "主会话探针#year_mismatch_plus_fraction（主会话核例）",
    "outline": "- **主旨**：2026年1月3日见顶。",
    "against": [
     "2025年1月3日见顶。比例为1/3。"
@@ -1751,7 +1751,7 @@
   },
   {
    "id": "r4p.bn_range",
-   "source": "parent-probes.json#bn_range（主会话核例）",
+   "source": "主会话探针#bn_range（主会话核例）",
    "outline": "- **主旨**：规模为3-5bn。",
    "against": [
     "规模为3-5bn。"
@@ -1765,7 +1765,7 @@
   },
   {
    "id": "r4p.percent_range",
-   "source": "parent-probes.json#percent_range（主会话核例）",
+   "source": "主会话探针#percent_range（主会话核例）",
    "outline": "- **主旨**：增长为3%至5%。",
    "against": [
     "增长为3-5%。"

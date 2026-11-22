@@ -123,7 +123,7 @@ Hand（`ficc-hand`）依赖以下技能和代理卡，本仓库不包含它们�
 
 ## 版本与许可证
 
-当前版本2.0.0（2026-11-21），见 `VERSION` 和 `CHANGELOG.md`。主版本号升到2，是因为写作规则从四本合成三本，旧版里指向`FICCCompose.md`的做法要改读`FICCVoice.md`。
+当前版本2.0.1（2026-11-21），见 `VERSION` 和 `CHANGELOG.md`。主版本号在2.0.0升到2，是因为写作规则从四本合成三本，旧版里指向`FICCCompose.md`的做法要改读`FICCVoice.md`。
 
 许可证分两部分，详见 `LICENSE`：
 

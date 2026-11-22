@@ -34,7 +34,7 @@ python3 ~/.claude/skills/ficc-voice/scripts/voice_check.py <稿件路径> --clar
 ```
 
 - voice_check v4.7: H1–H6 are hard in the default mode. Under `--clarity`, H1 internal working labels, H5 quotation-mark format and H6 semicolons in prose must be fixed. Necessary retentions in verbatim quotes of the original go to T0.
-- H10 (a paragraph over ten sentences or 400 CJK characters) is a review hint, not a cut line (FICCVoice.md C08).
+- H10 (a paragraph over ten sentences; the 400-CJK hint only with `voice_check.py --max-para-cjk 400`) is a review hint, not a cut line (FICCVoice.md C08).
 - A paragraph with ≥30 number strings is listed as `重段待处置`. The exit code does not change, but the paragraph must be disposed of before handover: table the isomorphic grid, split it at a sub-question or basis seam with 拆后四带, or carry the verifier-signed proof of one indivisible claim (FICCVoice.md C08).
 - In clarity mode, H2 roadmap, H3 short list, and H4 antithetical headings are only listed for review. The real problems are reporting the arrangement without a judgment, using labels in place of statements, and distorting the meaning for symmetry. Clear steps, complete points, and parallel headings that aid comparison may stay.
 - “！” rows (user ruling 2026-10-13): only “不是……而是” (not … but; criterion FICCVoice.md V36) and the dash (FICCVoice.md V19) are handled before submission, until the row no longer carries “！”; the rest are only counted. This is not a clarity standard. A fix must not harm the original meaning; report conflicts, such as a sentence kept verbatim, to T0.

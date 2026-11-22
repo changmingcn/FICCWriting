@@ -40,7 +40,7 @@ optional markdown link target "](...)", optional backtick, optional one space):
                     space, 2026-11-21; "## 0 title" is section 0).  Not refs: a number followed by a digit, ",5", "%",
                     "-5", a measure word (F.md 40条, 3份) or KB/bytes/lines/times.
                     A file name that resolves to no file in the tree, or to a file
-                    with no numbered headings, is not a ref (results/J-trees.md第3节).
+                    with no numbered headings, is not a ref (other/notes.md第3节).
   Q  quoted title   F “4.2 How to write the outline, and where it goes”: the title
                     must equal the heading title.  Unprefixed “4.2 title” inside a
                     main file (or its zh mirror) is checked against that file; in
@@ -1377,7 +1377,7 @@ FIXTURE = {
                 'STALE: FICCVoice.md “2 An old title”.\n\n'
                 'TITLE: FICCOutline “2.1 Define the question”.\n\n'
                 'QUOTE: FICCVoice 2「我们认为」; FICCVoice.md 40条 and FICCOutline 43,828 are not refs.\n\n'
-                'DEV: references/dev-notes.md section 2; dev-notes.md第1节; results/J-trees.md第3节.\n\n'
+                'DEV: references/dev-notes.md section 2; dev-notes.md第1节; other/notes.md第3节.\n\n'
                 'LEGACY: FICCOutline.md四（二）; FICCOutline三份 is a measure word.\n\n'
                 'RULES: O01 and S01 resolve; V99 is a deliberately broken rule number; O02 is defined nowhere.\n\n'
                 'OLD: V02 (formerly S38); V02 (S34 merged); a history note is checked like any other text.\n\n'
@@ -1460,7 +1460,7 @@ def selftest():
             ('measure words / thousands are not refs (40条, 43,828, 三份)',
              not any(x.startswith(('FICCVoice.md 40', 'FICCOutline 43', 'FICCOutline三')) for x in raws)),
             ('V02 is not a ref', not any('V02' in x for x in raws)),
-            ('a file outside the tree is not a ref (J-trees.md第3节)', not any('J-trees' in x for x in raws)),
+            ('a file outside the tree is not a ref (other/notes.md第3节)', not any('other/notes' in x for x in raws)),
             ('history.md excluded', not any(r['file'] == 'references/history.md' for r in res['refs'])),
             ('dev-notes.md excluded from scanning, still a target',
              not any(r['file'] == 'references/dev-notes.md' for r in res['refs'])),

@@ -1193,7 +1193,7 @@ def cmd_fields(a, out):
 
 
 # ------------------------------------------------------------------ pre-prose gates (check-0to1, 1.2.0 W1-O2)
-# Opinion §3.1 gates 1-5 in machine form, read off fields_json (no second parse).  One finding per defect,
+# The pre-prose gates 1-5 (FICCOutline.md §9, FICCStructure.md §7) in machine form, read off fields_json (no second parse).  One finding per defect,
 # {code, sev, where, why, line}: sev hard (exit 2), warn or skip.  Codes: (a) Z-SWAP, Z-SWAP?; (b) Z-DENOM, Z-Q;
 # (c) Z-SHARE; (d) Z-EDGE, Z-EDGE?; (e) Z-FACT, Z-QUOTE, Z-QUOTE-SKIP; (f) Z-PARA, Z-SIGN.  The gates read neither
 # 收尾 nor 关系, so the legacy continuation reader (ANY_FIELD_RE) does not touch them.

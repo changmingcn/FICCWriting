@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.1 (2026-11-21)
+
+Built from the same author's tree as 2.0.0. Only the release rules changed, and no script behaves differently.
+
+- references/clarity-acceptance.md 3 and references/dispatch-notes.md 7 item 20: H10 counts sentences only, as voice_check.py 4.7 does, and the 400-CJK paragraph hint is reported only with `--max-para-cjk 400` (wording fixes W36, W37). FICCVoice.md C08 and §4.1 already kept the two apart and are unchanged.
+- Task file names from the author's working directories, public since 1.3.0 or earlier, are gone from this release:
+  - three in references/examples-and-rewrites.md (W33–W35)
+  - one in scripts/README.md (W32)
+  - the out-of-tree example of xref_check.py and scripts/README.md, now `other/notes.md第3节` (C27, C28, W31). The self-test checks the same case.
+  - the names of the author's four probe files in the sources and the `about` field of ficc-hand/scripts/tieout_probes.json, now 第二轮探针, 第三轮评审探针 and 主会话探针 (C29–C34)
+
+  The tags v2.0.0 and earlier, and their archives, still carry these names.
+- outline_slice.py: one more comment cited the author's upgrade opinion (C35).
+- The leak scan gains two patterns. One flags words in .py files that point at task documents or review runs (opinion, packet with an id, red team, re-review). The other flags the task file names cleaned here, so that they cannot come back.
+
 ## 2.0.0 (2026-11-21)
 
 Rebuilt from the author's tree of 2026-11-21 with the release rules of 1.3.0, changed as listed under “Release build”. The major version marks a change of layout: FICCCompose.md is merged into FICCVoice.md, so the writing relay has three rule books (FICCOutline.md, FICCStructure.md, FICCVoice.md) instead of four, and six reference files retire with it. This release carries the author's 0→1 rebuild of 2026-11-20 and 2026-11-21, the punctuation pass and the Python 3.15 fix of 2026-11-16, and the budget-caps fix that stood under Unreleased after 1.3.0. Every rule number stays defined exactly once: 24 C, 39 V, 54 S and 90 O rules and the twelve invariants I1–I12, as in 1.3.0.
