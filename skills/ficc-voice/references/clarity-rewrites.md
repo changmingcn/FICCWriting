@@ -92,7 +92,7 @@ Make clear who gets the cash and which pressure eases. Do not leave a vague “�
 
 **Argument step:** 某指标统计范围不包含小企业，因此不能据它判断所有企业的融资状况。 Here the scope limit decides the conclusion. Write it into the body text. Do not hide it as a note the reader can skip.
 
-The test is whether later text depends on this information, not how long the explanation is. How to hang it: FICCVoice.md 5.1.
+The test is whether later text depends on this information, not how long the explanation is. How to hang it: FICCVoice.md V29.
 
 ## 8 The writer does not decide an unclear relation
 

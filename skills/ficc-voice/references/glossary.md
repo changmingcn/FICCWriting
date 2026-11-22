@@ -1,6 +1,6 @@
 # Glossary: FICC rule files, Chinese to English
 
-Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md, and since 2026-10-17 FICCCompose.md). Use one English term per Chinese term across all of them. First translator writes; later translators append under their own heading and do not change existing rows. Mark a disputed row with “交 T0” in the note column.
+Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md; FICCCompose.md from 2026-10-17 until its C rules moved into FICCVoice.md on 2026-11-21). Use one English term per Chinese term across all of them. First translator writes; later translators append under their own heading and do not change existing rows. Mark a disputed row with “交 T0” in the note column.
 
 ## 1 Conventions
 
@@ -36,7 +36,7 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 | 关系行 | relation line | |
 | 顺序行 | order line | `顺序：`, why the node sits here, through the two adjacent blocks' content; the outline agent writes it (FICCOutline.md O18, O19); split from the relation line 2026-10-17 |
 | 标注行 | annotation line | |
-| 关系单 | relation sheet | relations only: endpoints, type, grounds, limits or open items (FICCStructure.md S74). Since 2026-10-17 it gives no opening words, writing instructions, or writing advice. Facts and verbatim sentences are cited by index number or position, not copied |
+| 关系单 | relation sheet | retired 2026-11-21: relations go into the living outline's relation slots (FICCStructure.md §6). Before that it held relations only: endpoints, type, grounds, limits or open items (FICCStructure.md S74). Since 2026-10-17 it gives no opening words, writing instructions, or writing advice. Facts and verbatim sentences are cited by index number or position, not copied |
 | 安放记录 | placement record | |
 | 名字表 | name table | |
 | 主干组 | trunk group | |
@@ -377,7 +377,7 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 | 重搭 | rebuild | |
 | 整理录音稿 | transcript cleanup | |
 | 作者亲写 | author-written | tag 〔作者亲写·逐字〕 kept in Chinese |
-| 作者原句 | author's original sentence | relation-sheet column, kept in Chinese |
+| 作者原句 | author's original sentence | column of the retired relation sheet, kept in Chinese |
 | 信息量测试 | information test | |
 | 抽主旨 | claim extraction / extract the claims | |
 | 父子检验／子树检验／同组检验 | parent–child test / subtree test / grouping test | |
@@ -435,7 +435,7 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 | 铺垫与兑现 | setup and payoff | |
 | 呼应与变奏 | echo and variation | |
 | 节奏与情绪调节 | pacing and mood regulation | |
-| 对照（单用） | contrast | also 对比 in FICCCompose.md C14; 交 T0 |
+| 对照（单用） | contrast | also 对比 in FICCVoice.md C14; 交 T0 |
 
 ### 5.3 Complex-sentence relations (row names of connectives.md section “现行连接词表”, current connective table)
 
@@ -509,10 +509,10 @@ Shared by the English rule files (FICCVoice.md, FICCStructure.md, FICCOutline.md
 
 | 中文 | English | Note |
 |---|---|---|
-| 段落组织（Compose） | paragraph organization (FICCCompose.md) | inside a settled node: how the text opens, carries over, unfolds, moves between layers, pays off previews, and closes. The file is FICCCompose.md |
-| 段落代理 | composer (ficc-composer) | writes the paragraph draft per FICCCompose.md. The writer (ficc-writer) then works on sentences per FICCVoice.md |
+| 段落组织（Compose） | paragraph organization | inside a settled node: how the text opens, carries over, unfolds, moves between layers, pays off previews, and closes. The rules are FICCVoice.md §1 and FICCVoice.md §2 (FICCCompose.md until 2026-11-21) |
+| 段落代理 | composer (ficc-composer) | writes the paragraph draft per FICCVoice.md §1 and FICCVoice.md §2, now only as the optional paragraph-only arm (SKILL.md §2). The writer (ficc-writer) writes paragraphs and sentences in one pass per FICCVoice.md |
 | 段落草稿 | paragraph draft | the composer's output. No separate paragraph plan |
-| C 号 | C number (C01–C24) | rule numbers of FICCCompose.md. Old V, O and S numbers that moved: references/migration-2026-10-17.md |
+| C 号 | C number (C01–C24) | rule numbers of the paragraph and piece rules, in FICCVoice.md since 2026-11-21 (FICCCompose.md before). Old V, O and S numbers that moved: references/migration-2026-10-17.md |
 
 ## 7 Added by the English pass on SKILL.md files and agent cards (2026-10-17)
 
@@ -533,7 +533,7 @@ One row per concept with no earlier English name, from the B1–B4 change notes 
 
 | 中文 | English | Note |
 |---|---|---|
-| 问题号 | question number (I-nn) | the ledger id of a conflict or open question, kept through the relation sheet and the placement record; defined in ~/.claude/skills/research-agent/references/analysis.md |
+| 问题号 | question number (I-nn) | the ledger id of a conflict or open question, kept through the living outline (its relation and placement slots) and, in legacy and rewrite runs, the placement record; defined in ~/.claude/skills/research-agent/references/analysis.md |
 | 起草席 | drafting seat | composer and writer (SKILL.md, kept rulings) |
 | 短稿合并模式 | short-piece merged mode | 短稿 = short piece (body text ≤600 Chinese characters); one writer draft seat does relay steps ④⑤ (dispatch-notes) |
 | 只改措辞 | wording-only edit | writer patch; not 只改文风 (style-only edit) |
@@ -541,7 +541,7 @@ One row per concept with no earlier English name, from the B1–B4 change notes 
 | 退回说明 | return note | location, conflict, decision needed (dispatch-notes) |
 | 隐患清单 | hazard list | voice_check output heading, kept as the token `隐患清单` |
 | 统计对象 | what is counted | in the fact tuple: who, what they did, what is counted, period, unit, qualifier |
-| 改动流水 | change log | table name, kept as 《改动流水》 |
+| 改动流水 | change log | table name, kept as "改动流水" |
 | 体例整理 | format tidy | not 体例 = established style (convention) |
 | 脉络图 | map | FICCHand step 3, `R/脉络图.md` |
 | 问题树 | question tree | map element; headings in map-template stay Chinese |

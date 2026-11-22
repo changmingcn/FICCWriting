@@ -1,10 +1,10 @@
 # Placement record template
 
-The outline agent (ficc-outliner) writes the placement record per FICCOutline.md 5; it decides and carries out placement and selection, and the relation agent (ficc-structurer) writes the relation sheet for the affected nodes in part 1. This template is the single definition of the placement record's parts. For simple material, write only the parts that apply.
+New writing keeps placement in the living outline (FICCOutline.md §4.2 and FICCOutline.md §5): the outline agent (ficc-outliner) applies its placement changes in `<文稿>-提纲.md`, and the relation agent (ficc-structurer) writes back only the relation slots (FICCOutline.md O50, O63). This template now serves only legacy and rewrite runs. There the outline agent writes the placement record per FICCOutline.md §5; it decides and carries out placement and selection, and the relation agent fills the relation slots (FICCStructure.md §6) of the affected nodes in part 1. This template is the single definition of the placement record's parts. For simple material, write only the parts that apply.
 
 ## 1 安放结论 (placement conclusion)
 
-Whether to place it; at which node (write the node number); as a branch of its own, or embedded in, replacing, or merged with an existing block. If it cannot be placed, write whether it is set aside or discarded, and why. When deleting existing facts, state item by item which ones. The last line lists the affected nodes: number and why each is affected; the relation sheet is written node by node from this line. A new node not yet built uses the same temporary number in both records.
+Whether to place it; at which node (write the node number); as a branch of its own, or embedded in, replacing, or merged with an existing block. If it cannot be placed, write whether it is set aside or discarded, and why. When deleting existing facts, state item by item which ones. The last line lists the affected nodes: number and why each is affected; the relation slots are filled node by node from this line. A new node not yet built uses the same temporary number in the record and in the outline.
 
 ## 2 材料价值 (material value)
 
@@ -16,7 +16,7 @@ What task it does for the layer above. When positions are in dispute, list two o
 
 ## 4 修改后的局部提纲 (revised partial outline)
 
-State what the decision changes things to, as changes still to be carried out; writing the record does not mean the outline file has been changed. List only the affected parent nodes, sibling branches, and necessary lower nodes; for each node, write per FICCOutline.md O31 the claim line and the four lines task, order, relation, and unfolding (the relation line waits for backfill from the relation sheet). List the whole piece only when the overall structure changes. The outline agent carries the changes out itself and then hands back the temporary-to-permanent number map; when existing nodes are renumbered, it also lists the old-to-new number map; T0 passes these with the relation sheet to the drafting seats (composer, writer). When a settled claim, content, or order changes substantively, state the change and send it to T0 for the relation agent to add the affected relations.
+State what the decision changes things to, as changes still to be carried out; writing the record does not mean the outline file has been changed. List only the affected parent nodes, sibling branches, and necessary lower nodes; for each node, write per FICCOutline.md O31 the claim line and the four lines task, order, relation, and unfolding (the relation line waits for the relation agent's backfill). List the whole piece only when the overall structure changes. The outline agent carries the changes out itself and then hands back the temporary-to-permanent number map; when existing nodes are renumbered, it also lists the old-to-new number map; T0 passes these with the node slices and their relation slots to the drafting seats (composer, writer). When a settled claim, content, or order changes substantively, state the change and send it to T0 for the relation agent to add the affected relations.
 
 ## 5 待核实或待补充 (to be verified or to be supplied)
 
@@ -35,3 +35,5 @@ Written by the outliner when the inline seat drafts or patches (dispatch-notes.m
 - 上限 (cap): `上限：N字`, or `上限：见提纲` and the packer reads the cap from the node's unfolding line in the outline.
 - 伏笔 (foreshadow): the thread taken from the previous node and the one left for the next.
 - 必改句 (must-change sentences): one line each, `原句 → 现行说法` (base sentence → current wording), for base-text sentences that contradict a current judgment.
+- 开头后移 (opening relocation): one line per item that the lead, a part or section opening, or a paragraph's first sentence gives up under FICCOutline.md O73, `开头后移：<item> → <node number>` (or `→ 后句` when it stays in the paragraph). The destination must already state the item, and the node's claim line stays intact.
+- 检查顺序 (optional `Actionable check sequence`, only on a part's or the whole piece's close node, and only when the evidence already holds the accounts and thresholds): `检查顺序：<account or indicator>｜<threshold>｜<where the piece states it>`, one step per line, in the order to check. The writer turns it into the close's check steps and invents no action, threshold or frequency.

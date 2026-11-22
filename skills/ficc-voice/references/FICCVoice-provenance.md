@@ -87,3 +87,11 @@ Development record kept by the author; not included in the public release.
 ## 35 2026-10-24 两处跨文件指针：O64改提纲席动作指C15、SKILL第6条标O58
 
 ## 36 2026-10-24 摘录第三节编号校核、L66补齐、dispatch-notes加注
+
+## 37 2026-11-21 冷读摘录V34与“不写改法”、各层开头最高信噪比（Wave 3）
+
+## 38 2026-11-21 Wave 4双审修补（Wave 4b）
+
+## 39 2026-11-21 0→1重构Wave 2：方式乙三卷、唯一活提纲、C/V并入FICCVoice与七份文件归档
+
+## 40 2026-11-21 0→1重构Wave 4B双审：恢复V32、V29三条用户裁定

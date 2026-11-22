@@ -143,3 +143,7 @@ Development record kept by the author; not included in the public release.
 ## 61 2026-11-07标题序数五级数字化、附录编号、cjk_space退役
 
 ## 62 2026-11-11写作席切片：上级链默认内容、--path开关、节收尾指派
+
+## 63 2026-11-21放宽冻结、各层开头最高信噪比与内联席护栏（Wave 1、1b、K、3）
+
+## 64 2026-11-21 0→1重构Wave 2（D8）：方式乙三卷、唯一活提纲与C/V合卷

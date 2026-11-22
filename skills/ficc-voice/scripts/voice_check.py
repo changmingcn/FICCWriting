@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""voice_check.py v4.5 (2026-10-24) -- FICCVoice fingerprint report.
+"""voice_check.py v4.7 (2026-11-21) -- FICCVoice fingerprint report.
 
-Default mode keeps six hard checks (H1-H6) and the existing result schema,
-plus semantic_reviews holding H7 only (v4.3).
+Default mode keeps six hard checks (H1-H6) and the existing result schema;
+semantic_reviews holds H7, the H10 hint and 重段待处置 in both modes (v4.7).
 With --clarity, H2-H4 are semantic-review candidates, not hard failures;
 only H1, H5 and H6 set exit code 1.  The heuristics do not prove clarity.
 H7 (cross-paragraph repetition: trigger A long verbatim run, trigger B an
 opening that echoes an earlier preview) is a review candidate in both modes
-and never sets the exit code.
+and never sets the exit code.  v4.7 (user decision 2026-11-21): H10 (> ten
+sentences) is a review hint, no longer hard in any mode; a paragraph with
+>= 30 number strings enters semantic_reviews as 重段待处置 (mandatory
+disposition by the apply / acceptance seat: table it, split it with subject,
+period, basis and qualifiers re-carried in each part, or attach a
+verifier-signed proof that it cannot be divided) and is listed under its own
+labelled line in the text report; neither sets the exit code.
 
 Density counts never change the exit code.  Handling of the flagged rows
 before handoff is defined in references/clarity-acceptance.md; density
@@ -23,6 +29,7 @@ The v4 hazard list (隐患清单) remains report-only: 承前省略, 句首代�
 
 Usage:
   voice_check.py <file.md> [--clarity] [--lecture] [--json] [--names OUTLINE.md] [--hazards-only]
+                 [--para-stats] [--max-para-cjk N]
   voice_check.py --selftest [--clarity] [--letters PATH]
   voice_check.py --baseline [--letters PATH] [--extra FILE ...] [--per-doc]
 
@@ -42,13 +49,30 @@ Checks (H2-H4 are hard only in the compatibility default):
      counted characters.  B: >= H7_ECHO_GROUP (3) later paragraph openings
      each echo a sentence or clause of the same earlier paragraph (contained,
      or difflib ratio >= H7_ECHO_RATIO 0.75; opening >= H7_ECHO_MIN 8 counted
-     characters).  FICCCompose.md C23 check items, C04, C20; a re-mention
+     characters).  Rule C23 check items, C04, C20; a re-mention
      carries one more layer per C07
   H9 (review only, --clarity only, v4.4; trimmed v4.5) nominalized views
      (FICCVoice V57): 读法, 解读, 视角, 判别读数, 推断加强, 判断…加强, 占上风,
      站在…一边 in prose lines (list rows included, inline code masked); one
      entry per hit.  框架, 让步 and 的分量 were removed on 2026-10-24
-Current review: FICCVoice.md V02/V10/V13/V25/V37-V40, FICCCompose.md C01
+  H10 (review hint in both modes since v4.7; hard 2026-10-16 to v4.6) a body
+     prose paragraph with more than ten sentences (rule C08); headings, table
+     rows, fenced code, quote blocks and list rows are never paragraphs; scope
+     as H6.  A direct quote “…” counts as one sentence: the sentence ends
+     inside it only at its last mark (W4b).  Paragraph statistics (--json "paragraphs", --para-stats): per
+     paragraph sentences, CJK, number strings (digit runs, decimals kept),
+     over_10_sentences, over_30_numbers (>= 30 strings) and over_cjk_cap
+     (--max-para-cjk N; over it is a review candidate C08-cjk, never hard)
+  重段待处置 (semantic_reviews, both modes, v4.7) a body prose paragraph with
+     >= 30 number strings (over_30_numbers); mandatory disposition, never hard
+  段首信噪比 (hazard list, --clarity only, v4.6; user ruling 2026-11-21: the
+     whole-piece lead, every part or section opening and every paragraph's
+     first sentence carry the highest signal-to-noise ratio) the opening
+     sentence of the lead, of a section opening paragraph or of any paragraph
+     of two or more sentences packs >= 4 number strings, or >= 2 parenthetical
+     asides, or opens an argument paragraph with raw source compilation
+     (据…披露/统计/季报/报告) or a roadmap (本节/下文/接下来…); report only
+Current review: FICCVoice.md V02/V11/V13/V25/V37-V40, rule C01
 and references/clarity-acceptance.md.  H1 also follows FICCOutline.md 4.2;
 H5 follows references/format-and-maintenance.md 1 (user ruling 2026-10-12:
 quotes are “”, with ‘’ inside).  H6 follows FICCVoice.md V07 (user ruling
@@ -64,8 +88,8 @@ import re
 import sys
 import unicodedata
 
-VERSION = '4.5'
-VERSION_DATE = '2026-10-24'
+VERSION = '4.7'
+VERSION_DATE = '2026-11-21'
 HERE = os.path.dirname(os.path.abspath(__file__))
 SKILL_DIR = os.path.dirname(HERE)
 CORPUS_DIR = os.path.join(SKILL_DIR, 'references', 'corpus')
@@ -73,7 +97,7 @@ EXEMPLARS = ['nine-sections.md', 'panda-on-options.md']
 DEFAULT_LETTERS = os.path.expanduser(
     '~/ficc-letters/letters.txt')
 CONTROL_ISSUE = '2026.02'  # AI-assisted: excluded from the baseline, used as control
-DEDUP_ISSUE = '2025.12'    # same text as 《九节》: counted once, via nine-sections.md
+DEDUP_ISSUE = '2025.12'    # same text as "九节": counted once, via nine-sections.md
 SHORT_TEXT = 1500          # below this many CJK chars densities are noisy
 
 # ---------------------------------------------------------------------------
@@ -111,7 +135,9 @@ METRICS = [
     ('parallel3', '三连排比'),
 ]
 LECTURE_SILENT = {'wo', 'paren'}
-SEMANTIC_REVIEW_CODES = {'H2', 'H3', 'H4', 'H7', 'H9'}
+SEMANTIC_REVIEW_CODES = {'H2', 'H3', 'H4', 'H7', 'H9'}  # hard in default mode, review under --clarity (H7: both)
+HEAVY_PARA_CODE = '重段待处置'
+HINT_CODES = {'H10', HEAVY_PARA_CODE, 'C08-cjk'}  # review hints in both modes (v4.7), never hard
 FLAG_MIN_COUNT = 3  # "一篇里出现一两处是文章" -- one or two hits never get a flag
 
 # ---------------------------------------------------------------------------
@@ -433,7 +459,7 @@ def check_h4(lines):
             a, b = head_core(P.title), core
             na, nb = a.replace(' ', ''), b.replace(' ', '')
             sk = skeleton(a)
-            common = len(os.path.commonprefix([na, nb]))
+            common = next((i for i, (x, y) in enumerate(zip(na, nb)) if x != y), min(len(na), len(nb)))
             if (len(na) == len(nb) >= H4_MIN_LEN and sk and sk == skeleton(b)
                     and common * 2 < len(na)):  # 上篇/下篇 series titles are not couplets
                 out.append({'code': 'H4', 'line': L.no, 'quote': False,
@@ -498,7 +524,7 @@ def check_h6(lines):
 
 
 # H7: verbatim or near-verbatim repetition across paragraphs (v4.3; review only,
-# never in `hard`).  FICCCompose.md C23 check items with C04 and C20: a claim or
+# never in `hard`).  Rule C23 check items with C04 and C20: a claim or
 # carry-over paragraph that previews the later openings word for word is a table
 # of contents, not a step on the chain; a re-mention carries one more layer (C07).
 # Scope as H6 (classify; list rows skipped too).  A paragraph is a run of
@@ -654,7 +680,7 @@ def check_h7(lines):
         A, B = paras[p], paras[q]
         h = {'code': 'H7', 'trigger': 'A', 'line': A[0], 'quote': A[2] or B[2], 'pair_line': B[0],
              'pair_end_line': B[1], 'length': n, 'overlap': run,
-             'desc': '与 %s 逐字重合 %d 字（只计汉字和数字）：再提要多带一层，不照抄（FICCCompose C07、C23；'
+             'desc': '与 %s 逐字重合 %d 字（只计汉字和数字）：再提要多带一层，不照抄（规则 C07、C23；'
                      '预告与段首重复见 C04、C20）' % (h7_loc(B), n),
              'text': run[:H7_CTX] + ('…' if len(run) > H7_CTX else '')}
         if A[1] != A[0]:
@@ -668,7 +694,7 @@ def check_h7(lines):
              'pair_end_line': B[1], 'ratio': r, 'contained': contained, 'opening': opening,
              'matched': unit, 'matched_sentence': sent, 'echo_count': len(group[p]),
              'desc': '被 %s 段首复述（%s，相似度 %.2f；本段共被 %d 个后文段首复述）：本段“%s”｜段首“%s”。'
-                     '预告只给结论和步骤关系，不照抄段首（FICCCompose C04、C20、C23）'
+                     '预告只给结论和步骤关系，不照抄段首（规则 C04、C20、C23）'
                      % (h7_loc(B), '包含' if contained else '近似', r, len(group[p]),
                         snippet(unit, H7_CTX), snippet(opening, H7_CTX)),
              'text': snippet(opening, H7_CTX)}
@@ -752,7 +778,7 @@ def para_counts(text):
 
 
 # ---------------------------------------------------------------------------
-# Hazard list (v4): cold-read candidates, report-only (FICCVoice.md 7).
+# Hazard list (v4): cold-read candidates, report-only (FICCVoice.md §4.1).
 # Never touches the exit code and never carries a "！".  Regex and character
 # rules only (no segmenter on this machine): heuristic, biased towards missing.
 # Scope = the metrics scope (prose lines before the first 附 heading, quote
@@ -761,7 +787,7 @@ def para_counts(text):
 HZ_CLAUSE_JSON_MIN = 4   # 分句过多: every sentence with >= 4 clauses goes into --json
 HZ_CLAUSE_LIST_MIN = 6   # ... the text report and hazard_counts take >= 6 (no upper limit is a rule)
 HAZARD_KINDS = ['承前省略', '句首代词', '分句过多', '的≥3', '无施事被动',
-                '而则并且', '双重否定', '名词化', '名字表禁用词']
+                '而则并且', '双重否定', '名词化', '名字表禁用词', '段首信噪比']
 HAZARD_NOTES = {
     '承前省略': '承前省略，核上一句主语是否唯一',
     '句首代词': '句首裸代词，核它指哪一个；指得出名字就写名字',
@@ -772,6 +798,7 @@ HAZARD_NOTES = {
     '双重否定': '双重否定，核能否改成正说',
     '名词化': '名词化，核能否改回动词句',
     '名字表禁用词': '名字表“不许用”一栏的说法，改成正名',
+    '段首信噪比': '导语、部分或小节开头段、多句段的首句堆了数字、括注、材料出处或路线图，核能否让判断先出、明细后移（--clarity）',
 }
 HAZARD_ENUM_KEY = '分句过多（列举句，未列）'
 HAZARD_COND_MAX = 10  # conditional 名字表 hits listed in the text report
@@ -950,7 +977,7 @@ def hz_prose(L, t, out, skipped):
             m = HZ_META_RE.match(t, c0, ce)
             if m:
                 out.append(hz_item(L, '句首代词', t, a, b, m.start(1), m.end(1),
-                                   note='元话语主语：指得出名字就写名字（FICCVoice 4.4）'))
+                                   note='元话语主语：指得出名字就写名字（FICCVoice V24）'))
             else:
                 m = HZ_PRON_RE.match(t, c0, ce)
                 if m:
@@ -977,7 +1004,7 @@ def hz_prose(L, t, out, skipped):
             # 6 而则并且
             m = HZ_ERZE_RE.match(t, c0, ce)
             # 而 not listed: second half of a pair (不在X，而在Y) or 而……也 later in the
-            # same sentence (a parallel / repetition marker, FICCVoice 4.1)
+            # same sentence (a parallel / repetition marker, FICCVoice V13)
             if m and not (m.group(1) == '则' and '与其' in t[a:c0]) and not (
                     m.group(1) == '而' and (HZ_ER_PAIR_RE.search(t[a:c0])
                                            or '也' in t[m.end(1):b])):
@@ -1043,9 +1070,11 @@ def hz_names(L, t, names, out):
         out.append(it)
 
 
-def find_hazards(lines, names=None):
+def find_hazards(lines, names=None, clarity=False):
     out, skipped = [], {HAZARD_ENUM_KEY: 0}
     use_names = bool(names and names.get('terms'))
+    if clarity:
+        out += snr_hazards(lines)
     for L in lines:
         if L.kind == 'prose':
             t = hz_clean(L.content)
@@ -1069,6 +1098,8 @@ def find_hazards(lines, names=None):
         counts[h['kind']] += 1
     if not use_names:
         counts['名字表禁用词'] = None
+    if not clarity:
+        counts['段首信噪比'] = None
     extra = {'clause_histogram': dict((str(k), hist[k]) for k in sorted(hist)),
              'names_conditional_count': ncond if use_names else None}
     return out, counts, skipped, extra
@@ -1227,9 +1258,149 @@ def check_h9(lines):
     return out
 
 
-def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False):
+# ---------------------------------------------------------------------------
+# H10 and paragraph statistics (v4.6, rule C08: no more than ten sentences per paragraph; v4.7: H10 is a review
+# hint in both modes and a paragraph with >= PARA_NUM_HEAVY number strings is the review entry 重段待处置)
+# A paragraph is a run of consecutive prose lines outside list rows (H6_LIST_RE) and quote blocks; a blank line,
+# a heading, a table row, an image, a code fence or a list row ends it.  Sentences end at 。！？!? (closing quotes
+# kept with them); a tail without an end mark is a sentence when it holds a CJK character or a digit.  W4b: the end
+# marks inside a direct quote “…” before its last one are masked, so a quoted passage counts as one sentence (a
+# verbatim official quote cannot be split, rule C08 and references/clarity-acceptance.md).
+# ---------------------------------------------------------------------------
+H10_MAX = 10
+PARA_NUM_RE = re.compile(r'\d+(?:[.,]\d+)*')
+PARA_NUM_HEAVY = 30
+PARA_SENT_RE = re.compile(r'[^。！？!?]*[。！？!?]+[”’」』"）)]*')
+QUOTE_SPAN_RE = re.compile(r'“[^“”\n]*”')
+QUOTE_END_MASK = '\ue001'
+
+
+def mask_quote_ends(t):
+    """T with the sentence-end marks inside each “…” span masked, except a run that stands right before the closing
+    quote (same length, so positions hold)."""
+    def one(m):
+        q = m.group(0)
+        inner = q[1:-1]
+        k = len(inner.rstrip('。！？!?'))
+        return '“' + re.sub(r'[。！？!?]', QUOTE_END_MASK, inner[:k]) + inner[k:] + '”'
+    return QUOTE_SPAN_RE.sub(one, t)
+
+
+def para_sentence_list(text):
+    t = H5_CODE_RE.sub(lambda m: ' ' * len(m.group(0)), text)
+    mt = mask_quote_ends(t)
+    out, pos = [], 0
+    for m in PARA_SENT_RE.finditer(mt):
+        if m.group(0).strip():
+            out.append(t[m.start():m.end()].strip())
+        pos = m.end()
+    tail = t[pos:].strip()
+    if tail and re.search(r'[一-鿿0-9]', tail):
+        out.append(tail)
+    return out
+
+
+def body_paragraphs(lines):
+    """-> [dict(line, end_line, text, opens)] of body prose paragraphs; opens is 'lead' (before the first heading),
+    'section' (the first paragraph after a heading) or '' (any later paragraph)."""
+    paras, cur, seen_head, after_head = [], None, False, True
+    for L in lines:
+        if L.kind == 'prose' and not L.quote and not H6_LIST_RE.match(L.content):
+            if cur is not None:
+                cur['end_line'], cur['text'] = L.no, cur['text'] + L.content.strip()
+                continue
+            cur = {'line': L.no, 'end_line': L.no, 'text': L.content.strip(),
+                   'opens': ('section' if seen_head else 'lead') if after_head else ''}
+            after_head = False
+            continue
+        if cur is not None:
+            paras.append(cur)
+            cur = None
+        if L.kind == 'heading':
+            seen_head, after_head = True, True
+        elif L.kind == 'prose':        # a list row or a quote line: the next paragraph opens nothing
+            after_head = False
+    if cur is not None:
+        paras.append(cur)
+    return paras
+
+
+def paragraph_stats(lines, max_cjk=None):
+    out = []
+    for P in body_paragraphs(lines):
+        ss = para_sentence_list(P['text'])
+        n_num = len(PARA_NUM_RE.findall(H5_CODE_RE.sub(' ', P['text'])))
+        c = cjk(P['text'])
+        out.append({'line': P['line'], 'end_line': P['end_line'], 'opens': P['opens'], 'sentences': len(ss),
+                    'cjk': c, 'number_strings': n_num, 'over_10_sentences': len(ss) > H10_MAX,
+                    'over_30_numbers': n_num >= PARA_NUM_HEAVY,
+                    'over_cjk_cap': bool(max_cjk) and c > max_cjk, 'first_sentence': ss[0] if ss else ''})
+    return out
+
+
+def check_h10(stats):
+    """H10 review hints (v4.7: never hard): paragraphs over H10_MAX sentences."""
+    return [{'code': 'H10', 'line': p['line'], 'end_line': p['end_line'] if p['end_line'] != p['line'] else None,
+             'quote': False, 'sentences': p['sentences'],
+             'desc': '段落 %d 句，超过十句（C08 复核提示，不是硬伤）：看能否在论证单元的边界另起段' % p['sentences'],
+             'text': snippet(p['first_sentence'], 40)} for p in stats if p['over_10_sentences']]
+
+
+def check_heavy_para(stats):
+    """重段待处置 (v4.7): paragraphs with >= PARA_NUM_HEAVY number strings.  Never hard; the apply or acceptance
+    seat must dispose of each one (table / split re-carrying subject, period, basis and qualifiers / signed proof)."""
+    return [{'code': HEAVY_PARA_CODE, 'line': p['line'],
+             'end_line': p['end_line'] if p['end_line'] != p['line'] else None,
+             'quote': False, 'number_strings': p['number_strings'],
+             'desc': '段落 %d 个数字串（≥%d），必须处置：改表格，或拆段并在每段重带主语、时期、口径与限定语，'
+                     '或附核验员签字的不可拆证明' % (p['number_strings'], PARA_NUM_HEAVY),
+             'text': snippet(p['first_sentence'], 40)} for p in stats if p['over_30_numbers']]
+
+
+def check_para_cjk(stats, max_cjk):
+    return [{'code': 'C08-cjk', 'line': p['line'], 'end_line': p['end_line'] if p['end_line'] != p['line'] else None,
+             'quote': False, 'desc': '段落 %d 汉字，超过 --max-para-cjk %d（探索格，只报不拦）' % (p['cjk'], max_cjk),
+             'text': snippet(p['first_sentence'], 40)} for p in stats if max_cjk and p['cjk'] > max_cjk]
+
+
+# 段首信噪比 (--clarity hazard): the opening sentence of the lead, of a section opening or of a multi-sentence paragraph
+SNR_NUM_MAX = 4          # number strings in the opening sentence
+SNR_PAREN_MAX = 2        # parenthetical asides in the opening sentence
+SNR_PAREN_RE = re.compile(r'（[^（）\n]{1,120}）|\([^()\n]{1,120}\)')
+SNR_SOURCE_RE = re.compile(r'^[“"]?(?:据|根据)[^，。；！？]{0,48}?(?:披露|统计|季报|年报|报告|公告|申报|10-Q|10-K|8-K|S-1)')
+SNR_ROADMAP_RE = re.compile(r'^[“"]?(?:本节|本部分|本章|本文|下文|以下|下面|接下来|这一节|这一部分|我们先|先看|首先[，,]?我们)'
+                            r'[^。！？]{0,12}?(?:将|要|会|先|讨论|分析|介绍|拆解|梳理|说明|看|回顾|展开|从)')
+
+
+def snr_hazards(lines):
+    out = []
+    for p in paragraph_stats(lines):
+        if not (p['opens'] or p['sentences'] >= 2):
+            continue
+        s = p['first_sentence']
+        hits = []
+        n = len(PARA_NUM_RE.findall(s))
+        if n >= SNR_NUM_MAX:
+            hits.append('%d 个数字串' % n)
+        k = len(SNR_PAREN_RE.findall(s))
+        if k >= SNR_PAREN_MAX:
+            hits.append('%d 处括注' % k)
+        if SNR_SOURCE_RE.match(s):
+            hits.append('以材料出处起句')
+        if SNR_ROADMAP_RE.match(s):
+            hits.append('以路线图起句')
+        if hits:
+            scope = {'lead': '导语', 'section': '开头段'}.get(p['opens'], '段首句')
+            out.append({'kind': '段首信噪比', 'line': p['line'], 'scope': p['opens'] or 'paragraph',
+                        'text': snippet(s, HZ_SNIP), 'hit': '、'.join(hits),
+                        'note': '%s：%s' % (scope, '、'.join(hits)), 'quote': False})
+    return out
+
+
+def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False, max_para_cjk=None):
     baseline = BASELINE if baseline is None else baseline
     lines = classify(text)
+    pstats = paragraph_stats(lines, max_para_cjk)
     hard = (check_h1(lines) + check_h2(lines) + check_h3(lines) + check_h4(lines)
             + check_h5(text) + check_h6(lines))
     hard.sort(key=lambda h: (h['line'], h['code']))
@@ -1237,10 +1408,12 @@ def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False)
     if clarity:
         reviews = [h for h in hard if h['code'] in SEMANTIC_REVIEW_CODES]
         hard = [h for h in hard if h['code'] not in SEMANTIC_REVIEW_CODES]
-    # H7 is computed apart from `hard`: a review candidate in both modes, never a hard failure
+    # H7, H10, 重段待处置 and C08-cjk are computed apart from `hard`: review entries in both modes, never hard
     if clarity:
         reviews += check_h9(lines)  # H9 (V57): review candidate under --clarity only
-    reviews = sorted(reviews + check_h7(lines), key=lambda h: (h['line'], h['code']))
+    reviews = sorted(reviews + check_h7(lines) + check_h10(pstats) + check_heavy_para(pstats)
+                     + check_para_cjk(pstats, max_para_cjk),
+                     key=lambda h: (h['line'], h['code']))
     paras = [L for L in lines if L.kind == 'prose']
     total = {k: 0 for k, _ in METRICS}
     inq = {k: 0 for k, _ in METRICS}
@@ -1256,7 +1429,7 @@ def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False)
                 inq[k] += pc[k]
         for k, qs in para_hits(body).items():
             dhits[k] += [{'line': L.no, 'quote': q} for q in qs]
-    hazards, hcounts, hskipped, hextra = find_hazards(lines, names)
+    hazards, hcounts, hskipped, hextra = find_hazards(lines, names, clarity)
     rows, flags = [], 0
     for k, label in METRICS:
         dens = total[k] * 10000.0 / n_cjk if n_cjk else 0.0
@@ -1279,7 +1452,12 @@ def analyze(text, name, lecture=False, baseline=None, names=None, clarity=False)
             'clause_histogram': hextra['clause_histogram'],
             'names_conditional_count': hextra['names_conditional_count'],
             'names': names_public(names), 'semantic_reviews': reviews,
-            'density_hits': dhits}
+            'density_hits': dhits, 'paragraphs': pstats,
+            'paragraph_summary': {'paragraphs': len(pstats),
+                                  'over_10_sentences': sum(p['over_10_sentences'] for p in pstats),
+                                  'over_30_numbers': sum(p['over_30_numbers'] for p in pstats),
+                                  'over_cjk_cap': sum(p['over_cjk_cap'] for p in pstats),
+                                  'max_para_cjk': max_para_cjk}}
     if clarity:
         result.update(mode='clarity')
     return result
@@ -1297,7 +1475,8 @@ def render(r, hazards=True):
     reg = '讲课档（--lecture：硬伤规则不变，「我」与括号不提示）' if r['register'] == 'lecture' else '书面档'
     out.append('voice_check v%s｜%s｜%s' % (r['version'], r['file'], reg))
     if r.get('mode') == 'clarity':
-        out.append('清晰模式：H1/H5/H6 是硬伤；H2–H4、H7 与 H9 只列语义复核候选，退出码不证明清晰。')
+        out.append('清晰模式：H1/H5/H6 是硬伤；H2–H4、H7、H9 与 H10（超十句）只列语义复核候选；'
+                   '重段待处置（数字串 ≥%d）另列、必须处置但不改退出码；退出码不证明清晰。' % PARA_NUM_HEAVY)
     out.append('正文 %d 汉字（查到第一个「## 附」为止；跳过围栏代码、表格行、图片行；'
                '引用块照查并标注；标题行只查 H4；H6、H7 另跳过清单行）' % r['chinese_chars'])
     if r['short_text']:
@@ -1339,8 +1518,10 @@ def render(r, hazards=True):
     if hazards and 'hazards' in r:
         out.append(render_hazards(r))
         out.append('')
-    out.append('结论：硬伤 %d，退出码 %d；高于作者 90 分位 %d 项（两项风格清理按上述说明处理）。'
-               % (len(r['hard']), r['exit_code'], r['over_p90_count']))
+    n_heavy = sum(1 for h in r['semantic_reviews'] if h['code'] == HEAVY_PARA_CODE)
+    out.append('结论：硬伤 %d，退出码 %d；高于作者 90 分位 %d 项（两项风格清理按上述说明处理）%s。'
+               % (len(r['hard']), r['exit_code'], r['over_p90_count'],
+                  '；重段待处置 %d 段（必须处置，不改退出码）' % n_heavy if n_heavy else ''))
     return '\n'.join(out)
 
 
@@ -1444,6 +1625,9 @@ SYNTH = [
     ('H4', '## 美元不是避险资产，而是融资货币\n\n正文。\n'),
     ('H5', '他说「美元荒」只是『表面』现象。\n'),
     ('H6', '利差走阔了；利率也在降，资金面并不宽松。\n'),
+    ('H10', '一。二。三。四。五。六。七。八。九。十。十一。\n'),
+    (None, '一。二。三。四。五。六。七。八。九。十。\n\n- 一。二。三。四。五。六。七。八。九。十。十一。\n\n'
+           '> 一。二。三。四。五。六。七。八。九。十。十一。\n'),
     (None, '| 项目 | 说明 |\n|---|---|\n| 利差 | 走阔；利率下行 |\n'),
     (None, '- 利差走阔；利率也在降\n\n1. 资金面偏紧；情绪低迷，市场还在等待央行下一步的公开市场操作信号\n\n2．结构越复杂；收费越高\n'),
     (None, '## 利差；利率\n\n正文没有分号。行内`a；b`不算。\n\n```\nx = 1；y = 2\n```\n\n'
@@ -1625,16 +1809,23 @@ def hazard_count_line(r):
 
 
 def render_semantic_reviews(r):
-    reviews = r['semantic_reviews']
+    """Review candidates, then 重段待处置 under its own labelled line (v4.7; both stay in semantic_reviews)."""
+    reviews = [h for h in r['semantic_reviews'] if h['code'] != HEAVY_PARA_CODE]
+    heavy = [h for h in r['semantic_reviews'] if h['code'] == HEAVY_PARA_CODE]
     if r.get('mode') == 'clarity':
-        out = ['语义复核候选 %d（H2–H4 字面命中、H7 跨段重复（A 长串重合、B 段首复述）、H9 名词化的看法，不据此判错；见 references/clarity-acceptance.md）'
+        out = ['语义复核候选 %d（H2–H4 字面命中、H7 跨段重复（A 长串重合、B 段首复述）、H9 名词化的看法、H10 超十句段，不据此判错；见 references/clarity-acceptance.md）'
                % len(reviews)]
     else:
-        out = ['语义复核候选 %d（H7 跨段重复：A 长串重合、B 段首复述，只报不拦；见 FICCCompose.md C23）' % len(reviews)]
-    for h in reviews:
+        out = ['语义复核候选 %d（H7 跨段重复：A 长串重合、B 段首复述；H10 超十句段；只报不拦；见规则 C23、C08）' % len(reviews)]
+
+    def row(h):
         loc = 'L%d' % h['line'] + ('–L%d' % h['end_line'] if h.get('end_line') else '')
         q = '〔引用块〕' if h.get('quote') else ''
-        out.append('  %s %s %s%s｜%s' % (h['code'], loc, h['desc'], q, h['text']))
+        return '  %s %s %s%s｜%s' % (h['code'], loc, h['desc'], q, h['text'])
+    out += [row(h) for h in reviews]
+    out.append('重段待处置 %d（数字串 ≥%d 的段；必须处置：改表格／拆段并重带主语、时期、口径与限定语／核验员签字的不可拆证明；'
+               '不改退出码，由落稿或验收席位处置）' % (len(heavy), PARA_NUM_HEAVY))
+    out += [row(h) for h in heavy]
     return '\n'.join(out)
 
 
@@ -1652,6 +1843,8 @@ def render_hazards(r):
                 cell += '（≥6 个分句；≥4 的见 --json）'
             elif k == '名字表禁用词':
                 cell += '（无条件；有条件的另有 %d，见最后）' % (r.get('names_conditional_count') or 0)
+        elif k == '段首信噪比':
+            cell = '只在 --clarity 下查'
         elif nm:
             cell = nm['status']
         else:
@@ -1708,7 +1901,7 @@ def selftest_clarity():
                 and r['exit_code'] == 0 and not r['hard']
                 and r['semantic_reviews'] == default['hard']
                 and r['metrics'] == default['metrics']
-                and r['hazards'] == default['hazards']
+                and [h for h in r['hazards'] if h['kind'] != '段首信噪比'] == default['hazards']
                 and default['semantic_reviews'] == []
                 and code in render_semantic_reviews(r))
         ok &= good
@@ -1804,6 +1997,69 @@ H9_WANT = [(3, '读法'), (3, '解读'), (5, '推断加强')]
 H9_NEG_LINE = 13
 
 
+def selftest_h10_snr():
+    print('== H10 超十句提示、重段待处置与段首信噪比自检（v4.7）')
+    ok = True
+    text = ('## 一、标题\n\n据Dell截至2026年7月31日的10-Q季报，DFS单季新发放融资由$2.4bn升至$7.5bn。第二句。\n\n'
+            '本节将先拆解三条合同链。第二句。\n\n利差走阔到416bp（11月9日）（见图3）。第二句。\n\n'
+            '现金只够覆盖0.83季。短于Dell。\n\n单句段，含1、2、3、4、5五个数。\n')
+    r = analyze(text, 'synthetic', clarity=True)
+    snr = [h for h in r['hazards'] if h['kind'] == '段首信噪比']
+    good = [h['line'] for h in snr] == [3, 5, 7] and r['hazard_counts']['段首信噪比'] == 3 and not r['hard']
+    ok &= good
+    print('  %s 段首信噪比：材料出处起句（开头段）、路线图起句、两处括注各 1，判断先出的段与单句段放过；得到 %s'
+          % ('通过' if good else '不通过', [(h['line'], h['hit']) for h in snr]))
+    r0 = analyze(text, 'synthetic')
+    good = r0['hazard_counts']['段首信噪比'] is None and not [h for h in r0['hazards'] if h['kind'] == '段首信噪比']
+    ok &= good
+    print('  %s 默认模式不查段首信噪比' % ('通过' if good else '不通过'))
+    long = '。'.join('第%d句有%d个数' % (i, i) for i in range(1, 12)) + '。\n'
+    r = analyze(long + '\n' + '短段。\n', 'synthetic', clarity=True, max_para_cjk=20)
+    p = r['paragraphs']
+    rd = analyze(long + '\n' + '短段。\n', 'synthetic')
+    good = (r['exit_code'] == 0 and not r['hard'] and p[0]['sentences'] == 11
+            and p[0]['number_strings'] == 22 and p[0]['over_10_sentences'] and not p[1]['over_10_sentences']
+            and p[0]['over_cjk_cap'] and not p[1]['over_cjk_cap']
+            and sorted(h['code'] for h in r['semantic_reviews']) == ['C08-cjk', 'H10']
+            and rd['exit_code'] == 0 and not rd['hard'] and [h['code'] for h in rd['semantic_reviews']] == ['H10']
+            and 'H10' in render_semantic_reviews(rd))
+    ok &= good
+    print('  %s H10 十一句段只进复核提示（默认与 --clarity 都不是硬伤，退出码 0），段落统计 11 句 22 串，'
+          '--max-para-cjk 20 只进复核候选' % ('通过' if good else '不通过'))
+    dense = '，'.join('%d' % i for i in range(30)) + '。第二句。\n'
+    light = '，'.join('%d' % i for i in range(29)) + '。第二句。\n'
+    good = True
+    for clar in (False, True):
+        r = analyze(dense, 'synthetic', clarity=clar)
+        heavy = [h for h in r['semantic_reviews'] if h['code'] == HEAVY_PARA_CODE]
+        txt = render(r, hazards=False).split('\n')
+        lab = [i for i, ln in enumerate(txt) if ln.startswith('重段待处置 1（')]
+        good &= (r['paragraphs'][0]['over_30_numbers'] and r['paragraphs'][0]['number_strings'] == 30
+                 and r['exit_code'] == 0 and not r['hard'] and len(heavy) == 1
+                 and heavy[0]['number_strings'] == 30 and heavy[0]['line'] == 1
+                 and r['paragraph_summary']['over_30_numbers'] == 1
+                 and len(lab) == 1 and txt[lab[0] + 1].startswith('  %s L1 ' % HEAVY_PARA_CODE))
+        rl = analyze(light, 'synthetic', clarity=clar)
+        good &= (not rl['paragraphs'][0]['over_30_numbers']
+                 and not [h for h in rl['semantic_reviews'] if h['code'] == HEAVY_PARA_CODE]
+                 and '重段待处置 0（' in render_semantic_reviews(rl))
+    ok &= good
+    print('  %s 单段 30 个数字串进 semantic_reviews（%s，默认与 --clarity 都有，文本另列标签行），不改退出码；29 串不报'
+          % ('通过' if good else '不通过', HEAVY_PARA_CODE))
+    quoted = ('第一句。第二句。声明原文写道：“甲。乙。丙。丁。戊。”第四句。第五句。\n')
+    r = analyze(quoted, 'synthetic', clarity=True)
+    p = r['paragraphs']
+    many = '。'.join('第%d句' % i for i in range(1, 8)) + '。他说：“甲。乙。丙。”第九句。第十句。第十一句。\n'
+    r2 = analyze(many, 'synthetic', clarity=True)
+    good = (p[0]['sentences'] == 5 and not r['hard'] and not r['semantic_reviews']
+            and r2['paragraphs'][0]['sentences'] == 11 and not r2['hard']
+            and [h['code'] for h in r2['semantic_reviews']] == ['H10'])
+    ok &= good
+    print('  %s 引号内整段直接引语算一句（五句段含五个句号的引语，计 5 不计 9，无 H10）；引语外仍超十句照样报 H10 提示'
+          % ('通过' if good else '不通过'))
+    return ok
+
+
 def selftest_h9():
     print('== H9 名词化的看法自检（只在 --clarity 下算；只进语义复核候选，不计硬伤、不改退出码）')
     r = analyze(H9_SYNTH, 'synthetic', clarity=True)
@@ -1871,13 +2127,16 @@ def selftest(letters, clarity=False):
     for want, text in SYNTH:
         r = analyze(text, 'synthetic', clarity=clarity)
         got = sorted(set(h['code'] for h in r['hard']))
-        expected = [] if not want or (clarity and want in SEMANTIC_REVIEW_CODES) else [want]
+        expected = [] if not want or want in HINT_CODES or (clarity and want in SEMANTIC_REVIEW_CODES) else [want]
         good = got == expected and r['exit_code'] == bool(expected)
+        reviews = sorted(set(h['code'] for h in r['semantic_reviews']))
         if clarity:
-            reviews = sorted(set(h['code'] for h in r['semantic_reviews']))
-            good &= reviews == ([want] if want in SEMANTIC_REVIEW_CODES else [])
+            good &= reviews == ([want] if want in SEMANTIC_REVIEW_CODES or want in HINT_CODES else [])
+        elif want in HINT_CODES:
+            good &= reviews == [want]
         ok &= good
-        print('  %s 期望 %s，得到 %s' % ('通过' if good else '不通过', expected or '无硬伤', got or '无硬伤'))
+        print('  %s 期望 %s，得到 %s%s' % ('通过' if good else '不通过', expected or '无硬伤', got or '无硬伤',
+                                       '（复核提示 %s）' % '/'.join(reviews) if want in HINT_CODES else ''))
     for title, want in HEAD_CORE_SYNTH:
         got = head_core(title)
         good = got == want
@@ -1893,6 +2152,8 @@ def selftest(letters, clarity=False):
         print()
         ok &= selftest_h9()
         print()
+    ok &= selftest_h10_snr()
+    print()
     ok &= selftest_hazards()
     print()
     for fn in EXEMPLARS:
@@ -1905,13 +2166,17 @@ def selftest(letters, clarity=False):
         r = analyze(read(p), fn, clarity=clarity)
         print(render(r, hazards=False))
         print(hazard_count_line(r))
-        # H6 hits in the exemplars are true positives in pre-2026-10-17 author
-        # text, not false alarms; the exemplar check guards against false alarms.
-        legacy = sum(1 for h in r['hard'] if h['code'] == 'H6')
-        good = len(r['hard']) == legacy
+        # H6 hits in the exemplars are true positives in author text written before the 2026-10-17 semicolon
+        # ruling, not false alarms; the exemplar check guards against false alarms.  H10 (v4.7) and 重段待处置
+        # are review hints, counted here for the record only.
+        legacy6 = sum(1 for h in r['hard'] if h['code'] == 'H6')
+        legacy10 = sum(1 for h in r['semantic_reviews'] if h['code'] == 'H10')
+        heavy = sum(1 for h in r['semantic_reviews'] if h['code'] == HEAVY_PARA_CODE)
+        good = len(r['hard']) == legacy6 and not any(h['code'] in HINT_CODES for h in r['hard'])
         ok &= good
-        print('自检：%s 硬伤 %d（其中 H6 分号 %d 处：10-17 裁定前的作者原文，只报不计）→ %s'
-              % (fn, len(r['hard']), legacy, '通过' if good else '不通过'))
+        print('自检：%s 硬伤 %d（其中 H6 分号 %d 处：10-17 裁定前的作者原文，只报不计）；复核提示 H10 超十句段 %d 段、'
+              '%s %d 段 → %s' % (fn, len(r['hard']), legacy6, legacy10, HEAVY_PARA_CODE, heavy,
+                                 '通过' if good else '不通过'))
         print()
     print('== 对照 2026.02（AI 辅助那期）')
     if os.path.exists(letters):
@@ -1940,7 +2205,8 @@ def main(argv=None):
         prog='voice_check.py',
         description='FICCVoice v%s (%s): default H1-H6 set exit 1; --clarity keeps only H1/H5/H6 hard; '
                     'H7 (cross-paragraph repetition, triggers A and B) is a review candidate in both modes; '
-                    'H9 (nominalized views) is a review candidate under --clarity only. '
+                    'H9 (nominalized views) is a review candidate under --clarity only; '
+                    'H10 (> ten sentences) and 重段待处置 (>= 30 number strings) are review entries in both modes. '
                     'Counts never set exit 1; two flagged style rows still need cleanup; '
                     'the 不是……而是 and 段末升华 rows list each hit.' % (VERSION, VERSION_DATE))
     ap.add_argument('file', nargs='?', help='markdown file to check')
@@ -1952,6 +2218,10 @@ def main(argv=None):
                     help='outline whose name table (名字 / 不许用 columns) is checked against the text')
     ap.add_argument('--hazards-only', action='store_true',
                     help='print only review candidates (H7 in both modes, H2-H4 with --clarity; exit code unchanged)')
+    ap.add_argument('--para-stats', action='store_true',
+                    help='print per-paragraph sentences, CJK and number strings (also in --json "paragraphs")')
+    ap.add_argument('--max-para-cjk', type=int, metavar='N',
+                    help='paragraphs over N CJK characters become review candidates C08-cjk (never hard)')
     ap.add_argument('--selftest', action='store_true', help='exemplars must pass; 2026.02 must be caught')
     ap.add_argument('--baseline', action='store_true', help='recompute author baseline and print it')
     ap.add_argument('--letters', default=DEFAULT_LETTERS, help='monthly-letter collection (txt)')
@@ -1980,10 +2250,11 @@ def main(argv=None):
             print('找不到提纲：%s' % a.names, file=sys.stderr)
             return 2
         names = parse_names(read(a.names), a.names)
-    r = analyze(read(a.file), os.path.basename(a.file), lecture=a.lecture, names=names, clarity=a.clarity)
+    r = analyze(read(a.file), os.path.basename(a.file), lecture=a.lecture, names=names, clarity=a.clarity,
+                max_para_cjk=a.max_para_cjk)
     if a.json and a.hazards_only:
         keys = ('file', 'version', 'hazards', 'hazard_counts', 'hazard_skipped',
-                'clause_histogram', 'names_conditional_count', 'names', 'semantic_reviews')
+                'clause_histogram', 'names_conditional_count', 'names', 'semantic_reviews', 'paragraph_summary')
         if a.clarity:
             keys += ('mode',)
         print(json.dumps(dict((k, r[k]) for k in keys), ensure_ascii=False, indent=2))
@@ -1995,7 +2266,23 @@ def main(argv=None):
         print(render_hazards(r))
     else:
         print(render(r))
+    if a.para_stats and not a.json:
+        print(render_para_stats(r))
     return r['exit_code']
+
+
+def render_para_stats(r):
+    s = r['paragraph_summary']
+    out = ['', '段落统计：%d 段；超十句 %d 段；数字串 ≥%d 的 %d 段%s' % (
+        s['paragraphs'], s['over_10_sentences'], PARA_NUM_HEAVY, s['over_30_numbers'],
+        ('；超 %d 汉字 %d 段' % (s['max_para_cjk'], s['over_cjk_cap'])) if s['max_para_cjk'] else '')]
+    for p in r['paragraphs']:
+        flag = ''.join(['！十句' if p['over_10_sentences'] else '', ' 重段' if p['over_30_numbers'] else '',
+                        ' 超字' if p['over_cjk_cap'] else ''])
+        out.append('  L%d%s %s 句 %d｜汉字 %d｜数字串 %d %s' % (
+            p['line'], ('–L%d' % p['end_line']) if p['end_line'] != p['line'] else '', p['opens'] or '-',
+            p['sentences'], p['cjk'], p['number_strings'], flag))
+    return '\n'.join(out)
 
 
 if __name__ == '__main__':

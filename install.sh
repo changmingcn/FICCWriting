@@ -129,6 +129,11 @@ check "voice_check.py --selftest"        python3 -B "$V/voice_check.py" --selfte
 check "voice_check.py --selftest --clarity" python3 -B "$V/voice_check.py" --selftest --clarity
 check "tieout.py --self-test"            python3 -B "$H/tieout.py" --self-test
 check "test_tieout.py"                   python3 -B "$H/test_tieout.py"
+check "outline_slice.py --self-test"     python3 -B "$V/outline_slice.py" --self-test
+check "inline_guards.py --selftest"      python3 -B "$V/inline_guards.py" --selftest
+check "number_set_diff.py --selftest"    python3 -B "$V/number_set_diff.py" --selftest
+check "changed_sentences.py --selftest"  python3 -B "$V/changed_sentences.py" --selftest
+check "sentence_diff.py --selftest"      python3 -B "$V/sentence_diff.py" --selftest
 if [ "$fails" -ne 0 ]; then
     echo "install.sh: $fails self-test(s) failed; files are installed in $DEST" >&2
     exit 1

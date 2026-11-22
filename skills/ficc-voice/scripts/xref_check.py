@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 r"""xref_check.py (2026-10-17, wave 4; no retired numbers since 2026-11-04; agent cards and STALE-QUOTE
-2026-11-04) -- section references must resolve to numbered headings; V/S/O/C rule numbers must be defined;
-rationale "Supports" quotes must quote the current rule text.
+2026-11-04; merged tree, § refs and skipped excerpts 2026-11-21) -- section references must resolve to numbered
+headings; V/S/O/C rule numbers must be defined; rationale "Supports" quotes must quote the current rule text.
 
 Checks that every reference to a section of FICCOutline.md, FICCStructure.md,
 FICCVoice.md or FICCCompose.md (and to a numbered section of any other .md file in
@@ -16,7 +16,8 @@ Targets: numbered headings "## N title", "### N.M title", "#### N.M.N title" (ti
 may be absent, as in "## 1.2" of the rationale files).  An unnumbered ## heading
 closes the section above it.  Main files: <root>/FICCOutline.md, FICCStructure.md,
 FICCVoice.md (required) and FICCCompose.md (optional: when absent, refs to it are
-MISSING and C numbers are MISSING-RULE).  A file under references/zh/ that names a main file is checked against
+MISSING and the C rules are read from FICCVoice.md -- the merged tree of 2026-11-21, whose FICCVoice.md has
+sections "## 0", "## 1", "## 2", "### 3.1", "### 3.2", "## 4"; with FICCCompose.md present nothing changes).  A file under references/zh/ that names a main file is checked against
 its Chinese mirror references/zh/<F>.md (same numbers, Chinese titles).
 
 Scanned: every *.md and *.py under <root>, except
@@ -35,7 +36,8 @@ other target must be written as a file name ending .md, optionally with a path;
 optional markdown link target "](...)", optional backtick, optional one space):
   N  numbered       F 4 / F 4.2 / F4.2 / F.md 4.2 / dev-notes.md section 35 /
                     dev-notes.md第35节 / FICCVoice 5.1 V29 (V/S/O/C numbers are not
-                    sections).  Not refs: a number followed by a digit, ",5", "%",
+                    sections) / FICCVoice.md §3.1 / FICCVoice.md §0 (§, one optional
+                    space, 2026-11-21; "## 0 title" is section 0).  Not refs: a number followed by a digit, ",5", "%",
                     "-5", a measure word (F.md 40条, 3份) or KB/bytes/lines/times.
                     A file name that resolves to no file in the tree, or to a file
                     with no numbered headings, is not a ref (results/J-trees.md第3节).
@@ -52,11 +54,12 @@ optional markdown link target "](...)", optional backtick, optional one space):
   C  continuation   a list after a recognised ref inherits its file:
                     F 4.3 and 4.5, F 1 to 3, F 1到3, F 3、8, F 2.2, 2.3, F 4.1和7
                     (a range -- to / 到 / 至 / dash -- must ascend: "F 10.3 to 9.3"
-                    is a move and stops the list; "，" ends the list)
+                    is a move and stops the list; "，" ends the list); a continuation
+                    may repeat §, and "/" joins § items: F.md §3.1 and §3.2, F.md §0/§1/§2
   B  bare in-file   inside the four main files and their zh mirrors only, resolved
                     against that file: any N.M / N.M.N not preceded by a letter,
                     digit, "." "-" "/" (see 4.2, (2.2, 2.3), the 1.4 table, 见4.2,
-                    （4.2）); section 5 / 第5节; a single number right after
+                    （4.2）); section 5 / 第5节 / §0 / §3.1; a single number right after
                     see / 见 (see 7.  见7。).  Heading lines and fenced code are skipped.
   L  legacy         old Chinese numbering after F (F四（二）, F七, F“七、标题”):
                     always MISSING -- rewrite it as F 4.2 / F 7 / F “7 title”.
@@ -70,8 +73,9 @@ longer matches).
 Rule numbers (added 2026-10-17; retired-number pointers dropped 2026-11-04): every V\d\d, S\d\d,
 O\d\d, C\d\d in a scanned file (not preceded by a letter, digit or "_", not followed by a digit)
 must have a definition line "- **Vnn** **<intent>**" in FICCVoice.md ("- **Snn** **...**" in
-FICCStructure.md, "- **Onn** **...**" in FICCOutline.md, "- **Cnn** **...**" in FICCCompose.md);
-otherwise MISSING-RULE.  Not checked for rule numbers: the files excluded above (the records,
+FICCStructure.md, "- **Onn** **...**" in FICCOutline.md, "- **Cnn** **...**" in FICCCompose.md, or in
+FICCVoice.md when the root has no FICCCompose.md); otherwise MISSING-RULE.  In such a merged tree a C number
+cited through the retired file name ("FICCCompose.md C08", "`FICCCompose` C08") is MISSING-RULE too.  Not checked for rule numbers: the files excluded above (the records,
 references/migration-2026-10-17.md among them, keep old numbers) and everything under
 references/zh/.  There are no retired numbers, pointer lines or exemptions (user ruling
 2026-11-04): a retired number is deleted with its line and live files cite current numbers only,
@@ -89,9 +93,9 @@ captions and not checked):
   "| ... |"           equals some Compose table row (leading and trailing blanks ignored)
 Results: EXCERPT-MISMATCH (the line has no verbatim Compose counterpart; the report gives the
 excerpt line number and the closest Compose line), EXCERPT-MISSING (a C number defined in
-FICCCompose.md has no "- Cnn" intent line in excerpt section 1), EXCERPT-MISSING-FILE (root has
-FICCCompose.md but no references/compose-excerpt.md).  No FICCCompose.md under the root: excerpt
-skipped.
+FICCCompose.md has no "- Cnn" intent line in excerpt section 1).  No FICCCompose.md or no
+references/compose-excerpt.md under the root (the excerpts retire in Wave 2, 2026-11-21): excerpt skipped, one
+line "excerpt: skipped (<file> absent)", no error; EXCERPT-MISSING-FILE is no longer raised (count kept, 0).
 Section 3 (added 2026-10-24): "## 3" and after is not compared word for word; its C numbers go
 through the rule-number check above, and its "- C23 ..." lines, taken together, must cite exactly
 the C numbers that FICCCompose.md C23's body cites (from "- **C23**" to the next "- **Cnn**" or
@@ -148,7 +152,7 @@ The cards line and the quotes line stand before the last line; their counts also
 just before its last item (see "Last line" below).
 
 Exit codes: 0 clean; 1 any MISSING, STALE?, MISSING-RULE, EXCERPT-MISMATCH,
-EXCERPT-MISSING or EXCERPT-MISSING-FILE in the skill; any MISSING, STALE-TITLE, NO-TITLE or MISSING-RULE in a
+EXCERPT-MISSING (EXCERPT-MISSING-FILE no longer raised since 2026-11-21) in the skill; any MISSING, STALE-TITLE, NO-TITLE or MISSING-RULE in a
 card; any STALE-QUOTE; 2 usage error (root lacks FICCOutline.md, FICCStructure.md or FICCVoice.md).
 Last line of the text report:
   refs N · MISSING m · STALE? s · rule refs R · MISSING-RULE r
@@ -157,19 +161,24 @@ Last line of the text report:
     · quotes Q · STALE-QUOTE q
     · excerpt §3 C23 ids OK
   (one line; the last item reads OK, MISMATCH, MISSING or skipped as in "Section 3" above;
-  " · EXCERPT-MISSING-FILE 1" replaces the section-3 item when the excerpt is missing; " · excerpt
-  skipped" instead of the excerpt items when the root has no FICCCompose.md.  The cards and quotes
+  " · excerpt skipped" instead of the excerpt items when the root has no FICCCompose.md or no
+  references/compose-excerpt.md.  The cards and quotes
   items (2026-11-04) always stand just before that last item; " · cards none" when no card dir with
   ficc-*.md was found)
 Voice excerpts (wave 3, 2026-11-03): each file in VOICE_EXCERPTS (references/voice-excerpt-{patch,polish,draft,
 coldread}.md) must copy FICCVoice.md lines verbatim in its section 1 ("**" removed) and hold the intent line of each V
-number listed for it; results EXCERPT-MISMATCH / EXCERPT-MISSING / EXCERPT-MISSING-FILE (exit 1), one report line per
-file before the last line.  --selftest-excerpt also runs, per voice excerpt, a changed word, a dropped intent line
-and a removed file on a temp copy.
+number listed for it; results EXCERPT-MISMATCH / EXCERPT-MISSING (exit 1), one report line per file before the last
+line.  An absent file is skipped (2026-11-21): one line "voice excerpts: skipped (<files> absent)", no error.
+--selftest-excerpt also runs, per voice excerpt present, a changed word, a dropped intent line (exit 1) and a removed
+file (skipped, exit unchanged) on a temp copy, then every excerpt file removed at once (both checks skipped).
 --selftest-excerpt (2026-10-24): on a temp copy of --root, drop one C number from the excerpt's
 "- C23" lines, add a defined C number C23 does not cite, and drop every "- C23" line; each must
 be reported (EXCERPT-MISMATCH ids, EXCERPT-MISSING ids) with exit 1 and no other count changed;
-then --root itself must pass (exit 0, section 3 OK).  Exit 0 all passed, 1 otherwise.
+then --root itself must pass (exit 0, section 3 OK); a root without FICCCompose.md or the excerpt: "skipped".
+Both --selftest and --selftest-excerpt run the merged-tree fixture (2026-11-21): no FICCCompose.md, C rules in
+FICCVoice.md, no excerpt files, § refs -> exit 0; a missing C rule, a C rule cited through the retired file name
+and a missing § section each -> exit 1; with FICCCompose.md present the C rules still come from it.
+Exit 0 all passed, 1 otherwise.
 When to run: after any change to a heading or a section number of the main files (or of a
 numbered reference file), or to a rule definition, before installing.  Details: scripts/README.md.
 """
@@ -213,7 +222,7 @@ GUARD = (r'(?![0-9]|[.,][0-9]|[%%‰]|\s?[-/][0-9]|\s?–\s?(?=(?P<gq>\d{1,2}(?:
 PATH = r'[A-Za-z0-9_~./-]*/'
 PFX = (r'(?P<path>(?:%s)?(?:%s)(?![A-Za-z_-])(?:\.md)?'
        r'|(?:%s)?[A-Za-z0-9_-]+\.md)(?:\]\([^)]*\))?`?\s?') % (PATH, FNAMES, PATH)
-RREF = re.compile(PFX + r'(?:(?P<sec>[Ss]ections?\s)|(?P<di>第\s?))?(?P<n>%s)(?(di)\s?节)%s'
+RREF = re.compile(PFX + r'(?:(?P<sec>[Ss]ections?\s|§\s?)|(?P<di>第\s?))?(?P<n>%s)(?(di)\s?节)%s'
                   % (NUMS, GUARD))
 QT = r'[“"「](?P<qn>%s) (?P<qt>[^”"」\n]{1,80})[”"」]' % NUMS
 RQF = re.compile(PFX + QT)
@@ -225,13 +234,14 @@ OLDM = '份个条种句层处步件类篇段节章样项次点方者'
 RLEG = re.compile(r'(?<![A-Za-z0-9_-])(%s)(?:\.md)?(?:\]\([^)]*\))?`?\s?'
                   r'(?:[“"「][%s]{1,2}、[^”"」\n]{1,30}[”"」]|[%s]{1,2}(?![%s%s])(?:（[%s]{1,2}）)?)'
                   % (FNAMES, CN, CN, CN, OLDM, CN))
-CONN = r'(?:\s?(?:和|与|及|或|、|到|至|—|–)\s?|,\s(?:(?:and|or)\s)?|\s(?:and|or|to)\s)'   # ", and 8.3" too
-RCONT = re.compile('(' + CONN + r')(%s)%s' % (NUMS, GUARD))
+CONN = (r'(?:\s?(?:和|与|及|或|、|到|至|—|–)\s?|,\s(?:(?:and|or)\s)?|\s(?:and|or|to)\s'   # ", and 8.3" too
+        r'|/(?=§))')   # "F.md §0/§1/§2" (2026-11-21)
+RCONT = re.compile('(' + CONN + r')(?:§\s?)?(%s)%s' % (NUMS, GUARD))   # a continuation may repeat §
 RANGE = ('到', '至', '—', '–', 'to')   # a range must ascend: "10.3 to 9.3" is a move, not a range
 # a dotted number right after an opening curly quote or a backtick is a quoted example, not a bare reference
 # (FICCOutline O83 “1.1”, “1.1.1”; 2026-11-07)
 B_DOT = re.compile(r'(?<![A-Za-z0-9_./\-$¥“`])(\d{1,2}\.\d{1,2}(?:\.\d{1,2})?)%s' % GUARD)
-B_SECT = re.compile(r'(?:(?<![A-Za-z])[Ss]ection\s|(?P<di>第\s?))(\d{1,2}(?:\.\d{1,2}){0,2})(?(di)\s?节)%s' % GUARD)
+B_SECT = re.compile(r'(?:(?<![A-Za-z])[Ss]ection\s|§\s?|(?P<di>第\s?))(\d{1,2}(?:\.\d{1,2}){0,2})(?(di)\s?节)%s' % GUARD)
 B_SEE = re.compile(r'(?:(?<=见)|(?<=[Ss]ee ))(\d{1,2})(?=[。，；：）、)\s,.;:]|$|和|与|及)')
 HEADNUM = re.compile(r'^#{2,4} (%s)(?:\s+(.*?))?\s*$' % NUMS)
 FENCE = re.compile(r'^\s{0,3}(```|~~~)')
@@ -239,6 +249,10 @@ RULE_REF = re.compile(r'(?<![A-Za-z0-9_])([VSOC])(\d{2})(?![0-9])')
 # definition line "- **V07** **<intent>**"; "- **V05** → ..." (a pointer) is not one (2026-11-04)
 RULE_DEF = re.compile(r'^\s*-\s+\*\*([VSOC]\d{2})\*\*\s+\*\*')
 RULE_FILE = {'V': 'FICCVoice.md', 'S': 'FICCStructure.md', 'O': 'FICCOutline.md', 'C': 'FICCCompose.md'}
+# merged tree (2026-11-21, Wave 2 方式乙): with no FICCCompose.md under the root, the C rules are defined in FICCVoice.md
+C_MERGED = 'FICCVoice.md'
+# in a merged tree a C number cited through the retired file name ("FICCCompose.md C08") is MISSING-RULE
+C_RETIRED_PFX = re.compile(r'FICCCompose(?:\.md)?(?:\]\([^)]*\))?`?\s?\Z')
 # compose-excerpt.md vs FICCCompose.md (wave 6)
 EXCERPT = 'references/compose-excerpt.md'
 EX_C = re.compile(r'^-\s+(C\d{2})\s+(.*?)\s*$')        # excerpt intent line "- C01 <sentence>"
@@ -292,6 +306,15 @@ QMAP = str.maketrans({'‘': '“', '’': '”'})   # a quote inside “...” 
 def read(path):
     with open(path, encoding='utf-8') as fh:
         return fh.read()
+
+
+def rule_files(root):
+    """-> {letter: rule file} for this root: RULE_FILE, with C read from FICCVoice.md when the root has no
+    FICCCompose.md (the merged tree, 2026-11-21); with FICCCompose.md present nothing changes."""
+    rf = dict(RULE_FILE)
+    if not os.path.isfile(os.path.join(root, RULE_FILE['C'])):
+        rf['C'] = C_MERGED
+    return rf
 
 
 def outline(path):
@@ -379,7 +402,7 @@ def chain(line, pos, prev, aq=attached_quote):
                 [int(x) for x in m.group(2).split('.')] <= [int(x) for x in prev.split('.')]:
             return out
         q, end = aq(line, m.end())
-        out.append((m.group(2), q, m.start(2), end))
+        out.append((m.group(2), q, m.end(1), end))   # from the end of the connector: a repeated § is part of it
         pos, prev = end, m.group(2)
 
 
@@ -460,7 +483,7 @@ def rule_bodies(root):
     rule line "- **Xmm**" (pointer lines included) or heading.  Text per line: blanks at both ends and "**" removed; the
     definition line without its "- Xnn " prefix (= the intent sentence), any other list line without its leading "- "."""
     out = {}
-    for letter, fname in sorted(RULE_FILE.items()):
+    for letter, fname in sorted(rule_files(root).items()):
         fp = os.path.join(root, fname)
         if not os.path.isfile(fp):
             continue
@@ -540,6 +563,7 @@ def check_quotes(root):
     -> list of {file, line, rule, quote, result OK|STALE-QUOTE|SKIPPED, rule_file, match_line, nearest_line,
     nearest, similarity, note}."""
     bodies = rule_bodies(root)
+    rf = rule_files(root)
     out = []
     for rel in rationale_files(root):
         fence = False
@@ -559,7 +583,7 @@ def check_quotes(root):
                 e = _close_quote(l, k)
                 rid = m.group(1)
                 r = {'file': rel, 'line': no, 'rule': rid, 'quote': l[k + 1:e] if e >= 0 else l[k + 1:],
-                     'result': 'OK', 'rule_file': RULE_FILE[rid[0]],
+                     'result': 'OK', 'rule_file': rf[rid[0]],
                      'match_line': None, 'nearest_line': None, 'nearest': '', 'similarity': 0.0, 'note': ''}
                 if e < 0:   # never dropped silently (R1 F7)
                     r['result'] = 'STALE-QUOTE'
@@ -594,16 +618,15 @@ def check_excerpt(root, required=EXCERPT_REQUIRED):
     2 must hold every C01 table row; section 3 is checked by check_excerpt_s3.  -> None when root
     has no FICCCompose.md, else {file, lines, items, missing, missing_file, required, table_rows,
     sec3}; items are the checked excerpt lines (plus one kind-ids item on a section-3 mismatch);
-    missing entries carry kind rule | required | table | table-count | ids."""
+    missing entries carry kind rule | required | table | table-count | ids.  Since 2026-11-21 (the excerpts retire in
+    Wave 2) an absent references/compose-excerpt.md is skipped like an absent FICCCompose.md: -> None, no error;
+    missing_file stays in the result and is always False."""
     cp = os.path.join(root, 'FICCCompose.md')
-    if not os.path.isfile(cp):
+    ep = os.path.join(root, EXCERPT)
+    if not os.path.isfile(cp) or not os.path.isfile(ep):
         return None
     out = {'file': EXCERPT, 'lines': 0, 'items': [], 'missing': [], 'missing_file': False,
            'required': [], 'table_rows': None, 'sec3': None}
-    ep = os.path.join(root, EXCERPT)
-    if not os.path.isfile(ep):
-        out['missing_file'] = True
-        return out
     cdef, lists, subs, tables, fence = {}, [], [], [], False
     cur, trows = None, []              # cur: C number whose body we are in; trows: its table rows
     for no, l in enumerate(read(cp).split('\n'), 1):
@@ -773,8 +796,10 @@ def check_excerpt_s3(compose_path, excerpt_path, rule=EX_S3_RULE):
 def check_voice_excerpts(root, table=None):
     """FICCVoice mode excerpts (wave 3): section 1 ("## 1" to the next "## ") of each file in VOICE_EXCERPTS must copy
     FICCVoice.md lines verbatim ("**" removed, blanks at both ends ignored, fenced code skipped) and hold the intent
-    line "- Vnn ..." of each V number listed for it.  -> [] when root has no FICCVoice.md, else one dict per file:
-    {file, lines, mismatch [(line, text)], missing [V], required, missing_file}."""
+    line "- Vnn ..." of each V number listed for it.  -> [] when root has no FICCVoice.md, else one dict per file
+    present: {file, lines, mismatch [(line, text)], missing [V], required, missing_file}.  Since 2026-11-21 (the
+    excerpts retire in Wave 2) an absent file is skipped, not an error: it gets no dict (voice_excerpts_absent()
+    names it for the report) and missing_file is always False."""
     vp = os.path.join(root, 'FICCVoice.md')
     if not os.path.isfile(vp):
         return []
@@ -784,8 +809,6 @@ def check_voice_excerpts(root, table=None):
         r = {'file': rel, 'lines': 0, 'mismatch': [], 'missing': [], 'required': list(req), 'missing_file': False}
         ep = os.path.join(root, rel)
         if not os.path.isfile(ep):
-            r['missing_file'] = True
-            out.append(r)
             continue
         in1, fence, seen = False, False, set()
         for no, l in enumerate(read(ep).split('\n'), 1):
@@ -810,20 +833,44 @@ def check_voice_excerpts(root, table=None):
     return out
 
 
+def voice_excerpts_absent(root, table=None):
+    """VOICE_EXCERPTS files (or table's) not present under root: skipped by check_voice_excerpts (2026-11-21)."""
+    return [rel for rel in sorted(VOICE_EXCERPTS if table is None else table)
+            if not os.path.isfile(os.path.join(root, rel))]
+
+
+def excerpt_skip_reason(root):
+    """why check_excerpt skipped: the first of FICCCompose.md, references/compose-excerpt.md absent, else ''."""
+    return next((f for f in ('FICCCompose.md', EXCERPT) if not os.path.isfile(os.path.join(root, f))), '')
+
+
 def selftest_voice_excerpts(root=SKILL_DIR, cards=None):
-    """--selftest-excerpt, part 2 (wave 3): on a temp copy of root, per voice excerpt: one word changed in a section-1
-    line -> EXCERPT-MISMATCH; one required intent line dropped -> EXCERPT-MISSING; the file removed ->
-    EXCERPT-MISSING-FILE; each with exit 1.  Then root itself must pass.  -> 0 or 1."""
+    """--selftest-excerpt, part 2 (wave 3): on a temp copy of root, per voice excerpt present: one word changed in a
+    section-1 line -> EXCERPT-MISMATCH; one required intent line dropped -> EXCERPT-MISSING; each with exit 1; the file
+    removed -> skipped (2026-11-21: one "skipped (... absent)" line, exit and other counts unchanged).  Then every
+    excerpt file removed at once (compose excerpt included) -> both checks skipped, exit unchanged.  Root itself must
+    pass; absent voice excerpts there are skipped.  -> 0 or 1."""
     print('== voice excerpt selftest (%d files vs FICCVoice.md; temp copy of %s)' % (len(VOICE_EXCERPTS), root))
     cards = cards_dir(root, cards)   # the copy's own ../../agents is elsewhere: keep the original's
     live = check(root, cards=cards)
+    lc = live['counts']
+    keep = ('missing', 'stale', 'missing_rule', 'excerpt_mismatch', 'excerpt_missing', 'excerpt_missing_file')
     ok = live['exit_code'] == 0 and all(v['lines'] and not (v['mismatch'] or v['missing'] or v['missing_file'])
                                         for v in live['voice_excerpts'])
+    present = [v['file'] for v in live['voice_excerpts']]
+    if len(present) < len(VOICE_EXCERPTS):
+        print('  voice excerpts: skipped (%s absent)' % ', '.join(voice_excerpts_absent(live['root'])))
+
+    def skip_line(text, rels):
+        return [x for x in text.split('\n') if x.startswith('voice excerpts: skipped (')] == [
+            'voice excerpts: skipped (%s absent)' % ', '.join(rels)]
     tmp = tempfile.mkdtemp(prefix='xref_voice_')
     try:
         dst = os.path.join(tmp, 'skill')
         shutil.copytree(root, dst, symlinks=True, ignore=shutil.ignore_patterns('.*', '__pycache__'))
-        for rel, req in sorted(VOICE_EXCERPTS.items()):
+        base_gone = voice_excerpts_absent(dst)
+        for rel in present:
+            req = VOICE_EXCERPTS[rel]
             path = os.path.join(dst, rel)
             orig = read(path)
             rows = orig.split('\n')
@@ -833,7 +880,7 @@ def selftest_voice_excerpts(root=SKILL_DIR, cards=None):
             dropped = [l for i, l in enumerate(rows) if i != vline]
             for name, text, key in (('one word changed at L%d' % (vline + 1), changed, 'voice_mismatch'),
                                     ('%s intent line dropped' % req[0], dropped, 'voice_missing'),
-                                    ('file removed', None, 'voice_missing_file')):
+                                    ('file removed', None, 'skipped')):
                 if text is None:
                     os.remove(path)
                 else:
@@ -841,18 +888,37 @@ def selftest_voice_excerpts(root=SKILL_DIR, cards=None):
                         fh.write('\n'.join(text))
                 res = check(dst, cards=cards)
                 c = res['counts']
-                good = res['exit_code'] == 1 and c[key] >= 1 and all(
-                    c[k] == live['counts'][k] for k in ('missing', 'stale', 'missing_rule', 'excerpt_mismatch',
-                                                        'excerpt_missing', 'excerpt_missing_file'))
+                same = all(c[k] == lc[k] for k in keep)
+                if key == 'skipped':
+                    good = (res['exit_code'] == live['exit_code'] and same and c['voice_missing_file'] == 0
+                            and rel not in [v['file'] for v in res['voice_excerpts']]
+                            and skip_line(render(res), sorted(base_gone + [rel])))
+                else:
+                    good = res['exit_code'] == 1 and c[key] >= 1 and same
                 ok &= good
                 print('  %s  %s: %s -> %s (exit %d)' % ('PASS' if good else 'FAIL', rel, name, key, res['exit_code']))
                 with open(path, 'w', encoding='utf-8') as fh:
                     fh.write(orig)
+        for rel in sorted(VOICE_EXCERPTS) + [EXCERPT]:
+            if os.path.isfile(os.path.join(dst, rel)):
+                os.remove(os.path.join(dst, rel))
+        res = check(dst, cards=cards)
+        c, txt = res['counts'], render(res)
+        good = (res['exit_code'] == live['exit_code'] and res['voice_excerpts'] == [] and res['excerpt'] is None
+                and all(c[k] == lc[k] for k in ('missing', 'stale', 'missing_rule'))
+                and c['excerpt_missing_file'] == 0 and c['voice_missing_file'] == 0
+                and skip_line(txt, sorted(VOICE_EXCERPTS)) and txt.split('\n')[-1].endswith(' · excerpt skipped')
+                and ('excerpt: skipped (%s absent)' % excerpt_skip_reason(dst)) in txt.split('\n'))
+        ok &= good
+        print('  %s  every excerpt file removed (4 voice excerpts and %s) -> two "skipped (... absent)" lines, '
+              'last item "excerpt skipped", exit %d as the live tree' % ('PASS' if good else 'FAIL', EXCERPT,
+                                                                       res['exit_code']))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     print('  %s  live tree passes (exit %d; voice excerpts %s)' % (
         'PASS' if ok else 'FAIL', live['exit_code'],
-        ', '.join('%s %d lines' % (os.path.basename(v['file']), v['lines']) for v in live['voice_excerpts'])))
+        ', '.join('%s %d lines' % (os.path.basename(v['file']), v['lines']) for v in live['voice_excerpts'])
+        or 'none present'))
     print('selftest-excerpt (voice): %s' % ('all passed' if ok else 'FAILED'))
     return 0 if ok else 1
 
@@ -904,9 +970,12 @@ def check(root, cards=None, voice_table=None):
     refs, per = [], []
     bare = {}
     # rule numbers: a definition line "- **Vnn** **...**" in FICCVoice.md, "- **Snn** **...**" in FICCStructure.md,
-    # "- **Onn** **...**" in FICCOutline.md, "- **Cnn** **...**" in FICCCompose.md; no retired numbers (2026-11-04)
+    # "- **Onn** **...**" in FICCOutline.md, "- **Cnn** **...**" in FICCCompose.md (in FICCVoice.md when the root has
+    # no FICCCompose.md, 2026-11-21); no retired numbers (2026-11-04)
+    rf = rule_files(root)
+    merged = rf['C'] != RULE_FILE['C']
     defined = {}
-    for letter, fname in RULE_FILE.items():
+    for letter, fname in rf.items():
         fp = os.path.join(root, fname)
         lines = read(fp).split('\n') if os.path.isfile(fp) else []
         defined[letter] = {m.group(1) for m in (RULE_DEF.match(l) for l in lines) if m and m.group(1)[0] == letter}
@@ -917,7 +986,7 @@ def check(root, cards=None, voice_table=None):
             return
         for i, l in enumerate(text.split('\n'), 1):
             d = RULE_DEF.match(l)
-            own_def = d.start(1) if d and RULE_FILE[d.group(1)[0]] == rel else -1  # the definition itself is not a ref
+            own_def = d.start(1) if d and rf[d.group(1)[0]] == rel else -1  # the definition itself is not a ref
             for m in RULE_REF.finditer(l):
                 if m.start() == own_def:
                     continue
@@ -925,7 +994,11 @@ def check(root, cards=None, voice_table=None):
                 r = {'file': rel, 'line': i, 'ref': rid, 'result': 'OK', 'note': ''}
                 if rid not in defined[m.group(1)]:
                     r['result'] = 'MISSING-RULE'
-                    r['note'] = 'no "- **%s** **...**" in %s' % (rid, RULE_FILE[m.group(1)])
+                    r['note'] = 'no "- **%s** **...**" in %s' % (rid, rf[m.group(1)])
+                elif merged and m.group(1) == 'C' and C_RETIRED_PFX.search(l, max(0, m.start() - 40), m.start()):
+                    r['result'] = 'MISSING-RULE'
+                    r['note'] = 'cited through the retired file name: no FICCCompose.md under the root; %s is ' \
+                                'defined in %s' % (rid, rf['C'])
                 rules.append(r)
 
     def resolve(rel, i, kind, tgt, num, raw, quote, local, card=False):
@@ -1202,7 +1275,7 @@ def render(res, quiet=False):
     exc = res.get('excerpt')
     head, last = '', ''   # last line: ... excerpt items (head), cards and quotes, then the last item
     if exc is None:
-        out.append('excerpt: skipped (no FICCCompose.md under the root)')
+        out.append('excerpt: skipped (%s absent)' % (excerpt_skip_reason(res['root']) or 'FICCCompose.md'))
         last = ' · excerpt skipped'
     elif exc['missing_file']:
         out.append('excerpt: %s -> EXCERPT-MISSING-FILE' % exc['file'])
@@ -1245,6 +1318,9 @@ def render(res, quiet=False):
         head = ' · excerpt lines %d · EXCERPT-MISMATCH %d · EXCERPT-MISSING %d' % (
             exc['lines'], c['excerpt_mismatch'], c['excerpt_missing'])
         last = s3_tail
+    gone = voice_excerpts_absent(res['root']) if res.get('voice_excerpts') is not None else []
+    if gone:   # retired or absent voice excerpts (2026-11-21): one line, not a failure
+        out.append('voice excerpts: skipped (%s absent)' % ', '.join(gone))
     for v in res.get('voice_excerpts') or []:
         if v['missing_file']:
             out.append('voice excerpt %s -> EXCERPT-MISSING-FILE' % v['file'])
@@ -1451,9 +1527,15 @@ def selftest():
             ('counts 10 MISSING-RULE (V99, O02, S38, S34, C99, V05 x5); no retired-number fields in the result',
              res['counts']['missing_rule'] == 10 and 'rules_retired' not in res
              and not any(k.startswith('retired') for k in res['counts'])),
-            ('FICCCompose.md without references/compose-excerpt.md -> one EXCERPT-MISSING-FILE',
-             res['excerpt']['missing_file'] and res['counts']['excerpt_missing_file'] == 1
-             and render(res).split('\n')[-1].endswith('EXCERPT-MISSING-FILE 1')),
+            ('FICCCompose.md without references/compose-excerpt.md -> excerpt skipped, one "skipped (... absent)" '
+             'line, no EXCERPT-MISSING-FILE (2026-11-21)',
+             res['excerpt'] is None and res['counts']['excerpt_missing_file'] == 0
+             and res['counts']['excerpt_skipped']
+             and render(res).count('excerpt: skipped (%s absent)' % EXCERPT) == 1
+             and render(res).split('\n')[-1].endswith(' · excerpt skipped')),
+            ('no voice excerpt files -> one "voice excerpts: skipped (... absent)" line, voice counts 0',
+             res['voice_excerpts'] == [] and res['counts']['voice_missing_file'] == 0
+             and len([x for x in render(res).split('\n') if x.startswith('voice excerpts: skipped (')]) == 1),
         ]
         for name, good in extra:
             ok &= good
@@ -1462,8 +1544,106 @@ def selftest():
         shutil.rmtree(tmp, ignore_errors=True)
     ok &= selftest_excerpt()
     ok &= selftest_cards_quotes()
+    ok &= selftest_merged()
     print('selftest: %s' % ('all passed' if ok else 'FAILED'))
     return 0 if ok else 1
+
+
+# merged tree (2026-11-21, Wave 2 方式乙): no FICCCompose.md, C rules in FICCVoice.md (§0/§1/§2/§3.1/§3.2/§4), no
+# excerpt files.  Section refs with §, C refs through FICCVoice.md, a rationale quote of a C rule.
+MERGED_TREE = {
+    'FICCOutline.md': '# FICCOutline\n\n## 1 The outline is a tree\n\n- **O01** **Write the claim first.**\n',
+    'FICCStructure.md': '# FICCStructure\n\n## 1 Set position\n\n- **S01** **Ask the task.**\n',
+    'FICCVoice.md': ('# FICCVoice\n\n## 0 Scope\n\nBody; see §3.1 and §0, then §4.\n\n## 1 Who speaks\n\n'
+                     '- **V02** **State the judgment.**\n\n## 2 Words\n\nBody.\n\n## 3 Paragraphs\n\n'
+                     '### 3.1 Openings\n\n- **C08** **One topic per paragraph.**\n  - Split at a unit boundary.\n\n'
+                     '### 3.2 Closes\n\n- **C17** **Close every part.** See C08 and V02.\n\n## 4 Check\n\nBody.\n'),
+    'references/FICCVoice-rationale.md': ('# FICCVoice rationale\n\n## C08\n\n'
+                                          '  Supports: C08 “One topic per paragraph”. A merged C rule.\n'),
+    'SKILL.md': ('# skill\n\nRead FICCVoice.md §0, FICCVoice.md §3.1 and §3.2, FICCVoice.md §0/§1/§2/§4 and '
+                 'FICCVoice 3.2; apply FICCVoice.md C08, C17, V02, O01 and S01.\n'),
+}
+
+
+def _merged_run(files, drop=()):
+    """check() on a temp tree made of files (minus drop) -> (result, rendered text)."""
+    tmp = tempfile.mkdtemp(prefix='xref_merged_')
+    try:
+        for rel, txt in files.items():
+            if rel in drop:
+                continue
+            p = os.path.join(tmp, rel)
+            if not os.path.isdir(os.path.dirname(p)):
+                os.makedirs(os.path.dirname(p))
+            with open(p, 'w', encoding='utf-8') as fh:
+                fh.write(txt)
+        res = check(tmp, cards=os.path.join(tmp, 'no-cards'))
+        return res, render(res)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def selftest_merged():
+    """merged tree (2026-11-21): passes clean; a missing C rule, a C rule cited through the retired file name and a
+    missing § section each fail; with FICCCompose.md present, C rules still come from FICCCompose.md."""
+    print()
+    print('merged tree (no FICCCompose.md, C rules in FICCVoice.md, no excerpt files):')
+    res, txt = _merged_run(MERGED_TREE)
+    c = res['counts']
+    sk = [r for r in res['refs'] if r['file'] == 'SKILL.md']
+    bare = sorted(r['raw'] for r in res['refs'] if r['file'] == 'FICCVoice.md' and r['kind'] == 'B')
+    rule = lambda rr, f, rid: [r['result'] for r in rr if r['file'] == f and r['ref'] == rid]
+    lines = txt.split('\n')
+    cases = [
+        ('merged tree passes: exit 0, MISSING 0, MISSING-RULE 0, STALE-QUOTE 0',
+         res['exit_code'] == 0 and (c['missing'], c['stale'], c['missing_rule'], c['stale_quote']) == (0, 0, 0, 0)),
+        ('C rules read from FICCVoice.md: C defined 2; "FICCVoice.md C08" and C17 -> OK; its own definitions not refs',
+         res['rules_defined']['C'] == 2 and rule(res['rules'], 'SKILL.md', 'C08') == ['OK']
+         and rule(res['rules'], 'SKILL.md', 'C17') == ['OK'] and rule(res['rules'], 'FICCVoice.md', 'C08') == ['OK']),
+        ('§ refs resolve: FICCVoice.md §0, §3.1 and §3.2, §0/§1/§2/§4, FICCVoice 3.2',
+         sorted((r['ref'], r['result']) for r in sk) == sorted(
+             [('FICCVoice %s' % n, 'OK') for n in ('0', '3.1', '3.2', '0', '1', '2', '4', '3.2')])),
+        ('bare §3.1, §0 and §4 inside FICCVoice.md resolve in own file',
+         bare == ['§0', '§3.1', '§4'] and all(r['result'] == 'OK' for r in res['refs'] if r['file'] == 'FICCVoice.md')
+         and res['bare'] == {'FICCVoice.md': 3}),
+        ('rationale quote of a merged C rule checked against FICCVoice.md',
+         [(q['rule'], q['result'], q['rule_file']) for q in res['quotes']] == [('C08', 'OK', 'FICCVoice.md')]),
+        ('excerpts skipped: one "excerpt: skipped (FICCCompose.md absent)" line, one voice excerpts skipped line, '
+         'last item "excerpt skipped"; JSON keys unchanged',
+         res['excerpt'] is None and res['voice_excerpts'] == [] and lines.count('excerpt: skipped (FICCCompose.md absent)') == 1
+         and len([x for x in lines if x.startswith('voice excerpts: skipped (') and x.endswith(' absent)')]) == 1
+         and lines[-1].endswith(' · excerpt skipped') and c['excerpt_missing_file'] == 0 and c['voice_missing_file'] == 0),
+    ]
+    bad = dict(MERGED_TREE)
+    bad['SKILL.md'] = MERGED_TREE['SKILL.md'] + 'Broken: C99 is defined nowhere.\n'
+    r1, _ = _merged_run(bad)
+    cases.append(('a ref to a missing C rule (C99) -> MISSING-RULE, exit 1',
+                  r1['exit_code'] == 1 and r1['counts']['missing_rule'] == 1
+                  and rule(r1['rules'], 'SKILL.md', 'C99') == ['MISSING-RULE']
+                  and 'in FICCVoice.md' in [r for r in r1['rules'] if r['ref'] == 'C99'][0]['note']))
+    bad['SKILL.md'] = MERGED_TREE['SKILL.md'] + 'Old pointer: FICCCompose.md C08 and `FICCCompose` C17.\n'
+    r2, _ = _merged_run(bad)
+    cases.append(('a C rule cited through the retired file name (FICCCompose.md C08, `FICCCompose` C17) -> '
+                  'MISSING-RULE 2, exit 1; FICCVoice.md C08 on the line above stays OK',
+                  r2['exit_code'] == 1 and r2['counts']['missing_rule'] == 2
+                  and rule(r2['rules'], 'SKILL.md', 'C08') == ['OK', 'MISSING-RULE']))
+    bad['SKILL.md'] = MERGED_TREE['SKILL.md'] + 'Gone: FICCVoice.md §9 and FICCVoice.md §3.9.\n'
+    r3, _ = _merged_run(bad)
+    cases.append(('a § ref to a missing section (§9, §3.9) -> MISSING 2, exit 1',
+                  r3['exit_code'] == 1 and r3['counts']['missing'] == 2))
+    old = dict(MERGED_TREE)
+    old['FICCCompose.md'] = '# FICCCompose\n\n## 1 Openings\n\n- **C17** **Close every part.**\n'
+    r4, t4 = _merged_run(old)
+    cases.append(('FICCCompose.md present: C rules still come from it (behaviour unchanged): C08 defined only in '
+                  'FICCVoice.md -> MISSING-RULE; "FICCCompose.md C17" is no retired-name error',
+                  r4['rules_defined']['C'] == 1 and rule(r4['rules'], 'SKILL.md', 'C08') == ['MISSING-RULE']
+                  and rule(r4['rules'], 'SKILL.md', 'C17') == ['OK'] and r4['exit_code'] == 1
+                  and 'excerpt: skipped (%s absent)' % EXCERPT in t4))
+    ok = True
+    for name, good in cases:
+        ok &= bool(good)
+        print('  %s  %s' % ('PASS' if good else 'FAIL', name))
+    return ok
 
 
 # cards and rationale quotes (2026-11-04): a clean minimal tree at <tmp>/skills/ficc-voice, cards at <tmp>/agents
@@ -1764,6 +1944,11 @@ def selftest_excerpt_s3(root=SKILL_DIR, cards=None):
     no other count changed; then root itself must pass (exit 0, section 3 OK).  -> 0 or 1."""
     print('== excerpt section 3 selftest (%s "- %s" lines vs FICCCompose.md %s; temp copy of %s)'
           % (EXCERPT, EX_S3_RULE, EX_S3_RULE, root))
+    gone = excerpt_skip_reason(os.path.abspath(os.path.expanduser(root)))
+    if gone:   # merged tree (2026-11-21): the compose excerpt is retired with FICCCompose.md
+        print('  skipped (%s absent)' % gone)
+        print('selftest-excerpt: skipped')
+        return 0
     cards = cards_dir(root, cards)   # the copy's own ../../agents is elsewhere: keep the original's
     live = check(root, cards=cards)
     s3 = (live.get('excerpt') or {}).get('sec3')
@@ -1837,12 +2022,13 @@ def main(argv=None):
         prog='xref_check.py', formatter_class=argparse.RawDescriptionHelpFormatter,
         description='Section references (F 4.2, F.md 4.2, file.md section 35, 第35节, “4.2 title”) '
                     'must resolve to numbered headings; quoted titles must match; V/S/O/C rule numbers must be '
-                    'defined by a line "- **Vnn** **...**" etc. in the main files (C in FICCCompose.md); a number '
+                    'defined by a line "- **Vnn** **...**" etc. in the main files (C in FICCCompose.md, or in '
+                    'FICCVoice.md when there is no FICCCompose.md); a number '
                     'without one is MISSING-RULE wherever it stands (no retired numbers or pointer lines since '
                     '2026-11-04); references/compose-excerpt.md '
                     'must copy FICCCompose.md verbatim before its "## 3", hold an intent line per C number, the key '
                     'lines in EXCERPT_REQUIRED and every C01 table row; its "- C23" lines after "## 3" must cite '
-                    'exactly the C numbers of FICCCompose.md C23. '
+                    'exactly the C numbers of FICCCompose.md C23; an absent excerpt file is skipped. '
                     'Agent cards <root>/../../agents/ficc-*.md (or --cards DIR, symlinks followed): section refs '
                     'named by file must resolve (MISSING) and carry the section title, “...” right after the number '
                     '(NO-TITLE, STALE-TITLE); rule numbers (MISSING-RULE); counted on their own "cards" line. '
@@ -1850,7 +2036,7 @@ def main(argv=None):
                     'rule Xnn\'s current body (substring; ellipsis segments in order on one line; "Original", '
                     '"Origin" and "Moved here" history not checked), else STALE-QUOTE. '
                     'Exit 1 on any MISSING, STALE?, MISSING-RULE, EXCERPT-MISMATCH, EXCERPT-MISSING, '
-                    'EXCERPT-MISSING-FILE, STALE-TITLE, NO-TITLE or STALE-QUOTE.',
+                    'STALE-TITLE, NO-TITLE or STALE-QUOTE.',
         epilog='Not scanned (still valid targets): references/history.md, references/dev-notes.md, '
                'references/FICCVoice-provenance.md and references/migration-2026-10-17.md (historical records, '
                'provenance and the rule-number map; '
@@ -1872,7 +2058,8 @@ def main(argv=None):
                          'line, cited and in a *-rationale.md file), FICCCompose.md sections; '
                          'seven excerpt cases (verbatim OK, changed word, dropped C number, extra table cell, dropped '
                          'key sub-line, dropped C01 table row, key lines and table complete) '
-                         'and a missing excerpt file; cards (default ../../agents found, ficc-*.md only, titled clean '
+                         'and a missing excerpt file (skipped); a merged tree (no FICCCompose.md, C rules in '
+                         'FICCVoice.md, § refs) passing and its broken variants failing; cards (default ../../agents found, ficc-*.md only, titled clean '
                          'card, skill files need no titles, a card with "F.md 1–5 and 9" (NO-TITLE, MISSING), stale '
                          'titles and a bad rule number, symlinked cards, --cards override, no cards dir) and rationale '
                          'quotes (intent line, sub-item after a note, ellipsis in order, two quotes on a line, history '
@@ -1881,13 +2068,18 @@ def main(argv=None):
     ap.add_argument('--selftest-excerpt', action='store_true',
                     help='excerpt section 3 on a temp copy of --root: drop one C number from the "- C23" lines, '
                          'add a defined C number C23 does not cite, drop every "- C23" line (each must be reported '
-                         'with exit 1); then --root itself must pass (exit 0). Exit 0 all passed, 1 otherwise')
+                         'with exit 1); per voice excerpt a changed word and a dropped intent line (exit 1) and a removed '
+                         'file (skipped); every excerpt removed (skipped); the merged-tree fixture; then --root itself '
+                         'must pass (exit 0). Exit 0 all passed, 1 otherwise')
     a = ap.parse_args(argv)
     if a.selftest:
         return selftest()
     if a.selftest_excerpt:
         s3 = selftest_excerpt_s3(a.root, a.cards)
-        return selftest_voice_excerpts(a.root, a.cards) or s3
+        vx = selftest_voice_excerpts(a.root, a.cards)
+        mg = 0 if selftest_merged() else 1   # merged-tree fixture (2026-11-21), independent of --root
+        print('selftest-excerpt (merged tree fixture): %s' % ('all passed' if not mg else 'FAILED'))
+        return vx or s3 or mg
     try:
         res = check(a.root, cards=a.cards)
     except IOError as e:

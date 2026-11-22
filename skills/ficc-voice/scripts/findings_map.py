@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""findings_map.py (1.0.0, 2026-11-05) -- route check findings to outline nodes by draft line number.
+"""findings_map.py (1.1.0, 2026-11-21 W1; 1.0.0 2026-11-05) -- route check findings to outline nodes by draft line
+number, with the G1 ruling pre-check.
 
 Generalises a findings-mapping script of the 1105AIHouse task, whose r'\\bL(\\d{1,4})\\b' missed
 "L383仍写" and took source line numbers ("1104 L1026") for draft lines: 10 nodes and 12 rows
@@ -35,8 +36,16 @@ Output (stdout or --out): '# 发现按节点（FINDINGS name；…）', the 标�
 '### <id>' section per node in outline order: the ruling line, then '- <row>' lines (cut to
 --max-chars, default 600; 0 = whole row).  stderr: per-node row counts.
 
+G1 (1.1.0, W1): every routed row and the ruling line pass through inline_guards.py lint (beside this file): quotes
+are anchored to DRAFT (the frozen draft under repair); replacement prose, direction, causation, certainty, holder,
+unit and new-number prescriptions are content points for the tie-out seat. --guards warn (default) keeps the rows
+as they are and reports the count on stderr; --guards refuse strips those prescriptions from the rows (the anchor
+quote and allowed form actions stay); --guards off skips the check. --questions FILE appends one JSON line per
+stripped point (tieout-questions.jsonl). pack_node.py lints F0 and F1 again under the task's guards_mode.
+
 Usage:
   findings_map.py DRAFT OUTLINE FINDINGS [--ruling FILE] [--out FILE] [--skip ID ...]
+                  [--guards refuse|warn|off] [--questions FILE]
                   [--cell-re RE] [--source-prefix RE ...] [--no-heading-to-outliner]
                   [--max-chars N] [--map] [--expect FILE]
       --expect FILE: compare the node set with the '### N…' headings of FILE (an earlier
@@ -51,6 +60,7 @@ import argparse
 import collections
 import contextlib
 import io
+import json
 import os
 import re
 import sys
@@ -61,7 +71,7 @@ import cjk_ids  # noqa: E402
 import heading_list  # noqa: E402
 import outline_slice  # noqa: E402
 
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 DEFAULT_CELL_RE = r'^(?:open|new)(?![A-Za-z])|^delta$'
 UNIT_CELL_RE = re.compile(r'^s[0-9]+\s*[（(]([^）)]*)[）)]$')
 DRAFT_HEAD_RE = re.compile(r'^(#{2,6})\s+(.*?)\s*$')
@@ -301,6 +311,38 @@ RULING = """**裁定**（T0）：只改本节点里点名的句子。
 行号是组装稿的行。"""
 
 
+def g1_lint(text, draft, mode, questions=None):
+    """G1 on the by-node text, one node section at a time: -> the text (sanitized under refuse)."""
+    import inline_guards
+    parts, cur, nid, out, qs, stats = [], [], None, [], [], collections.Counter()
+    for ln in text.split('\n'):
+        m = re.match(r'^###\s+(' + cjk_ids.NODE_ID + r')\s*$', ln)
+        if m or re.match(r'^##\s', ln):
+            parts.append((nid, cur))
+            cur, nid = [ln], (m.group(1) if m else None)
+            continue
+        cur.append(ln)
+    parts.append((nid, cur))
+    for nd, lines in parts:
+        if not lines:
+            continue
+        head, body = lines[:1], lines[1:]
+        if not re.match(r'^#{2,3}\s', head[0] if head else ''):
+            head, body = [], lines
+        res = inline_guards.lint('\n'.join(body), draft, '', nd, mode)
+        qs += res['questions']
+        stats.update(res['stats'])
+        out += head + (res['text'].split('\n') if mode == 'refuse' else body)
+    if questions and qs:
+        with open(questions, 'a', encoding='utf-8') as fh:
+            for q in qs:
+                fh.write(json.dumps(q, ensure_ascii=False) + '\n')
+    print('G1 lint (%s): %d rows with content prescriptions%s' % (
+        mode, stats.get('stripped', 0), ' stripped' if mode == 'refuse' else ' (rows kept; --guards refuse strips them)'),
+        file=sys.stderr)
+    return '\n'.join(out)
+
+
 def run(argv):
     out, err = io.StringIO(), io.StringIO()
     with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
@@ -398,6 +440,18 @@ def self_test():
               c5 == 2 and o5 == '' and 'outline heading N1 “## 一、甲部” is missing from the draft' in e5)
         c6, o6, e6 = run(base + ['--cell-re', '('])
         check('bad --cell-re exits 2', c6 == 2 and 'bad --cell-re' in e6)
+        # 1.1.0 G1: a direction prescription in a routed row; warn keeps it, refuse strips it and writes a question
+        fdir = os.path.join(tmp, 'dir.md')
+        with open(fdir, 'w', encoding='utf-8') as fh:
+            fh.write('| 编号 | 处置 | 依据 |\n|---|---|---|\n| D01 | open | L9“甲的正文”应改为前三项上调 |\n'
+                     '| D02 | open | L17“乙的正文”拆成两句 |\n')
+        qf = os.path.join(tmp, 'q.jsonl')
+        cw, ow, ew = run([paths['draft.md'], paths['样例-提纲.md'], fdir, '--skip', 'N3'])
+        cr, orr, er = run([paths['draft.md'], paths['样例-提纲.md'], fdir, '--skip', 'N3', '--guards', 'refuse', '--questions', qf])
+        qn = sum(1 for _ in open(qf, encoding='utf-8')) if os.path.exists(qf) else 0
+        check('G1 warn (default): rows kept, the count on stderr', cw == 0 and '上调' in ow and 'G1 lint (warn): 2' in ew)
+        check('G1 refuse: the prescription stripped, the anchor and the split kept, a tie-out question per routed row',
+              cr == 0 and '上调' not in orr and '“甲的正文”' in orr and '拆成两句' in orr and qn == 2)
     ok = all(results)
     print('findings_map self-test: %s (%d checks)' % ('PASS' if ok else 'FAIL', len(results)))
     return 0 if ok else 1
@@ -427,6 +481,9 @@ def main(argv=None):
     ap.add_argument('--max-chars', type=int, default=600)
     ap.add_argument('--map', action='store_true', help='print the heading alignment on stderr')
     ap.add_argument('--expect', metavar='FILE')
+    ap.add_argument('--guards', choices=('refuse', 'warn', 'off'), default='warn',
+                    help='G1 ruling pre-check through inline_guards lint (default warn: report only)')
+    ap.add_argument('--questions', metavar='FILE', help='append the tie-out questions (JSON lines)')
     a = ap.parse_args(argv)
     if a.selftest:
         return self_test()
@@ -445,6 +502,8 @@ def main(argv=None):
     except (outline_slice.SliceError, MapError) as e:
         print('findings_map.py: %s' % e, file=sys.stderr)
         return 2
+    if a.guards != 'off':
+        text = g1_lint(text, draft, a.guards, a.questions)
     if a.map:
         dl = draft.split('\n')
         for ln, nd in pairs:

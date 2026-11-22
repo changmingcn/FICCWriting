@@ -1,6 +1,6 @@
 # Connective table: current words, distinctions, and example sentences
 
-Take the relation from the Structure relation sheet. Where in the paragraph to mark it: per FICCCompose.md C13, C14. For the wording, check the table below first. If it is not enough, check the supplementary words and the example sentences. Bold words are words the user specified. The author's example sentences only show how a word is used; they are not templates to imitate. Source tags: see the end of the file.
+Take the relation from the node's relation slots in the living outline (FICCStructure.md §6: `接前`, `边`). Where in the paragraph to mark it: per FICCVoice.md C13, C14. For the wording, check the table below first. If it is not enough, check the supplementary words and the example sentences. Bold words are words the user specified. The author's example sentences only show how a word is used; they are not templates to imitate. Source tags: see the end of the file.
 
 ## 1 Current connective table (现行连接词表)
 
@@ -8,7 +8,7 @@ Take the relation from the Structure relation sheet. Where in the paragraph to m
 |---|---|---|
 | 并列 | **第一、第二**；**既……又／也……**；**也……也……**；同时；以及；不是……而是…… (paired contrast) | For the use of “第一、第二” (first, second), “一是、二是” (one is, two is), and “首先” (first of all), see below the table. Above the numbering, also mark an add-on relation as far as possible; see the next row |
 | 并列·附加关系 | 承接 (carry-over): “这种、这个、这些” plus the previous item's keyword (back-reference); 再说; 于是、接着、就这样. 反复 (repetition): 同样、同理; 而……也; 又; the same phrase recurring a few paragraphs apart. 强调 (emphasis): 甚至、更是、尤其是、特别是、正是、恰恰、就连、竟然. 深化 (deepening): 更重要的是、而且、不仅……而且、其实、实际上、真正 | Markers added on top of parallel, not a ninth relation type. For every emphasis or deepening word, you must be able to say where it is sharper or deeper than the previous item. If you cannot, delete it. Example sentences: references/connectives.md 5 |
-| 并列·解说 | 比如、例如；换句话说；也就是说；即 | For an example, use “比如、例如” (for example). To say the same thing another way, use the later ones. Do not use them to bring in a stronger new conclusion. Explaining only one word or one number is not explication but a note; how to hang it: FICCVoice.md 5.1 |
+| 并列·解说 | 比如、例如；换句话说；也就是说；即 | For an example, use “比如、例如” (for example). To say the same thing another way, use the later ones. Do not use them to bring in a stronger new conclusion. Explaining only one word or one number is not explication but a note; how to hang it: FICCVoice.md V29 |
 | 承接关系（先后） | **就**；**又**；**于是**；**首先……然后……**；**接着**；**后来**；**才**（……之后才、这才） | String several steps in sequence together with “首先……然后……接着……” (first … then … next …). For a single sequence between two sentences, bring it out with “就、又、才” or “就这样” (and so). Do not leave the reader to work out the order. When the earlier event only comes first in time, use “然后、接着、后来” (then, next, later). “于是” (so then) also carries a result. Use it only when the earlier event led to the later one |
 | 递进 | 而且；甚至；不仅……还／也……；更何况；尤其；更糟糕的是 | Former-clause words as needed. Latter-clause words are not omitted. See FICCVoice.md V22 |
 | 转折 | 但是；却 | Default to “但是” (but). The single character “但” may be used, but do not use only “但” across the whole piece. “不过、只是” are light turns. With no concession word in the earlier clause and “但是” alone in the later clause, it is a turn |
@@ -16,9 +16,9 @@ Take the relation from the Structure relation sheet. Where in the paragraph to m
 | 因果 | 所以；因为；因此；所以说 (paragraph opening) | Use mainly “所以” (so), with “因此” (therefore) as secondary. Do not force pairs. Use “所以、因此” only when it truly is a cause, not when the earlier event only comes first in time. When the earlier event is an objective cause, use “因为、由于” (because, due to) |
 | 因果·推断 | 既然……就／那么……；既然如此；这样说来 | The type most easily missed. When the reader has already accepted the premise and the conclusion is derived in the text, mark it with these. “可见” (evidently) and “那么” (then) also mark inference |
 | 因果·目的 | 为了 | When used, put it at the start of the sentence to state the motive |
-| 假设 | 如果……就／那么……；一旦……就……；要是；否则 | The antecedent imagines some situation happening (如果、要是、一旦). “如果” (if) and “一旦” (once) have two uses; see below |
+| 假设 | 如果……就／那么……；一旦……就……；要是；否则 | The antecedent imagines some situation happening (如果, 要是, 一旦). “如果” (if) and “一旦” (once) have two uses; see below |
 | 选择 | 或者；是……还是……；要么……要么…… | Where the choice is already made, use “与其……不如” (rather than … better to) |
-| 条件 | 只要……就……；只有……才……；越……越…… | The antecedent states what the result needs in order to hold (只要、只有、除非). “只要A就B” means A is enough. “只有A才B” means without A it does not work. They are not interchangeable. Unconditional (“怎样都一样” (the same whatever happens)): use “无论……都”; see the 转折·让步 row |
+| 条件 | 只要……就……；只有……才……；越……越…… | The antecedent states what the result needs in order to hold (只要, 只有, 除非). “只要A就B” means A is enough. “只有A才B” means without A it does not work. They are not interchangeable. Unconditional (“怎样都一样” (the same whatever happens)): use “无论……都”; see the 转折·让步 row |
 
 ## 2 Words to use first and classical supplementary words
 
@@ -44,7 +44,7 @@ The table below follows the row names of this file's current connective table an
 
 Use the six groups whose classification diverges by their actual meaning; both sides' category names are correct. The row a group sits in here is only for ease of lookup. The attributions are all paraphrased; for the classical sources, see references/examples-and-rewrites.md, “Appendix: Sources”.
 
-| Words | The Huang Borong and Liao Xudong 《现代汉语》 school | Xing Fuyi, 《汉语复句研究》 | Placed in this table under |
+| Words | The Huang Borong and Liao Xudong "现代汉语" school | Xing Fuyi, "汉语复句研究" | Placed in this table under |
 |---|---|---|---|
 | 即使……也 | 假设（兼转折） | 让步·虚让 | 转折·让步 |
 | 无论……都 | 条件 | 让步·总让 | 转折·让步 |
@@ -113,7 +113,7 @@ Between items of the same kind under one basis of division (swapped, they are st
 | 深化 | “而且我们有个强烈的感觉，现在的市场参与者其实都清楚AI表外这笔账。看上去糊涂未必是真糊涂，也可能是在装糊涂以诱引韭菜接盘。”〔亲改〕: “而且” opens the paragraph and goes one step beyond the previous paragraph. This paragraph progresses layer by layer in five steps. “而且” links to the previous paragraph and goes one layer further. “其实都清楚” states the actual situation. “看上去……未必……也可能” turns it over one layer. “如果……就能看到……真正的原因” lands on the main line. “吵吵闹闹的市场中……而……” lands on a picture contrasting the two ends and closes |
 | 深化 | “再考虑到飙涨的国债利率和油价，莫非AI的资金游戏即将迎来审判日？”〔亲改〕: “再考虑到” adds a layer, and a posed question closes the paragraph |
 
-How to identify a relation: FICCStructure.md 3. Which layer and which point in the paragraph to mark: FICCCompose.md C13, C14. Where the word sits in the sentence: FICCVoice.md V22, V53, V54. Principles of expression: FICCVoice.md 4.
+How to identify a relation: FICCStructure.md 3. Which layer and which point in the paragraph to mark: FICCVoice.md C13, C14. Where the word sits in the sentence: FICCVoice.md V22, V53, V54. Principles of expression: FICCVoice.md V13, V23, V24, V25.
 
 ## 6 Supplement on easily confused uses
 
@@ -124,9 +124,9 @@ Easily confused uses such as “就、才、又” and “或者说” are below
 - “第一，” may open a paragraph, followed by this item's claim. When a label sentence gives only a method and no conclusion, the conclusion follows in the very next sentence (FICCVoice.md V25).
 - Two things joined in one sentence may be written as clauses, “第一，……，第二，……” or “一是……，二是……”. Do not separate them with a semicolon (FICCVoice.md V07). When three or more need numbering, split them into paragraphs or lines. Short content may be joined with “而且” or “也”. Do not force in a string of numbers.
 - “首先” marks the first step and is followed by “然后、再、接着”. When it heads a parallel list, later items add weight with emphasis or deepening words, and a following “其次” also carries an add-on marker (其次……也……). A process may be marked “第一步、第二步”. Within a paragraph, often only the first step is marked, and the rest continue with “再、然后、此时、一旦、如果”.
-- Distinguishing words. “才” in “……之后才” or “这才” marks sequence and means later than expected. In “只有……才” it marks condition. “才0.3%” does not count. “就” counts as a connective only when a clause, or an antecedent such as 如果、只要、一旦、既然、一……, precedes it. “就是、就像、早就” do not count. “又” counts only when it means simultaneity, continuation, or adding a layer. Repetition does not count. “或者说” is explication. Only “或者、还是” are alternative. “真正” is for turning from appearances to a concrete mechanism. Do not add it casually for weight.
-- When unfolding by stage, open each paragraph with a concrete point in time (“2021年开始”, “到了……”). Use “起初、最初” sparingly. Between stages, use “后来、此后、到了” when they show sequence only, “于是、所以” when the earlier stage leads to the later one, and “但是、然而” when the later stage overturns the earlier one. Choose per the relation sheet.
-- In a linking-back sentence between blocks, choose the word by the relation: cause and effect “既然……那么”, turn “但是”, concession “就算……也”, deepening “更要紧的是”, posed question “那么……呢”. A Q&A piece may write the link back into the premise of the question. Position: FICCCompose.md C13.
+- Distinguishing words. “才” in “……之后才” or “这才” marks sequence and means later than expected. In “只有……才” it marks condition. “才0.3%” does not count. “就” counts as a connective only when a clause, or an antecedent such as 如果, 只要, 一旦, 既然, 一……, precedes it. “就是、就像、早就” do not count. “又” counts only when it means simultaneity, continuation, or adding a layer. Repetition does not count. “或者说” is explication. Only “或者、还是” are alternative. “真正” is for turning from appearances to a concrete mechanism. Do not add it casually for weight.
+- When unfolding by stage, open each paragraph with a concrete point in time (“2021年开始”, “到了……”). Use “起初、最初” sparingly. Between stages, use “后来、此后、到了” when they show sequence only, “于是、所以” when the earlier stage leads to the later one, and “但是、然而” when the later stage overturns the earlier one. Choose per the node's `接前` slot (FICCStructure.md §6).
+- In a linking-back sentence between blocks, choose the word by the relation: cause and effect “既然……那么”, turn “但是”, concession “就算……也”, deepening “更要紧的是”, posed question “那么……呢”. A Q&A piece may write the link back into the premise of the question. Position: FICCVoice.md C13.
 - Replace “而、则、并、且” standing alone at the start of a clause with a connective from the table, or delete it. Fixed words (而且、而是、从而、否则、并且) and “而……也” are exempt.
 
 ## 7 Appendix: sources
@@ -177,4 +177,4 @@ Sources of the example sentences (九节 and 熊猫讲期权 are under reference
 | 而且，转型之后的影子银行 | L:720 |
 | 真正打断这一模式的 | L:354 |
 
-The 〔亲改〕 sentences come from task directory （作者草稿）, lines 9, 19, 23, 42. The third-draft original sentence in the 强调 rows of section 5 comes from （作者草稿）, line 5. The reference counts that section 5 once held now stand in references/dev-notes.md section 11 (“移来的作者计数”); they come from （作者草稿） section 2 in the same task directory. For the sources of the classical classifications (the Huang Borong and Liao Xudong 《现代汉语》 school; Xing Fuyi, 《汉语复句研究》) and their evidence grades, see references/examples-and-rewrites.md, “Appendix: Sources”.
+The 〔亲改〕 sentences come from task directory （作者草稿）, lines 9, 19, 23, 42. The third-draft original sentence in the 强调 rows of section 5 comes from （作者草稿）, line 5. The reference counts that section 5 once held now stand in references/dev-notes.md section 11 (“移来的作者计数”); they come from （作者草稿） section 2 in the same task directory. For the sources of the classical classifications (the Huang Borong and Liao Xudong "现代汉语" school; Xing Fuyi, "汉语复句研究") and their evidence grades, see references/examples-and-rewrites.md, “Appendix: Sources”.

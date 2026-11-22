@@ -55,6 +55,7 @@ import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, '..', '..', 'shared-protocols', 'scripts'))
+sys.path.insert(1, HERE)  # public package: sentence_diff.py ships beside this script
 import sentence_diff as sd  # noqa: E402  (U02; read-only use: sents, Refused)
 
 VERSION = '2.1.0'

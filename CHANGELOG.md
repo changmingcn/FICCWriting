@@ -1,8 +1,40 @@
 # Changelog
 
-## Unreleased
+## 2.0.0 (2026-11-21)
 
-- scripts/budget.json: the caps of the four relay cards are now their character counts (outliner 3,381, structurer 2,936, composer 2,754, writer 3,157), the unit budget_check.py measures. 1.3.0 carried the cards' byte sizes, which left these caps 89 to 190 characters loose.
+Rebuilt from the author's tree of 2026-11-21 with the release rules of 1.3.0, changed as listed under “Release build”. The major version marks a change of layout: FICCCompose.md is merged into FICCVoice.md, so the writing relay has three rule books (FICCOutline.md, FICCStructure.md, FICCVoice.md) instead of four, and six reference files retire with it. This release carries the author's 0→1 rebuild of 2026-11-20 and 2026-11-21, the punctuation pass and the Python 3.15 fix of 2026-11-16, and the budget-caps fix that stood under Unreleased after 1.3.0. Every rule number stays defined exactly once: 24 C, 39 V, 54 S and 90 O rules and the twelve invariants I1–I12, as in 1.3.0.
+
+The 0→1 trunk (`skills/ficc-voice`, the author's approval of five decisions on 2026-11-21):
+
+- SKILL.md is rewritten around one trunk that grows a piece from material and a research question to a finished draft: ① question card and living outline, ② relations and S32 completeness, ③ each node written once, with paragraphs and sentences in one pass, ④ cold read, source check and bounded patches, ⑤ delivery. Rewriting a finished draft is the secondary entry (FICCOutline.md §10). Each step closes on its gate. The acceptance table routes every defect to the rule file that owns it, and section 4 keeps fifteen rulings.
+- FICCCompose.md is merged into FICCVoice.md: §0 Contract (twelve invariants I1–I12 and the three questions before the first sentence), §1 openings, carry-overs and closes, §2 leaf paragraphs, §3.1 qualifiers, own calculations and inferences, §3.2 syntax, cohesion and readability, §4 checks before handover and bounded patches. The C rules keep their numbers and are defined in FICCVoice.md. Seats read the sections their duty names (a leaf: §0, §2, §3.1, §3.2 and §4; a lead adds §1; a patch: §0, §3.1, §3.2 and §4). `ficc-composer` stays as an optional paragraph-only arm. Sizes in characters: FICCVoice.md and FICCCompose.md 42,268 + 31,171 → 54,850, FICCOutline.md 53,293 → 48,313, FICCStructure.md 41,512 → 38,852.
+- One living outline per piece, `<文稿>-提纲.md` beside the draft (FICCOutline.md §4.2). It holds the question card (each 开工问 with 门槛, 分母 and 窗口), the name table, the tree with 主旨四栏, the 事实, 算式, 消歧 and 段 rows, and the relation slots 分担, 接前 and 关键边表 (FICCStructure.md §6) that the relation sheet used to hold. New writing keeps no separate placement record or relation sheet. references/placement-record-template.md stays for legacy and rewrite runs.
+- Numbers are computed on the tree: a derived number needs a signed 算式 row (FICCOutline.md §5.5), and a leaf seat adds no number that the tree and the sources lack (FICCVoice.md V26).
+- The Outline Gate (FICCOutline.md §9) and the Structure Gate (FICCStructure.md §7) close steps ① and ②. `outline_slice.py check-0to1` is their script half.
+- references/clarity-acceptance.md: A01 covers the cold read (three reports, five bans), the source check against the originals, and findings that carry no model-written fix. A02 covers bounded patches and the five-gate recheck.
+- SKILL.md §5 (new): a single-window chat protocol. One model in one chat, with no tools or scripts, runs the same trunk in five steps, each closed by gate questions.
+- High-signal openings (the author's ruling of 2026-11-21): the lead, each part's opening and each paragraph's first sentence carry the highest signal-to-noise (FICCVoice.md C01, C03, C23). In a rewrite, opening cleanup is on by default (FICCOutline.md O73).
+- The four relay cards are rewritten for the new modes and slices.
+- Retired, archived by the author and not included: FICCCompose.md, references/compose-excerpt.md, references/relation-sheet-template.md and the four mode excerpts references/voice-excerpt-draft.md, voice-excerpt-polish.md, voice-excerpt-patch.md and voice-excerpt-coldread.md.
+
+Scripts (`skills/ficc-voice/scripts`):
+
+- inline_guards.py 1.3.2 (new): deterministic fact guards for drafting seats (`scan`, `lint`, `recompute`, `verify`, `release-trace`). They reject a leaf number that no source or signed 算式 row attests (G-NEWNUM), a derived number whose metric does not match its row (G-DERIV), a flipped sign (G-SIGN) and a swapped reporting period (G-PERIOD). Checks a script cannot settle are queued as semantic candidates for the tie-out seat. `--selftest` runs 82 cases. Its main caller, the inline seat, is not included, but the guards run on their own.
+- outline_slice.py 1.2.0: `check-0to1`, the pre-prose gates of the living outline in machine form (question card, relation slots, signed rows).
+- voice_check.py 4.7: H10 (a body paragraph of more than ten sentences) and a paragraph with 30 or more number strings are review hints in `semantic_reviews`, never hard errors. New: `--para-stats`, `--max-para-cjk` and the `段首信噪比` hazard list under `--clarity`. os.path.commonprefix, deprecated in Python 3.15, is replaced.
+- number_set_diff.py 2.3.1: compound time and multiple units stay whole (3个财月), soft markers (约, 近) stay apart from hard bounds (逾, 至多), and an ordinal quarter (第一财季) is a period.
+- findings_map.py 1.1.0: `--guards refuse|warn|off` lints rulings with inline_guards, and `--questions FILE` collects tie-out questions.
+- xref_check.py: C numbers are looked up in FICCVoice.md, `§3.1` section references are read, and the excerpt checks are skipped when the excerpts are absent.
+- budget.json: caps for the merged books and the four cards. The caps of the four relay cards are counted in characters, the unit budget_check.py measures (1.3.0 carried their byte sizes, 89 to 190 above). Entries for the retired files are removed.
+
+Punctuation (the author's ruling of 2026-11-16): in English sentences of the rule files and cards, 「」 and 《》 become backticks or straight quotes, and 、 becomes a comma. Whole Chinese sentences, Chinese examples and quoted originals keep Chinese punctuation.
+
+Release build:
+
+- New in the package: skills/ficc-voice/scripts/sentence_diff.py, a copy of the author's shared-protocols script with two history notes trimmed (C24–C26). changed_sentences.py imports it, and number_set_diff.py and inline_guards.py import changed_sentences.py. Until 1.3.0 the first two could not start without it (README, 运行要求). Code fix C16 lets changed_sentences.py find it beside itself.
+- Code fixes C13–C15: history notes in budget.json named the author's engine packets and a path into the author's archive. Wording fixes W25–W28 do the same for scripts/README.md (three archive pointers, two task regression-script paths). C17–C23: outline_slice.py cited the author's upgrade opinion, which is not shipped; its docstrings, the Z-Q message and the `check-0to1` help now name the FICCOutline.md and FICCStructure.md rules instead. W29–W30: the inline_guards section of scripts/README.md gives version 1.3.2 and 82 self-test cases.
+- install.sh and the build now run eleven self-tests. Five are new: outline_slice, inline_guards, number_set_diff, changed_sentences and sentence_diff.
+- README: the table of skills, the directory list, the dependency section and the list of what is not included are updated for the merged books.
 
 ## 1.3.0 (2026-11-14)
 

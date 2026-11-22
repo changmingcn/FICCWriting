@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""number_set_diff.py (2026-11-03, wave 3 U09; 2.0.0 fix round r1; 2.1.0 r2; 2.2.0 r3) -- number tokens of a frozen
-and a current draft.
+"""number_set_diff.py (2026-11-03, wave 3 U09; 2.0.0 fix round r1; 2.1.0 r2; 2.2.0 r3; 2.3.0 2026-11-21 W1; 2.3.1 W1b) --
+number tokens of a frozen and a current draft.
 
 Before a re-tick seat is opened after a fix or patch round, compare the numbers of the frozen (ticked) draft with
 the current draft, sentence by sentence and in order.  A number token is sign + approximation + number + scale/unit
@@ -13,7 +13,8 @@ kept (约, 近, 超过, 超, 不到, 不足, 低于, 高于, 逾 before it, 超�
 十亿, 千万, 百万, 十万, 亿, 万, 千, 百; then %, ‰, bp, 个百分点, 个点, pp, 倍, 次, 成, 年, 月, 日, 季度, 个月, 周, 天,
 currencies, bn/tn/mn, and the counting words 家, 个, 人, 笔), so 3千亿元 and 3千万元 differ; Chinese numerals only with
 such a suffix or as a fraction (三成, 两成半, 一半, 三分之一, 三季度, 两年, 两次, 三家, 三千亿元); periods Q1-Q4, H1/H2, 3Q25, 1H26,
-FY25/CY25, 上半年/下半年.  `[src: …]` anchors and HTML comments are left out.  Every unit of the changed-sentence
+FY25/CY25, 上半年/下半年; an ordinal fiscal or calendar quarter (第一财季, 第2季度, 第三季) is a period in token_spans
+(2.3.1: a date, never a duration such as 一季以上).  `[src: …]` anchors and HTML comments are left out.  Every unit of the changed-sentence
 table (changed_sentences.py) must carry the same token sequence as its frozen counterpart: a changed, moved,
 moved-seam or punct sentence is compared with the frozen sentence at its old position; a pair whose sequences differ
 (value, unit, sign, approximation or order), a changed pair whose pair_confidence is low (changed_sentences.py 2.1.0:
@@ -55,16 +56,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import changed_sentences as cs  # noqa: E402
 
-VERSION = '2.2.0'
+VERSION = '2.3.1'
 _CN = '零〇一二三四五六七八九十两百千'
 _SCALE = r'(?:千万亿|万亿|千亿|百亿|十亿|千万|百万|十万|亿|万|千|百(?!分))'
 _CNSCALE = r'(?:万亿|亿|万)'                # Chinese numerals carry 十/百/千 themselves
 # one grammar for both branches (r2, Codex C01): sign? + number + scale? + unit?, where unit lists every multi-character
 # unit before its prefix (日元 before 日, 季度 before 季, 个百分点 before 百分点, 成半 before 成)
 _CUR = r'(?:美元|欧元|日元|英镑|港元|元)'
-_UNIT = (r'(?:' + _CUR + r'|%|‰|\s?bps?(?![A-Za-z])|个百分点|百分点|个点|\s?pp(?![A-Za-z])|倍|次(?!性)|成半|成|个季度|季度|季|'
+# 2.3.0 (2026-11-21, W1): compound units stay whole (3个财月 is never cut to 3个; 12个月, 1.33季, 3个交易日), and the
+# multiplier x (6.00x, 0.30x) and power units (4.2GW) are units, so a value keeps its unit and a unit shift is seen
+_UNIT = (r'(?:' + _CUR + r'|%|‰|\s?bps?(?![A-Za-z])|个百分点|百分点|个基点|基点|个点|\s?pp(?![A-Za-z])|倍|次(?!性)|成半|成|'
+         r'个财月|财月|个财季|财季|个财年|财年|个季度|季度|季|个交易日|交易日|个工作日|工作日|'
          r'个月|年(?!代)|月|日|号|周|天|小时|家|个|人(?!民)|笔|'      # r3 (R3): counting words after every 个X unit
-         r'\s?(?:bn|tn|mn|trillion|billion|million)(?![A-Za-z]))')
+         r'\s?(?:bn|tn|mn|trillion|billion|million)(?![A-Za-z])|\s?(?:GWh|TWh|GW|MW|kW)(?![A-Za-z])|x(?![A-Za-z]))')
 TOKEN = re.compile(
     r'(?P<per>(?<![A-Za-z_\d])\d[QH]\d{2}(?!\d)|(?<![A-Za-z_\d])(?:FY|CY)\d{2,4}(?!\d)|(?<![A-Za-z_])Q[1-4](?!\d)'
     r'|(?<![A-Za-z_])H[12](?!\d)|上半年|下半年)'
@@ -77,9 +81,18 @@ _DOWN = '负增长|下降|下跌|下调|减少|降低|回落|缩小|收窄|走�
 DIRECTION = re.compile(r'(?:(?P<up>%s)|(?P<down>%s))(?:了|约|近|逾|超过|不到|不足|低于|高于|超|达|至|到){0,2}$'
                        % (_UP, _DOWN))
 # 2.1.0: bound to the number, part of the token; 2.2.0 (r3, R3): 不足, 超, 低于, 高于, and 不 before 超过/超/低于/高于
-APPROX_PRE = re.compile(r'(?:(?<![最附靠])近|约|不?超过|不?超|不到|不足|不?低于|不?高于|逾)$')
+# 2.3.0: also 至多 至少 最多 最少 不少于 大致 大约, and a currency sign between the marker and the number (约$20bn)
+APPROX_PRE = re.compile(r'(?:(?<![最附靠])近|大约|大致|约|不?超过|不?超|不到|不足|不少于|不?低于|不?高于|逾|至多|至少|最多|最少)'
+                        r'[$¥€£]?$')
 APPROX_POST = re.compile(r'以上|以下|左右|以内|以外')
+# 2.3.0: soft approximators (an estimate) and hard bounds (a direction: the value is a floor or a ceiling)
+SOFT_MARKS = ('大约', '大致', '左右', '约', '近')
+LOWER_MARKS = ('不低于', '不少于', '超过', '至少', '最少', '以上', '高于', '逾', '超')
+UPPER_MARKS = ('不超过', '不高于', '不到', '不足', '低于', '至多', '最多', '以下', '以内')
 PERIOD = {'上半年': 'H1', '下半年': 'H2'}
+# 2.3.1 (W1b): 第 + 一二三四/1-4 + 财季/季度/季 is a period (the quarter of a report), not a quantity
+ORD_PERIOD_UNITS = ('财季', '季度', '季')
+ORD_PERIOD_CORES = ('一', '二', '三', '四', '1', '2', '3', '4')
 STRIP = re.compile(r'\[src:[^\]]*\]|<!--.*?-->', re.S)
 QUANT = re.compile(r'大半|(?<![更很许])多数(?![据字额])|过半|(?<![减缺])少数(?![据字额量])|'
                    r'(?<![最附将靠])近(?=[\d一二三四五六七八九十两半百千万成倍](?![季期月周年日天]))')
@@ -102,9 +115,106 @@ def tokens(text):
         if not sign:
             d = DIRECTION.search(t[max(0, m.start() - 6):m.start()])
             sign = ('+' if d.group('up') else '-') if d else ''
-        pre = APPROX_PRE.search(t[max(0, m.start() - 3):m.start()])
+        pre = APPROX_PRE.search(t[max(0, m.start() - 4):m.start()])
         post = APPROX_POST.match(t, m.end())
-        out.append(sign + (pre.group() if pre else '') + tok + (post.group() if post else ''))
+        out.append(sign + (pre.group().rstrip('$¥€£') if pre else '') + tok + (post.group() if post else ''))
+    return out
+
+
+def prep(text):
+    """The text tokens() reads: anchors and comments cut, NFKC (the Chinese comma kept), minus signs folded."""
+    t = unicodedata.normalize('NFKC', STRIP.sub('', text).replace('，', '\ue000')).replace('\ue000', '，')
+    return t.replace('−', '-').replace('﹣', '-')
+
+
+def token_spans(text):
+    """-> [dict(tok, sign, mark, core, unit, post, start, end)] over prep(text), the same grammar and order as
+    tokens(); mark is the marker before the number (约, 逾, …), post the one after it (以上, 左右, …)."""
+    t = prep(text)
+    out = []
+    for m in TOKEN.finditer(t):
+        if m.group('per'):
+            tok = PERIOD.get(m.group('per'), m.group('per'))
+            out.append({'tok': tok, 'sign': '', 'mark': '', 'core': tok, 'unit': '', 'post': '', 'period': True,
+                        'start': m.start(), 'end': m.end()})
+            continue
+        if m.group('cn'):
+            raw = m.group('cn')
+            mm = re.match(r'^([%s]+(?:分之[%s]+)?)(.*)$' % (_CN, _CN), raw)
+            core, unit = (mm.group(1), mm.group(2)) if mm else (raw, '')
+        else:
+            core, unit = m.group('num').replace(',', ''), re.sub(r'\s', '', m.group('suf') or '')
+        sign = m.group('sign') or ''
+        if not sign:
+            d = DIRECTION.search(t[max(0, m.start() - 6):m.start()])
+            sign = ('+' if d.group('up') else '-') if d else ''
+        pre = APPROX_PRE.search(t[max(0, m.start() - 4):m.start()])
+        post = APPROX_POST.match(t, m.end())
+        mark, pst = (pre.group().rstrip('$¥€£') if pre else ''), (post.group() if post else '')
+        ordinal = (unit in ORD_PERIOD_UNITS and core in ORD_PERIOD_CORES and not sign and not mark and not pst
+                   and t[max(0, m.start() - 1):m.start()] == '第')
+        out.append({'tok': sign + mark + core + unit + pst, 'sign': sign, 'mark': mark, 'core': core, 'unit': unit,
+                    'post': pst, 'period': ordinal, 'start': (pre.start() + max(0, m.start() - 4)) if pre else m.start(),
+                    'end': post.end() if post else m.end()})
+    return out
+
+
+_PARSE = re.compile(r'^(?P<sign>[+\-]?)(?P<mark>%s)?(?P<body>.*?)(?P<post>以上|以下|左右|以内|以外)?$'
+                    % '|'.join(sorted(set(SOFT_MARKS + LOWER_MARKS + UPPER_MARKS) - {'左右', '以上', '以下', '以内'},
+                                      key=len, reverse=True)))
+
+
+def parse_token(tok):
+    """-> dict(sign, mark, body, post, bound) of a token from tokens(); bound is 'soft' (约 近 大致 左右), 'lower'
+    (逾 超过 以上 至少 …), 'upper' (不足 低于 至多 不超过 以下 …) or '' (exact)."""
+    m = _PARSE.match(tok or '')
+    d = m.groupdict('') if m else {'sign': '', 'mark': '', 'body': tok or '', 'post': ''}
+    marks = [x for x in (d['mark'], d['post']) if x]
+    bound = ''
+    for x in marks:
+        if x in LOWER_MARKS:
+            bound = 'lower'
+        elif x in UPPER_MARKS:
+            bound = 'upper'
+        elif x in SOFT_MARKS and not bound:
+            bound = 'soft'
+    d['bound'] = bound
+    return d
+
+
+def soft_key(tok):
+    """The token with soft approximators dropped and hard bounds kept: 约20% -> 20%, 逾5% -> 逾5%."""
+    d = parse_token(tok)
+    mark = d['mark'] if d['mark'] not in SOFT_MARKS else ''
+    post = d['post'] if d['post'] not in SOFT_MARKS else ''
+    return d['sign'] + mark + d['body'] + post
+
+
+def value_key(tok):
+    """Sign, value and unit only (every marker dropped): 约20% -> 20%, 逾5% -> 5%, 3个财月 -> 3个财月."""
+    d = parse_token(tok)
+    return d['sign'] + d['body']
+
+
+def restatement_ok(tok, present):
+    """True when TOK restates a threshold already present (a list of tokens of the same node): the same value and
+    unit with only a soft approximator added or dropped (约20% then 20%), and any hard bound kept (逾5% then 逾5%;
+    逾5% then 5% or 不足5% is not a restatement: the bound's direction is lost or turned)."""
+    k = soft_key(tok)
+    return any(soft_key(p) == k for p in present)
+
+
+def new_derived(new_tokens, base_tokens, periods=False):
+    """Tokens of NEW_TOKENS whose value and unit occur nowhere in BASE_TOKENS (markers ignored): new derived
+    numbers such as 25% or 四分之一 written next to a base that holds only 约20%. Period tokens (Q3, 3Q25, H1) are
+    left out unless periods=True."""
+    have = {value_key(b) for b in base_tokens}
+    out = []
+    for x in new_tokens:
+        if not periods and re.fullmatch(r'[QH][1-4]|\d[QH]\d{2}|(?:FY|CY)\d{2,4}|H[12]', x):
+            continue
+        if value_key(x) not in have:
+            out.append(x)
     return out
 
 
@@ -327,6 +437,33 @@ def selftest():
                       r['verdict'] == 'equal' and r['units_unresolved'] == 0 and len(r['unit_rows']) == 3))
         cases.append(('identical files: equal, 0 units', (lambda r: r['equal'] and not r['units'])(
             run(os.path.join(d, 'p-new.md'), os.path.join(d, 'p-new.md')))))
+        # 2.3.0 (W1): compound units, x and GW units, soft vs hard bounds, restatement and new derived numbers
+        cases.append(('2.3.0 compound units: 3个财月 12个月 1.33季 3个交易日 6.00x 0.30x 4.2GW kept whole',
+                      tokens('每连续12个月最多动用3个财月，现金覆盖1.33季，3个交易日内，6.00x净杠杆，覆盖率0.30x，扩至4.2GW。')
+                      == ['12个月', '3个财月', '1.33季', '3个交易日', '6.00x', '0.30x', '4.2GW']))
+        put('p-old.md', '每连续12个月最多动用3个财月。\n'); put('p-new.md', '每连续12个月最多动用3次。\n')
+        r = run(os.path.join(d, 'p-old.md'), os.path.join(d, 'p-new.md'))
+        cases.append(('2.3.0 probe 3个财月 -> 3次: a difference located as 3个财月 / 3次', not r['equal']
+                      and r['units'][0]['only_frozen'] == ['3个财月'] and r['units'][0]['only_current'] == ['3次']))
+        cases.append(('2.3.0 a marker before a currency sign binds: 约$117.2bn, 逾$5bn, 至多3次',
+                      tokens('约$117.2bn，逾$5bn，至多3次。') == ['约117.2bn', '逾5bn', '至多3次']))
+        cases.append(('2.3.0 bounds: 约 soft, 逾 and 以上 lower, 不足 至多 不超过 upper, bare exact',
+                      [parse_token(x)['bound'] for x in ('约20%', '逾5%', '5%以上', '不足5%', '至多3次', '不超过5%', '5%')]
+                      == ['soft', 'lower', 'lower', 'upper', 'upper', 'upper', '']))
+        cases.append(('2.3.0 restatement: 20% restates 约20%; 约20% restates 20%; 5% and 不足5% do not restate 逾5%',
+                      restatement_ok('20%', ['约20%', '29bn']) and restatement_ok('约20%', ['20%'])
+                      and not restatement_ok('5%', ['逾5%']) and not restatement_ok('不足5%', ['逾5%'])
+                      and restatement_ok('逾5%', ['逾5%'])))
+        cases.append(('2.3.0 new derived numbers: 25% and 四分之一 are new next to 约20%; 20% and Q3 are not',
+                      new_derived(['25%', '四分之一', '20%', 'Q3'], ['约20%', '117.2bn']) == ['25%', '四分之一']))
+        sp = token_spans('门槛约合$29–35bn，约20%。')
+        cases.append(('2.3.0 token_spans: same order as tokens(), start covers the marker',
+                      [x['tok'] for x in sp] == tokens('门槛约合$29–35bn，约20%。')
+                      and prep('门槛约合$29–35bn，约20%。')[sp[-1]['start']:sp[-1]['end']] == '约20%'))
+        sp = token_spans('据2027财年第一财季季报与第2季度数据，覆盖仍在一季以上，前三个季度合计。')
+        cases.append(('2.3.1 ordinal quarters 第一财季 / 第2季度 are periods; 一季以上 and 三个季度 stay quantities',
+                      [(x['tok'], x['period']) for x in sp if x['unit'] in ('财季', '季度', '季', '个季度')]
+                      == [('一财季', True), ('2季度', True), ('一季以上', False), ('三个季度', False)]))
         cases.append(('tokens: sign, unit, period, Chinese fraction', tokens('增长５%，-3.5bp的差，1,130亿美元，3Q25与上半年，两成半与三分之一，5,6两项。')
                       == ['+5%', '-3.5bp', '1130亿美元', '3Q25', 'H1', '两成半', '三分之一', '5', '6']))
     finally:

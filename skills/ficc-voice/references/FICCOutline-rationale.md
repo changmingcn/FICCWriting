@@ -1,6 +1,6 @@
 # FICCOutline rationale and distinctions
 
-This file holds the rationale, examples, and history moved out of the FICCOutline.md body text, in sections by the body's section numbers. Each entry first gives the original sentence in a block quote, then one sentence on which rule in the body it supports. Here each original sentence appears in English translation, and Chinese phrases inside it stay in Chinese with an English gloss. The Chinese originals are kept in the author's archive and are not included in this release. Consult this file as needed while writing.
+This file holds the rationale, examples, and history moved out of the FICCOutline.md body text, in sections by the body's section numbers. Each entry first gives the original sentence in a block quote, then one sentence on which rule in the body it supports. Here each original sentence appears in English translation, and Chinese phrases inside it stay in Chinese with an English gloss. The Chinese originals are kept in the author's archive and are not included in this release. Consult this file as needed while writing. Since 2026-11-21, section 7.3 here (rewrite permissions) goes with FICCOutline.md 10, and section 10 here (Conclusion) has no section of its own in the body.
 
 ## Introduction
 
@@ -116,7 +116,7 @@ Supports O25: the original's transition sentence from 3 to 4.
 
 Supports O31: leave the argument to the body text, and do not write it on the outline.
 
-Supports O31 (close line): FICCCompose.md C17 already requires a close for the whole piece and for a section with three or more children, but the outline did not say which node writes it. The line names the node whose end carries the close. A last paragraph that doubles as the close is still an assignment. Only a ruled waiver (`收尾：不设（<裁定>）`) leaves a section without a close, and N0 never gets one, because the whole piece must close. On the outline of the 2026-11-08 retail piece (《1025散户》), in the 2026-11-11 A/B, the two composers of unit B04 (old arm and new arm) each returned the N3 close as a to-do, although N3.3's order line already said “N3 收尾，答案交给 N4”. T0's reading, not measured: the writers took that line as an ordering reason. Provenance: user 2026-11-11 (original words: “交接部分你的意见也很重要，我认为值得做”; “加，开始吧”).
+Supports O31 (close line): FICCVoice.md C17 already requires a close for the whole piece and for a section with three or more children, but the outline did not say which node writes it. The line names the node whose end carries the close. A last paragraph that doubles as the close is still an assignment. Only a ruled waiver (`收尾：不设（<裁定>）`) leaves a section without a close, and N0 never gets one, because the whole piece must close. On the outline of the 2026-11-08 retail piece ("1025散户"), in the 2026-11-11 A/B, the two composers of unit B04 (old arm and new arm) each returned the N3 close as a to-do, although N3.3's order line already said “N3 收尾，答案交给 N4”. T0's reading, not measured: the writers took that line as an ordering reason. Provenance: user 2026-11-11 (original words: “交接部分你的意见也很重要，我认为值得做”; “加，开始吧”).
 
 > With this table, two writers working in parallel still write the same set of names.
 
@@ -136,9 +136,9 @@ Supports O89: once the outline is checked, the body text only unfolds each node 
 
 Supports O41: of the seven invariants, summarizing, completeness, and length belong to this file.
 
-> The other four (grouping, attachment, hanging, and re-mention) govern whether content is placed right: for attachment and hanging, see 5.3; for grouping and re-mention, see FICCStructure.md 3.2 and FICCCompose.md C07.
+> The other four (grouping, attachment, hanging, and re-mention) govern whether content is placed right: for attachment and hanging, see 5.3; for grouping and re-mention, see FICCStructure.md 3.2 and FICCVoice.md C07.
 
-Supports O41: the other four govern whether content is placed right. For attachment and hanging, see 5.3. For grouping and re-mention, see FICCStructure.md 3.2 and FICCCompose.md C07.
+Supports O41: the other four govern whether content is placed right. For attachment and hanging, see 5.3. For grouping and re-mention, see FICCStructure.md 3.2 and FICCVoice.md C07.
 
 (O41) When any layer breaks one of them, rewording cannot repair it.
 
@@ -268,7 +268,7 @@ Supports O87: claim extraction serves only to find the structure, so counter-evi
 
 ## 10 Conclusion
 
-Moved from FICCOutline.md 10 (2026-10-25): Reading only the outline should show where the main line, the counter-views, the material, and the headings each sit, and what each does.
+Moved from the Conclusion section of FICCOutline.md (2026-10-25; that section was dropped on 2026-11-21): Reading only the outline should show where the main line, the counter-views, the material, and the headings each sit, and what each does.
 
 > The order of these nine sections is the order in which one central sentence grows into an outline tree, gives new material its place, is maintained, and then lands on the page.
 
@@ -302,7 +302,7 @@ Opening sentence of the history record.
 
 Records the origin of the introduction's division-of-labour sentences.
 
-> Placement (5) moved here from FICCStructure.md 1 on 2026-10-13, under the three-agent relay plan the user approved (within it, placing material by task follows the user's instructions and posted text of 2026-10-12, and the handling of new stories or new material is taken from the writing-structure editing reference the user posted the same day); the seven-part hand-back was split into the placement record here and the relation sheet in FICCStructure.md 6; judging cross-branch annotations moved to FICCStructure.md 5; the annotation format is in references/relation-sheet-template.md;
+> Placement (5) moved here from FICCStructure.md 1 on 2026-10-13, under the three-agent relay plan the user approved (within it, placing material by task follows the user's instructions and posted text of 2026-10-12, and the handling of new stories or new material is taken from the writing-structure editing reference the user posted the same day); the seven-part hand-back was split into the placement record here and the relation sheet in FICCStructure.md 6; judging cross-branch annotations moved to FICCStructure.md 5; the annotation format then had its own template (retired 2026-11-21; cross-branch edges now go to the 关键边表, FICCStructure.md S74);
 
 Records the origin of 5, O50, and O64.
 
@@ -350,11 +350,11 @@ Records the origin of O53, O54, O60, and O61.
 
 Records the origin of O16, O38, O69 to O75, O51, and O57.
 
-> After the 2026-10-12 audit, a second split followed (on the principle of （十六） “FICCVoice管措辞” (FICCVoice governs wording), with T0 deciding the split sentence by sentence): the qualifiers in 2.3 reaching down to objects and the labels kept out of the body text in 4.2 merged back into FICCVoice.md 2 and FICCVoice.md 5.2, and attaching no writing notes went to the delivery step in SKILL.md;
+> After the 2026-10-12 audit, a second split followed (on the principle of （十六） “FICCVoice管措辞” (FICCVoice governs wording), with T0 deciding the split sentence by sentence): the qualifiers in 2.3 reaching down to objects and the labels kept out of the body text in 4.2 merged back into FICCVoice.md (then its 2 and 5.2; now FICCVoice.md V20 and V32), and attaching no writing notes went to the delivery step in SKILL.md;
 
 Records the origin of the parts of 2.3 and 4.2 merged back into FICCVoice.md.
 
-> Arranging sources by point within a paragraph in 5.1, how citations point in 5.3, how identity is made explicit and checked in 5.4, and the text–figure match in 5.5 have their home in FICCVoice.md V07, V25, V27 and FICCVoice.md V15, V16, V19, V21, V29;
+> Arranging sources by point within a paragraph in 5.1, how citations point in 5.3, how identity is made explicit and checked in 5.4, and the text–figure match in 5.5 have their home in FICCVoice.md V07, V25, V27 and FICCVoice.md V15, V16, V19, V21 (now V13), V29;
 
 Records the origin of several rules now in FICCVoice.md.
 
@@ -382,7 +382,7 @@ Records the origin of removing author self-descriptions from this file and switc
 
 Records the origin of the mark in O79's original sentence.
 
-> The provision in 7.3 that a style-only edit may also merge a note back into the word, number, or sentence it serves was added the same day as the notes passage in FICCVoice.md 5.1.
+> The provision in 7.3 that a style-only edit may also merge a note back into the word, number, or sentence it serves was added the same day as the notes passage in FICCVoice.md V29 (then its 5.1).
 
 Records the origin of O69's sentence on merging notes back.
 
@@ -404,4 +404,6 @@ Per the user's 10-16 instruction, the body text carries no marks of the “（�
 Per O90, record here the date and the gist of the original words of each later user correction to the outline. Record the original words verbatim in references/dev-notes.md.
 
 - 2026-10-20 — user: “读法”是AI腔；→ O91 (claim lines speak the article's language). Rolled back 2026-10-21 with the 10-18 snapshot and re-kept the same day (“V57和091要保留。”). Verbatim: references/dev-notes.md 49.
-- 2026-10-24 — O64 L483: the former sentence was a page-level instruction left from the pre-2026-10-17 copy shared with FICCStructure; the page-level home is FICCCompose.md C15 (“decide it here”); the line now states the outliner's own step (the annotation names the content the later node pays off) and points to C15. User: “同意，可以改。” Verbatim: references/dev-notes.md 52.
+- 2026-10-24 — O64 L483: the former sentence was a page-level instruction left from the pre-2026-10-17 copy shared with FICCStructure; the page-level home is C15 (“decide it here”; FICCVoice.md C15 since 2026-11-21); the line now states the outliner's own step (the annotation names the content the later node pays off) and points to C15. User: “同意，可以改。” Verbatim: references/dev-notes.md 52.
+- 2026-11-21 — user: “不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比。” and “同意你的推荐” (the recommended plan, including opening-detail relocation on by default in a rewrite). → O73 (a rewrite may move a secondary sample list, parenthetical gloss or source date out of an opening into its supporting sentences or the existing child section that owns it, each destination checked, the claim line intact) and O86 (the information test also checks signal-to-noise in claim lines that open the lead, a part or section, or a paragraph); the page-level rule is C01, with checks in C03 and C23 (FICCVoice.md §1 C01 and its §2 段首款 block since the Wave 2 merge the same day). The same day: “我给你放宽11/30的技能冻结，允许你升级FICC写作技能。” Verbatim and evidence: references/dev-notes.md 63.
+- 2026-11-21 (Wave 2) — user: “同意，五项决策都按你的建议来。” (the five decisions of the 0→1 rebuild spec, each on its recommended option). → the living outline `<文稿>-提纲.md` is the one live file in new writing (template in 4.2; every relation sits in `分担`, `接前`, `边` or the `关键边表`, and no separate placement record is kept); O10 question card and O20 主旨四栏; facts on the tree (O46–O58: 写全/回指/留表, `算式`, `消歧`, `段`); O64 sends cross-branch edges to the `关键边表` (FICCStructure.md S74); the Outline Gate (O84–O89); the old 7.3 is now the secondary rewrite entry (FICCOutline.md 10). Verbatim and evidence: references/dev-notes.md 64; provenance: references/FICCVoice-provenance.md 39.

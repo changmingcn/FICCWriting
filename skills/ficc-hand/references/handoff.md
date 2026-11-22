@@ -2,7 +2,7 @@
 
 ## 1 What is handed over
 
-- `<文稿名>-提纲.md`: ficc-outliner maintains it per FICCOutline; relation lines wait for the relation sheet.
+- `<文稿名>-提纲.md`: ficc-outliner maintains it per FICCOutline; its relation lines are the relation slots ficc-structurer rules (FICCStructure.md §6).
 - `<文稿名>-资料索引.md`, §0 being the card below: append only; a changed row is marked “已改，见新行”.
 
 Working files are not copied; index §9 gives their paths.
@@ -36,7 +36,7 @@ The handoff note is a state card (`shared-protocols/handoff.md` §2) that opens 
 
 ## 3 Where ficc-voice takes over
 
-At step ③ of the relay table in ficc-voice/SKILL.md (relation sheet), under `ficc-conductor`, the standing writing-phase parent: a fresh one for each wave (relay, check wave, close), each started from this card and `conductor-progress.md`. The outline has passed ficc-outliner's check mode (FICCOutline 9); do not rebuild it. The draft then passes ④ (ficc-composer) and ⑤ (ficc-writer); a short draft: one ficc-writer does ④ and ⑤ in a row. This skill changes no file of ficc-voice.
+At step ② of the relay table in ficc-voice/SKILL.md (relations), under `ficc-conductor`, the standing writing-phase parent: a fresh one for each wave (relay, check wave, close), each started from this card and `conductor-progress.md`. The outline has passed ficc-outliner's check mode (FICCOutline 9); do not rebuild it. The draft then passes ③ (ficc-writer draft, paragraphs and sentences in one pass; ficc-composer only as the optional paragraph-only arm) and the ④ checks. This skill changes no file of ficc-voice.
 
 ## 4 After handoff
 

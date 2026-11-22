@@ -3,20 +3,14 @@
   "measure": "len(text) of the UTF-8 file",
   "root": "~/.claude",
   "files": {
-    "skills/ficc-voice/FICCVoice.md": 42268,
-    "skills/ficc-voice/FICCCompose.md": 31171,
-    "skills/ficc-voice/FICCOutline.md": 53293,
-    "skills/ficc-voice/FICCStructure.md": 41577,
-    "skills/ficc-voice/references/compose-excerpt.md": 7189,
-    "skills/ficc-voice/references/clarity-acceptance.md": 4395,
-    "agents/ficc-outliner.md": 3381,
-    "agents/ficc-structurer.md": 2936,
-    "agents/ficc-composer.md": 2754,
-    "agents/ficc-writer.md": 3157,
-    "skills/ficc-voice/references/voice-excerpt-patch.md": 15453,
-    "skills/ficc-voice/references/voice-excerpt-polish.md": 18350,
-    "skills/ficc-voice/references/voice-excerpt-draft.md": 11054,
-    "skills/ficc-voice/references/voice-excerpt-coldread.md": 14402
+    "skills/ficc-voice/FICCVoice.md": 54983,
+    "skills/ficc-voice/FICCOutline.md": 48313,
+    "skills/ficc-voice/FICCStructure.md": 38888,
+    "skills/ficc-voice/references/clarity-acceptance.md": 6500,
+    "agents/ficc-outliner.md": 3961,
+    "agents/ficc-structurer.md": 3252,
+    "agents/ficc-composer.md": 3119,
+    "agents/ficc-writer.md": 3605
   },
   "history": [
     {
@@ -360,6 +354,222 @@
         "agents/ficc-writer.md": [
           2579,
           3157
+        ]
+      }
+    },
+    {
+      "date": "2026-11-20",
+      "reason": "User ruling 2026-11-21: 不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比 (C01 high-SNR opening line and three sub-lines, C03 and C23 check lines; +1134 chars; no retirable duplicate: every existing sentence kept)",
+      "changes": {
+        "skills/ficc-voice/FICCCompose.md": [
+          31171,
+          32305
+        ]
+      }
+    },
+    {
+      "date": "2026-11-20",
+      "reason": "User ruling 2026-11-21: 不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比 (C01 four lines copied verbatim from FICCCompose.md, one C23 section-3 line; +931 chars; no retirable duplicate)",
+      "changes": {
+        "skills/ficc-voice/references/compose-excerpt.md": [
+          7189,
+          8120
+        ]
+      }
+    },
+    {
+      "date": "2026-11-20",
+      "reason": "User ruling 2026-11-21: 不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比 (O73 opening-cleanup line for rewrite, the default relocation the user approved the same day: 同意你的推荐; O86 signal-to-noise check line; +619 chars; no retirable duplicate)",
+      "changes": {
+        "skills/ficc-voice/FICCOutline.md": [
+          53293,
+          53912
+        ]
+      }
+    },
+    {
+      "date": "2026-11-20",
+      "reason": "User ruling 2026-11-21: 不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比 (段首信噪比 line +217 chars); plus the 85-char H10 line documenting the C08 ten-sentence check made hard by the plan the user approved the same day (同意你的推荐); +302 chars; no retirable duplicate",
+      "changes": {
+        "skills/ficc-voice/references/clarity-acceptance.md": [
+          4395,
+          4697
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "User ruling 2026-11-21: 不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比 — W4b review fixes F01/F09 and F03 (C01 line names opening form 8, C03 check exempts the row-3 hook date, C23 reads row 8 across two sentences, C01 adds secondary numbers move with their source and date; +143 chars; no retirable duplicate)",
+      "changes": {
+        "skills/ficc-voice/FICCCompose.md": [
+          32305,
+          32448
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "User ruling 2026-11-21: 不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比 — W4b review fixes F01/F09 and F03 (section 1 C01 lines re-copied verbatim from FICCCompose.md, section 3 C23 line reads row 8 across two sentences; +107 chars; no retirable duplicate)",
+      "changes": {
+        "skills/ficc-voice/references/compose-excerpt.md": [
+          8120,
+          8227
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "User ruling 2026-11-21: 不只是全篇导语，而且是每一部分的导语甚至每一段的首句，都要体现最高信噪比 and 同意你的推荐 (rewrite opening cleanup on by default) — W4b review fix F19 (O69 points to the O73 exception; +31 chars)",
+      "changes": {
+        "skills/ficc-voice/FICCOutline.md": [
+          53912,
+          53943
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "W4b review fixes F04/F18: H10 merged into the H1/H5/H6 line (inherits the verbatim-quote T0 escape), the separate H10 line retired and the duplicate C08 parenthetical shortened; cap lowered to the merged size (-79 chars)",
+      "changes": {
+        "skills/ficc-voice/references/clarity-acceptance.md": [
+          4697,
+          4618
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "Wave 2 of the 0→1 rebuild, user approval 2026-11-21 of the five decisions (“同意，五项决策都按你的建议来。”): FICCCompose.md and the compose and four voice excerpts retire to the author's archive, not included in this release (caps removed); FICCCompose + FICCVoice merge into FICCVoice.md §0–§5; the three books and four relay cards are set to their post-rewrite sizes (caps = post-install sizes); clarity-acceptance.md raised 4,618→6,500 as decision 1 names (post-install 6,486)",
+      "changes": {
+        "skills/ficc-voice/FICCCompose.md": [
+          32448,
+          null
+        ],
+        "skills/ficc-voice/references/compose-excerpt.md": [
+          8227,
+          null
+        ],
+        "skills/ficc-voice/references/voice-excerpt-patch.md": [
+          15453,
+          null
+        ],
+        "skills/ficc-voice/references/voice-excerpt-polish.md": [
+          18350,
+          null
+        ],
+        "skills/ficc-voice/references/voice-excerpt-draft.md": [
+          11054,
+          null
+        ],
+        "skills/ficc-voice/references/voice-excerpt-coldread.md": [
+          14402,
+          null
+        ],
+        "skills/ficc-voice/FICCVoice.md": [
+          42268,
+          54272
+        ],
+        "skills/ficc-voice/FICCOutline.md": [
+          53943,
+          47053
+        ],
+        "skills/ficc-voice/FICCStructure.md": [
+          41577,
+          38283
+        ],
+        "agents/ficc-outliner.md": [
+          3381,
+          3961
+        ],
+        "agents/ficc-structurer.md": [
+          2936,
+          3252
+        ],
+        "agents/ficc-composer.md": [
+          2754,
+          3119
+        ],
+        "agents/ficc-writer.md": [
+          3157,
+          3605
+        ],
+        "skills/ficc-voice/references/clarity-acceptance.md": [
+          4618,
+          6500
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "Task D8 W3a-2 (Stage-1 stop-gate fixes): T7 tempting-link 待据 seal (O54, O64, S74, 闸3), multi-limb negation and cross-tier denominator fence (O51, V26), source-revision byte-identity (O62) (+1207 chars)",
+      "changes": {
+        "skills/ficc-voice/FICCOutline.md": [
+          47053,
+          48260
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "Task D8 W3a-2 (Stage-1 stop-gate fixes): T7 tempting-link 待据 seal (O54, O64, S74, 闸3), multi-limb negation and cross-tier denominator fence (O51, V26), source-revision byte-identity (O62) (+458 chars)",
+      "changes": {
+        "skills/ficc-voice/FICCStructure.md": [
+          38283,
+          38741
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "Task D8 W3a-2 (Stage-1 stop-gate fixes): T7 tempting-link 待据 seal (O54, O64, S74, 闸3), multi-limb negation and cross-tier denominator fence (O51, V26), source-revision byte-identity (O62) (+200 chars)",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          54272,
+          54472
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "Task D8 W3b (W3a2 Open 2a/2b): 范围排除 named as a way of dropping a tempting link, no substitute for the two-end row (O64); a source silent on a link gives 待据, 不成立 needs a refuting sentence (S74) (+53 and +147 chars)",
+      "changes": {
+        "skills/ficc-voice/FICCOutline.md": [
+          48260,
+          48313
+        ],
+        "skills/ficc-voice/FICCStructure.md": [
+          38741,
+          38888
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "D8 W4b review F01: restore three user rulings the W2 condensation dropped from V32/V29 (V5.1.6 用户10-11 少用术语、白话先讲、同段少加新名词; V5.2.2 用户10-11 沿用市场叫法; V5.1.11 用户10-13 注解不单独成句、两个词分挂两处); +214 chars, no retired duplicate houses them",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          54472,
+          54686
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "D8 W4b user-ruling sweep U1-U5: restore five ruling clauses the W2 condensation dropped (V27 出处句末括注 V1.6 用户10-14; V28 机构预测改数 V1.9 用户同意; V24 不用嵌入问句开头 V4.4.7 用户10-14; V26/V29 样本出处与同段简称 V5.1.2 用户同意; V32 唯一自造名导语引出当场说清 V5.2.3 用户同意); +285 chars, no retired duplicate houses them",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          54686,
+          54971
+        ]
+      }
+    },
+    {
+      "date": "2026-11-21",
+      "reason": "D8 W4b re-read2 Q5: the V26 short-name permission (V5.1.2 用户同意, 同段允许用不变义的简称) reworded so it covers the number, not only its sample source; +12 chars",
+      "changes": {
+        "skills/ficc-voice/FICCVoice.md": [
+          54971,
+          54983
         ]
       }
     }
